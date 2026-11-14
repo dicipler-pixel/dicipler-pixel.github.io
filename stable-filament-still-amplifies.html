@@ -1,0 +1,1475 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Filament Operator Mixer</title>
+<meta name="description" content="An interactive mixer for the five-dimensional filament operator: watch a stable operator amplify, kick the interface, and scatter the eigenvalues.">
+<style>
+:root{color-scheme:dark;
+  --bg:#050914;--panel:#0a1322;--panel2:#101c30;--line:#263a56;--line2:#35516f;
+  --ink:#eaf2ff;--ink2:#cbd9ea;--muted:#91a8c2;--dim:#5f7896;
+  --gold:#edc775;--teal:#69d7c4;--violet:#bc90ff;--red:#ff8d98;--blue:#7cbaff;--green:#7ee2a8;--orange:#ffb46b;
+  --pos:#7cbaff;--neg:#ff8d98;--rec:#7ee2a8;--null:#edc775;
+  --serif:Georgia,"Iowan Old Style","Palatino Linotype",Palatino,"Times New Roman",serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace}
+*{box-sizing:border-box}
+html{background:#050914}
+body{margin:0;background:radial-gradient(circle at 12% 0,#172442 0,transparent 34rem),radial-gradient(circle at 92% 4%,#1a1437 0,transparent 32rem),var(--bg);color:var(--ink);font:15px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1540px;margin:0 auto;padding-inline:24px}
+@media (max-width:640px){.wrap{padding-inline:16px}}
+header.top{padding-block:34px 18px}
+.eyebrow{font-size:11px;letter-spacing:.19em;color:var(--teal);font-weight:800;text-transform:uppercase}
+h1{font:500 clamp(2.3rem,6vw,5.2rem)/.98 var(--serif);margin:10px 0 12px;color:var(--gold);text-wrap:balance}
+h2{font:500 clamp(1.5rem,2.6vw,1.95rem)/1.15 var(--serif);color:var(--gold);margin:.2em 0 .5em;text-wrap:balance}
+h3{color:#dbe9ff;margin:.3em 0 .35em;font-size:1.05rem;text-wrap:balance}
+p{margin:.45em 0}
+.subtitle{font-size:1.12rem;max-width:62rem;color:var(--ink2)}
+.byline{color:var(--muted);font-size:13px;margin-top:6px}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.stat{background:#091526;border:1px solid var(--line);border-radius:10px;padding:9px 13px;min-width:0}
+.stat b{font-size:1.3rem;color:var(--teal);display:block;font-variant-numeric:tabular-nums}
+.stat span{font-size:13px;color:var(--ink2)}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(5,9,20,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-block:1px solid var(--line)}
+nav.tabs .wrap{display:flex;gap:7px;overflow-x:auto;padding-block:9px;scrollbar-width:thin}
+button,select,input,textarea{font:inherit;color:inherit}
+button{background:#13233a;color:var(--ink);border:1px solid var(--line2);border-radius:8px;padding:7px 12px;cursor:pointer;white-space:nowrap}
+button:hover{border-color:var(--teal);background:#173049}
+button.active{border-color:var(--teal);background:#173a4a;color:#fff}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+button.small{padding:3px 8px;font-size:12px;border-radius:6px}
+main{padding-block:22px 80px}
+.lens{display:none}.lens.active{display:block}
+.lede{max-width:70rem;color:var(--ink2);font-size:1.02rem}
+.kicker{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);font-weight:800}
+.grid2{display:grid;grid-template-columns:320px minmax(0,1fr);gap:18px;margin-top:14px}
+@media (max-width:980px){.grid2{grid-template-columns:minmax(0,1fr)}}
+.controls{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;align-self:start}
+@media (min-width:981px){.controls.sticky{position:sticky;top:64px;max-height:calc(100vh - 80px);overflow:auto}}
+.control{margin:9px 0 13px}
+.control label{display:flex;justify-content:space-between;gap:8px;color:#bed0e5;font-size:12.5px}
+.control output{color:var(--gold);font-family:var(--mono);font-size:12px;font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--teal)}
+select{background:#0d1a2c;border:1px solid var(--line2);border-radius:7px;padding:6px 8px;width:100%}
+.row{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.hr{border-top:1px solid var(--line);margin:14px 0}
+.stage{min-width:0;display:grid;gap:14px}
+.canvasbox{background:linear-gradient(180deg,#07101e,#050913);border:1px solid var(--line);border-radius:14px;padding:8px;overflow:hidden;position:relative;min-width:0}
+.canvasbox canvas{width:100%;display:block;touch-action:none}
+.canvasbox .ctitle{position:absolute;left:14px;top:10px;font:11px/1.3 var(--mono);color:var(--ink2);background:rgba(8,16,30,.8);border:1px solid var(--line);border-radius:7px;padding:4px 8px;pointer-events:none}
+.caption{font-size:12px;color:var(--muted);padding:6px 8px 2px}
+.split{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.split3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media (max-width:980px){.split,.split3{grid-template-columns:minmax(0,1fr)}}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px 12px;min-width:0}
+.card .lab{font-size:11.5px;letter-spacing:.02em;color:var(--muted)}
+.card .val{font:500 1.35rem/1.25 var(--serif);color:var(--gold);margin:3px 0;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.card .note{font-size:11.5px;color:#aac0d9;letter-spacing:.01em;font-weight:700}
+.note.pos{color:var(--pos)}.note.neg{color:var(--neg)}.note.rec{color:var(--rec)}.note.null{color:var(--null)}.note.vio{color:var(--violet)}
+.eyes{display:grid;gap:8px}
+.eye{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px;align-items:center;padding:7px 8px;border:1px solid var(--line);border-radius:10px;background:#0b1728}
+.eye .sw{width:12px;height:12px;border-radius:3px;box-shadow:0 0 10px currentColor;background:currentColor}
+.eye b{font-size:12.5px;display:block}
+.eye small{display:block;color:var(--muted);font-size:11px;font-family:var(--mono)}
+.eye input[type=checkbox]{accent-color:var(--teal);width:16px;height:16px}
+.eye.off{opacity:.45}
+.eyegrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:10px}
+@media (max-width:1100px){.eyegrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:700px){.eyegrid{grid-template-columns:minmax(0,1fr)}}
+.ecard{background:linear-gradient(180deg,#0e1a2e,#08111f);border:1px solid var(--line);border-radius:13px;padding:13px 14px;cursor:pointer;min-width:0}
+.ecard:hover{border-color:var(--teal)}
+.ecard .kick{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);font-weight:800}
+.ecard h4{margin:.35em 0 .3em;font-size:1rem;color:#e6f0ff;text-wrap:balance}
+.ecard .f{font:1rem/1.35 var(--serif);color:var(--gold);margin:.35em 0;overflow-wrap:anywhere}
+.ecard p{font-size:12.8px;color:#b9cbe0;margin:.3em 0}
+.badges{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
+.badge{font:700 9.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;border:1px solid;border-radius:20px;padding:4px 7px}
+.b-T{color:var(--green);border-color:#2f6d51}.b-L{color:var(--teal);border-color:#2c6d66}.b-N{color:var(--blue);border-color:#2f5889}.b-C{color:var(--violet);border-color:#5d4a86}.b-H{color:var(--orange);border-color:#7a5a33}.b-F{color:var(--red);border-color:#7e3d48}.b-R{color:var(--gold);border-color:#7a6636}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;min-width:0}
+.scope{border-left:4px solid var(--violet);background:#15132a;padding:12px 15px;margin:14px 0;border-radius:0 12px 12px 0;color:#d9d3f3}
+.scope.gold{border-left-color:var(--gold);background:#1b1a14;color:#efe4c4}
+.scope.red{border-left-color:var(--red);background:#23121a;color:#f3d6dc}
+.table{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{padding:8px 10px;text-align:left;border-bottom:1px solid #1c2c45;vertical-align:top}
+th{color:var(--gold);font-weight:700;background:#0b1627;position:sticky;top:0}
+td.num,th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+tr.hl td{background:#15233a}
+.mono{font-family:var(--mono)}
+.gold{color:var(--gold)}.teal{color:var(--teal)}.red{color:var(--red)}.blue{color:var(--blue)}.green{color:var(--green)}.vio{color:var(--violet)}
+.ride{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px}
+.step{flex:0 0 150px;text-align:left;white-space:normal;background:#0b1627;border:1px solid var(--line);border-radius:12px;padding:10px 11px}
+.step b{display:block;font-size:11px;letter-spacing:.08em;color:var(--teal);text-transform:uppercase}
+.step span{display:block;font-size:12px;color:var(--muted);margin-top:3px}
+.step.active{border-color:var(--gold);background:#1a1810}
+.route{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-top:10px}
+.route h3{font:500 1.5rem/1.2 var(--serif);color:var(--gold)}
+.ledger textarea{width:100%;min-height:74px;background:#08111f;border:1px solid var(--line2);border-radius:10px;padding:10px;resize:vertical;font:13px/1.45 var(--mono);color:var(--ink)}
+.trials{display:grid;gap:8px;margin-top:10px}
+.trial{border:1px solid var(--line);border-radius:10px;padding:9px 11px;background:#0b1627;font-size:12.5px}
+.trial .when{font-family:var(--mono);color:var(--muted);font-size:11px}
+.legend{display:flex;gap:8px;flex-wrap:wrap;font-size:11.5px;color:var(--ink2);padding:6px 8px}
+.legend i{display:inline-block;width:14px;height:3px;border-radius:2px;vertical-align:middle;margin-right:5px}
+.pill{display:inline-block;font:700 10.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:5px 8px;border-radius:20px;border:1px solid var(--line2);color:var(--ink2)}
+.pill.pos{color:var(--pos);border-color:#2f5889}.pill.neg{color:var(--neg);border-color:#7e3d48}.pill.null{color:var(--null);border-color:#7a6636}.pill.rec{color:var(--rec);border-color:#2f6d51}
+footer{border-top:1px solid var(--line);color:var(--muted);font-size:12.5px;padding-block:18px 36px}
+.sectionhead{display:flex;justify-content:space-between;align-items:end;gap:14px;flex-wrap:wrap;margin-top:28px}
+.msg{font-size:12px;color:var(--green);min-height:1.2em}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+
+</style>
+</head>
+<body>
+<header class="top wrap">
+  <div class="eyebrow">Jeromie Beasley · Compound Eye · Filament Operator Mixer</div>
+  <h1>A Stable Filament That Still Amplifies</h1>
+  <p class="subtitle">Five coordinates, one invariant plane, and a Jordan block inside it. Every eigenvalue says decay, yet a well-aimed disturbance grows first. Turn the dials and watch the states actually move: the stretch, the kick, the pseudospectral disk, and the two ways eigenvectors collapse.</p>
+  <div class="byline">Built from research revision 4 of the paper (25 September 2026) and its proof package. Every curve and number here is computed live from the paper's formulas or from the full five-by-five matrix.</div>
+  <div class="stats">
+    <div class="stat"><b>5</b><span>coordinates, one invariant plane V</span></div>
+    <div class="stat"><b>κ &gt; 2</b><span>growth for the best initial state</span></div>
+    <div class="stat"><b>κ &gt; 2.48527</b><span>growth after an interface kick</span></div>
+    <div class="stat"><b>0</b><span>unstable eigenvalues anywhere</span></div>
+    <div class="stat"><b>√(ε|μ|+ε²)</b><span>exact pseudospectral radius</span></div>
+    <div class="stat"><b>27 / 27</b><span>independent checks pass</span></div>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Lenses">
+  <div class="wrap">
+    <button data-lens="amp">The amplifier</button>
+    <button data-lens="kick">Interface kick</button>
+    <button data-lens="pseudo">Pseudospectrum</button>
+    <button data-lens="paths">Two paths to the defect</button>
+    <button data-lens="full">All five coordinates</button>
+    <button data-lens="sky">The Snake</button>
+    <button data-lens="ledger">Claim ledger</button>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- ================= 1. THE AMPLIFIER ================= -->
+<section class="lens" id="lens-amp">
+  <div class="kicker">Theorem 4.1 · the operator norm of the Jordan semigroup</div>
+  <h2>Every eigenvalue decays. The states grow anyway.</h2>
+  <p class="lede">Inside the invariant plane <span class="mono">V = span{x₂, r}</span> the operator is <span class="mono">J = [[b, μ], [0, b]]</span>, and states evolve as <span class="mono">u(t) = e<sup>−Jt</sup>u(0) = e<sup>−bt</sup>(x₂ − μt·r, r)</span>. The interface coordinate r only decays, but it keeps pushing the shape coordinate x₂. With <span class="mono">κ = |μ|/b</span>, the best initial state grows above its starting size exactly when κ &gt; 2. Time runs in units of <span class="mono">bt</span>.</p>
+  <div class="grid2">
+    <aside class="controls sticky" aria-label="Amplifier controls">
+      <div class="kicker">Dials</div>
+      <div class="control"><label for="aK">Coupling ratio κ = |μ|/b <output for="aK"></output></label><input type="range" id="aK" min="0" max="6" step="any" value="3"></div>
+      <div class="control"><label for="aX">Time bt <output for="aX"></output></label><input type="range" id="aX" min="0" max="6" step="any" value="0"></div>
+      <div class="control"><label for="aSpeed">Play speed <output for="aSpeed"></output></label><input type="range" id="aSpeed" min="0.1" max="2" step="0.05" value="0.7"></div>
+      <div class="row"><button id="aPlay">Pause</button><button id="aZero">Back to t = 0</button><button id="aPeak">Jump to t*</button></div>
+      <div class="hr"></div>
+      <div class="kicker">Presets</div>
+      <div class="row" style="margin-top:6px">
+        <button class="small" data-ak="1.5">κ = 1.5 · no growth</button>
+        <button class="small" data-ak="2">κ = 2 · threshold</button>
+        <button class="small" data-ak="2.3">κ = 2.3 · best state only</button>
+        <button class="small" data-ak="3">κ = 3</button>
+        <button class="small" data-ak="5">κ = 5</button>
+      </div>
+      <div class="hr"></div>
+      <div class="row" style="justify-content:space-between"><div class="kicker">Contributing eyes</div><div class="row"><button class="small" id="aAll">All on</button><button class="small" id="aNone">All off</button></div></div>
+      <div class="eyes" id="aEyes" style="margin-top:8px"></div>
+      <div class="control" style="margin-top:12px"><label for="aScale">Scope scale</label>
+        <select id="aScale"><option value="common">One common scale</option><option value="own">Each eye on its own scale</option></select></div>
+    </aside>
+    <div class="stage">
+      <div class="split3">
+        <div class="canvasbox"><span class="ctitle">state plane V · the unit circle moves</span><canvas id="aState" aria-label="Image of the unit circle of initial states under the semigroup"></canvas></div>
+        <div class="canvasbox"><span class="ctitle">size of the state over time</span><canvas id="aGain" aria-label="Optimal gain and interface response over time"></canvas></div>
+        <div class="canvasbox"><span class="ctitle">λ-plane of −J</span><canvas id="aLam" aria-label="Eigenvalue and numerical range of minus J"></canvas></div>
+      </div>
+      <div class="cards">
+        <div class="card"><div class="lab">κ = |μ|/b</div><div class="val" id="ac-k"></div><div class="note" id="an-k"></div></div>
+        <div class="card"><div class="lab">best state: peak gain M<sub>max</sub></div><div class="val" id="ac-M"></div><div class="note" id="an-M"></div></div>
+        <div class="card"><div class="lab">peak time bt*</div><div class="val" id="ac-t"></div><div class="note">t* = √(κ²−4)/|μ|</div></div>
+        <div class="card"><div class="lab">interface kick: peak</div><div class="val" id="ac-A"></div><div class="note" id="an-A"></div></div>
+        <div class="card"><div class="lab">eigenvalues of −J</div><div class="val" id="ac-eig">−b, −b</div><div class="note pos">stable, and they never move</div></div>
+        <div class="card"><div class="lab">initial growth rate of M</div><div class="val" id="ac-slope"></div><div class="note" id="an-slope"></div></div>
+      </div>
+      <div class="canvasbox"><span class="ctitle">every enabled eye along the same clock</span><canvas id="aScope" aria-label="All enabled eyes over time"></canvas></div>
+      <div class="canvasbox"><span class="ctitle">peak gain against κ · the two thresholds</span><canvas id="aSweep" aria-label="Peak gains as functions of kappa"></canvas></div>
+      <p class="caption">Gold: the best initial state, M<sub>max</sub> from (4.2). Teal: a kick confined to the interface coordinate, the peak of (4.3). Between κ = 2 and κ<sub>r</sub> = 2.48527 a carefully aimed state grows while an interface kick does not.</p>
+    </div>
+  </div>
+  <div class="scope gold">What the λ-plane shows: the double eigenvalue sits at −b for every κ, so the spectrum predicts pure decay. The violet disk is the numerical range of −J, centred at −b with radius |μ|/2 (a standard fact, not stated in the paper). Its right edge, b(κ/2 − 1), is the initial growth rate of M(t) read off the proof of Theorem 4.1. The disk crosses into the right half-plane exactly when κ &gt; 2.</div>
+</section>
+
+<!-- ================= 2. INTERFACE KICK ================= -->
+<section class="lens" id="lens-kick">
+  <div class="kicker">Equation (4.3) · the interface impulse threshold · the trap snapshot (6.1)</div>
+  <h2>Kick the interface and watch the shape answer</h2>
+  <p class="lede">An impact is not free to pick the most amplified direction. If it lands in the interface coordinate, the state starts at <span class="mono">e<sub>r</sub></span> and follows <span class="mono">e<sup>−bt</sup>(−μt, 1)</span>: the interface glow fades while the shape bends, then everything decays. This input rises above its starting size only for <span class="mono">κ &gt; κ<sub>r</sub> = 2.48526751266</span>, where <span class="mono">1 − x = e<sup>−2x</sup></span> at the tangency. This is the model test that applies if an impact projects onto the interface coordinate <span class="pill">[H]</span>.</p>
+  <div class="grid2">
+    <aside class="controls sticky" aria-label="Kick controls">
+      <div class="control"><label for="kK">Coupling ratio κ <output for="kK"></output></label><input type="range" id="kK" min="0" max="6" step="any" value="3"></div>
+      <div class="control"><label for="kThr"><span>Threshold E<sub>max</sub>/E₀</span> <output for="kThr"></output></label><input type="range" id="kThr" min="0.5" max="4" step="any" value="1.2"></div>
+      <div class="control"><label for="kT">Window T (in bt) <output for="kT"></output></label><input type="range" id="kT" min="0.3" max="6" step="any" value="4"></div>
+      <div class="control"><label for="kX">Time bt <output for="kX"></output></label><input type="range" id="kX" min="0" max="6" step="any" value="0"></div>
+      <div class="control"><label for="kSpeed">Play speed <output for="kSpeed"></output></label><input type="range" id="kSpeed" min="0.1" max="2" step="0.05" value="0.7"></div>
+      <div class="row"><button id="kGo">Kick</button><button id="kPlay">Pause</button></div>
+      <div class="hr"></div>
+      <div class="kicker">Presets</div>
+      <div class="row" style="margin-top:6px">
+        <button class="small" data-kk="2.3">κ = 2.3 · kick fades</button>
+        <button class="small" data-kk="2.48526751266">κ = κ<sub>r</sub> · just touches</button>
+        <button class="small" data-kk="3">κ = 3 · overshoot</button>
+        <button class="small" data-kk="5">κ = 5 · strong</button>
+      </div>
+      <p class="caption" style="padding-left:0">A trap snapshot needs two things at once: every eigenvalue of −K in the stable half-plane, and the energy above E<sub>max</sub> somewhere in the window 0 &lt; t &lt; T.</p>
+    </aside>
+    <div class="stage">
+      <div class="canvasbox"><span class="ctitle">cartoon · bend = shape coordinate x₂ · glow = interface coordinate r</span><canvas id="kFil" aria-label="Cartoon filament bending after an interface kick"></canvas></div>
+      <div class="split">
+        <div class="canvasbox"><span class="ctitle">energy after the kick · E(t)/E₀ = A<sub>r</sub>(t)²</span><canvas id="kE" aria-label="Energy after the kick with threshold"></canvas></div>
+        <div class="canvasbox"><span class="ctitle">why 2.48527 · the tangency</span><canvas id="kTan" aria-label="Interface response touching one at the threshold"></canvas></div>
+      </div>
+      <div class="cards">
+        <div class="card"><div class="lab">peak E/E₀ after the kick</div><div class="val" id="kc-E"></div><div class="note" id="kn-E"></div></div>
+        <div class="card"><div class="lab">peak time bt</div><div class="val" id="kc-t"></div><div class="note">x₊ = (1 + √(1 − 4/κ²))/2</div></div>
+        <div class="card"><div class="lab">spectral condition</div><div class="val">Re σ(−K) = −b</div><div class="note pos">stable for every κ</div></div>
+        <div class="card"><div class="lab">trap snapshot in window</div><div class="val" id="kc-trap"></div><div class="note" id="kn-trap"></div></div>
+        <div class="card"><div class="lab">energy now</div><div class="val" id="kc-now"></div><div class="note" id="kn-now"></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="scope">The filament picture is a cartoon of two model coordinates, not a plasma simulation. A physical fracture would also need a calibrated map from the model energy to magnetic stress, emission or shape <span class="pill">[H]</span>.</div>
+</section>
+
+<!-- ================= 3. PSEUDOSPECTRUM ================= -->
+<section class="lens" id="lens-pseudo">
+  <div class="kicker">Equations (3.1) to (3.3) · the exact pseudospectral disk</div>
+  <h2>Shake the matrix and watch the eigenvalues scatter</h2>
+  <p class="lede">For the reduced block the resolvent norm depends only on the distance from the eigenvalue, so every ε-pseudospectrum is exactly a disk: <span class="mono">r<sub>ε</sub> = √(ε|μ| + ε²)</span>. Small perturbations move the eigenvalue by about <span class="mono">√(ε|μ|)</span>, far more than ε. The growth test belongs to <span class="mono">−J</span>, whose disk is centred at <span class="mono">−b</span>; it reaches the right half-plane once <span class="mono">ε &gt; ε<sub>crit</sub> = σ<sub>min</sub>(J)</span>. Here b = 1.</p>
+  <div class="grid2">
+    <aside class="controls sticky" aria-label="Pseudospectrum controls">
+      <div class="control"><label for="pK">Coupling ratio κ <output for="pK"></output></label><input type="range" id="pK" min="0" max="6" step="any" value="2"></div>
+      <div class="control"><label for="pE">Perturbation size log₁₀ ε <output for="pE"></output></label><input type="range" id="pE" min="-4" max="0.5" step="any" value="-1.3"></div>
+      <div class="control"><label for="pType">Perturbations drawn</label>
+        <select id="pType"><option value="rand">Random complex, ‖E‖ ≤ ε</option><option value="rev">Reverse coupling only, ‖E‖ = ε</option><option value="det">Diagonal detuning only, ‖E‖ = ε</option></select></div>
+      <div class="row"><button id="pPlay">Pause</button><button id="pClear">Clear the cloud</button><button id="pCrit">Set ε = ε<sub>crit</sub></button></div>
+      <p class="caption" style="padding-left:0">Each dot is an eigenvalue of <span class="mono">−J + E</span> for one drawn perturbation E. Random draws fill the disk. Reverse coupling alone lands on a circle of radius √(ε|μ|); diagonal detuning alone moves one eigenvalue by only ε.</p>
+    </aside>
+    <div class="stage">
+      <div class="split">
+        <div class="canvasbox"><span class="ctitle">complex plane · resolvent norm of −J</span><canvas id="pPlane" aria-label="Resolvent norm heat map with pseudospectral disk and perturbed eigenvalues"></canvas></div>
+        <div class="canvasbox"><span class="ctitle">radius against ε · square root, then linear</span><canvas id="pR" aria-label="Pseudospectral radius against epsilon"></canvas></div>
+      </div>
+      <div class="cards">
+        <div class="card"><div class="lab">ε</div><div class="val" id="pc-e"></div><div class="note" id="pn-e"></div></div>
+        <div class="card"><div class="lab">disk radius r<sub>ε</sub></div><div class="val" id="pc-r"></div><div class="note" id="pn-r"></div></div>
+        <div class="card"><div class="lab">ε<sub>crit</sub> = σ<sub>min</sub>(J)</div><div class="val" id="pc-c"></div><div class="note">(√(μ²+4b²) − |μ|)/2</div></div>
+        <div class="card"><div class="lab">farthest dot / r<sub>ε</sub></div><div class="val" id="pc-f"></div><div class="note" id="pn-f"></div></div>
+        <div class="card"><div class="lab">dots drawn</div><div class="val" id="pc-n"></div><div class="note">eigenvalues of −J + E</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="scope">A pseudospectral incursion and actual transient growth are related but distinct tests, and neither establishes an astronomical rupture. The sign matters: the test that bears on growth of <span class="mono">u̇ = −Ku</span> uses the pseudospectrum of −K.</div>
+</section>
+
+<!-- ================= 4. TWO PATHS ================= -->
+<section class="lens" id="lens-paths">
+  <div class="kicker">Proposition 5.1 · detuning versus reverse coupling</div>
+  <h2>Two roads into the same defect, at different speeds</h2>
+  <p class="lede">Approach the Jordan block two ways and watch the eigenvectors close. Detune the diagonal by δ and the angle shrinks linearly, <span class="mono">sin θ = |δ|/√(μ² + δ²)</span>. Unfold with a small reverse coupling γ and it shrinks like a square root, <span class="mono">sin θ = √(γ/(μ + γ))</span>. At the defect itself the eigenvector frame loses a direction while the invariant plane V stays two-dimensional.</p>
+  <div class="grid2">
+    <aside class="controls sticky" aria-label="Path controls">
+      <div class="control"><label for="gC"><span>Control log₁₀ (δ or γ)</span> <output for="gC"></output></label><input type="range" id="gC" min="-5" max="-0.2" step="any" value="-0.4"></div>
+      <div class="control"><label for="gMu">Coupling μ (b = 1) <output for="gMu"></output></label><input type="range" id="gMu" min="0.2" max="3" step="any" value="1"></div>
+      <div class="control"><label for="gSpeed">Sweep speed <output for="gSpeed"></output></label><input type="range" id="gSpeed" min="0.1" max="2" step="0.05" value="0.6"></div>
+      <div class="row"><button id="gPlay">Pause</button><button id="gReset">Start again</button></div>
+      <p class="caption" style="padding-left:0">The sweep runs the control from about 0.6 down to 10⁻⁵. The plane views are drawn to true scale, so the lines close up visibly at first and then too finely to see; the log–log panel keeps the rates in view the whole way.</p>
+    </aside>
+    <div class="stage">
+      <div class="split">
+        <div class="canvasbox"><span class="ctitle">diagonal detuning J<sub>δ</sub> = [[b+δ, μ], [0, b]]</span><canvas id="gDet" aria-label="Eigenvector lines under diagonal detuning"></canvas></div>
+        <div class="canvasbox"><span class="ctitle">reverse coupling J<sub>γ</sub> = [[b, μ], [γ, b]]</span><canvas id="gRev" aria-label="Eigenvector lines under reverse coupling"></canvas></div>
+      </div>
+      <div class="canvasbox"><span class="ctitle">eigenvector angle against control · slopes 1 and ½</span><canvas id="gLog" aria-label="Log-log plot of eigenvector angle against control"></canvas></div>
+      <div class="cards">
+        <div class="card"><div class="lab">control</div><div class="val" id="gc-c"></div><div class="note">δ = γ</div></div>
+        <div class="card"><div class="lab">detuning: sin θ</div><div class="val" id="gc-d"></div><div class="note" style="color:var(--blue)">linear, (5.1)</div></div>
+        <div class="card"><div class="lab">reverse coupling: sin θ</div><div class="val" id="gc-r"></div><div class="note" style="color:var(--red)">square root, (5.2)</div></div>
+        <div class="card"><div class="lab">ratio of the two angles</div><div class="val" id="gc-q"></div><div class="note">grows without bound as the control → 0</div></div>
+        <div class="card"><div class="lab">eigenvalue split</div><div class="val" id="gc-s" style="font-size:1.05rem"></div><div class="note">δ versus 2√(μγ)</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="scope">These are statements about an eigenbasis. Neither rate implies that plasma streamlines turn into sheets, that a boundary becomes inviscid, or that a precursor is suppressed; those would need a field model and a measurement map.</div>
+</section>
+
+<!-- ================= 5. ALL FIVE ================= -->
+<section class="lens" id="lens-full">
+  <div class="kicker">Theorem 2.1 · the exact interface embedding · Section 7</div>
+  <h2>All five coordinates, and the plane that holds the block</h2>
+  <p class="lede">The full operator <span class="mono">K₅(γ)</span> couples a shape pair (x₁, x₂), a shear pair (s₁, s₂) and an interface coordinate r. The columns for x₂ and r have no entries outside rows x₂ and r, so <span class="mono">V = span{x₂, r}</span> is exactly invariant and carries <span class="mono">J<sub>γ</sub></span>. The whole five-coordinate norm is therefore never below the reduced one. Kick a coordinate and watch the signal flow through the couplings.</p>
+  <div class="grid2">
+    <aside class="controls sticky" aria-label="Full operator controls">
+      <div class="control"><label for="fK">μ (with b = 1) <output for="fK"></output></label><input type="range" id="fK" min="0" max="6" step="any" value="3"></div>
+      <div class="control"><label for="fA">a <output for="fA"></output></label><input type="range" id="fA" min="0.2" max="3" step="any" value="1.5"></div>
+      <div class="control"><label for="fH">h (x₁ → x₂) <output for="fH"></output></label><input type="range" id="fH" min="-3" max="3" step="any" value="0"></div>
+      <div class="control"><label for="fC1">c₁ (s₁ → x₂) <output for="fC1"></output></label><input type="range" id="fC1" min="-3" max="3" step="any" value="0"></div>
+      <div class="control"><label for="fC2">c₂ (s₂ → x₂) <output for="fC2"></output></label><input type="range" id="fC2" min="-3" max="3" step="any" value="0"></div>
+      <div class="control"><label for="fD1">d₁ <output for="fD1"></output></label><input type="range" id="fD1" min="-0.5" max="3" step="any" value="2"></div>
+      <div class="control"><label for="fD2">d₂ <output for="fD2"></output></label><input type="range" id="fD2" min="-0.5" max="3" step="any" value="2.5"></div>
+      <div class="control"><label for="fQ1">q₁ <output for="fQ1"></output></label><input type="range" id="fQ1" min="-2" max="2" step="any" value="0.6"></div>
+      <div class="control"><label for="fQ2">q₂ <output for="fQ2"></output></label><input type="range" id="fQ2" min="-2" max="2" step="any" value="-0.4"></div>
+      <div class="control"><label for="fG">γ (r ← x₂ reverse coupling) <output for="fG"></output></label><input type="range" id="fG" min="-0.5" max="0.5" step="any" value="0"></div>
+      <div class="control"><label for="fInit">Kick which coordinate</label>
+        <select id="fInit"><option value="r">interface r (e₅)</option><option value="opt">best state in V</option><option value="x1">shape x₁ (e₁)</option><option value="s1">shear s₁ (e₃)</option></select></div>
+      <div class="control"><label for="fX">Time bt <output for="fX"></output></label><input type="range" id="fX" min="0" max="6" step="any" value="0"></div>
+      <div class="row"><button id="fPlay">Pause</button><button id="fZero">Back to t = 0</button></div>
+      <div class="hr"></div>
+      <div class="kicker">Presets</div>
+      <div class="row" style="margin-top:6px">
+        <button class="small" data-fp="clean">Clean block</button>
+        <button class="small" data-fp="leaky">Leaky couplings</button>
+        <button class="small" data-fp="unfold">Unfold γ = 0.05</button>
+        <button class="small" data-fp="rot">γ &lt; 0 · rotation</button>
+        <button class="small" data-fp="bad">Unstable shear</button>
+      </div>
+    </aside>
+    <div class="stage">
+      <div class="split">
+        <div class="canvasbox"><span class="ctitle">couplings · signal flowing through K₅</span><canvas id="fNet" aria-label="Five coordinates with coupling arrows and moving signal"></canvas></div>
+        <div class="canvasbox"><span class="ctitle">the matrix K₅(γ) · V highlighted</span><canvas id="fMat" aria-label="The five by five matrix with the invariant block highlighted"></canvas></div>
+      </div>
+      <div class="split">
+        <div class="canvasbox"><span class="ctitle">full norm ‖e<sup>−K₅t</sup>‖ against the reduced ‖e<sup>−Jt</sup>‖</span><canvas id="fNorm" aria-label="Full semigroup norm and reduced lower bound"></canvas></div>
+        <div class="canvasbox"><span class="ctitle">spectrum of −K₅ from the factorization (2.3)</span><canvas id="fSpec" aria-label="Eigenvalues of minus K5"></canvas></div>
+      </div>
+      <div class="cards">
+        <div class="card"><div class="lab">spectral condition</div><div class="val" id="fc-st" style="font-size:1.1rem"></div><div class="note" id="fn-st"></div></div>
+        <div class="card"><div class="lab">peak full gain</div><div class="val" id="fc-full"></div><div class="note">numerical, 5×5 matrix exponential</div></div>
+        <div class="card"><div class="lab">peak reduced gain</div><div class="val" id="fc-red"></div><div class="note">the block J<sub>γ</sub> alone</div></div>
+        <div class="card"><div class="lab">min over t of (full − reduced)</div><div class="val" id="fc-gap"></div><div class="note" id="fn-gap"></div></div>
+        <div class="card"><div class="lab">Riesz range Ran Π</div><div class="val" style="font-size:1.05rem">span{e₂, e₅}, fixed</div><div class="note">so g = Ω = 0 in these coordinates</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="scope gold">Five is sufficient, not necessary (Remark 2.2): a four-coordinate family with one shear mode carries the same Jordan block. And because V never moves in these coordinates, the projector geometry of Section 7 is flat here; a geometric signal needs an embedding that actually varies.</div>
+</section>
+
+<!-- ================= 6. THE SNAKE ================= -->
+<section class="lens" id="lens-sky">
+  <div class="kicker">Section 1 · Figure 1 · what the observations say</div>
+  <h2>The Snake: a kink blamed on a candidate impact</h2>
+  <p class="lede">The Galactic Centre Snake is a radio filament about 30′ (roughly 70 pc) long and under 1 pc wide. At its major kink sits G359.13142−0.20005, a compact radio source with an X-ray counterpart. Its discoverers propose, and a 2025 NASA Chandra release restates, that this likely pulsar struck the filament at roughly 500–1000 km/s and distorted its magnetic field. No radio pulses have been detected from it. The confirmed millisecond pulsar PSR J1744−2946 lies in the Sunfish, 49″ due west, and its localization rules out an association with the Snake.</p>
+  <div class="grid2">
+    <aside class="controls sticky" aria-label="Sky controls">
+      <div class="kicker">Layers</div>
+      <div class="eyes" id="sLayers" style="margin-top:8px"></div>
+      <div class="hr"></div>
+      <div class="kicker">Crossing time, for orientation only</div>
+      <div class="control"><label for="sV">Assumed speed (km/s) <output for="sV"></output></label><input type="range" id="sV" min="450" max="1000" step="any" value="700"></div>
+      <div class="control"><label for="sD">Distance crossed (pc) <output for="sD"></output></label><input type="range" id="sD" min="0.1" max="2" step="any" value="1"></div>
+      <div class="cards" style="grid-template-columns:1fr"><div class="card"><div class="lab">time to cross</div><div class="val" id="sc-t"></div><div class="note">illustrative only · not a measured impulse duration or a value of t*</div></div></div>
+    </aside>
+    <div class="stage">
+      <div class="canvasbox"><span class="ctitle">around the major kink · Galactic offsets, l increasing to the left</span><canvas id="sSky" aria-label="Sky positions of the pulsar candidate and PSR J1744-2946 near the Snake"></canvas></div>
+      <div class="cards">
+        <div class="card"><div class="lab">candidate at the kink</div><div class="val" style="font-size:1.05rem">G359.13142−0.20005</div><div class="note">radio + X-ray · no pulses detected</div></div>
+        <div class="card"><div class="lab">PSR J1744−2946</div><div class="val" style="font-size:1.05rem">49″ due west</div><div class="note">ΔRA·cos δ = −49.1″ · ΔDec = +1.4″</div></div>
+        <div class="card"><div class="lab">projected separation</div><div class="val">1.9 pc</div><div class="note">at 8 kpc, 1″ ≈ 0.0388 pc</div></div>
+        <div class="card"><div class="lab">proposed impact speed</div><div class="val">500–1000 km/s</div><div class="note">scenario estimate · direction not given</div></div>
+      </div>
+      <p class="caption">Source offsets are to scale, computed from the coordinates in the two source names. The filament traces are schematic, drawn by hand rather than traced from an image. North and east arrows come from the equatorial-to-Galactic rotation at the candidate.</p>
+    </div>
+  </div>
+  <div class="scope red">On the current account the Snake is a forced disruption: its kink is attributed to an outside object whose nature and speed are unconfirmed. It is not an observed spontaneous rupture, and archival images cannot show whether a precursor existed. Other readings remain open: filaments lit by relativistic electrons from a nearby source, a stellar trail, or a filament that bends on its own through a kink instability.</div>
+</section>
+
+<!-- ================= 7. CLAIM LEDGER ================= -->
+<section class="lens" id="lens-ledger">
+  <div class="kicker">Evidence grades · T proved here · C cited · V checked by script · H modelling or interpretation</div>
+  <h2>What is proved, what is cited, and what is a hypothesis</h2>
+  <p class="lede">Each row is one claim of the paper with its grade. Open a row to see it move in its lens.</p>
+  <div class="table" style="margin-top:12px"><table id="ledgerTable"><thead><tr><th>Claim</th><th>Where</th><th>Grade</th><th>See it</th></tr></thead><tbody></tbody></table></div>
+</section>
+
+</main>
+<footer class="wrap">Filament Operator Mixer · from “A Five-Dimensional Non-Normal Stability Operator with a Verified Interface Block”, research revision 4, by Jeromie Beasley. The observational layer follows Yusef-Zadeh et al. 2024, Lower et al. 2024, and NASA's Chandra release of 1 May 2025.</footer>
+
+<script>
+/* ===== Filament Operator Mixer: shared core ===== */
+'use strict';
+const CSS = getComputedStyle(document.documentElement);
+const C = {};
+['bg','panel','line','ink','ink2','muted','dim','gold','teal','violet','red','blue','green','orange','pos','neg','rec','null'].forEach(k => C[k] = CSS.getPropertyValue('--' + k).trim());
+const MONO = 'ui-monospace,SFMono-Regular,Menlo,Consolas,monospace';
+const SERIF = 'Georgia,"Iowan Old Style",Palatino,serif';
+const SANS = 'system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif';
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const lerp = (a, b, t) => a + (b - a) * t;
+const TAU = Math.PI * 2;
+
+/* ---- global clock and lens registry (the recorder can freeze time) ---- */
+const GM = {
+  lenses: {}, order: [], active: null, frozen: null, t0: performance.now(),
+  calm: window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches,
+  now() { return this.frozen != null ? this.frozen : (performance.now() - this.t0) / 1000; },
+  freeze(t) { this.frozen = t; }, thaw() { this.frozen = null; },
+  add(id, lens) { this.lenses[id] = lens; this.order.push(id); },
+  show(id) {
+    if (!this.lenses[id]) id = this.order[0];
+    this.active = id;
+    $$('.lens').forEach(s => s.classList.toggle('active', s.id === 'lens-' + id));
+    $$('nav.tabs button').forEach(b => b.classList.toggle('active', b.dataset.lens === id));
+    const L = this.lenses[id];
+    if (L && !L._init) { L._init = true; L.init && L.init(); }
+    requestAnimationFrame(() => { Stage.resizeAll(); L && L.draw && L.draw(this.now()); });
+    try { history.replaceState(null, '', '#' + id); } catch (e) {}
+  },
+  frame() {
+    const L = this.lenses[this.active];
+    if (L && L.draw && L.animated) L.draw(this.now());
+  }
+};
+function loop() { GM.frame(); requestAnimationFrame(loop); }
+
+/* ---- HiDPI canvas stage ---- */
+class Stage {
+  constructor(canvas, aspect) {
+    this.c = canvas; this.ctx = canvas.getContext('2d'); this.aspect = aspect || 0.6;
+    this.W = 600; this.H = 360; Stage.all.push(this); this.resize();
+  }
+  resize() {
+    const w = Math.max(200, Math.round(this.c.clientWidth || this.c.parentElement.clientWidth || 600));
+    const ar = typeof this.aspect === 'function' ? this.aspect(w) : this.aspect;
+    const h = Math.round(w * ar);
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    if (this.c.width !== Math.round(w * dpr) || this.c.height !== Math.round(h * dpr)) {
+      this.c.width = Math.round(w * dpr); this.c.height = Math.round(h * dpr);
+      this.c.style.height = h + 'px';
+    }
+    this.W = w; this.H = h; this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  clear(bg) { const x = this.ctx; x.save(); x.setTransform(1, 0, 0, 1, 0, 0); x.clearRect(0, 0, this.c.width, this.c.height); x.restore(); if (bg) { x.fillStyle = bg; x.fillRect(0, 0, this.W, this.H); } }
+  static resizeAll() { Stage.all.forEach(s => { if (s.c.offsetParent !== null) s.resize(); }); }
+}
+Stage.all = [];
+let _rz; window.addEventListener('resize', () => { clearTimeout(_rz); _rz = setTimeout(() => { Stage.resizeAll(); const L = GM.lenses[GM.active]; L && L.draw && L.draw(GM.now()); }, 80); });
+
+/* ---- drawing helpers ---- */
+function glow(ctx, color, blur) { ctx.shadowColor = color; ctx.shadowBlur = blur; }
+function noglow(ctx) { ctx.shadowBlur = 0; ctx.shadowColor = 'transparent'; }
+function line(ctx, pts, color, w = 2, g = 0, dash) {
+  if (pts.length < 2) return;
+  ctx.save(); ctx.strokeStyle = color; ctx.lineWidth = w; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+  if (dash) ctx.setLineDash(dash); if (g) glow(ctx, color, g);
+  ctx.beginPath(); let pen = false;
+  for (const p of pts) { if (!p || !isFinite(p[0]) || !isFinite(p[1])) { pen = false; continue; } if (!pen) { ctx.moveTo(p[0], p[1]); pen = true; } else ctx.lineTo(p[0], p[1]); }
+  ctx.stroke(); ctx.restore();
+}
+function dot(ctx, x, y, r, color, g = 0, stroke) {
+  ctx.save(); if (g) glow(ctx, color, g); ctx.fillStyle = color; ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); ctx.fill();
+  if (stroke) { ctx.shadowBlur = 0; ctx.strokeStyle = stroke; ctx.lineWidth = 1.5; ctx.stroke(); } ctx.restore();
+}
+function text(ctx, s, x, y, o = {}) {
+  ctx.save(); ctx.fillStyle = o.color || C.ink2; ctx.font = o.font || `12px ${SANS}`;
+  ctx.textAlign = o.align || 'left'; ctx.textBaseline = o.base || 'alphabetic';
+  if (o.glow) glow(ctx, o.color || C.ink, o.glow);
+  if (o.bg) { const m = ctx.measureText(s); const pad = 4; const w = m.width + pad * 2; let bx = x - pad; if (ctx.textAlign === 'center') bx = x - w / 2; if (ctx.textAlign === 'right') bx = x - w + pad; ctx.fillStyle = o.bg; ctx.fillRect(bx, y - 12, w, 16); ctx.fillStyle = o.color || C.ink2; }
+  ctx.fillText(s, x, y); ctx.restore();
+}
+function arrow(ctx, x0, y0, x1, y1, color, w = 2, g = 0, head = 9) {
+  const a = Math.atan2(y1 - y0, x1 - x0);
+  ctx.save(); ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = w; ctx.lineCap = 'round'; if (g) glow(ctx, color, g);
+  ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1 - Math.cos(a) * head * .6, y1 - Math.sin(a) * head * .6); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x1 - head * Math.cos(a - .42), y1 - head * Math.sin(a - .42)); ctx.lineTo(x1 - head * Math.cos(a + .42), y1 - head * Math.sin(a + .42)); ctx.closePath(); ctx.fill(); ctx.restore();
+}
+function rgba(hex, a) { const h = hex.replace('#', ''); const n = parseInt(h.length === 3 ? h.split('').map(c => c + c).join('') : h, 16); return `rgba(${n >> 16 & 255},${n >> 8 & 255},${n & 255},${a})`; }
+
+/* ---- plot frame with linear or log axes ---- */
+class Frame {
+  constructor(ctx, box, xr, yr, o = {}) {
+    Object.assign(this, { ctx, box, xr, yr, xlog: !!o.xlog, ylog: !!o.ylog });
+    const [x, y, w, h] = box; this.x0 = x; this.y0 = y; this.w = w; this.h = h;
+  }
+  tx(v) { const [a, b] = this.xr; const t = this.xlog ? (Math.log10(v) - Math.log10(a)) / (Math.log10(b) - Math.log10(a)) : (v - a) / (b - a); return this.x0 + t * this.w; }
+  ty(v) { const [a, b] = this.yr; const t = this.ylog ? (Math.log10(v) - Math.log10(a)) / (Math.log10(b) - Math.log10(a)) : (v - a) / (b - a); return this.y0 + this.h - t * this.h; }
+  ix(px) { const [a, b] = this.xr; const t = (px - this.x0) / this.w; return this.xlog ? Math.pow(10, Math.log10(a) + t * (Math.log10(b) - Math.log10(a))) : a + t * (b - a); }
+  iy(py) { const [a, b] = this.yr; const t = (this.y0 + this.h - py) / this.h; return this.ylog ? Math.pow(10, Math.log10(a) + t * (Math.log10(b) - Math.log10(a))) : a + t * (b - a); }
+  pts(xs, f) { return xs.map(x => { const y = f(x); return (y == null || !isFinite(y)) ? null : [this.tx(x), this.ty(y)]; }); }
+  clip() { const c = this.ctx; c.save(); c.beginPath(); c.rect(this.x0, this.y0, this.w, this.h); c.clip(); }
+  unclip() { this.ctx.restore(); }
+  axes(o = {}) {
+    const c = this.ctx; c.save();
+    c.fillStyle = o.bg || 'rgba(10,19,34,.55)'; c.fillRect(this.x0, this.y0, this.w, this.h);
+    c.strokeStyle = 'rgba(120,150,190,.12)'; c.lineWidth = 1;
+    const xt = o.xticks || ticks(this.xr, this.xlog, o.nx || 6), yt = o.yticks || ticks(this.yr, this.ylog, o.ny || 5);
+    c.beginPath(); xt.forEach(v => { const X = Math.round(this.tx(v)) + .5; c.moveTo(X, this.y0); c.lineTo(X, this.y0 + this.h); });
+    yt.forEach(v => { const Y = Math.round(this.ty(v)) + .5; c.moveTo(this.x0, Y); c.lineTo(this.x0 + this.w, Y); }); c.stroke();
+    c.strokeStyle = 'rgba(120,150,190,.35)'; c.strokeRect(this.x0 + .5, this.y0 + .5, this.w - 1, this.h - 1);
+    c.fillStyle = C.muted; c.font = `10.5px ${MONO}`;
+    const fx = o.fx || (v => fmtTick(v, this.xlog)), fy = o.fy || (v => fmtTick(v, this.ylog));
+    if (!o.noxl) { c.textAlign = 'center'; c.textBaseline = 'top'; xt.forEach(v => c.fillText(fx(v), this.tx(v), this.y0 + this.h + 5)); }
+    if (!o.noyl) { c.textAlign = 'right'; c.textBaseline = 'middle'; yt.forEach(v => c.fillText(fy(v), this.x0 - 6, this.ty(v))); }
+    if (o.xlabel) { c.textAlign = 'center'; c.textBaseline = 'top'; c.fillStyle = C.ink2; c.font = `11.5px ${SANS}`; c.fillText(o.xlabel, this.x0 + this.w / 2, this.y0 + this.h + 21); }
+    if (o.ylabel) { c.save(); c.translate(this.x0 - (o.ylabelOff || 44), this.y0 + this.h / 2); c.rotate(-Math.PI / 2); c.textAlign = 'center'; c.textBaseline = 'bottom'; c.fillStyle = C.ink2; c.font = `11.5px ${SANS}`; c.fillText(o.ylabel, 0, 0); c.restore(); }
+    c.restore();
+  }
+  hline(v, color, dash = [4, 4], w = 1) { line(this.ctx, [[this.x0, this.ty(v)], [this.x0 + this.w, this.ty(v)]], color, w, 0, dash); }
+  vline(v, color, dash = [4, 4], w = 1) { line(this.ctx, [[this.tx(v), this.y0], [this.tx(v), this.y0 + this.h]], color, w, 0, dash); }
+}
+function ticks(r, log, n) {
+  let [a, b] = r; if (a > b) [a, b] = [b, a];
+  if (log) { const out = []; for (let e = Math.ceil(Math.log10(a) - 1e-9); e <= Math.floor(Math.log10(b) + 1e-9); e++) out.push(Math.pow(10, e)); if (out.length > 9) return out.filter((_, i) => i % 2 === 0); return out; }
+  const span = b - a, raw = span / n, mag = Math.pow(10, Math.floor(Math.log10(raw))); const f = raw / mag;
+  const st = (f < 1.5 ? 1 : f < 3.5 ? 2 : f < 7.5 ? 5 : 10) * mag; const out = [];
+  for (let v = Math.ceil(a / st) * st; v <= b + st * 1e-6; v += st) out.push(Math.abs(v) < st * 1e-9 ? 0 : v);
+  return out;
+}
+function fmtTick(v, log) {
+  if (log) { const e = Math.round(Math.log10(v)); return e === 0 ? '1' : e === 1 ? '10' : '10' + sup(e); }
+  if (v === 0) return '0'; const a = Math.abs(v);
+  if (a >= 1e4 || a < 1e-3) return v.toExponential(0).replace('e', 'e'); return +v.toPrecision(4) + '';
+}
+const SUPS = { '-': '⁻', '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹' };
+function sup(n) { return String(n).split('').map(ch => SUPS[ch] || ch).join(''); }
+/* scientific number formatting with unicode exponent */
+function sci(v, d = 3) {
+  if (v == null || !isFinite(v)) return '—';
+  if (v === 0) return '0';
+  const a = Math.abs(v);
+  if (a >= 1e-3 && a < 1e5) { const s = v.toPrecision(d + 1); return (+s).toString().length > s.length ? s : s.replace(/(\.\d*?[1-9])0+$/, '$1').replace(/\.0+$/, ''); }
+  const e = Math.floor(Math.log10(a)); const m = v / Math.pow(10, e);
+  return m.toFixed(d - 1) + '×10' + sup(e);
+}
+function fix(v, d = 4) { return (v == null || !isFinite(v)) ? '—' : (v >= 0 ? '+' : '−') + Math.abs(v).toFixed(d); }
+function sgn(v, d = 3) { if (v == null || !isFinite(v)) return '—'; const s = sci(Math.abs(v), d); return (v > 0 ? '+' : v < 0 ? '−' : '') + s; }
+
+/* ---- complex numbers as [re, im] ---- */
+const cx = {
+  add: (a, b) => [a[0] + b[0], a[1] + b[1]], sub: (a, b) => [a[0] - b[0], a[1] - b[1]],
+  mul: (a, b) => [a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0]],
+  div: (a, b) => { const d = b[0] * b[0] + b[1] * b[1]; return [(a[0] * b[0] + a[1] * b[1]) / d, (a[1] * b[0] - a[0] * b[1]) / d]; },
+  sc: (a, s) => [a[0] * s, a[1] * s], conj: a => [a[0], -a[1]], abs: a => Math.hypot(a[0], a[1]), arg: a => Math.atan2(a[1], a[0]),
+  exp: a => { const e = Math.exp(a[0]); return [e * Math.cos(a[1]), e * Math.sin(a[1])]; },
+  log: a => [Math.log(Math.hypot(a[0], a[1])), Math.atan2(a[1], a[0])],
+  sqrt: a => { const r = Math.hypot(a[0], a[1]); const re = Math.sqrt((r + a[0]) / 2); const im = Math.sign(a[1] || 1) * Math.sqrt(Math.max(0, (r - a[0]) / 2)); return [re, im]; },
+  i: [0, 1], one: [1, 0], zero: [0, 0], of: (re, im = 0) => [re, im]
+};
+/* 2x2 complex matrices as [[a,b],[c,d]] */
+const m2 = {
+  mul: (A, B) => [[cx.add(cx.mul(A[0][0], B[0][0]), cx.mul(A[0][1], B[1][0])), cx.add(cx.mul(A[0][0], B[0][1]), cx.mul(A[0][1], B[1][1]))],
+                  [cx.add(cx.mul(A[1][0], B[0][0]), cx.mul(A[1][1], B[1][0])), cx.add(cx.mul(A[1][0], B[0][1]), cx.mul(A[1][1], B[1][1]))]],
+  sub: (A, B) => A.map((r, i) => r.map((v, j) => cx.sub(v, B[i][j]))), add: (A, B) => A.map((r, i) => r.map((v, j) => cx.add(v, B[i][j]))),
+  sc: (A, s) => A.map(r => r.map(v => cx.sc(v, s))), tr: A => cx.add(A[0][0], A[1][1]),
+  fro: A => Math.sqrt(A.flat().reduce((s, v) => s + v[0] * v[0] + v[1] * v[1], 0)),
+  det: A => cx.sub(cx.mul(A[0][0], A[1][1]), cx.mul(A[0][1], A[1][0]))
+};
+
+/* ---- small real linear algebra ---- */
+function sym2eig(a, b, c) { /* eigenvalues of [[a,b],[b,c]] ascending, with unit eigenvectors */
+  const t = (a + c) / 2, d = Math.hypot((a - c) / 2, b); const l1 = t - d, l2 = t + d;
+  let v1 = Math.abs(b) > 1e-300 ? [b, l1 - a] : (a <= c ? [1, 0] : [0, 1]); const n1 = Math.hypot(v1[0], v1[1]); v1 = [v1[0] / n1, v1[1] / n1];
+  return { l: [l1, l2], v: [v1, [-v1[1], v1[0]]] };
+}
+function jacobiEig(A) { /* symmetric n x n, returns ascending eigenvalues and eigenvectors (columns) */
+  const n = A.length; const a = A.map(r => r.slice()); const V = a.map((r, i) => r.map((_, j) => i === j ? 1 : 0));
+  for (let sweep = 0; sweep < 60; sweep++) {
+    let off = 0; for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) off += a[i][j] * a[i][j];
+    if (off < 1e-26) break;
+    for (let p = 0; p < n; p++) for (let q = p + 1; q < n; q++) {
+      if (Math.abs(a[p][q]) < 1e-300) continue;
+      const th = (a[q][q] - a[p][p]) / (2 * a[p][q]); const t = Math.sign(th || 1) / (Math.abs(th) + Math.sqrt(th * th + 1));
+      const cs = 1 / Math.sqrt(t * t + 1), sn = t * cs;
+      for (let k = 0; k < n; k++) { const akp = a[k][p], akq = a[k][q]; a[k][p] = cs * akp - sn * akq; a[k][q] = sn * akp + cs * akq; }
+      for (let k = 0; k < n; k++) { const apk = a[p][k], aqk = a[q][k]; a[p][k] = cs * apk - sn * aqk; a[q][k] = sn * apk + cs * aqk; }
+      for (let k = 0; k < n; k++) { const vkp = V[k][p], vkq = V[k][q]; V[k][p] = cs * vkp - sn * vkq; V[k][q] = sn * vkp + cs * vkq; }
+    }
+  }
+  const idx = [...Array(n).keys()].sort((i, j) => a[i][i] - a[j][j]);
+  return { l: idx.map(i => a[i][i]), V: idx.map(i => V.map(r => r[i])) };
+}
+/* deterministic random numbers so every viewer sees the same draws */
+function mulberry(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function gauss(r) { let u = 0, v = 0; while (u === 0) u = r(); v = r(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(TAU * v); }
+
+/* ---- slider binding ---- */
+function bindRange(id, onChange, fmt) {
+  const el = document.getElementById(id); const out = document.querySelector(`output[for="${id}"]`);
+  const upd = () => { const v = parseFloat(el.value); if (out) out.textContent = fmt ? fmt(v) : v; onChange(v); };
+  el.addEventListener('input', upd); if (out) out.textContent = fmt ? fmt(parseFloat(el.value)) : el.value;
+  return { el, get v() { return parseFloat(el.value); }, set(v) { el.value = v; if (out) out.textContent = fmt ? fmt(parseFloat(el.value)) : el.value; } };
+}
+function setText(id, s) { const e = document.getElementById(id); if (e) e.textContent = s; }
+function setHTML(id, s) { const e = document.getElementById(id); if (e) e.innerHTML = s; }
+function setNote(id, s, cls) { const e = document.getElementById(id); if (e) { e.textContent = s; e.className = 'note ' + (cls || ''); } }
+function copyText(s, msgEl) {
+  const done = ok => { if (msgEl) { msgEl.textContent = ok ? 'Copied to the clipboard.' : 'Copy was blocked here. The text is selected below; press Ctrl+C or Cmd+C.'; } };
+  try { navigator.clipboard.writeText(s).then(() => done(true), () => done(false)); } catch (e) { done(false); }
+}
+/* drag on a canvas: calls fn(x, y) in CSS pixels while the pointer is down */
+function dragOn(canvas, fn) {
+  let down = false;
+  const at = e => { const r = canvas.getBoundingClientRect(); fn(e.clientX - r.left, e.clientY - r.top, e); };
+  canvas.addEventListener('pointerdown', e => { down = true; canvas.setPointerCapture(e.pointerId); at(e); });
+  canvas.addEventListener('pointermove', e => { if (down) at(e); });
+  canvas.addEventListener('pointerup', () => down = false); canvas.addEventListener('pointercancel', () => down = false);
+}
+/* contour-integral particles: points running around a circle */
+function contourParticles(ctx, cxp, cyp, rp, t, color, n = 18, speed = .35) {
+  for (let k = 0; k < n; k++) {
+    const th = (k / n + t * speed) * TAU; const x = cxp + rp * Math.cos(th), y = cyp - rp * Math.sin(th);
+    dot(ctx, x, y, 1.9, color, 8);
+  }
+}
+/* marching squares on a scalar grid, returns segments in grid coords */
+function marching(F, nx, ny) {
+  const segs = [];
+  for (let j = 0; j < ny - 1; j++) for (let i = 0; i < nx - 1; i++) {
+    const a = F[j * nx + i], b = F[j * nx + i + 1], c = F[(j + 1) * nx + i + 1], d = F[(j + 1) * nx + i];
+    const pts = [];
+    const e = (v0, v1, x0, y0, x1, y1) => { if ((v0 > 0) !== (v1 > 0)) { const t = v0 / (v0 - v1); pts.push([x0 + (x1 - x0) * t, y0 + (y1 - y0) * t]); } };
+    e(a, b, i, j, i + 1, j); e(b, c, i + 1, j, i + 1, j + 1); e(d, c, i, j + 1, i + 1, j + 1); e(a, d, i, j, i, j + 1);
+    if (pts.length === 2) segs.push(pts); else if (pts.length === 4) { segs.push([pts[0], pts[1]]); segs.push([pts[2], pts[3]]); }
+  }
+  return segs;
+}
+/* the unit set of a real symmetric 2x2 form: ellipse, parallel lines or hyperbola, drawn around (ox,oy) with scale s px */
+function drawConic(ctx, ox, oy, s, a, b, c, o = {}) {
+  const E = sym2eig(a, b, c); const [l1, l2] = E.l; const [v1, v2] = E.v; const R = o.R || 3.2;
+  const P = (p, q) => [ox + s * (p * v1[0] + q * v2[0]), oy - s * (p * v1[1] + q * v2[1])];
+  const tol = o.tol || 1e-12 * Math.max(Math.abs(l1), Math.abs(l2), 1e-300);
+  const out = { kind: '', l: [l1, l2] };
+  if (l1 > tol && l2 > tol) { /* ellipse g=1 */
+    const pts = []; for (let k = 0; k <= 160; k++) { const th = k / 160 * TAU; pts.push(P(Math.cos(th) / Math.sqrt(l1), Math.sin(th) / Math.sqrt(l2))); }
+    ctx.save(); ctx.fillStyle = rgba(o.pos || C.pos, .09); ctx.beginPath(); pts.forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1])); ctx.fill(); ctx.restore();
+    line(ctx, pts, o.pos || C.pos, 2.2, 14); out.kind = 'definite';
+  } else if (l1 < -tol && l2 < -tol) {
+    const pts = []; for (let k = 0; k <= 160; k++) { const th = k / 160 * TAU; pts.push(P(Math.cos(th) / Math.sqrt(-l1), Math.sin(th) / Math.sqrt(-l2))); }
+    line(ctx, pts, o.neg || C.neg, 2.2, 14, [6, 4]); out.kind = 'negative definite';
+  } else if (Math.abs(l1) <= tol || Math.abs(l2) <= tol) { /* degenerate: parallel lines along the null eigenvector */
+    const lp = Math.abs(l1) <= tol ? l2 : l1; const nullv = Math.abs(l1) <= tol ? 0 : 1; const q = 1 / Math.sqrt(Math.abs(lp));
+    const along = t => nullv === 0 ? [t, 0] : [0, t]; const off = nullv === 0 ? [0, q] : [q, 0];
+    for (const sg of [1, -1]) { const pts = [-R, R].map(t => { const A = along(t); return P(A[0] + sg * off[0], A[1] + sg * off[1]); }); line(ctx, pts, lp > 0 ? (o.pos || C.pos) : (o.neg || C.neg), 2, 12); }
+    const nl = [-R, R].map(t => { const A = along(t); return P(A[0], A[1]); }); line(ctx, nl, C.null, 2.4, 18);
+    out.kind = 'degenerate';
+  } else { /* hyperbola: l1 < 0 < l2 ; g = +1 branches and g = -1 branches and the null lines */
+    const ap = 1 / Math.sqrt(l2), an = 1 / Math.sqrt(-l1);
+    const br = (sgn, pos) => { const pts = []; for (let k = -80; k <= 80; k++) { const u = k / 80 * 2.4; if (pos) pts.push(P(an * Math.sinh(u), sgn * ap * Math.cosh(u))); else pts.push(P(sgn * an * Math.cosh(u), ap * Math.sinh(u))); } return pts; };
+    line(ctx, br(1, true), o.pos || C.pos, 2.1, 12); line(ctx, br(-1, true), o.pos || C.pos, 2.1, 12);
+    line(ctx, br(1, false), o.neg || C.neg, 1.8, 10, [6, 4]); line(ctx, br(-1, false), o.neg || C.neg, 1.8, 10, [6, 4]);
+    const k = Math.sqrt(-l1 / l2); /* null directions: -|l1| p^2 + l2 q^2 = 0  => q = ± p sqrt(|l1|/l2) */
+    for (const sg of [1, -1]) { const pts = [-R, R].map(t => P(t, sg * t * k)); line(ctx, pts, C.null, 2.2, 18); }
+    out.kind = 'indefinite';
+  }
+  return out;
+}
+/* legend box inside a plot frame: items are [label, color, dash] */
+function legend(ctx, F, items, pos = 'tr') {
+  ctx.save(); ctx.font = `11px ${SANS}`;
+  const w = Math.max(...items.map(i => ctx.measureText(i[0]).width)) + 28, h = items.length * 15 + 8;
+  const x = pos[1] === 'r' ? F.x0 + F.w - w - 8 : F.x0 + 8, y = pos[0] === 't' ? F.y0 + 6 : F.y0 + F.h - h - 6;
+  ctx.fillStyle = 'rgba(5,9,20,.78)'; ctx.strokeStyle = 'rgba(53,81,111,.8)'; ctx.fillRect(x, y, w, h); ctx.strokeRect(x + .5, y + .5, w - 1, h - 1); ctx.restore();
+  items.forEach(([lab, col, dash], i) => { const yy = y + 15 + i * 15; line(ctx, [[x + 7, yy - 4], [x + 21, yy - 4]], col, 2.2, 0, dash); text(ctx, lab, x + 26, yy, { color: col, font: `11px ${SANS}` }); });
+}
+
+/* ===== Filament formulas (b = 1 units; x = bt, k = κ = |μ|/b) ===== */
+const FM = {
+  kr: 2.48526751266005, xrT: 0.79681213002002,
+  M(k, x) { const s = k * x; return Math.exp(-x) * (Math.sqrt(4 + s * s) + s) / 2; },            /* (4.1) */
+  Ar(k, x) { return Math.exp(-x) * Math.sqrt(1 + k * k * x * x); },                             /* (4.3) */
+  xstar(k) { return k > 2 ? Math.sqrt(k * k - 4) / k : null; },                                 /* b t* from (4.2) */
+  Mmax(k) { if (k <= 2) return 1; const r = Math.sqrt(k * k - 4); return (k + r) / 2 * Math.exp(-r / k); },
+  xr(k) { return k >= 2 ? (1 + Math.sqrt(1 - 4 / (k * k))) / 2 : null; },                         /* local max of A_r */
+  Armax(k) { const x = FM.xr(k); return x == null ? 1 : Math.max(1, FM.Ar(k, x)); },
+  slope(k, x) { return -1 + k / Math.sqrt(4 + k * k * x * x); },                                /* d log M / d(bt) */
+  epsCrit(k) { return (Math.sqrt(k * k + 4) - k) / 2; },                                         /* (3.3), b = 1 */
+  rEps(k, e) { return Math.sqrt(e * k + e * e); }                                                /* (3.2) */
+};
+/* play-clock helper: advances a lens time dial while playing, loops at the end */
+function advance(L, t, key, max, loopTo) {
+  const st = L.st;
+  if (st.play) { const dt = L._last == null ? 0 : Math.min(0.1, Math.max(0, t - L._last)); st[key] += dt * st.speed; if (st[key] > max) st[key] = loopTo; }
+  L._last = t;
+}
+function syncBtn(id, play) { const b = document.getElementById(id); if (b) b.textContent = play ? 'Pause' : 'Play'; }
+function eyeRows(host, eyes, st, onToggle) {
+  host.innerHTML = '';
+  eyes.forEach(e => {
+    const row = document.createElement('label'); row.className = 'eye' + (st.eyes[e.id] ? '' : ' off'); row.style.color = e.color;
+    row.innerHTML = `<span class="sw"></span><span><b style="color:var(--ink)">${e.name}</b><small>${e.f}</small></span><span><span class="mono" id="ev-${e.id}" style="color:${e.color};font-size:12px"></span> <input type="checkbox" ${st.eyes[e.id] ? 'checked' : ''} aria-label="Show ${e.name}"></span>`;
+    row.querySelector('input').addEventListener('change', ev => { st.eyes[e.id] = ev.target.checked; row.classList.toggle('off', !ev.target.checked); onToggle(); });
+    host.appendChild(row); e.row = row;
+  });
+}
+function equalFrame(ctx, box, cxv, cyv, halfW) { /* frame with equal x and y scaling centred on (cxv, cyv) */
+  const [, , w, h] = box; const halfH = halfW * h / w;
+  return new Frame(ctx, box, [cxv - halfW, cxv + halfW], [cyv - halfH, cyv + halfH]);
+}
+
+/* ===== Lens 1: the amplifier ===== */
+const Amp = {
+  animated: true,
+  st: { k: 3, x: 0, play: true, speed: 0.7, scale: 'common', eyes: { M: true, A: true, S: true, X: false, R: false, L: false } },
+  eyes: [
+    { id: 'M', name: 'best-state gain M(t)', f: '‖e⁻ᴶᵗ‖ · (4.1)', color: '#edc775', fn: (k, x) => FM.M(k, x) },
+    { id: 'A', name: 'kick response A_r(t)', f: '‖e⁻ᴶᵗ e_r‖ · (4.3)', color: '#69d7c4', fn: (k, x) => FM.Ar(k, x) },
+    { id: 'S', name: 'eigenvalue envelope', f: 'e⁻ᵇᵗ: what the spectrum predicts', color: '#7cbaff', fn: (k, x) => Math.exp(-x) },
+    { id: 'X', name: 'shape x₂ after a kick', f: '|μ|t · e⁻ᵇᵗ', color: '#ffb46b', fn: (k, x) => k * x * Math.exp(-x) },
+    { id: 'R', name: 'interface r after a kick', f: 'e⁻ᵇᵗ', color: '#bc90ff', fn: (k, x) => Math.exp(-x) },
+    { id: 'L', name: 'growth rate of M', f: 'd log M/d(bt) = −1 + κ/√(4+κ²(bt)²)', color: '#ff8d98', fn: (k, x) => FM.slope(k, x) }
+  ],
+  init() {
+    this.sState = new Stage($('#aState'), w => w < 520 ? 0.95 : 0.9);
+    this.sGain = new Stage($('#aGain'), w => w < 520 ? 0.8 : 0.9);
+    this.sLam = new Stage($('#aLam'), w => w < 520 ? 0.85 : 0.9);
+    this.sScope = new Stage($('#aScope'), w => w < 640 ? 0.65 : 0.3);
+    this.sSweep = new Stage($('#aSweep'), w => w < 640 ? 0.7 : 0.32);
+    this.rk = bindRange('aK', v => { this.st.k = v; this.draw(GM.now()); }, v => v.toFixed(3));
+    this.rx = bindRange('aX', v => { this.st.x = v; this.st.play = false; syncBtn('aPlay', false); this.draw(GM.now()); }, v => v.toFixed(2));
+    this.rs = bindRange('aSpeed', v => { this.st.speed = v; }, v => v.toFixed(2) + '×');
+    $('#aPlay').onclick = () => { this.st.play = !this.st.play; syncBtn('aPlay', this.st.play); this._last = null; };
+    $('#aZero').onclick = () => { this.st.x = 0; this.rx.set(0); this.draw(GM.now()); };
+    $('#aPeak').onclick = () => { const xs = FM.xstar(this.st.k); if (xs != null) { this.st.x = xs; this.st.play = false; syncBtn('aPlay', false); this.rx.set(xs); this.draw(GM.now()); } };
+    $$('[data-ak]').forEach(b => b.onclick = () => { this.st.k = parseFloat(b.dataset.ak); this.rk.set(this.st.k); this.st.x = 0; this.draw(GM.now()); });
+    eyeRows($('#aEyes'), this.eyes, this.st, () => this.draw(GM.now()));
+    $('#aAll').onclick = () => { this.eyes.forEach(e => this.st.eyes[e.id] = true); eyeRows($('#aEyes'), this.eyes, this.st, () => this.draw(GM.now())); this.draw(GM.now()); };
+    $('#aNone').onclick = () => { this.eyes.forEach(e => this.st.eyes[e.id] = false); eyeRows($('#aEyes'), this.eyes, this.st, () => this.draw(GM.now())); this.draw(GM.now()); };
+    $('#aScale').onchange = e => { this.st.scale = e.target.value; this.draw(GM.now()); };
+  },
+  set(p) {
+    Object.assign(this.st, p);
+    if (p.eyes) this.st.eyes = Object.assign({}, this.st.eyes, p.eyes);
+    this.rk.set(this.st.k); this.rx.set(this.st.x); syncBtn('aPlay', this.st.play);
+    if (p.eyes) eyeRows($('#aEyes'), this.eyes, this.st, () => this.draw(GM.now()));
+    this.draw(GM.now());
+  },
+  draw(t) {
+    advance(this, t, 'x', 5.2, 0);
+    if (this.st.play) this.rx.set(this.st.x);
+    const { k, x } = this.st;
+    this.drawState(t); this.drawGain(); this.drawLam(); this.drawScope(); this.drawSweep();
+    const xs = FM.xstar(k), Mm = FM.Mmax(k), xr = FM.xr(k), Am = FM.Armax(k);
+    setText('ac-k', k.toFixed(3));
+    setNote('an-k', k > FM.kr ? 'above both thresholds' : k > 2 ? 'between 2 and κ_r' : k === 2 ? 'at the threshold' : 'below κ = 2', k > 2 ? 'rec' : '');
+    setText('ac-M', Mm.toFixed(4)); setNote('an-M', k > 2 ? 'grows above its start' : 'never exceeds 1', k > 2 ? 'rec' : 'neg');
+    setText('ac-t', xs == null ? '—' : xs.toFixed(4));
+    const Ap = xr != null ? FM.Ar(k, xr) : 1;
+    setText('ac-A', (xr != null && Ap > 1) ? `${Ap.toFixed(4)} at ${xr.toFixed(3)}` : '1 (at t = 0)');
+    setNote('an-A', k > FM.kr ? 'overshoots: κ > κ_r' : 'never rises above its start', k > FM.kr ? 'rec' : 'neg');
+    const sl = -1 + k / 2; setText('ac-slope', sgn(sl, 3) + ' b'); setNote('an-slope', sl > 0 ? 'positive: M starts to rise' : 'not positive: M starts to fall', sl > 0 ? 'rec' : 'neg');
+    this.eyes.forEach(e => setText('ev-' + e.id, e.fn(k, x).toFixed(3)));
+  },
+  drawState(t) {
+    const S = this.sState, c = S.ctx; S.clear();
+    const { k, x } = this.st; const W = S.W, H = S.H;
+    const R = Math.max(1.35, FM.Mmax(k) * 1.12);
+    const F = equalFrame(c, [10, 30, W - 20, H - 40], 0, 0, R * Math.max(1, (W - 20) / (H - 40)));
+    const P = (a, b) => [F.tx(a), F.ty(b)];
+    /* axes */
+    line(c, [P(-10, 0), P(10, 0)], 'rgba(145,168,194,.25)', 1); line(c, [P(0, -10), P(0, 10)], 'rgba(145,168,194,.25)', 1);
+    text(c, 'x₂ shape', F.tx(R * 0.95) - 2, F.ty(0) - 6, { align: 'right', color: C.muted, font: `11px ${SANS}` });
+    text(c, 'r interface', F.tx(0) + 6, 44, { color: C.muted, font: `11px ${SANS}` });
+    /* unit circle: the starting states */
+    const circ = []; for (let j = 0; j <= 180; j++) { const th = j / 180 * TAU; circ.push(P(Math.cos(th), Math.sin(th))); }
+    line(c, circ, 'rgba(203,217,234,.55)', 1.3, 0, [5, 5]);
+    text(c, '‖u‖ = 1', F.tx(Math.cos(3.8)) - 6, F.ty(Math.sin(3.8)) + 12, { align: 'right', color: C.muted, font: `11px ${MONO}` });
+    /* trajectories of 24 starting states */
+    const ex = (th, tau) => { const e = Math.exp(-tau); const a = Math.cos(th), b = Math.sin(th); return [e * (a - k * tau * b), e * b]; };
+    for (let j = 0; j < 24; j++) {
+      const th = j / 24 * TAU; const pts = [];
+      for (let m = 0; m <= 40; m++) { const tau = x * m / 40; const u = ex(th, tau); pts.push(P(u[0], u[1])); }
+      line(c, pts, 'rgba(124,186,255,.28)', 1);
+      const u = ex(th, x); const big = Math.hypot(u[0], u[1]) > 1;
+      dot(c, pts[40][0], pts[40][1], 2.4, big ? C.gold : C.blue, big ? 8 : 0);
+    }
+    /* image of the unit circle: an ellipse */
+    const ell = []; let mx = 0; for (let j = 0; j <= 200; j++) { const th = j / 200 * TAU; const u = ex(th, x); mx = Math.max(mx, Math.hypot(u[0], u[1])); ell.push(P(u[0], u[1])); }
+    c.save(); c.fillStyle = rgba(mx > 1 ? C.gold : C.blue, .08); c.beginPath(); ell.forEach((p, i) => i ? c.lineTo(p[0], p[1]) : c.moveTo(p[0], p[1])); c.fill(); c.restore();
+    line(c, ell, mx > 1 ? C.gold : C.blue, 2.2, 12);
+    /* best initial state at t* and the interface kick e_r */
+    const xs = FM.xstar(k);
+    if (xs != null) {
+      const s = k * xs; const E = sym2eig(1, -s, 1 + s * s); let v = E.v[1]; if (v[1] < 0) v = [-v[0], -v[1]];
+      const th = Math.atan2(v[1], v[0]); const pts = []; for (let m = 0; m <= 60; m++) { const u = ex(th, x * m / 60); pts.push(P(u[0], u[1])); }
+      line(c, pts, C.gold, 2.4, 10); dot(c, pts[0][0], pts[0][1], 4, C.gold, 0, '#000'); const u = ex(th, x); dot(c, F.tx(u[0]), F.ty(u[1]), 5.5, C.gold, 14, '#fff');
+      text(c, 'v* best state', pts[0][0] + (v[0] >= 0 ? 8 : -8), pts[0][1] - 8, { align: v[0] >= 0 ? 'left' : 'right', color: C.gold, font: `bold 11px ${SANS}` });
+    }
+    { const pts = []; for (let m = 0; m <= 60; m++) { const u = ex(Math.PI / 2, x * m / 60); pts.push(P(u[0], u[1])); }
+      line(c, pts, C.teal, 2.4, 10); const u = ex(Math.PI / 2, x); dot(c, F.tx(u[0]), F.ty(u[1]), 5.5, C.teal, 14, '#fff');
+      text(c, 'e_r kick', F.tx(0) + 8, F.ty(1) - 6, { align: 'left', color: C.teal, font: `bold 11px ${SANS}` }); }
+    text(c, `bt = ${x.toFixed(2)}   largest stretch ${mx.toFixed(3)}`, W - 14, H - 10, { align: 'right', color: mx > 1 ? C.gold : C.ink2, font: `12px ${MONO}` });
+  },
+  drawGain() {
+    const S = this.sGain, c = S.ctx; S.clear(); const { k, x } = this.st;
+    const ymax = Math.max(1.6, FM.Mmax(k) * 1.12);
+    const F = new Frame(c, [46, 36, S.W - 60, S.H - 78], [0, 6], [0, ymax]);
+    F.axes({ xlabel: 'time bt', nx: 6 });
+    F.clip();
+    c.fillStyle = 'rgba(237,199,117,.05)'; c.fillRect(F.x0, F.y0, F.w, F.ty(1) - F.y0);
+    F.hline(1, 'rgba(234,242,255,.5)', [5, 4]);
+    const xs = []; for (let i = 0; i <= 300; i++) xs.push(6 * i / 300);
+    line(c, F.pts(xs, v => Math.exp(-v)), C.blue, 1.6, 0, [6, 4]);
+    line(c, F.pts(xs, v => FM.Ar(k, v)), C.teal, 2.2, 8);
+    line(c, F.pts(xs, v => FM.M(k, v)), C.gold, 2.4, 10);
+    F.vline(x, 'rgba(234,242,255,.7)', [2, 3]);
+    dot(c, F.tx(x), F.ty(FM.M(k, x)), 4.5, C.gold, 12, '#fff'); dot(c, F.tx(x), F.ty(FM.Ar(k, x)), 4.5, C.teal, 12, '#fff'); dot(c, F.tx(x), F.ty(Math.exp(-x)), 3.5, C.blue);
+    const xst = FM.xstar(k); if (xst != null) { dot(c, F.tx(xst), F.ty(FM.Mmax(k)), 3.5, '#fff'); text(c, 't*', F.tx(xst) + 6, F.ty(FM.Mmax(k)) - 6, { color: C.gold, font: `11px ${MONO}` }); }
+    F.unclip();
+    legend(c, F, [['best state M(t)', C.gold], ['interface kick A_r(t)', C.teal], ['eigenvalues alone: e⁻ᵇᵗ', C.blue, [5, 4]]]);
+  },
+  drawLam() {
+    const S = this.sLam, c = S.ctx; S.clear(); const { k } = this.st;
+    const RR = Math.max(2.3, k / 2 + 0.6);
+    const F = equalFrame(c, [10, 30, S.W - 20, S.H - 40], -0.9, 0, RR * Math.max(1, (S.W - 20) / (S.H - 40)));
+    /* right half-plane */
+    c.save(); c.fillStyle = 'rgba(255,141,152,.07)'; c.fillRect(F.tx(0), F.y0, F.x0 + F.w - F.tx(0), F.h); c.restore();
+    line(c, [[F.tx(0), F.y0], [F.tx(0), F.y0 + F.h]], 'rgba(255,141,152,.6)', 1.4);
+    line(c, [[F.x0, F.ty(0)], [F.x0 + F.w, F.ty(0)]], 'rgba(145,168,194,.3)', 1);
+    text(c, 'growth half-plane', F.tx(0) + 6, F.y0 + 16, { color: C.red, font: `11px ${SANS}` });
+    text(c, 'Re λ', F.x0 + F.w - 6, F.ty(0) + 14, { align: 'right', color: C.muted, font: `11px ${MONO}` });
+    /* numerical range disk of −J: centre −1, radius κ/2 */
+    const r = k / 2; const pts = []; for (let j = 0; j <= 160; j++) { const th = j / 160 * TAU; pts.push([F.tx(-1 + r * Math.cos(th)), F.ty(r * Math.sin(th))]); }
+    c.save(); c.fillStyle = rgba(C.violet, .12); c.beginPath(); pts.forEach((p, i) => i ? c.lineTo(p[0], p[1]) : c.moveTo(p[0], p[1])); c.fill(); c.restore();
+    line(c, pts, C.violet, 1.8, 10);
+    const edge = -1 + r; dot(c, F.tx(edge), F.ty(0), 4, edge > 0 ? C.red : C.violet, 10, '#fff');
+    const rl = `right edge ${sgn(edge, 3)}b`; const rightSide = F.tx(edge) + 120 < F.x0 + F.w;
+    text(c, rl, F.tx(edge) + (rightSide ? 6 : -6), F.ty(0) - 8, { align: rightSide ? 'left' : 'right', color: edge > 0 ? C.red : C.violet, font: `11px ${MONO}`, bg: 'rgba(5,9,20,.7)' });
+    /* double eigenvalue */
+    dot(c, F.tx(-1), F.ty(0), 6, C.blue, 16, '#fff');
+    text(c, 'double eigenvalue −b', F.tx(-1), F.ty(0) + 22, { align: 'center', color: C.blue, font: `bold 11px ${SANS}` });
+    text(c, 'numerical range of −J', F.tx(-1), Math.max(F.y0 + 30, F.ty(r) - 8), { align: 'center', color: C.violet, font: `11px ${SANS}`, bg: 'rgba(5,9,20,.7)' });
+  },
+  drawScope() {
+    const S = this.sScope, c = S.ctx; S.clear(); const { k, x } = this.st;
+    const on = this.eyes.filter(e => this.st.eyes[e.id]);
+    const xs = []; for (let i = 0; i <= 300; i++) xs.push(6 * i / 300);
+    let lo = 0, hi = 1;
+    if (this.st.scale === 'common') { on.forEach(e => xs.forEach(v => { const y = e.fn(k, v); lo = Math.min(lo, y); hi = Math.max(hi, y); })); }
+    const F = new Frame(c, [52, 18, S.W - 66, S.H - 58], [0, 6], this.st.scale === 'common' ? [lo - .05 * (hi - lo), hi + .05 * (hi - lo)] : [0, 1]);
+    F.axes({ xlabel: 'time bt', noyl: this.st.scale !== 'common' });
+    F.clip();
+    if (this.st.scale === 'common') { F.hline(1, 'rgba(234,242,255,.4)', [5, 4]); F.hline(0, 'rgba(234,242,255,.25)', [2, 3]); }
+    on.forEach(e => {
+      let f = v => e.fn(k, v);
+      if (this.st.scale === 'own') { let a = Infinity, b = -Infinity; xs.forEach(v => { const y = e.fn(k, v); a = Math.min(a, y); b = Math.max(b, y); }); const sp = (b - a) || 1; f = v => .06 + .88 * (e.fn(k, v) - a) / sp; }
+      line(c, F.pts(xs, f), e.color, 2, 8);
+      dot(c, F.tx(x), F.ty(f(x)), 3.8, e.color, 10, '#fff');
+    });
+    F.vline(x, 'rgba(234,242,255,.7)', [2, 3]);
+    F.unclip();
+    if (!on.length) text(c, 'All eyes are off. Tick one on the left.', S.W / 2, S.H / 2, { align: 'center', color: C.muted });
+  },
+  drawSweep() {
+    const S = this.sSweep, c = S.ctx; S.clear(); const { k } = this.st;
+    const F = new Frame(c, [52, 18, S.W - 66, S.H - 58], [0, 6], [0.9, 2.4]);
+    F.axes({ xlabel: 'κ = |μ|/b', ny: 4 });
+    F.clip();
+    c.fillStyle = 'rgba(124,186,255,.05)'; c.fillRect(F.x0, F.y0, F.tx(2) - F.x0, F.h);
+    c.fillStyle = 'rgba(237,199,117,.08)'; c.fillRect(F.tx(2), F.y0, F.tx(FM.kr) - F.tx(2), F.h);
+    c.fillStyle = 'rgba(105,215,196,.06)'; c.fillRect(F.tx(FM.kr), F.y0, F.x0 + F.w - F.tx(FM.kr), F.h);
+    F.hline(1, 'rgba(234,242,255,.5)', [5, 4]);
+    const ks = []; for (let i = 0; i <= 400; i++) ks.push(6 * i / 400);
+    line(c, F.pts(ks, FM.Mmax), C.gold, 2.4, 10); line(c, F.pts(ks, FM.Armax), C.teal, 2.2, 8);
+    F.vline(2, C.gold, [4, 4]); F.vline(FM.kr, C.teal, [4, 4]);
+    F.vline(k, 'rgba(234,242,255,.8)', [2, 3]);
+    dot(c, F.tx(k), F.ty(FM.Mmax(k)), 4.5, C.gold, 12, '#fff'); dot(c, F.tx(k), F.ty(FM.Armax(k)), 4.5, C.teal, 12, '#fff');
+    F.unclip();
+    const narrow = S.W < 560;
+    text(c, 'κ = 2', F.tx(2) - 4, F.y0 + 14, { align: 'right', color: C.gold, font: `bold 11px ${MONO}` });
+    text(c, 'κ_r = 2.48527', F.tx(FM.kr) + 4, F.y0 + 14, { color: C.teal, font: `bold 11px ${MONO}` });
+    if (!narrow) {
+      text(c, 'no growth', (F.x0 + F.tx(2)) / 2, F.y0 + 36, { align: 'center', color: C.blue, font: `11px ${SANS}` });
+      text(c, 'best state only', (F.tx(2) + F.tx(FM.kr)) / 2, F.y0 + 36, { align: 'center', color: C.gold, font: `11px ${SANS}` });
+      text(c, 'best state and kick both grow', (F.tx(FM.kr) + F.x0 + F.w) / 2 - 40, F.y0 + 36, { align: 'center', color: C.teal, font: `11px ${SANS}` });
+    }
+  }
+};
+GM.add('amp', Amp);
+
+/* ===== Lens 2: the interface kick ===== */
+const Kick = {
+  animated: true,
+  st: { k: 3, thr: 1.2, T: 4, x: 0, play: true, speed: 0.7 },
+  init() {
+    this.sFil = new Stage($('#kFil'), w => w < 640 ? 0.62 : 0.36);
+    this.sE = new Stage($('#kE'), w => w < 520 ? 0.8 : 0.62);
+    this.sTan = new Stage($('#kTan'), w => w < 520 ? 0.8 : 0.62);
+    this.rk = bindRange('kK', v => { this.st.k = v; this.draw(GM.now()); }, v => v.toFixed(3));
+    this.rthr = bindRange('kThr', v => { this.st.thr = v; this.draw(GM.now()); }, v => v.toFixed(2));
+    this.rT = bindRange('kT', v => { this.st.T = v; this.draw(GM.now()); }, v => v.toFixed(2));
+    this.rx = bindRange('kX', v => { this.st.x = v; this.st.play = false; syncBtn('kPlay', false); this.draw(GM.now()); }, v => v.toFixed(2));
+    this.rs = bindRange('kSpeed', v => { this.st.speed = v; }, v => v.toFixed(2) + '×');
+    $('#kGo').onclick = () => { this.st.x = 0; this.st.play = true; syncBtn('kPlay', true); this._last = null; };
+    $('#kPlay').onclick = () => { this.st.play = !this.st.play; syncBtn('kPlay', this.st.play); this._last = null; };
+    $$('[data-kk]').forEach(b => b.onclick = () => { this.st.k = parseFloat(b.dataset.kk); this.rk.set(this.st.k); this.st.x = 0; this.st.play = true; syncBtn('kPlay', true); this.draw(GM.now()); });
+    const r = mulberry(7); this.stars = []; for (let i = 0; i < 140; i++) this.stars.push([r(), r(), r()]);
+  },
+  set(p) {
+    Object.assign(this.st, p);
+    this.rk.set(this.st.k); this.rthr.set(this.st.thr); this.rT.set(this.st.T); this.rx.set(this.st.x); syncBtn('kPlay', this.st.play);
+    this.draw(GM.now());
+  },
+  E(x) { return Math.pow(FM.Ar(this.st.k, x), 2); },
+  supE(T) { let m = 0; for (let i = 1; i <= 600; i++) m = Math.max(m, this.E(T * i / 600)); const xr = FM.xr(this.st.k); if (xr != null && xr < T) m = Math.max(m, this.E(xr)); return m; },
+  draw(t) {
+    advance(this, t, 'x', 6, 0);
+    if (this.st.play) this.rx.set(this.st.x);
+    this.drawFil(t); this.drawE(); this.drawTan();
+    const { k, thr, T, x } = this.st;
+    const pk = Math.pow(FM.Armax(k), 2), xr = FM.xr(k);
+    const over = k > FM.kr;
+    setText('kc-E', pk.toFixed(4)); setNote('kn-E', over ? 'rises above the start: κ > κ_r' : 'never above the start', over ? 'rec' : 'neg');
+    setText('kc-t', (xr != null && over) ? xr.toFixed(4) : '0 (the start)');
+    const sE = this.supE(T), trap = sE > thr;
+    setText('kc-trap', trap ? 'yes' : 'no'); setNote('kn-trap', `sup E/E₀ on (0, ${T.toFixed(2)}) = ${sE.toFixed(3)} vs ${thr.toFixed(2)}`, trap ? 'rec' : 'neg');
+    const en = this.E(x); setText('kc-now', en.toFixed(4)); setNote('kn-now', en > thr ? 'above E_max' : 'below E_max', en > thr ? 'neg' : '');
+  },
+  drawFil(t) {
+    const S = this.sFil, c = S.ctx; const W = S.W, H = S.H; S.clear('#040810');
+    const { k, x, thr, T } = this.st;
+    this.stars.forEach(s => dot(c, s[0] * W, s[1] * H, .5 + s[2] * 1.1, `rgba(203,217,234,${.25 + .5 * s[2]})`));
+    const s0 = W * .56, wid = W * .085, amp = H * .13;
+    const x2 = k * x * Math.exp(-x), rr = Math.exp(-x);
+    const hot = this.E(x) > thr && x > 0 && x < T;
+    const base = s => H * .6 + 9 * Math.sin(s / W * TAU * 1.2 + .4) + 5 * Math.sin(s / W * TAU * 3.1);
+    const bend = s => -amp * x2 * Math.exp(-Math.pow((s - s0) / wid, 2));
+    const rest = [], cur = []; for (let i = 0; i <= 300; i++) { const s = W * i / 300; rest.push([s, base(s)]); cur.push([s, base(s) + bend(s)]); }
+    line(c, rest, 'rgba(124,186,255,.25)', 1, 0, [4, 5]);
+    const col = hot ? '#ff8d98' : '#7fb3d9';
+    for (const [w, a] of [[16, .08], [8, .2], [3, 1]]) line(c, cur, rgba(col, a), w, w > 10 ? 18 : 0);
+    /* interface glow at the kink */
+    const gy = base(s0) + bend(s0);
+    c.save(); const g = c.createRadialGradient(s0, gy, 0, s0, gy, 12 + 40 * rr); g.addColorStop(0, rgba('#bc90ff', .85 * rr)); g.addColorStop(1, rgba('#bc90ff', 0)); c.fillStyle = g; c.beginPath(); c.arc(s0, gy, 12 + 40 * rr, 0, TAU); c.fill(); c.restore();
+    /* the kick: a ring that spreads out at t = 0 */
+    if (x < .6) { const q = x / .6; c.save(); c.strokeStyle = rgba('#ffffff', .8 * (1 - q)); c.lineWidth = 2; c.beginPath(); c.arc(s0, base(s0), 10 + q * H * .35, 0, TAU); c.stroke(); c.restore(); }
+    /* bend gauge */
+    const narrow = W < 560; const gx = W - (narrow ? 34 : 70); line(c, [[gx, H * .15], [gx, H * .85]], 'rgba(145,168,194,.35)', 1);
+    const gv = H * .85 - (H * .7) * Math.min(1, this.E(x) / Math.max(2.2, Math.pow(FM.Armax(k), 2) * 1.05));
+    const tv = H * .85 - (H * .7) * Math.min(1, thr / Math.max(2.2, Math.pow(FM.Armax(k), 2) * 1.05));
+    line(c, [[gx - 14, tv], [gx + 14, tv]], C.red, 2, 0, [4, 3]);
+    c.save(); c.fillStyle = hot ? C.red : C.teal; c.fillRect(gx - 7, gv, 14, H * .85 - gv); c.restore();
+    text(c, 'E/E₀', gx, H * .12 + (narrow ? 26 : 0), { align: 'center', color: C.muted, font: `11px ${MONO}` });
+    if (!narrow) text(c, 'E_max', gx + 18, tv + 4, { color: C.red, font: `10.5px ${MONO}` });
+    if (narrow) { text(c, `bt = ${x.toFixed(2)}   E/E₀ = ${this.E(x).toFixed(3)}`, 12, H - 26, { color: hot ? C.red : C.ink2, font: `11px ${MONO}` }); text(c, `x₂ = ${(-x2).toFixed(3)}   r = ${rr.toFixed(3)}`, 12, H - 10, { color: C.ink2, font: `11px ${MONO}` }); }
+    else { text(c, `bt = ${x.toFixed(2)}   x₂ = ${(-x2).toFixed(3)}   r = ${rr.toFixed(3)}   E/E₀ = ${this.E(x).toFixed(3)}`, 14, H - 12, { color: hot ? C.red : C.ink2, font: `12px ${MONO}` });
+      text(c, 'interface coordinate r', s0 + 16, gy + 30 + 30 * rr, { color: C.violet, font: `11px ${SANS}` }); }
+    if (hot) text(c, 'above E_max inside the window', s0, H * .14, { align: 'center', color: C.red, font: `bold 12px ${SANS}` });
+  },
+  drawE() {
+    const S = this.sE, c = S.ctx; S.clear(); const { k, thr, T, x } = this.st;
+    const ymax = Math.max(2, Math.pow(FM.Armax(k), 2) * 1.12, thr * 1.15);
+    const F = new Frame(c, [46, 30, S.W - 60, S.H - 72], [0, 6], [0, ymax]);
+    F.axes({ xlabel: 'time bt', ny: 4 });
+    F.clip();
+    const xs = []; for (let i = 0; i <= 400; i++) xs.push(6 * i / 400);
+    c.fillStyle = 'rgba(188,144,255,.06)'; c.fillRect(F.x0, F.y0, F.tx(T) - F.x0, F.h);
+    /* fill where E > threshold within the window */
+    c.save(); c.fillStyle = 'rgba(255,141,152,.28)';
+    for (let i = 0; i < 400; i++) { const a = xs[i], b = xs[i + 1]; if (b > T) break; const ea = this.E(a), eb = this.E(b); if (ea > thr || eb > thr) { c.beginPath(); c.moveTo(F.tx(a), F.ty(thr)); c.lineTo(F.tx(a), F.ty(Math.max(ea, thr))); c.lineTo(F.tx(b), F.ty(Math.max(eb, thr))); c.lineTo(F.tx(b), F.ty(thr)); c.fill(); } }
+    c.restore();
+    line(c, F.pts(xs, v => Math.pow(FM.M(k, v), 2)), rgba(C.gold, .6), 1.5, 0, [6, 4]);
+    line(c, F.pts(xs, v => this.E(v)), C.teal, 2.4, 10);
+    F.hline(thr, C.red, [5, 4], 1.4); F.hline(1, 'rgba(234,242,255,.4)', [2, 3]);
+    F.vline(T, C.violet, [4, 4]);
+    F.vline(x, 'rgba(234,242,255,.7)', [2, 3]); dot(c, F.tx(x), F.ty(this.E(x)), 4.5, C.teal, 12, '#fff');
+    F.unclip();
+    legend(c, F, [['kick: E/E₀ = A_r²', C.teal], ['best state: M²', C.gold, [6, 4]], ['threshold E_max', C.red, [5, 4]]]);
+    text(c, 'E_max', F.x0 + F.w - 4, F.ty(thr) - 5, { align: 'right', color: C.red, font: `11px ${MONO}` });
+    text(c, 'T', F.tx(T) + 4, F.y0 + 12, { color: C.violet, font: `bold 11px ${MONO}` });
+  },
+  drawTan() {
+    const S = this.sTan, c = S.ctx; S.clear(); const { k } = this.st;
+    const F = new Frame(c, [46, 30, S.W - 60, S.H - 72], [0, 3], [0.4, 1.5]);
+    F.axes({ xlabel: 'time bt', ny: 5 });
+    F.clip();
+    F.hline(1, 'rgba(234,242,255,.55)', [5, 4]);
+    const xs = []; for (let i = 0; i <= 300; i++) xs.push(3 * i / 300);
+    line(c, F.pts(xs, v => FM.Ar(FM.kr, v)), C.gold, 2.2, 10);
+    line(c, F.pts(xs, v => FM.Ar(k, v)), C.teal, 2, 8);
+    dot(c, F.tx(FM.xrT), F.ty(1), 5, C.gold, 14, '#fff');
+    F.unclip();
+    text(c, `κ_r: touches 1 at bt = ${FM.xrT.toFixed(5)}`, F.tx(FM.xrT) + 8, F.ty(1) + 16, { color: C.gold, font: `11px ${MONO}` });
+    legend(c, F, [['κ = κ_r', C.gold], [`κ = ${k.toFixed(3)}`, C.teal]]);
+    const nx = S.W < 460;
+    text(c, 'tangency: 1 − x = e⁻²ˣ', F.x0 + 8, F.y0 + F.h - 30, { color: C.ink2, font: `${nx ? 11 : 12}px ${MONO}`, bg: 'rgba(5,9,20,.7)' });
+    text(c, 'κ_r = 1/√(x(1−x)) = 2.48527', F.x0 + 8, F.y0 + F.h - 12, { color: C.ink2, font: `${nx ? 11 : 12}px ${MONO}`, bg: 'rgba(5,9,20,.7)' });
+  }
+};
+GM.add('kick', Kick);
+
+/* ===== Lens 3: the exact pseudospectrum ===== */
+const Pseudo = {
+  animated: true,
+  st: { k: 2, le: -1.3, type: 'rand', play: true },
+  init() {
+    this.sPlane = new Stage($('#pPlane'), w => w < 520 ? 0.9 : 0.78);
+    this.sR = new Stage($('#pR'), w => w < 520 ? 0.85 : 0.78);
+    this.rk = bindRange('pK', v => { this.st.k = v; this.clear(); this.draw(GM.now()); }, v => v.toFixed(3));
+    this.re = bindRange('pE', v => { this.st.le = v; this.clear(); this.draw(GM.now()); }, v => v.toFixed(2));
+    $('#pType').onchange = e => { this.st.type = e.target.value; this.clear(); this.draw(GM.now()); };
+    $('#pPlay').onclick = () => { this.st.play = !this.st.play; syncBtn('pPlay', this.st.play); };
+    $('#pClear').onclick = () => { this.clear(); this.draw(GM.now()); };
+    $('#pCrit').onclick = () => { this.st.le = Math.log10(FM.epsCrit(this.st.k)); this.re.set(this.st.le); this.clear(); this.draw(GM.now()); };
+    this.rng = mulberry(20260925); this.pts = []; this.heat = document.createElement('canvas'); this.heatKey = '';
+  },
+  set(p) {
+    const reset = ('k' in p && p.k !== this.st.k) || ('le' in p && p.le !== this.st.le) || ('type' in p && p.type !== this.st.type);
+    Object.assign(this.st, p);
+    this.rk.set(this.st.k); this.re.set(this.st.le); $('#pType').value = this.st.type; syncBtn('pPlay', this.st.play);
+    if (reset || p.clear) { this.clear(); if (p.seed != null) this.rng = mulberry(p.seed); }
+    if (p.fill) for (let i = 0; i < p.fill; i++) this.addDot();
+    this.draw(GM.now());
+  },
+  clear() { this.pts = []; },
+  eps() { return Math.pow(10, this.st.le); },
+  addDot() {
+    const { k, type } = this.st, e = this.eps(), r = this.rng;
+    let E;
+    if (type === 'rand') {
+      const g = () => [gauss(r), gauss(r)]; E = [[g(), g()], [g(), g()]];
+      const F2 = E.flat().reduce((s, v) => s + v[0] * v[0] + v[1] * v[1], 0); const dt = cx.abs(m2.det(E));
+      const smax = Math.sqrt((F2 + Math.sqrt(Math.max(0, F2 * F2 - 4 * dt * dt))) / 2);
+      const sc = e * (0.25 + 0.75 * Math.sqrt(r())) / smax; E = m2.sc(E, sc);
+    } else {
+      const ph = r() * TAU, z = [e * Math.cos(ph), e * Math.sin(ph)];
+      E = type === 'rev' ? [[cx.zero, cx.zero], [z, cx.zero]] : [[z, cx.zero], [cx.zero, cx.zero]];
+    }
+    const A = m2.add([[cx.of(-1), cx.of(-k)], [cx.zero, cx.of(-1)]], E);
+    const h = cx.sc(m2.tr(A), .5); const d = cx.sqrt(cx.sub(cx.mul(h, h), m2.det(A)));
+    this.pts.push(cx.add(h, d), cx.sub(h, d));
+    if (this.pts.length > 2400) this.pts.splice(0, this.pts.length - 2400);
+  },
+  draw(t) {
+    if (this.st.play) for (let i = 0; i < 6; i++) this.addDot();
+    const { k } = this.st, e = this.eps(), r = FM.rEps(k, e), ec = FM.epsCrit(k);
+    this.drawPlane(); this.drawR();
+    setText('pc-e', sci(e, 3)); setNote('pn-e', e > ec ? 'above ε_crit' : 'below ε_crit', e > ec ? 'neg' : '');
+    setText('pc-r', sci(r, 4)); setNote('pn-r', `r_ε / ε = ${sci(r / e, 3)} (a normal matrix gives 1)`, r / e > 1.5 ? 'vio' : '');
+    setText('pc-c', ec.toFixed(5));
+    let far = 0; this.pts.forEach(p => far = Math.max(far, Math.hypot(p[0] + 1, p[1])));
+    setText('pc-f', this.pts.length ? (far / r).toFixed(4) : '—'); setNote('pn-f', this.pts.length ? (far <= r * (1 + 1e-9) ? 'every dot inside the disk' : 'a dot outside the disk') : 'no dots yet', far <= r * (1 + 1e-9) ? 'rec' : 'neg');
+    setText('pc-n', String(this.pts.length));
+  },
+  frame() {
+    const S = this.sPlane; const { k } = this.st; const r = FM.rEps(k, this.eps());
+    const R = Math.max(1.25, r * 1.3 + 0.3);
+    return equalFrame(S.ctx, [8, 28, S.W - 16, S.H - 36], -1 + Math.min(0.6, R * 0.35), 0, R * Math.max(1, (S.W - 16) / (S.H - 36)));
+  },
+  drawPlane() {
+    const S = this.sPlane, c = S.ctx; S.clear(); const { k } = this.st; const e = this.eps(), r = FM.rEps(k, e);
+    const F = this.frame();
+    /* heat map of log10 of the resolvent norm, cached */
+    const key = [k.toFixed(4), F.xr.map(v => v.toFixed(4)).join(), S.W, S.H].join('|');
+    if (key !== this.heatKey) {
+      const nx = 200, ny = Math.max(40, Math.round(200 * F.h / F.w)); const hc = this.heat; hc.width = nx; hc.height = ny;
+      const hx = hc.getContext('2d'); const img = hx.createImageData(nx, ny);
+      for (let j = 0; j < ny; j++) for (let i = 0; i < nx; i++) {
+        const zr = F.xr[0] + (i + .5) / nx * (F.xr[1] - F.xr[0]), zi = F.yr[1] - (j + .5) / ny * (F.yr[1] - F.yr[0]);
+        const d2 = (zr + 1) * (zr + 1) + zi * zi; const N = (Math.sqrt(4 * d2 + k * k) + k) / (2 * d2);
+        const v = clamp((Math.log10(N) + 0.6) / 4.2, 0, 1);
+        const col = v < .5 ? [lerp(8, 20, v * 2), lerp(14, 70, v * 2), lerp(28, 110, v * 2)] : [lerp(20, 105, (v - .5) * 2), lerp(70, 205, (v - .5) * 2), lerp(110, 190, (v - .5) * 2)];
+        const o = (j * nx + i) * 4; img.data[o] = col[0]; img.data[o + 1] = col[1]; img.data[o + 2] = col[2]; img.data[o + 3] = 255;
+      }
+      hx.putImageData(img, 0, 0); this.heatKey = key;
+    }
+    c.save(); c.imageSmoothingEnabled = true; c.drawImage(this.heat, F.x0, F.y0, F.w, F.h); c.restore();
+    /* right half-plane and axes */
+    c.save(); c.fillStyle = 'rgba(255,141,152,.10)'; c.fillRect(F.tx(0), F.y0, F.x0 + F.w - F.tx(0), F.h); c.restore();
+    line(c, [[F.tx(0), F.y0], [F.tx(0), F.y0 + F.h]], 'rgba(255,141,152,.75)', 1.4);
+    line(c, [[F.x0, F.ty(0)], [F.x0 + F.w, F.ty(0)]], 'rgba(203,217,234,.25)', 1);
+    text(c, 'Re z > 0', F.tx(0) + 6, F.y0 + 16, { color: C.red, font: `11px ${SANS}` });
+    F.clip();
+    /* faint level circles for ε = 10^-3 … 10^0 */
+    [-3, -2, -1, 0].forEach(p => { const rr = FM.rEps(k, Math.pow(10, p)); const pts = []; for (let j = 0; j <= 120; j++) { const th = j / 120 * TAU; pts.push([F.tx(-1 + rr * Math.cos(th)), F.ty(rr * Math.sin(th))]); } line(c, pts, 'rgba(234,242,255,.22)', 1); if (F.ty(rr) > F.y0 + 8) text(c, `10${sup(p)}`, F.tx(-1), F.ty(rr) - 3, { align: 'center', color: 'rgba(234,242,255,.5)', font: `10px ${MONO}` }); });
+    /* the current disk */
+    const cross = r > 1;
+    const disk = []; for (let j = 0; j <= 200; j++) { const th = j / 200 * TAU; disk.push([F.tx(-1 + r * Math.cos(th)), F.ty(r * Math.sin(th))]); }
+    line(c, disk, cross ? C.red : C.gold, 2.4, 14);
+    /* perturbed eigenvalues */
+    const col = this.st.type === 'rev' ? C.red : this.st.type === 'det' ? C.blue : '#ffffff';
+    c.save(); c.fillStyle = rgba(col, .75); this.pts.forEach(p => { c.fillRect(F.tx(p[0]) - 1, F.ty(p[1]) - 1, 2.2, 2.2); }); c.restore();
+    dot(c, F.tx(-1), F.ty(0), 5.5, C.blue, 14, '#fff');
+    text(c, '−b', F.tx(-1) + 8, F.ty(0) + 16, { color: C.blue, font: `bold 11px ${MONO}` });
+    F.unclip();
+    text(c, `ε = ${sci(e, 3)}   r_ε = ${sci(r, 4)}${cross ? '   the disk reaches Re z > 0' : ''}`, F.x0 + 8, F.y0 + F.h - 10, { color: cross ? C.red : C.gold, font: `12px ${MONO}`, bg: 'rgba(5,9,20,.7)' });
+  },
+  drawR() {
+    const S = this.sR, c = S.ctx; S.clear(); const { k } = this.st; const e = this.eps(), ec = FM.epsCrit(k);
+    const F = new Frame(c, [56, 30, S.W - 70, S.H - 72], [1e-5, 10], [1e-5, 20], { xlog: true, ylog: true });
+    F.axes({ xlabel: 'ε', ylabel: 'disk radius r_ε' });
+    F.clip();
+    const es = []; for (let i = 0; i <= 300; i++) es.push(Math.pow(10, -5 + 6 * i / 300));
+    line(c, F.pts(es, v => v), C.blue, 1.6, 0, [6, 4]);
+    if (k > 0) line(c, F.pts(es, v => Math.sqrt(v * k)), rgba(C.violet, .8), 1.4, 0, [2, 3]);
+    line(c, F.pts(es, v => FM.rEps(k, v)), C.gold, 2.4, 10);
+    F.hline(1, rgba(C.red, .7), [4, 4]); F.vline(ec, rgba(C.red, .7), [4, 4]);
+    F.vline(e, 'rgba(234,242,255,.7)', [2, 3]);
+    dot(c, F.tx(e), F.ty(FM.rEps(k, e)), 5, C.gold, 12, '#fff');
+    F.unclip();
+    legend(c, F, [['r_ε = √(ε|μ| + ε²)', C.gold], ['√(ε|μ|), small ε', C.violet, [2, 3]], ['normal matrix: r = ε', C.blue, [6, 4]]], 'br');
+    text(c, 'ε_crit', F.tx(ec) + 4, F.y0 + 30, { color: C.red, font: `bold 11px ${MONO}` });
+    text(c, 'r = b', F.x0 + 6, F.ty(1) - 5, { color: C.red, font: `11px ${MONO}` });
+  }
+};
+GM.add('pseudo', Pseudo);
+
+/* ===== Lens 4: two paths to the defect (Proposition 5.1) ===== */
+const Paths = {
+  animated: true,
+  st: { lc: -0.4, mu: 1, play: true, speed: 0.6 },
+  init() {
+    this.sDet = new Stage($('#gDet'), w => w < 520 ? 0.85 : 0.72);
+    this.sRev = new Stage($('#gRev'), w => w < 520 ? 0.85 : 0.72);
+    this.sLog = new Stage($('#gLog'), w => w < 640 ? 0.7 : 0.34);
+    this.rc = bindRange('gC', v => { this.st.lc = v; this.st.play = false; syncBtn('gPlay', false); this.draw(GM.now()); }, v => v.toFixed(2));
+    this.rm = bindRange('gMu', v => { this.st.mu = v; this.draw(GM.now()); }, v => v.toFixed(2));
+    this.rs = bindRange('gSpeed', v => { this.st.speed = v; }, v => v.toFixed(2) + '×');
+    $('#gPlay').onclick = () => { this.st.play = !this.st.play; syncBtn('gPlay', this.st.play); this._last = null; };
+    $('#gReset').onclick = () => { this.st.lc = -0.2; this.st.play = true; syncBtn('gPlay', true); this._last = null; };
+  },
+  set(p) { Object.assign(this.st, p); this.rc.set(this.st.lc); this.rm.set(this.st.mu); syncBtn('gPlay', this.st.play); this.draw(GM.now()); },
+  sDetF(c) { const m = this.st.mu; return c / Math.sqrt(m * m + c * c); },
+  sRevF(c) { const m = this.st.mu; return Math.sqrt(c / (m + c)); },
+  draw(t) {
+    const st = this.st;
+    if (st.play) { const dt = this._last == null ? 0 : Math.min(0.1, Math.max(0, t - this._last)); st.lc -= dt * st.speed * 0.9; if (st.lc < -5.6) st.lc = -0.2; this.rc.set(Math.max(-5, st.lc)); }
+    this._last = t;
+    const lc = Math.max(-5, st.lc), c = Math.pow(10, lc);
+    this.drawPlane(this.sDet, 'det', c); this.drawPlane(this.sRev, 'rev', c); this.drawLog(c);
+    const d = this.sDetF(c), r = this.sRevF(c);
+    setText('gc-c', sci(c, 3)); setText('gc-d', sci(d, 3)); setText('gc-r', sci(r, 3)); setText('gc-q', sci(r / d, 3));
+    setText('gc-s', `${sci(c, 2)} vs ${sci(2 * Math.sqrt(st.mu * c), 2)}`);
+  },
+  drawPlane(S, kind, cval) {
+    const c = S.ctx; S.clear(); const m = this.st.mu;
+    const F = equalFrame(c, [8, 28, S.W - 16, S.H - 36], 0, 0, 1.25 * Math.max(1, (S.W - 16) / (S.H - 36)));
+    const P = (a, b) => [F.tx(a), F.ty(b)];
+    line(c, [P(-5, 0), P(5, 0)], 'rgba(145,168,194,.2)', 1); line(c, [P(0, -5), P(0, 5)], 'rgba(145,168,194,.2)', 1);
+    const circ = []; for (let j = 0; j <= 120; j++) { const th = j / 120 * TAU; circ.push(P(Math.cos(th), Math.sin(th))); }
+    line(c, circ, 'rgba(203,217,234,.18)', 1, 0, [3, 4]);
+    let a1, a2, col, lab1, lab2, s;
+    if (kind === 'det') { s = this.sDetF(cval); a1 = 0; a2 = -Math.asin(s); col = C.blue; lab1 = 'eigenvalue b + δ'; lab2 = 'eigenvalue b'; }
+    else { s = this.sRevF(cval); a1 = Math.asin(s); a2 = -Math.asin(s); col = C.red; lab1 = 'b + √(μγ)'; lab2 = 'b − √(μγ)'; }
+    const L = th => [P(-1.15 * Math.cos(th), -1.15 * Math.sin(th)), P(1.15 * Math.cos(th), 1.15 * Math.sin(th))];
+    line(c, L(a1), kind === 'det' ? C.ink2 : col, 2.4, 10);
+    line(c, L(a2), col, 2.4, 12);
+    arrow(c, F.tx(0), F.ty(0), F.tx(Math.cos(a1)), F.ty(Math.sin(a1)), kind === 'det' ? C.ink2 : col, 2, 0, 9);
+    arrow(c, F.tx(0), F.ty(0), F.tx(Math.cos(a2)), F.ty(Math.sin(a2)), col, 2, 0, 9);
+    /* wedge showing the angle */
+    c.save(); c.fillStyle = rgba(col, .22); c.beginPath(); c.moveTo(F.tx(0), F.ty(0));
+    const ra = 0.55; const n = 40; for (let j = 0; j <= n; j++) { const th = a2 + (a1 - a2) * j / n; c.lineTo(F.tx(ra * Math.cos(th)), F.ty(ra * Math.sin(th))); } c.closePath(); c.fill(); c.restore();
+    const deg = Math.asin(s) * 180 / Math.PI;
+    text(c, `θ to e₁: ${deg >= 0.01 ? deg.toFixed(deg > 1 ? 2 : 4) + '°' : sci(deg, 2) + '°'}   sin θ = ${sci(s, 3)}`, 14, S.H - 12, { color: col, font: `12px ${MONO}` });
+    text(c, 'e₁', F.tx(1.18), F.ty(0) + 16, { color: C.muted, font: `12px ${SERIF}` });
+    text(c, lab1, F.tx(Math.cos(a1)) - 4, F.ty(Math.sin(a1)) - 10, { align: 'right', color: kind === 'det' ? C.ink2 : col, font: `11px ${SANS}` });
+    text(c, lab2, F.tx(Math.cos(a2)) - 4, F.ty(Math.sin(a2)) + 18, { align: 'right', color: col, font: `11px ${SANS}` });
+    text(c, kind === 'det' ? `δ = ${sci(cval, 2)}` : `γ = ${sci(cval, 2)}`, S.W - 12, 44, { align: 'right', color: C.gold, font: `bold 12px ${MONO}` });
+  },
+  drawLog(cval) {
+    const S = this.sLog, c = S.ctx; S.clear();
+    const F = new Frame(c, [60, 26, S.W - 76, S.H - 66], [1e-5, 1], [1e-6, 1.5], { xlog: true, ylog: true });
+    F.axes({ xlabel: 'control δ or γ', ylabel: 'sin θ', ylabelOff: 48 });
+    F.clip();
+    const xs = []; for (let i = 0; i <= 300; i++) xs.push(Math.pow(10, -5 + 5 * i / 300));
+    line(c, F.pts(xs, v => this.sDetF(v)), C.blue, 2.4, 10);
+    line(c, F.pts(xs, v => this.sRevF(v)), C.red, 2.4, 10);
+    F.vline(cval, 'rgba(234,242,255,.75)', [2, 3]);
+    dot(c, F.tx(cval), F.ty(this.sDetF(cval)), 5, C.blue, 12, '#fff'); dot(c, F.tx(cval), F.ty(this.sRevF(cval)), 5, C.red, 12, '#fff');
+    F.unclip();
+    legend(c, F, [['diagonal detuning: slope 1', C.blue], ['reverse coupling: slope ½', C.red]], 'br');
+  }
+};
+GM.add('paths', Paths);
+
+/* ===== small dense real linear algebra for the 5x5 operator ===== */
+const LA = {
+  eye(n) { return [...Array(n)].map((_, i) => [...Array(n)].map((_, j) => i === j ? 1 : 0)); },
+  mul(A, B) { const n = A.length, m = B[0].length, p = B.length; const C_ = [...Array(n)].map(() => new Array(m).fill(0)); for (let i = 0; i < n; i++) for (let k = 0; k < p; k++) { const a = A[i][k]; if (a === 0) continue; for (let j = 0; j < m; j++) C_[i][j] += a * B[k][j]; } return C_; },
+  add(A, B) { return A.map((r, i) => r.map((v, j) => v + B[i][j])); },
+  sc(A, s) { return A.map(r => r.map(v => v * s)); },
+  T(A) { return A[0].map((_, j) => A.map(r => r[j])); },
+  mv(A, v) { return A.map(r => r.reduce((s, a, j) => s + a * v[j], 0)); },
+  expm(A) { /* scaling and squaring with a 20-term Taylor series */
+    const n = A.length; let nrm = 0; A.forEach(r => nrm = Math.max(nrm, r.reduce((s, v) => s + Math.abs(v), 0)));
+    const s = Math.max(0, Math.ceil(Math.log2(nrm || 1)) + 2); const As = LA.sc(A, Math.pow(2, -s));
+    let term = LA.eye(n), sum = LA.eye(n);
+    for (let k = 1; k <= 20; k++) { term = LA.sc(LA.mul(term, As), 1 / k); sum = LA.add(sum, term); }
+    for (let i = 0; i < s; i++) sum = LA.mul(sum, sum);
+    return sum;
+  },
+  norm2(M) { const e = jacobiEig(LA.mul(LA.T(M), M)); return Math.sqrt(Math.max(0, e.l[e.l.length - 1])); }
+};
+function eig2real(a, b, c, d) { /* eigenvalues of [[a,b],[c,d]] as [re, im] pairs */
+  const tr = (a + d) / 2, disc = tr * tr - (a * d - b * c);
+  return disc >= 0 ? [[tr + Math.sqrt(disc), 0], [tr - Math.sqrt(disc), 0]] : [[tr, Math.sqrt(-disc)], [tr, -Math.sqrt(-disc)]];
+}
+
+/* ===== Lens 5: all five coordinates (Theorem 2.1) ===== */
+const Full = {
+  animated: true,
+  st: { mu: 3, a: 1.5, h: 0, c1: 0, c2: 0, d1: 2, d2: 2.5, q1: 0.6, q2: -0.4, g: 0, init: 'r', x: 0, play: true, speed: 0.7 },
+  keys: [['fK', 'mu'], ['fA', 'a'], ['fH', 'h'], ['fC1', 'c1'], ['fC2', 'c2'], ['fD1', 'd1'], ['fD2', 'd2'], ['fQ1', 'q1'], ['fQ2', 'q2'], ['fG', 'g']],
+  presets: {
+    clean: { mu: 3, a: 1.5, h: 0, c1: 0, c2: 0, d1: 2, d2: 2.5, q1: 0.6, q2: -0.4, g: 0, init: 'r' },
+    leaky: { mu: 3, a: 1.5, h: 1.5, c1: 2, c2: -1.2, d1: 1.2, d2: 1.6, q1: 0.6, q2: -0.4, g: 0, init: 's1' },
+    unfold: { mu: 3, a: 1.5, h: 0, c1: 0, c2: 0, d1: 2, d2: 2.5, q1: 0.6, q2: -0.4, g: 0.05, init: 'r' },
+    rot: { mu: 3, a: 1.5, h: 0, c1: 0, c2: 0, d1: 2, d2: 2.5, q1: 0.6, q2: -0.4, g: -0.3, init: 'r' },
+    bad: { mu: 3, a: 1.5, h: 0.8, c1: 1.5, c2: 0, d1: -0.3, d2: 2.5, q1: 0.6, q2: -0.4, g: 0, init: 's1' }
+  },
+  init() {
+    this.sNet = new Stage($('#fNet'), w => w < 520 ? 0.85 : 0.72);
+    this.sMat = new Stage($('#fMat'), w => w < 520 ? 0.85 : 0.72);
+    this.sNorm = new Stage($('#fNorm'), w => w < 520 ? 0.8 : 0.66);
+    this.sSpec = new Stage($('#fSpec'), w => w < 520 ? 0.8 : 0.66);
+    this.r = {};
+    this.keys.forEach(([id, k]) => { this.r[k] = bindRange(id, v => { this.st[k] = v; this.recompute(); this.draw(GM.now()); }, v => v.toFixed(2)); });
+    this.rx = bindRange('fX', v => { this.st.x = v; this.st.play = false; syncBtn('fPlay', false); this.draw(GM.now()); }, v => v.toFixed(2));
+    $('#fInit').onchange = e => { this.st.init = e.target.value; this.st.x = 0; this.draw(GM.now()); };
+    $('#fPlay').onclick = () => { this.st.play = !this.st.play; syncBtn('fPlay', this.st.play); this._last = null; };
+    $('#fZero').onclick = () => { this.st.x = 0; this.rx.set(0); this.draw(GM.now()); };
+    $$('[data-fp]').forEach(b => b.onclick = () => this.set(Object.assign({ x: 0, play: true }, this.presets[b.dataset.fp])));
+    this.recompute();
+  },
+  set(p) {
+    Object.assign(this.st, p);
+    this.keys.forEach(([, k]) => this.r[k].set(this.st[k])); this.rx.set(this.st.x); $('#fInit').value = this.st.init; syncBtn('fPlay', this.st.play);
+    this.recompute(); this.draw(GM.now());
+  },
+  K() { const s = this.st; return [[s.a, 0, 0, 0, 0], [s.h, 1, s.c1, s.c2, s.mu], [0, 0, s.d1, s.q1, 0], [0, 0, s.q2, s.d2, 0], [0, s.g, 0, 0, 1]]; },
+  J() { const s = this.st; return [[1, s.mu], [s.g, 1]]; },
+  recompute() {
+    const K = this.K(), J = this.J(); this.xs = []; this.full = []; this.red = [];
+    for (let i = 0; i <= 120; i++) { const x = 6 * i / 120; this.xs.push(x); this.full.push(LA.norm2(LA.expm(LA.sc(K, -x)))); this.red.push(LA.norm2(LA.expm(LA.sc(J, -x)))); }
+    let im = 0; this.red.forEach((v, i) => { if (v > this.red[im]) im = i; });
+    const A = LA.expm(LA.sc(J, -this.xs[im])); const AtA = LA.mul(LA.T(A), A); const E = sym2eig(AtA[0][0], AtA[0][1], AtA[1][1]); let v = E.v[1]; if (v[1] < 0) v = [-v[0], -v[1]];
+    this.vopt = [0, v[0], 0, 0, v[1]];
+    const s = this.st; const mg = s.mu * s.g;
+    this.eigK = [...(mg >= 0 ? [[1 + Math.sqrt(mg), 0], [1 - Math.sqrt(mg), 0]] : [[1, Math.sqrt(-mg)], [1, -Math.sqrt(-mg)]]).map(z => [z, 'V']), [[s.a, 0], 'a'], ...eig2real(s.d1, s.q1, s.q2, s.d2).map(z => [z, 'B'])];
+    this.stable = this.eigK.every(([z]) => z[0] > 0);
+    this.gap = Math.min(...this.full.map((f, i) => f - this.red[i]));
+  },
+  u0() { const s = this.st.init; return s === 'opt' ? this.vopt : s === 'x1' ? [1, 0, 0, 0, 0] : s === 's1' ? [0, 0, 1, 0, 0] : [0, 0, 0, 0, 1]; },
+  draw(t) {
+    advance(this, t, 'x', 6, 0); if (this.st.play) this.rx.set(this.st.x);
+    const u = LA.mv(LA.expm(LA.sc(this.K(), -this.st.x)), this.u0());
+    this.drawNet(t, u); this.drawMat(); this.drawNorm(); this.drawSpec();
+    setText('fc-st', this.stable ? 'Re σ(K₅) > 0' : 'fails'); setNote('fn-st', this.stable ? 'every mode decays: stable' : 'an eigenvalue of −K₅ has Re ≥ 0: not a trap snapshot', this.stable ? 'rec' : 'neg');
+    setText('fc-full', Math.max(...this.full).toFixed(4)); setText('fc-red', Math.max(...this.red).toFixed(4));
+    setText('fc-gap', sgn(this.gap, 3)); setNote('fn-gap', this.gap >= -1e-9 ? 'never below the reduced norm (2.4)' : 'check failed', this.gap >= -1e-9 ? 'rec' : 'neg');
+  },
+  nodes(W, H) { return { x1: [W * .13, H * .32], x2: [W * .43, H * .32], s1: [W * .82, H * .2], s2: [W * .82, H * .62], r: [W * .43, H * .76] }; },
+  drawNet(t, u) {
+    const S = this.sNet, c = S.ctx; S.clear(); const W = S.W, H = S.H; const s = this.st; const N = this.nodes(W, H);
+    const names = ['x1', 'x2', 's1', 's2', 'r'], labels = ['x₁ shape', 'x₂ shape', 's₁ shear', 's₂ shear', 'r interface'];
+    /* the invariant plane V */
+    c.save(); c.strokeStyle = rgba(C.gold, .7); c.setLineDash([6, 5]); c.lineWidth = 1.6; c.beginPath();
+    const vx = N.x2[0], top = N.x2[1] - 44, bot = N.r[1] + 44; c.roundRect ? c.roundRect(vx - 62, top, 124, bot - top, 30) : c.rect(vx - 62, top, 124, bot - top); c.stroke(); c.restore();
+    text(c, 'V', vx - 52, top + 18, { color: C.gold, font: `bold 13px ${SERIF}` });
+    const K = this.K(); const R = 21;
+    for (let i = 0; i < 5; i++) for (let j = 0; j < 5; j++) {
+      if (i === j || Math.abs(K[i][j]) < 1e-9) continue;
+      const A = N[names[j]], B = N[names[i]]; const dx = B[0] - A[0], dy = B[1] - A[1], L = Math.hypot(dx, dy); const ux = dx / L, uy = dy / L;
+      const off = (i === 2 && j === 3) || (i === 3 && j === 2) || (i === 1 && j === 4) || (i === 4 && j === 1) ? 9 : 0;
+      const sgn2 = (i < j) ? 1 : -1; const ox = -uy * off * sgn2, oy = ux * off * sgn2;
+      const x0 = A[0] + ux * R + ox, y0 = A[1] + uy * R + oy, x1 = B[0] - ux * R + ox, y1 = B[1] - uy * R + oy;
+      const inV = (i === 1 || i === 4) && (j === 1 || j === 4);
+      const col = inV ? C.blue : (i === 1 ? C.orange : C.muted);
+      const w = 1 + Math.min(4, Math.abs(K[i][j]) * 1.2);
+      arrow(c, x0, y0, x1, y1, rgba(col, .75), w, 0, 10);
+      /* moving signal: brightness follows |K_ij u_j| */
+      const flow = Math.min(1, Math.abs(K[i][j] * u[j]) / 1.5);
+      if (flow > .01) for (let q = 0; q < 5; q++) { const ph = ((t * .55 + q / 5) % 1); dot(c, x0 + (x1 - x0) * ph, y0 + (y1 - y0) * ph, 2.2 + 1.8 * flow, rgba(col, .25 + .75 * flow), 10 * flow); }
+      const mx = (x0 + x1) / 2 + ox * 1.6, my = (y0 + y1) / 2 + oy * 1.6;
+      const nm = { '1,0': 'h', '1,2': 'c₁', '1,3': 'c₂', '1,4': 'μ', '2,3': 'q₁', '3,2': 'q₂', '4,1': 'γ' }[i + ',' + j] || '';
+      text(c, nm, mx + 6, my - 4, { color: col, font: `bold 12px ${SERIF}` });
+    }
+    names.forEach((n, i) => {
+      const [x, y] = N[n]; const a = Math.min(1, Math.abs(u[i])); const inV = n === 'x2' || n === 'r';
+      const col = inV ? (n === 'r' ? C.violet : C.gold) : C.teal;
+      dot(c, x, y, R, '#0b1728', 0); c.save(); c.globalAlpha = .25 + .75 * a; dot(c, x, y, R * (.35 + .65 * a), col, 24 * a); c.restore();
+      c.save(); c.strokeStyle = rgba(col, .8); c.lineWidth = 1.5; c.beginPath(); c.arc(x, y, R, 0, TAU); c.stroke(); c.restore();
+      const above = n === 'x2' || n === 's1';
+      text(c, labels[i], x, above ? y - R - 8 : y + R + 15, { align: 'center', color: C.ink2, font: `11px ${SANS}` });
+      text(c, sgn(u[i], 2), x, y + 4, { align: 'center', color: '#fff', font: `bold 9.5px ${MONO}` });
+    });
+    text(c, `bt = ${s.x.toFixed(2)}   ‖u‖ = ${Math.hypot(...u).toFixed(3)}`, 12, H - 10, { color: C.ink2, font: `12px ${MONO}` });
+  },
+  drawMat() {
+    const S = this.sMat, c = S.ctx; S.clear(); const K = this.K(); const W = S.W, H = S.H;
+    const lab = ['x₁', 'x₂', 's₁', 's₂', 'r']; const cell = Math.min((W - 60) / 5.2, (H - 70) / 5.2); const x0 = (W - cell * 5) / 2 + 12, y0 = 44;
+    for (let i = 0; i < 5; i++) for (let j = 0; j < 5; j++) {
+      const X = x0 + j * cell, Y = y0 + i * cell; const v = K[i][j]; const inV = (i === 1 || i === 4) && (j === 1 || j === 4);
+      const invCol = (j === 1 || j === 4) && !(i === 1 || i === 4);
+      c.save(); c.fillStyle = inV ? 'rgba(124,186,255,.22)' : invCol ? 'rgba(126,226,168,.10)' : Math.abs(v) > 1e-9 ? 'rgba(145,168,194,.10)' : 'rgba(5,9,20,.6)';
+      c.fillRect(X + 1, Y + 1, cell - 2, cell - 2); c.strokeStyle = 'rgba(53,81,111,.8)'; c.strokeRect(X + .5, Y + .5, cell - 1, cell - 1); c.restore();
+      text(c, Math.abs(v) < 1e-9 ? '0' : (+v.toFixed(2)).toString(), X + cell / 2, Y + cell / 2 + 5, { align: 'center', color: inV ? '#fff' : invCol ? C.green : C.ink2, font: `${inV ? 'bold ' : ''}${Math.max(10, Math.min(14, cell * .28))}px ${MONO}` });
+    }
+    for (let k = 0; k < 5; k++) { text(c, lab[k], x0 + k * cell + cell / 2, y0 - 8, { align: 'center', color: C.muted, font: `12px ${SERIF}` }); text(c, lab[k], x0 - 10, y0 + k * cell + cell / 2 + 4, { align: 'right', color: C.muted, font: `12px ${SERIF}` }); }
+    [1, 4].forEach(j => { c.save(); c.strokeStyle = C.gold; c.setLineDash([4, 3]); c.lineWidth = 1.6; c.strokeRect(x0 + j * cell + 2, y0 + 2, cell - 4, cell * 5 - 4); c.restore(); });
+    text(c, 'gold columns: zeros outside rows x₂ and r, so V is invariant', W / 2, H - 10, { align: 'center', color: C.green, font: `11px ${SANS}` });
+  },
+  drawNorm() {
+    const S = this.sNorm, c = S.ctx; S.clear(); const mx = Math.max(...this.full, 1.2);
+    const top = Math.min(mx * 1.1, 8);
+    const F = new Frame(c, [46, 30, S.W - 60, S.H - 72], [0, 6], [0, top]);
+    F.axes({ xlabel: 'time bt', ny: 4 });
+    F.clip();
+    c.save(); c.fillStyle = 'rgba(237,199,117,.12)'; c.beginPath(); this.xs.forEach((x, i) => { const p = [F.tx(x), F.ty(this.full[i])]; i ? c.lineTo(...p) : c.moveTo(...p); }); for (let i = this.xs.length - 1; i >= 0; i--) c.lineTo(F.tx(this.xs[i]), F.ty(this.red[i])); c.closePath(); c.fill(); c.restore();
+    F.hline(1, 'rgba(234,242,255,.45)', [5, 4]);
+    line(c, this.xs.map((x, i) => [F.tx(x), F.ty(this.red[i])]), C.blue, 2.2, 8);
+    line(c, this.xs.map((x, i) => [F.tx(x), F.ty(this.full[i])]), C.gold, 2.4, 10);
+    F.vline(this.st.x, 'rgba(234,242,255,.7)', [2, 3]);
+    F.unclip();
+    legend(c, F, [['all five: ‖e⁻ᴷᵗ‖', C.gold], ['block alone: ‖e⁻ᴶᵗ‖', C.blue]]);
+    if (mx * 1.1 > top) text(c, `peak ${mx.toFixed(2)} is off the top`, F.x0 + F.w - 6, F.y0 + 14, { align: 'right', color: C.red, font: `11px ${MONO}` });
+  },
+  drawSpec() {
+    const S = this.sSpec, c = S.ctx; S.clear();
+    const pts = this.eigK.map(([z, g]) => [[-z[0], -z[1]], g]);
+    let R = 1.5; pts.forEach(([z]) => R = Math.max(R, Math.abs(z[0]) + .6, Math.abs(z[1]) + .6));
+    const F = equalFrame(c, [8, 28, S.W - 16, S.H - 36], -R / 2, 0, R * .75 * Math.max(1, (S.W - 16) / (S.H - 36)));
+    c.save(); c.fillStyle = 'rgba(255,141,152,.08)'; c.fillRect(F.tx(0), F.y0, Math.max(0, F.x0 + F.w - F.tx(0)), F.h); c.restore();
+    line(c, [[F.tx(0), F.y0], [F.tx(0), F.y0 + F.h]], 'rgba(255,141,152,.7)', 1.3);
+    line(c, [[F.x0, F.ty(0)], [F.x0 + F.w, F.ty(0)]], 'rgba(203,217,234,.25)', 1);
+    const colr = { V: C.blue, a: C.muted, B: C.orange };
+    pts.forEach(([z, g], i) => { const bad = z[0] >= 0; dot(c, F.tx(z[0]), F.ty(z[1]) + (g === 'V' && Math.abs(this.st.mu * this.st.g) < 1e-12 ? (i ? 5 : -5) : 0), 6, bad ? C.red : colr[g], 14, '#fff'); });
+    text(c, '■ block J_γ', F.x0 + 6, F.y0 + F.h - 36, { color: C.blue, font: `11px ${SANS}` });
+    text(c, '■ −a', F.x0 + 6, F.y0 + F.h - 22, { color: C.muted, font: `11px ${SANS}` });
+    text(c, '■ shear block −B', F.x0 + 6, F.y0 + F.h - 8, { color: C.orange, font: `11px ${SANS}` });
+    text(c, 'unstable side', F.tx(0) + 6, F.y0 + 16, { color: C.red, font: `11px ${SANS}` });
+    text(c, 'Re = 0', F.tx(0) - 4, F.ty(0) + 14, { align: 'right', color: C.red, font: `10.5px ${MONO}` });
+  }
+};
+GM.add('full', Full);
+
+/* ===== Lens 6: the Snake on the sky ===== */
+const Sky = {
+  animated: true,
+  st: { v: 700, d: 1, eyes: { Lsnake: true, Lsun: true, Lcand: true, Lpsr: true, Limp: true, Lsep: true, Lcomp: true } },
+  DL: -24.6, DB: 42.6, NORTH: [0.852, 0.523], EAST: [0.523, -0.852], PC: 0.03878509,
+  layers: [
+    { id: 'Lsnake', name: 'The Snake (schematic trace)', f: 'G359.1−0.2', color: '#7fb3d9' },
+    { id: 'Lsun', name: 'The Sunfish (schematic trace)', f: 'a separate filament', color: '#ffb46b' },
+    { id: 'Lcand', name: 'Pulsar candidate at the kink', f: 'radio + X-ray · no pulses detected', color: '#69d7c4' },
+    { id: 'Lpsr', name: 'PSR J1744−2946', f: 'confirmed MSP binary · pulses', color: '#ffb46b' },
+    { id: 'Limp', name: 'Proposed impact', f: '500–1000 km/s · direction not given', color: '#bc90ff' },
+    { id: 'Lsep', name: 'Separation', f: '49″ ≈ 1.9 pc projected', color: '#cbd9ea' },
+    { id: 'Lcomp', name: 'Compass and scale', f: 'N, E and 30″ ≈ 1.2 pc', color: '#91a8c2' }
+  ],
+  init() {
+    this.s = new Stage($('#sSky'), w => w < 640 ? 1.05 : 0.56);
+    eyeRows($('#sLayers'), this.layers, this.st, () => this.draw(GM.now()));
+    this.rv = bindRange('sV', v => { this.st.v = v; this.calc(); }, v => v.toFixed(0));
+    this.rd = bindRange('sD', v => { this.st.d = v; this.calc(); }, v => v.toFixed(2));
+    this.hover = null;
+    this.s.c.addEventListener('pointermove', e => { const r = this.s.c.getBoundingClientRect(); this.hover = [e.clientX - r.left, e.clientY - r.top]; });
+    this.s.c.addEventListener('pointerleave', () => this.hover = null);
+    this.calc();
+  },
+  set(p) { Object.assign(this.st, p); if (p.eyes) { this.st.eyes = Object.assign({}, this.st.eyes, p.eyes); eyeRows($('#sLayers'), this.layers, this.st, () => this.draw(GM.now())); } this.rv.set(this.st.v); this.rd.set(this.st.d); this.calc(); this.draw(GM.now()); },
+  calc() { const yr = this.st.d * 3.0857e13 / this.st.v / 3.15576e7; setText('sc-t', `${Math.round(yr).toLocaleString('en-US')} years`); },
+  draw(t) {
+    const S = this.s, c = S.ctx; S.clear('#040810'); const W = S.W, H = S.H; const on = this.st.eyes;
+    const r0 = mulberry(3); for (let i = 0; i < 160; i++) dot(c, r0() * W, r0() * H, .4 + r0(), `rgba(203,217,234,${.15 + .4 * r0()})`);
+    const inset = W > 700;
+    const bx = inset ? W * .2 : 0; const box = [bx + 50, 16, W - bx - 66, H - 58];
+    const half = 64; const hy = half * box[3] / box[2];
+    const yc = 4, F = new Frame(c, box, [half, -half], [yc - hy, yc + hy]);
+    /* make the scaling equal whichever side limits */
+    const sx = box[2] / 128, sy = box[3] / 128; const s = Math.min(sx, sy); const hx = box[2] / s / 2, hy2 = box[3] / s / 2;
+    F.xr = [hx, -hx]; F.yr = [yc - hy2, yc + hy2];
+    F.axes({ xlabel: 'Δl (arcsec), increasing to the left', ylabel: 'Δb (arcsec)', bg: 'rgba(4,8,16,.3)', ylabelOff: 38 });
+    F.clip();
+    const P = (a, b) => [F.tx(a), F.ty(b)];
+    if (on.Lsnake) { const pts = []; for (let i = 0; i <= 300; i++) { const tt = -90 + 180 * i / 300; pts.push(P(5 * Math.sin(tt / 45) + 12 * Math.tanh(tt / 6), tt)); } for (const [w, a] of [[18, .08], [9, .2], [3, 1]]) line(c, pts, rgba('#7fb3d9', a), w * s * .9 / 2 + (w === 3 ? 1.5 : 0)); }
+    if (on.Lsun) { const pts = []; for (let i = 0; i <= 100; i++) { const u = -20 + 50 * i / 100; pts.push(P(this.DL + .18 * u, this.DB + u)); } for (const [w, a] of [[14, .08], [7, .2], [2.5, 1]]) line(c, pts, rgba('#ffb46b', a), w * s * .9 / 2 + (w === 2.5 ? 1.2 : 0)); }
+    if (on.Lsep) { line(c, [P(0, 0), P(this.DL, this.DB)], 'rgba(234,242,255,.6)', 1.2, 0, [3, 4]); text(c, '49″ ≈ 1.9 pc', F.tx(-15), F.ty(14), { color: C.ink2, font: `12px ${MONO}` }); }
+    if (on.Limp) { const q = (t * .35) % 1; const rr = 26 - 14 * q; const pts = []; for (let j = 0; j <= 120; j++) { const th = j / 120 * TAU; pts.push(P(rr * Math.cos(th), rr * Math.sin(th))); } line(c, pts, rgba('#bc90ff', .25 + .6 * (1 - q)), 1.6, 8, [6, 5]); const p2 = []; for (let j = 0; j <= 120; j++) { const th = j / 120 * TAU; p2.push(P(17 * Math.cos(th), 17 * Math.sin(th))); } line(c, p2, rgba('#bc90ff', .8), 1.3, 0, [4, 4]); }
+    if (on.Lcand) {
+      const [X, Y] = P(0, 0); const pulse = .85 + .15 * Math.sin(t * 2.2);
+      c.save(); const g = c.createRadialGradient(X, Y, 0, X, Y, 12 * s * pulse); g.addColorStop(0, 'rgba(105,215,196,.7)'); g.addColorStop(1, 'rgba(105,215,196,0)'); c.fillStyle = g; c.beginPath(); c.arc(X, Y, 12 * s * pulse, 0, TAU); c.fill(); c.restore();
+      this.star(c, X, Y, 11, C.teal);
+      if (W < 640) text(c, 'candidate · no pulses', X, Y + 34, { align: 'center', color: C.teal, font: `bold 11px ${SANS}`, bg: 'rgba(4,8,16,.6)' });
+      else text(c, 'candidate · no pulses detected', X + 16, Y + 26, { color: C.teal, font: `bold 12px ${SANS}`, bg: 'rgba(4,8,16,.6)' });
+    }
+    if (on.Lpsr) {
+      const [X, Y] = P(this.DL, this.DB);
+      for (let k = 0; k < 3; k++) { const q = ((t * 1.4) + k / 3) % 1; c.save(); c.strokeStyle = rgba('#ffb46b', .7 * (1 - q)); c.lineWidth = 1.5; c.beginPath(); c.arc(X, Y, 6 + q * 26, 0, TAU); c.stroke(); c.restore(); }
+      dot(c, X, Y, 6.5, '#ffb46b', 16, '#fff');
+      text(c, 'PSR J1744−2946 · pulses', X - 12, Y - 14, { align: 'right', color: C.orange, font: `bold 12px ${SANS}`, bg: 'rgba(4,8,16,.6)' });
+    }
+    F.unclip();
+    if (on.Lcomp) {
+      const ox = F.tx(-44), oy = F.ty(-40), L = 13 * s;
+      [[this.NORTH, 'N'], [this.EAST, 'E']].forEach(([v, n]) => { arrow(c, ox, oy, ox - v[0] * L, oy - v[1] * L, C.ink2, 1.5, 0, 7); text(c, n, ox - v[0] * (L + 10), oy - v[1] * (L + 10) + 4, { align: 'center', color: C.ink2, font: `bold 11px ${SANS}` }); });
+      const x0 = F.tx(55), x1 = F.tx(25), yb = F.ty(-56); line(c, [[x0, yb], [x1, yb]], '#eaf2ff', 2); text(c, '30″ ≈ 1.2 pc', (x0 + x1) / 2, yb - 7, { align: 'center', color: C.ink2, font: `11px ${MONO}` });
+    }
+    if (inset) this.drawInset(c, 14, 20, bx - 26, H - 60, t);
+    /* hover information */
+    if (this.hover) {
+      const [hx0, hy0] = this.hover; const items = [[P(0, 0), ['G359.13142−0.20005', 'compact radio source + X-ray counterpart', 'at the Snake\'s major kink', 'pulsar candidate: no pulses detected', 'proposed impactor, 500–1000 km/s']], [P(this.DL, this.DB), ['PSR J1744−2946', 'confirmed millisecond-pulsar binary', 'in the Sunfish, 49″ due west', 'localization rules out an', 'association with the Snake']]];
+      items.forEach(([p, lines]) => { if (Math.hypot(p[0] - hx0, p[1] - hy0) < 26) { const bw = 250, bh = 16 * lines.length + 12; const bxp = clamp(p[0] + 14, 4, W - bw - 4), byp = clamp(p[1] - bh - 10, 4, H - bh - 4); c.save(); c.fillStyle = 'rgba(8,16,30,.94)'; c.strokeStyle = C.line; c.fillRect(bxp, byp, bw, bh); c.strokeRect(bxp, byp, bw, bh); c.restore(); lines.forEach((l, i) => text(c, l, bxp + 10, byp + 20 + 16 * i, { color: i ? C.ink2 : C.gold, font: `${i ? '' : 'bold '}12px ${SANS}` })); } });
+    }
+  },
+  star(c, x, y, r, col) { c.save(); glow(c, col, 14); c.fillStyle = col; c.beginPath(); for (let k = 0; k < 10; k++) { const a = -Math.PI / 2 + k * Math.PI / 5, rr = k % 2 ? r * .45 : r; c.lineTo(x + rr * Math.cos(a), y + rr * Math.sin(a)); } c.closePath(); c.fill(); c.shadowBlur = 0; c.strokeStyle = '#fff'; c.lineWidth = 1; c.stroke(); c.restore(); },
+  drawInset(c, x, y, w, h, t) {
+    c.save(); c.strokeStyle = C.line; c.strokeRect(x + .5, y + .5, w, h); c.restore();
+    text(c, 'whole filament (schematic)', x + 8, y + 16, { color: C.muted, font: `11px ${SANS}` });
+    const cxp = x + w * .55, top = y + 34, bot = y + h - 30; const sc = (bot - top) / 30;
+    const pts = []; for (let i = 0; i <= 300; i++) { const yy = -15 + 30 * i / 300; const xx = -(0.35 * Math.sin(yy / 4.2) + 0.30 * Math.tanh(yy / 0.12) + 0.18 * Math.tanh((yy + 8.5) / 0.35)); pts.push([cxp + xx * sc, top + (15 - yy) * sc]); }
+    for (const [lw, a] of [[8, .1], [4, .25], [1.8, 1]]) line(c, pts, rgba('#7fb3d9', a), lw);
+    const ky = top + 15 * sc; c.save(); c.strokeStyle = C.gold; c.strokeRect(cxp - 1.1 * sc - 6, ky - 1.1 * sc - 6, 2.2 * sc + 12, 2.2 * sc + 12); c.restore();
+    text(c, 'major kink', x + 8, ky - 14, { color: C.ink2, font: `11px ${SANS}` });
+    text(c, 'minor kink', x + 8, top + (15 + 8.5) * sc + 4, { color: C.ink2, font: `11px ${SANS}` });
+    text(c, '≈ 30′ ≈ 70 pc', x + 8, y + h - 10, { color: C.muted, font: `11px ${MONO}` });
+  }
+};
+GM.add('sky', Sky);
+
+/* ===== Lens 7: claim ledger ===== */
+const Ledger = {
+  animated: false,
+  rows: [
+    ['V = span{x₂, r} is invariant and carries J_γ; the characteristic polynomial factors; the full norm is never below the reduced norm', 'Theorem 2.1, (2.1)–(2.4)', 'T V', 'full'],
+    ['Five coordinates are sufficient for the 2 + 2 + 1 profile, not necessary: a four-coordinate family carries the same block', 'Remark 2.2', 'T', 'full'],
+    ['The ε-pseudospectrum of J is exactly the disk of radius √(ε|μ| + ε²)', '(3.1)–(3.2)', 'T V', 'pseudo'],
+    ['The disk for −J reaches the right half-plane exactly when ε > σ_min(J)', '(3.3)', 'T V', 'pseudo'],
+    ['M(t) = e⁻ᵇᵗ(√(4 + μ²t²) + |μ|t)/2; growth for some state iff κ > 2; t* and M_max in closed form', 'Theorem 4.1, (4.1)–(4.2)', 'T V', 'amp'],
+    ['An interface-only input overshoots only for κ > κ_r = 2.48526751266', '(4.3)', 'T V', 'kick'],
+    ['Diagonal detuning closes the eigenvector angle linearly; reverse coupling closes it as a square root', 'Proposition 5.1, (5.1)–(5.2)', 'T V', 'paths'],
+    ['A model trap snapshot: stable spectrum and energy above E_max inside a window', 'Definition (6.1)', 'T', 'kick'],
+    ['With V fixed, the Riesz range is constant and g = Ω = 0 in these coordinates', 'Section 7', 'T', 'full'],
+    ['A physical μ needs a projected operator that passes the overlap checks (8.4)', 'Section 8', 'H', ''],
+    ['Heat-trace and zeta-determinant statements hold for their stated operator class only', 'Section 9', 'C H', ''],
+    ['The Bezold–Brücke metric shift is a labelled hypothesis, used in no proof', 'Section 10', 'H', ''],
+    ['A candidate at the Snake\'s major kink; an impact proposed at 500–1000 km/s; no pulses detected', 'Section 1', 'C H', 'sky'],
+    ['PSR J1744−2946 lies in the Sunfish; its localization rules out an association with the Snake', 'Section 1', 'C', 'sky'],
+    ['If an impact projects onto the interface coordinate, the relevant test is κ > κ_r, not κ > 2', 'Sections 1, 4, 11', 'H', 'kick'],
+    ['700 km/s crosses 1 pc in about 1.4 × 10³ years, for orientation only', 'Section 11', 'H', 'sky']
+  ],
+  init() {
+    const tb = $('#ledgerTable tbody'); tb.innerHTML = '';
+    const cls = { T: 'b-T', C: 'b-C', V: 'b-N', H: 'b-H' };
+    this.rows.forEach(([claim, where, grades, lens]) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${claim}</td><td class="mono" style="white-space:nowrap">${where}</td><td>${grades.split(' ').map(g => `<span class="badge ${cls[g]}">${g}</span>`).join(' ')}</td><td>${lens ? `<button class="small" data-go="${lens}">Open</button>` : '<span class="caption">text only</span>'}</td>`;
+      tb.appendChild(tr);
+    });
+    $$('[data-go]').forEach(b => b.onclick = () => { GM.show(b.dataset.go); window.scrollTo({ top: 0 }); });
+  },
+  set() {}, draw() {}
+};
+GM.add('ledger', Ledger);
+
+/* ===== start-up ===== */
+$$('nav.tabs button').forEach(b => b.addEventListener('click', () => GM.show(b.dataset.lens)));
+window.addEventListener('hashchange', () => { const h = location.hash.replace('#', ''); if (h && h !== GM.active && GM.lenses[h]) GM.show(h); });
+window.GM = GM;
+GM.show((location.hash || '#amp').replace('#', ''));
+requestAnimationFrame(loop);
+
+</script>
+</body>
+</html>

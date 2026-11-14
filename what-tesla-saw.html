@@ -1,0 +1,1410 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>What Tesla Saw Mixer</title>
+<meta name="description" content="An interactive mixer for What Tesla Saw: the period of a circuit, magnification, his coupled oscillator, the quarter wave, his earth, the storm of 3 July 1899, the ball on the wire, the structure, the jets and the turbine, computed from his own numbers by his own laws.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* What Tesla Saw Mixer: black ground, electric-blue lettering; blue = computed from his numbers by his laws, amber = his own record */
+:root{color-scheme:dark;
+  --bg:#000000;--panel:#03141a;--panel2:#062029;--line:#12303a;--line2:#1d4a5a;
+  --ink:#c9f7ff;--ink2:#8fe6f4;--muted:#5fb3c6;--dim:#2f6c7c;
+  --gold:#e8a53c;--teal:#7df9ff;--violet:#e06ac4;--red:#ff6f86;--blue:#3fa9f5;--green:#6ff0b0;--orange:#ffb46b;
+  --pos:#3fa9f5;--neg:#ff6f86;--rec:#6ff0b0;--null:#e8a53c;
+  --serif:"Crimson Pro","Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;
+  --sans:"IBM Plex Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+*{box-sizing:border-box}
+html{background:#000}
+body{margin:0;background:radial-gradient(circle at 50% -8rem,#06303d 0,transparent 30rem),var(--bg);color:var(--ink);font:15px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1540px;margin:0 auto;padding-inline:24px}
+@media (max-width:640px){.wrap{padding-inline:16px}}
+header.top{padding-block:34px 18px}
+.eyebrow{font-size:11px;letter-spacing:.19em;color:var(--teal);font-weight:800;text-transform:uppercase}
+h1{font:400 clamp(2.3rem,6vw,5rem)/.98 var(--serif);margin:10px 0 12px;color:var(--teal);text-wrap:balance;text-shadow:0 0 22px rgba(125,249,255,.35),0 0 2px rgba(125,249,255,.6)}
+h2{font:500 clamp(1.5rem,2.6vw,1.95rem)/1.15 var(--serif);color:var(--teal);margin:.2em 0 .5em;text-wrap:balance}
+h3{color:#c9f7ff;margin:.3em 0 .35em;font-size:1.05rem;text-wrap:balance}
+p{margin:.45em 0}
+.subtitle{font-size:1.12rem;max-width:62rem;color:var(--ink2)}
+.byline{color:var(--muted);font-size:13px;margin-top:6px}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.stat{background:#021118;border:1px solid var(--line);border-radius:10px;padding:9px 13px;min-width:0}
+.stat b{font-size:1.3rem;color:var(--teal);display:block;font-variant-numeric:tabular-nums}
+.stat span{font-size:13px;color:var(--ink2)}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(0,0,0,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-block:1px solid var(--line)}
+nav.tabs .wrap{display:flex;gap:7px;overflow-x:auto;padding-block:9px;scrollbar-width:thin}
+button,select,input,textarea{font:inherit;color:inherit}
+button{background:#04202a;color:var(--ink);border:1px solid var(--line2);border-radius:8px;padding:7px 12px;cursor:pointer;white-space:nowrap}
+button:hover{border-color:var(--teal);background:#063342}
+button.active{border-color:var(--teal);background:#08404f;color:#fff}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+button.small{padding:3px 8px;font-size:12px;border-radius:6px}
+main{padding-block:22px 80px}
+.lens{display:none}.lens.active{display:block}
+.lede{max-width:70rem;color:var(--ink2);font-size:1.02rem}
+.kicker{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);font-weight:800}
+.grid2{display:grid;grid-template-columns:320px minmax(0,1fr);gap:18px;margin-top:14px}
+@media (max-width:980px){.grid2{grid-template-columns:minmax(0,1fr)}}
+.controls{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;align-self:start}
+@media (min-width:981px){.controls.sticky{position:sticky;top:64px;max-height:calc(100vh - 80px);overflow:auto}}
+.control{margin:9px 0 13px}
+.control label{display:flex;justify-content:space-between;gap:8px;color:#9fe9f7;font-size:12.5px}
+.control output{color:var(--teal);font-family:var(--mono);font-size:12px;font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--teal)}
+select{background:#03161d;border:1px solid var(--line2);border-radius:7px;padding:6px 8px;width:100%}
+.row{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.hr{border-top:1px solid var(--line);margin:14px 0}
+.stage{min-width:0;display:grid;gap:14px}
+.canvasbox{background:linear-gradient(180deg,#02090c,#000000);border:1px solid var(--line);border-radius:14px;padding:8px;overflow:hidden;position:relative;min-width:0}
+.canvasbox canvas{width:100%;display:block;touch-action:none}
+.canvasbox .ctitle{position:absolute;left:14px;top:10px;font:11px/1.3 var(--mono);color:var(--ink2);background:rgba(0,10,14,.85);border:1px solid var(--line);border-radius:7px;padding:4px 8px;pointer-events:none}
+.caption{font-size:12px;color:var(--muted);padding:6px 8px 2px}
+.split{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.split3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media (max-width:980px){.split,.split3{grid-template-columns:minmax(0,1fr)}}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px 12px;min-width:0}
+.card .lab{font-size:11.5px;letter-spacing:.02em;color:var(--muted)}
+.card .val{font:500 1.35rem/1.25 var(--serif);color:var(--teal);margin:3px 0;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.card .note{font-size:11.5px;color:#8fdcea;letter-spacing:.01em;font-weight:700}
+.note.pos{color:var(--pos)}.note.neg{color:var(--neg)}.note.rec{color:var(--rec)}.note.null{color:var(--null)}.note.vio{color:var(--violet)}
+.eyes{display:grid;gap:8px}
+.eye{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px;align-items:center;padding:7px 8px;border:1px solid var(--line);border-radius:10px;background:#021118}
+.eye .sw{width:12px;height:12px;border-radius:3px;box-shadow:0 0 10px currentColor;background:currentColor}
+.eye b{font-size:12.5px;display:block}
+.eye small{display:block;color:var(--muted);font-size:11px;font-family:var(--mono)}
+.eye input[type=checkbox]{accent-color:var(--teal);width:16px;height:16px}
+.eye.off{opacity:.45}
+.eyegrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:10px}
+@media (max-width:1100px){.eyegrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:700px){.eyegrid{grid-template-columns:minmax(0,1fr)}}
+.ecard{background:linear-gradient(180deg,#03161d,#010a0e);border:1px solid var(--line);border-radius:13px;padding:13px 14px;cursor:pointer;min-width:0}
+.ecard:hover{border-color:var(--teal)}
+.ecard .kick{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);font-weight:800}
+.ecard h4{margin:.35em 0 .3em;font-size:1rem;color:#c9f7ff;text-wrap:balance}
+.ecard .f{font:1rem/1.35 var(--serif);color:var(--gold);margin:.35em 0;overflow-wrap:anywhere}
+.ecard p{font-size:12.8px;color:#8fe6f4;margin:.3em 0}
+.badges{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
+.badge{font:700 9.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;border:1px solid;border-radius:20px;padding:4px 7px}
+.b-T{color:var(--green);border-color:#2f6d51}.b-L{color:var(--teal);border-color:#2c6d66}.b-N{color:var(--blue);border-color:#2f5889}.b-C{color:var(--violet);border-color:#5d4a86}.b-H{color:var(--orange);border-color:#7a5a33}.b-F{color:var(--red);border-color:#7e3d48}.b-R{color:var(--gold);border-color:#7a6636}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;min-width:0}
+.scope{border-left:4px solid var(--violet);background:#15132a;padding:12px 15px;margin:14px 0;border-radius:0 12px 12px 0;color:#d9d3f3}
+.scope.gold{border-left-color:var(--blue);background:#021118;color:#9fe9f7}
+.scope.red{border-left-color:var(--red);background:#23121a;color:#f3d6dc}
+.table{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{padding:8px 10px;text-align:left;border-bottom:1px solid #12303a;vertical-align:top}
+th{color:var(--blue);font-weight:700;background:#021118;position:sticky;top:0}
+td.num,th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+tr.hl td{background:#062029}
+.mono{font-family:var(--mono)}
+.gold{color:var(--gold)}.teal{color:var(--teal)}.red{color:var(--red)}.blue{color:var(--blue)}.green{color:var(--green)}.vio{color:var(--violet)}
+.ride{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px}
+.step{flex:0 0 150px;text-align:left;white-space:normal;background:#0b1627;border:1px solid var(--line);border-radius:12px;padding:10px 11px}
+.step b{display:block;font-size:11px;letter-spacing:.08em;color:var(--teal);text-transform:uppercase}
+.step span{display:block;font-size:12px;color:var(--muted);margin-top:3px}
+.step.active{border-color:var(--gold);background:#1a1810}
+.route{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-top:10px}
+.route h3{font:500 1.5rem/1.2 var(--serif);color:var(--gold)}
+.ledger textarea{width:100%;min-height:74px;background:#08111f;border:1px solid var(--line2);border-radius:10px;padding:10px;resize:vertical;font:13px/1.45 var(--mono);color:var(--ink)}
+.trials{display:grid;gap:8px;margin-top:10px}
+.trial{border:1px solid var(--line);border-radius:10px;padding:9px 11px;background:#0b1627;font-size:12.5px}
+.trial .when{font-family:var(--mono);color:var(--muted);font-size:11px}
+.legend{display:flex;gap:8px;flex-wrap:wrap;font-size:11.5px;color:var(--ink2);padding:6px 8px}
+.legend i{display:inline-block;width:14px;height:3px;border-radius:2px;vertical-align:middle;margin-right:5px}
+.pill{display:inline-block;font:700 10.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:5px 8px;border-radius:20px;border:1px solid var(--line2);color:var(--ink2)}
+.pill.pos{color:var(--pos);border-color:#2f5889}.pill.neg{color:var(--neg);border-color:#7e3d48}.pill.null{color:var(--null);border-color:#7a6636}.pill.rec{color:var(--rec);border-color:#2f6d51}
+footer{border-top:1px solid var(--line);color:var(--muted);font-size:12.5px;padding-block:18px 36px}
+.sectionhead{display:flex;justify-content:space-between;align-items:end;gap:14px;flex-wrap:wrap;margin-top:28px}
+.msg{font-size:12px;color:var(--green);min-height:1.2em}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+
+.split64{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:14px}
+@media (max-width:980px){.split64{grid-template-columns:minmax(0,1fr)}}
+.formula{font:1.05rem/1.5 var(--serif);color:var(--ink);margin:.35em 0}
+.formula .g{color:var(--gold)}
+.plab{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);font-weight:800;margin-bottom:4px}
+
+</style>
+</head>
+<body>
+<header class="top wrap">
+  <div class="eyebrow">Jeromie Beasley · What Tesla Saw · Mixer</div>
+  <h1>What Tesla Saw</h1>
+  <p class="subtitle">His laws, his numbers, and what they fix, run live. Every panel is computed in your browser from his own figures, put through laws he stated himself: the Colorado Springs Notes (June 1899 to January 1900), his 112 US patents, and his own published accounts.</p>
+  <div class="byline"><span class="blue">Blue</span> is computed from his numbers by his own laws; <span class="gold">amber</span> is his own record. Built from the paper of September 2026.</div>
+  <div class="stats">
+    <div class="stat"><b>n = 1/(2π√LC)</b><span>every circuit has its own period</span></div>
+    <div class="stat"><b>m = pL/R = p/2γ</b><span>10,530 on 2 January 1900</span></div>
+    <div class="stat"><b>50,550 · 99,480</b><span>his November coils ring in an octave</span></div>
+    <div class="stat"><b>5.89 per second</b><span>his "six per second" earth tone</span></div>
+    <div class="stat"><b>25–70 km/h</b><span>the storm of 3 July 1899</span></div>
+    <div class="stat"><b>9 × 10 = 90</b><span>one more jet than the other</span></div>
+  </div>
+</header>
+<nav class="tabs" aria-label="Lenses"><div class="wrap"><button data-lens="tone">The period of a circuit</button><button data-lens="magnify">Magnification</button><button data-lens="coupled">His oscillator rings in an octave</button><button data-lens="quarter">The quarter wave</button><button data-lens="earth">His earth</button><button data-lens="storm">The storm of 3 July</button><button data-lens="ball">The ball on the wire</button><button data-lens="structure">The structure</button><button data-lens="jets">Nine jets and ten</button><button data-lens="turbine">The turbine</button><button data-lens="ledger">The record</button></div></nav>
+<main class="wrap">
+<section class="lens" id="lens-tone">
+  <div class="kicker">His law · n = 1/(2π√(LC)) · the Notes, 3 July 1899</div>
+  <h2>Twice the tone takes a quarter of the capacity</h2>
+  <p class="lede">Every circuit has "a period of vibration of its own analogous to the period of vibration of a weighted spring" (568,178). On 3 July 1899 his secondary rang at "n = 20,700 per sec. approx." with 15 jars a side. The ground waves wanted 48 jars a side, more than the transformer could charge, and "An octave would require only 12 jars on each side ... the octave vibration had only 1/4 of the energy." Move the jars and watch his two laws do the arithmetic.</p>
+  <div class="grid2">
+    <aside class="controls sticky" aria-label="Controls"><div class="control"><label for="tJ">Jars on each side <output for="tJ"></output></label><input type="range" id="tJ" min="4" max="60" step="1" value="15"></div><div class="row" style="margin-top:6px" id="tPick"><button class="small" data-v="15">15 jars: his 3 July tone</button><button class="small" data-v="48">48 jars: the ground waves</button><button class="small" data-v="12">12 jars: the octave</button></div><p class="caption" style="padding-left:0">Same coil throughout; the tone scales as 1/√(jars), and at one voltage the stored energy ½CV² scales with the jars.</p></aside>
+    <div class="stage">
+      <div class="split"><div class="canvasbox"><span class="ctitle">his circuit: the charge swings between the jars and the coil</span><canvas id="tCirc" aria-label="his circuit: the charge swings between the jars and the coil"></canvas></div><div class="canvasbox"><span class="ctitle">the tone against the jars, and the energy each holds</span><canvas id="tLaw" aria-label="the tone against the jars, and the energy each holds"></canvas></div></div>
+      <div class="cards"><div class="card"><div class="lab">tone n (per second)</div><div class="val" id="t-n"></div><div class="note" id="t-nn"></div></div><div class="card"><div class="lab">against 48 jars</div><div class="val" id="t-r"></div><div class="note" id="t-rn"></div></div><div class="card"><div class="lab">energy against 48 jars</div><div class="val" id="t-e"></div><div class="note" id="t-en"></div></div><div class="card"><div class="lab">wave at 186,000 mi/s</div><div class="val" id="t-w"></div><div class="note" id="t-wn"></div></div></div>
+    </div>
+  </div>
+  <div class="scope gold">His laws: n = 1/(2π√(LC)) (the Notes, more than 50 times) and ½CV² (512,340; the Notes). The octave rule is proved in Lean: octave_quarter_capacity and energy_scales_with_capacity (TeslaCore_v3). Blue is computed from his numbers by his laws; amber is his own record.</div>
+</section>
+<section class="lens" id="lens-magnify">
+  <div class="kicker">His law · m = pL/R · 462,418, 685,012, the Notes</div>
+  <h2>The magnifying factor is the tone over twice its decay</h2>
+  <p class="lede">His rule: the rise is "directly proportionate to" inductance "and inversely to" resistance. On 2 January 1900 his extra coil had p = 585,000 and L = 0.018, so m = 585,000 × 0.018 ÷ 1 = 10,530, "falling to about 10" with the lamps' 1,000 ohms. Written as a complex tone ω = √(p² − γ²) − iγ with γ = R/2L, the same number is m = p/2γ: how many swings it rings before it fades.</p>
+  <div class="grid2">
+    <aside class="controls sticky" aria-label="Controls"><div class="control"><label for="mR">Resistance R (ohm, log scale) <output for="mR"></output></label><input type="range" id="mR" min="-1" max="3.5" step="0.01" value="0"></div><div class="row" style="margin-top:6px" id="mPick"><button class="small" data-v="0">Coil alone, 1 ohm</button><button class="small" data-v="3">With the lamps, 1,000 ohm</button><button class="small" data-v="-0.301">Cooled: R halved</button></div><p class="caption" style="padding-left:0">p = 585,000 and L = 0.018 henry are his 2 January 1900 figures.</p></aside>
+    <div class="stage">
+      <div class="split"><div class="canvasbox"><span class="ctitle">the ring-down after one push: blue computed, envelope e^(−γt)</span><canvas id="mRing" aria-label="the ring-down after one push: blue computed, envelope e^(−γt)"></canvas></div><div class="canvasbox"><span class="ctitle">m = pL/R against R, with his two cases</span><canvas id="mLaw" aria-label="m = pL/R against R, with his two cases"></canvas></div></div>
+      <div class="cards"><div class="card"><div class="lab">decay rate γ = R/2L</div><div class="val" id="m-g"></div><div class="note" id="m-gn"></div></div><div class="card"><div class="lab">complex tone ω</div><div class="val" id="m-w"></div><div class="note" id="m-wn"></div></div><div class="card"><div class="lab">m = p/2γ = pL/R</div><div class="val" id="m-m"></div><div class="note" id="m-mn"></div></div><div class="card"><div class="lab">rings to 1/e in</div><div class="val" id="m-t"></div><div class="note" id="m-tn"></div></div></div>
+    </div>
+  </div>
+  <div class="scope gold">Reproduction note: &quot;non-Hermitian&quot; and &quot;complex tone&quot; are our words, not his; the numbers are his. m·2γ = p is proved in Lean (magnification_is_tone_over_decay). His cooling patent 685,012, &quot;intensifying and prolonging the electrical oscillations&quot;: lowering R pulls the imaginary part toward zero.</div>
+</section>
+<section class="lens" id="lens-coupled">
+  <div class="kicker">His measured coils, November 1899</div>
+  <h2>Two circuits tuned alike, coupled tight, ring at two tones</h2>
+  <p class="lede">He measured every part: secondary 9,023,000 cm and 1.382 ohm, primary 230,945 cm, mutual inductance 851,021 and 863,313 cm, secondary capacity 622 cm. Tuning the primary by his rule L₁C₁ = L₂C₂ takes 30 of his 0.0009 mfd bottles, and each circuit alone rings at 63,700 per second. Coupled at k = 0.59 they ring at about 50,500 and 100,000 per second, the two numbers he published in 1900.</p>
+  <div class="grid2">
+    <aside class="controls sticky" aria-label="Controls"><div class="control"><label for="cK">Coupling k (log scale) <output for="cK"></output></label><input type="range" id="cK" min="-4" max="-0.05" step="0.005" value="-0.2295"></div><div class="control"><label for="cR">Primary resistance R₁ (ohm) <output for="cR"></output></label><input type="range" id="cR" min="0.1" max="10" step="0.1" value="1"></div><div class="row" style="margin-top:6px" id="cPick"><button class="small" data-v="851021">M = 851,021 cm</button><button class="small" data-v="863313">M = 863,313 cm</button><button class="small" data-v="loose">Loose: k = 0.001</button></div><p class="caption" style="padding-left:0">The exact solution with losses: (z² + a₁z + 1)(z² + a₂z + 1) = k²z⁴, a = R/(Lω₀).</p></aside>
+    <div class="stage">
+      <div class="split"><div class="canvasbox"><span class="ctitle">response of his secondary to a drive in the primary</span><canvas id="cResp" aria-label="response of his secondary to a drive in the primary"></canvas></div><div class="canvasbox"><span class="ctitle">the two tones as the coupling changes</span><canvas id="cSplit" aria-label="the two tones as the coupling changes"></canvas></div></div>
+      <div class="cards"><div class="card"><div class="lab">coupling k and 1 − k²</div><div class="val" id="c-k"></div><div class="note" id="c-kn"></div></div><div class="card"><div class="lab">lower tone (per second)</div><div class="val" id="c-lo"></div><div class="note" id="c-lon"></div></div><div class="card"><div class="lab">upper tone (per second)</div><div class="val" id="c-hi"></div><div class="note" id="c-hin"></div></div><div class="card"><div class="lab">ratio of the tones</div><div class="val" id="c-r"></div><div class="note" id="c-rn"></div></div></div>
+    </div>
+  </div>
+  <div class="scope gold">His July factor &quot;1 − M²/NL ... nearly 0.6&quot;; from November k = 0.590 and 0.598, 1 − k² = 0.65 and 0.64. His 1900 figures: &quot;the fundamental vibration, which is fifty thousand per second&quot;, coils answering at &quot;twice that number&quot;. That the 1900 photographs used this November setup is untested. Lean: coupled_pair_two_tones, coupling_his_first_M, thirty_bottles. The meeting point near k = 0.004 is in our language (non-Hermitian), not his.</div>
+</section>
+<section class="lens" id="lens-quarter">
+  <div class="kicker">His law · 593,138 (1897), 787,412, the Notes</div>
+  <h2>Zero at one end, maximum at the other</h2>
+  <p class="lede">A grounded coil about a quarter wave long: "at one terminal the potential would be zero and at the other maximum." Such a wire rings only at 1, 3, 5, 7 ... times its lowest tone. His own wire lengths and tones, put through speed = 4 × length × frequency, give the speed each wire would need, against his 186,000 miles per second.</p>
+  <div class="grid2">
+    <aside class="controls sticky" aria-label="Controls"><div class="control"><label for="qT">Time (vibrations) <output for="qT"></output></label><input type="range" id="qT" min="0" max="4" step="0.01" value="0.3"></div><div class="row" style="margin-top:6px" id="qMode"><button class="small" data-v="1">Lowest tone</button><button class="small" data-v="3">3 times</button><button class="small" data-v="5">5 times</button><button class="small" data-v="2">2 times (not allowed)</button></div><p class="caption" style="padding-left:0">A wire held at zero at the ground and free at the top.</p><div class="row" style="margin-top:6px" id="qWire"><button class="small" data-v="jul">3 Jul 1899: 1 mile at 20,700</button><button class="small" data-v="jan2">2 Jan 1900: 2,750 ft at 93,110</button><button class="small" data-v="out">Jan 1900: 2,198 ft at 129,500</button></div><p class="caption" style="padding-left:0">His wires, his lengths, his tones.</p></aside>
+    <div class="stage">
+      <div class="split"><div class="canvasbox"><span class="ctitle">the standing wave on a grounded wire</span><canvas id="qWireC" aria-label="the standing wave on a grounded wire"></canvas></div><div class="canvasbox"><span class="ctitle">the speed each of his wires would need</span><canvas id="qSpeed" aria-label="the speed each of his wires would need"></canvas></div></div>
+      <div class="cards"><div class="card"><div class="lab">his wire</div><div class="val" id="q-l"></div><div class="note" id="q-ln"></div></div><div class="card"><div class="lab">his tone (per second)</div><div class="val" id="q-n"></div><div class="note" id="q-nn"></div></div><div class="card"><div class="lab">speed it would need</div><div class="val" id="q-v"></div><div class="note" id="q-vn"></div></div><div class="card"><div class="lab">against 186,000 mi/s</div><div class="val" id="q-x"></div><div class="note" id="q-xn"></div></div></div>
+    </div>
+  </div>
+  <div class="scope gold">For the slow wire he gave the reason: &quot;owing to the large capacity (distributed) in the secondary the vibration was much slower&quot;. For the outdoor coil he held the tuning off on purpose, because closer tuning broke the lamps. For 2 January his records give no reason: either the frequency was about 4% lower, or the wave ran about 4% faster. Both stand. Lean: quarter_wave_odd_tones.</div>
+</section>
+<section class="lens" id="lens-earth">
+  <div class="kicker">Patent 787,412 (filed 1900)</div>
+  <h2>One geometry: across at the speed of light, around at π/2 times it</h2>
+  <p class="lede">His figures: a wave train of "0.08484 of a second" at "about four hundred and seventy-one thousand two hundred and forty kilometers per second" over the surface, the earth's diameter "an odd multiple of the quarter wave length", and "The lowest frequency would appear to be six per second." With π = 3.1416, c = 300,000 km/s and D = 12,726 km they are one picture.</p>
+  <div class="grid2">
+    <aside class="controls sticky" aria-label="Controls"><div class="control"><label for="eT">Time (seconds) <output for="eT"></output></label><input type="range" id="eT" min="0" max="0.08484" step="0.0001" value="0.02"></div><div class="row" style="margin-top:6px" id="ePlay"><button class="small" data-v="play">Play</button></div><p class="caption" style="padding-left:0">The disturbance crosses the diameter and back while its footprint goes once round.</p></aside>
+    <div class="stage">
+      <div class="split"><div class="canvasbox"><span class="ctitle">the diameter crossed at c; the footprint on the surface</span><canvas id="eGlobe" aria-label="the diameter crossed at c; the footprint on the surface"></canvas></div><div class="canvasbox"><span class="ctitle">the tones his odd-quarter-wave rule allows</span><canvas id="eTones" aria-label="the tones his odd-quarter-wave rule allows"></canvas></div></div>
+      <div class="cards"><div class="card"><div class="lab">surface speed</div><div class="val" id="e-v"></div><div class="note" id="e-vn"></div></div><div class="card"><div class="lab">there and back</div><div class="val" id="e-t"></div><div class="note" id="e-tn"></div></div><div class="card"><div class="lab">footprint × time</div><div class="val" id="e-o"></div><div class="note" id="e-on"></div></div><div class="card"><div class="lab">lowest tone</div><div class="val" id="e-f"></div><div class="note" id="e-fn"></div></div></div>
+    </div>
+  </div>
+  <div class="scope gold">Proved in Lean (TeslaCore_v3): earth_surface_speed 471,240 = (3.1416/2) × 300,000; earth_round_trip 0.08484 = 2 × 12,726 ÷ 300,000; earth_once_round 471,240 × 0.08484 = 3.1416 × 12,726; earth_lowest_tone 1 ÷ (2 × 0.08484) lies between 5 and 6. Even multiples are not allowed by his rule.</div>
+</section>
+<section class="lens" id="lens-storm">
+  <div class="kicker">The Notes, the 1904 article, and 787,412 together</div>
+  <h2>A pattern pinned to the storm sweeps past a still detector</h2>
+  <p class="lede">"It showed clearly the existence of stationary waves ... the point where the lightning struck the ground would be a nodal point." His detector restarted about every half hour as the storm drew off to about 300 km, and his patent gives the earth waves as 25 to 70 km long. On his nodal reading each restart is the storm moving on half a wave.</p>
+  <div class="grid2">
+    <aside class="controls sticky" aria-label="Controls"><div class="control"><label for="sL">Wavelength λ (km, his range) <output for="sL"></output></label><input type="range" id="sL" min="25" max="70" step="0.5" value="50"></div><div class="control"><label for="sT">Hours since the storm was 80 km away <output for="sT"></output></label><input type="range" id="sT" min="0" max="10" step="0.01" value="0.4"></div><div class="row" style="margin-top:6px" id="sRead"><button class="small" data-v="half">One restart per half wave</button><button class="small" data-v="full">One restart per full wave</button></div><p class="caption" style="padding-left:0">The wave is the same either way; only the storm's speed and the count of restarts change.</p><div class="row" style="margin-top:6px" id="sPlay"><button class="small" data-v="play">Play</button></div><p class="caption" style="padding-left:0"></p></aside>
+    <div class="stage">
+      <div class="split"><div class="canvasbox"><span class="ctitle">the stationary wave, pinned to the storm</span><canvas id="sMap" aria-label="the stationary wave, pinned to the storm"></canvas></div><div class="canvasbox"><span class="ctitle">what his fixed detector registers</span><canvas id="sDet" aria-label="what his fixed detector registers"></canvas></div></div>
+      <div class="cards"><div class="card"><div class="lab">storm speed</div><div class="val" id="s-v"></div><div class="note" id="s-vn"></div></div><div class="card"><div class="lab">the wave vibrates</div><div class="val" id="s-f"></div><div class="note" id="s-fn"></div></div><div class="card"><div class="lab">from 80 km to 300 km</div><div class="val" id="s-h"></div><div class="note" id="s-hn"></div></div><div class="card"><div class="lab">restarts over that stretch</div><div class="val" id="s-n"></div><div class="note" id="s-nn"></div></div></div>
+    </div>
+  </div>
+  <div class="scope gold">Half-wave reading: 25 to 70 km per hour, 3 to 9 hours, 6 to 18 restarts. Full-wave reading: 50 to 140 km per hour. Frequency c/λ = 4,300 to 12,000 per second, under his limit of 20,000. His Notes give no clock times, so they do not separate the two readings. Lean: storm_speed.</div>
+</section>
+<section class="lens" id="lens-ball">
+  <div class="kicker">The Notes, 23 October and 11 November 1899</div>
+  <h2>The rise is the wire it was threaded on</h2>
+  <p class="lede">A ball alone loses capacity as it rises off the ground. His readings rose as he slid it up the vertical wire. Rebuilt from his coil, wire and ball, the circuit gives the rise: low down the coil top and the wire above crowd the ball; at the free end of the wire it takes the end's charge.</p>
+  <div class="grid2">
+    <aside class="controls sticky" aria-label="Controls"><div class="control"><label for="bH">Ball centre above ground (ft) <output for="bH"></output></label><input type="range" id="bH" min="9" max="59" step="0.1" value="34"></div><div class="row" style="margin-top:6px" id="bBall"><button class="small" data-v="30in">30-inch ball, 1,314-turn coil (11 Nov)</button><button class="small" data-v="18in">18-inch ball, 689-turn coil (23 Oct)</button></div><p class="caption" style="padding-left:0">Blue: computed from his dimensions. Amber: his readings.</p></aside>
+    <div class="stage">
+      <div class="split"><div class="canvasbox"><span class="ctitle">his arrangement: coil, No. 10 wire, the ball</span><canvas id="bScene" aria-label="his arrangement: coil, No. 10 wire, the ball"></canvas></div><div class="canvasbox"><span class="ctitle">capacity the ball adds, against height</span><canvas id="bCurve" aria-label="capacity the ball adds, against height"></canvas></div></div>
+      <div class="cards"><div class="card"><div class="lab">ball centre</div><div class="val" id="b-h"></div><div class="note" id="b-hn"></div></div><div class="card"><div class="lab">computed, the circuit</div><div class="val" id="b-m"></div><div class="note" id="b-mn"></div></div><div class="card"><div class="lab">his reading nearest</div><div class="val" id="b-r"></div><div class="note" id="b-rn"></div></div><div class="card"><div class="lab">ball alone, free</div><div class="val" id="b-f"></div><div class="note" id="b-fn"></div></div></div>
+    </div>
+  </div>
+  <div class="scope gold">Checks before any answer: the 30-inch ball alone gives 38.11 cm (C = r = 38.1); 50 ft of No. 10 wire on the coil gives 81 cm against his 81.5 by formula. For the 18-inch ball his top figure is more than twice the model&#x27;s rise; his records name streamers and eddy currents in unslit foil, both untested.</div>
+</section>
+<section class="lens" id="lens-structure">
+  <div class="kicker">The Notes, 5 to 26 November 1899</div>
+  <h2>His own doubt: the fundamental or the first octave</h2>
+  <p class="lede">For the iron-pipe structure he computed 464.8 cm from its parts. By resonance he read 339.7, 311.2, 310.6, 304.7, 305.0 and, with a new coil, 267.5 cm; with the rounded hood about 358 cm. On 26 November: "It now seems that the tuning ... was made to the first octave instead of to the fundamental tone. This is to be ascertained."</p>
+  <div class="grid2">
+    <aside class="controls sticky" aria-label="Controls"><div class="row" style="margin-top:6px" id="uTune"><button class="small" data-v="fund">Read as the fundamental</button><button class="small" data-v="oct">Read as the octave (× 4)</button></div><p class="caption" style="padding-left:0">By his own law, tuning to the octave means the true capacity is four times the value read.</p></aside>
+    <div class="stage">
+      <div class="split"><div class="canvasbox"><span class="ctitle">his readings, his computed value</span><canvas id="uBars" aria-label="his readings, his computed value"></canvas></div><div class="canvasbox"><span class="ctitle">the simple parts: straight wire, reading against his formula</span><canvas id="uWire" aria-label="the simple parts: straight wire, reading against his formula"></canvas></div></div>
+      <div class="cards"><div class="card"><div class="lab">his computed value</div><div class="val" id="u-c"></div><div class="note" id="u-cn"></div></div><div class="card"><div class="lab">his readings</div><div class="val" id="u-r"></div><div class="note" id="u-rn"></div></div><div class="card"><div class="lab">computed ÷ read</div><div class="val" id="u-x"></div><div class="note" id="u-xn"></div></div><div class="card"><div class="lab">straight wire, read ÷ formula</div><div class="val" id="u-w"></div><div class="note" id="u-wn"></div></div></div>
+    </div>
+  </div>
+  <div class="scope gold">His computed 464.8 cm lies between the fundamental reading and the octave reading; neither matches it. His records stop at &quot;This is to be ascertained&quot;. On straight wire the method was sound: 77.4 and 83.2 against 81.5 cm, and 85.85 against 84.4 cm.</div>
+</section>
+<section class="lens" id="lens-jets">
+  <div class="kicker">Patent 609,246 (1898)</div>
+  <h2>One more jet in one set than the other</h2>
+  <p class="lede">His mercury break: jets of 9 and of 10 give "ninety makes and breaks" a turn. His rule, "one more nozzle in one set than in the other", makes every meeting a separate instant. Counts that share a factor meet fewer times: 8 and 10 give only 40.</p>
+  <div class="grid2">
+    <aside class="controls sticky" aria-label="Controls"><div class="control"><label for="jA">Jets in the turning set <output for="jA"></output></label><input type="range" id="jA" min="2" max="12" step="1" value="9"></div><div class="control"><label for="jB">Nozzles in the fixed set <output for="jB"></output></label><input type="range" id="jB" min="2" max="12" step="1" value="10"></div><div class="row" style="margin-top:6px" id="jPick"><button class="small" data-v="9,10">9 and 10</button><button class="small" data-v="8,10">8 and 10</button><button class="small" data-v="5,6">5 and 6</button></div><p class="caption" style="padding-left:0">Two symmetric sets, one turning once.</p></aside>
+    <div class="stage">
+      <div class="split"><div class="canvasbox"><span class="ctitle">the two sets: a flash at every meeting</span><canvas id="jWheel" aria-label="the two sets: a flash at every meeting"></canvas></div><div class="canvasbox"><span class="ctitle">the separate meeting instants in one turn</span><canvas id="jLine" aria-label="the separate meeting instants in one turn"></canvas></div></div>
+      <div class="cards"><div class="card"><div class="lab">separate meetings a turn</div><div class="val" id="j-n"></div><div class="note" id="j-nn"></div></div><div class="card"><div class="lab">the product a × b</div><div class="val" id="j-p"></div><div class="note" id="j-pn"></div></div><div class="card"><div class="lab">shared factor</div><div class="val" id="j-g"></div><div class="note" id="j-gn"></div></div><div class="card"><div class="lab">his rule</div><div class="val" id="j-r"></div><div class="note" id="j-rn"></div></div></div>
+    </div>
+  </div>
+  <div class="scope gold">Proved in Lean: nine_ten_jets (90) and eight_ten_jets (40). Two symmetric sets of a and b meet at lcm(a, b) separate instants a turn, which is a × b exactly when they share no factor.</div>
+</section>
+<section class="lens" id="lens-turbine">
+  <div class="kicker">Patents 1,061,206 (1913) and 1,209,359 (1916)</div>
+  <h2>One third or one half: which drag law</h2>
+  <p class="lede">The turbine patent says the torque goes as the square of the fluid's relative speed, and that the work is greatest at half the fluid's speed. With work = torque × runner speed, the square law peaks at one third. Half is what his later law gives: drag "exactly proportionate to its velocity relative to the system" in a narrow gap.</p>
+  <div class="grid2">
+    <aside class="controls sticky" aria-label="Controls"><div class="control"><label for="uU">Runner speed, as a fraction of the fluid's <output for="uU"></output></label><input type="range" id="uU" min="0" max="1" step="0.005" value="0.4"></div><div class="row" style="margin-top:6px" id="uPlay"><button class="small" data-v="play">Play</button></div><p class="caption" style="padding-left:0">Work = torque × runner speed, for each drag law.</p></aside>
+    <div class="stage">
+      <div class="split"><div class="canvasbox"><span class="ctitle">the disk runner in the fluid</span><canvas id="uDisk" aria-label="the disk runner in the fluid"></canvas></div><div class="canvasbox"><span class="ctitle">work against runner speed, for each drag law</span><canvas id="uWork" aria-label="work against runner speed, for each drag law"></canvas></div></div>
+      <div class="cards"><div class="card"><div class="lab">work, square law</div><div class="val" id="w-sq"></div><div class="note" id="w-sqn"></div></div><div class="card"><div class="lab">work, linear law</div><div class="val" id="w-li"></div><div class="note" id="w-lin"></div></div><div class="card"><div class="lab">best runner speed</div><div class="val" id="w-b"></div><div class="note" id="w-bn"></div></div><div class="card"><div class="lab">the equal split, 416,194</div><div class="val" id="w-e"></div><div class="note" id="w-en"></div></div></div>
+    </div>
+  </div>
+  <div class="scope gold">Proved in Lean: turbine_square_law_third and turbine_linear_law_half, each with its equality case. The linear law&#x27;s u(V − u) is his equal split (416,194): with a fixed total the product is greatest when the parts are equal, 50 × 50 = 2,500 against 90 × 10 = 900 (equal_split).</div>
+</section>
+<section class="lens" id="lens-ledger">
+  <div class="kicker">What his records fix, and what stays open</div>
+  <h2>The record</h2>
+  <p class="lede">Fixed by his own numbers and his own laws, then the questions his records leave open. Nothing here is interpretation; where two readings fit his numbers, both stand.</p>
+  <h3>Fixed</h3>
+  <div class="table"><table><thead><tr><th>What his numbers fix</th><th>From</th></tr></thead><tbody><tr><td>The 3–4 July 1899 storm moved at 25 to 70 km per hour; the earth waves vibrated 4,300 to 12,000 times a second</td><td>Notes, 1904 article, 787,412; half-wave reading (full wave: 50 to 140 km per hour)</td></tr><tr><td>His earth figures are one geometry: diameter 12,726 km crossed at 300,000 km/s, surface speed π/2 times that, lowest tone 5.89 per second</td><td>787,412; proved in Lean</td></tr><tr><td>His octave rule is exact: twice the frequency takes a quarter of the capacity and holds a quarter of the energy</td><td>Notes, 3 Jul 1899; proved in Lean</td></tr><tr><td>The ball&#x27;s rise with height is the wire it was threaded on; within 2.4% at the top for the 30-inch ball</td><td>Notes, 23 Oct and 11 Nov 1899; the rebuilt circuit</td></tr><tr><td>His structure: computed 464.8 cm, read 267 to 358 cm, four times that if tuned to the octave; neither matches</td><td>Notes, Nov 1899</td></tr><tr><td>His straight-wire capacities agree with his formula within a few per cent; the resonance method was sound</td><td>Notes, 28 Oct, 10 and 16 Nov 1899</td></tr><tr><td>On 2 January 1900 his wire was 4% longer than the quarter wave: either the frequency was 4% lower or the wave ran 4% faster</td><td>Notes, 2 Jan 1900; both stand</td></tr><tr><td>His measured November coils ring at two tones an octave apart, about 50,500 and 100,000 per second</td><td>Notes, Nov 1899; his 1900 figures</td></tr><tr><td>His condensers, controllers, quarter-wave rule and magnifying rule were fixed before Colorado and carried into the patents after it</td><td>1886–1928 patents</td></tr></tbody></table></div>
+  <h3 style="margin-top:18px">Still open</h3>
+  <div class="table"><table><thead><tr><th>Open</th><th>Why</th></tr></thead><tbody><tr><td>Which single wavelength belonged to 3–4 July</td><td>The patent gives the range from &quot;a large number of observations&quot;</td></tr><tr><td>Whether his structure tunings were to the fundamental or the octave</td><td>&quot;This is to be ascertained&quot;; nothing later settles it</td></tr><tr><td>The rise in the ball readings beyond the conductor model, largest for the 18-inch ball</td><td>Streamers and eddy currents in unslit foil; both untested</td></tr><tr><td>Ground or air at long range: the earth alone, or the earth with the upper atmosphere as a second plate</td><td>Tesla&#x27;s pages and Marinčić (1978) side by side; untested</td></tr><tr><td>His 1916 interview in full</td><td>Only excerpts seen</td></tr><tr><td>The New York notes of 1900–1901</td><td>Located (Nikola Tesla Museum, 2008), not read</td></tr></tbody></table></div>
+</section>
+</main>
+<footer class="wrap">What Tesla Saw Mixer · Jeromie Beasley · built from What Tesla Saw (September 2026): the Colorado Springs Notes 1899–1900, all 112 of his US patents, his 1900 and 1904 accounts, and the Belgrade archive.</footer>
+
+<script>
+/* ===== Dirac Time Mixer: shared core (from the VOTKP Mixer) ===== */
+'use strict';
+const CSS = getComputedStyle(document.documentElement);
+const C = {};
+['bg','panel','line','ink','ink2','muted','dim','gold','teal','violet','red','blue','green','orange','pos','neg','rec','null'].forEach(k => C[k] = CSS.getPropertyValue('--' + k).trim());
+const MONO = '"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace';
+const SERIF = '"Crimson Pro",Georgia,"Iowan Old Style",Palatino,serif';
+const SANS = '"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif';
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const lerp = (a, b, t) => a + (b - a) * t;
+const TAU = Math.PI * 2;
+
+/* ---- global clock and lens registry (the recorder can freeze time) ---- */
+const GM = {
+  lenses: {}, order: [], active: null, frozen: null, t0: performance.now(),
+  calm: window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches,
+  now() { return this.frozen != null ? this.frozen : (performance.now() - this.t0) / 1000; },
+  freeze(t) { this.frozen = t; }, thaw() { this.frozen = null; },
+  add(id, lens) { this.lenses[id] = lens; this.order.push(id); },
+  show(id) {
+    if (!this.lenses[id]) id = this.order[0];
+    this.active = id;
+    $$('.lens').forEach(s => s.classList.toggle('active', s.id === 'lens-' + id));
+    $$('nav.tabs button').forEach(b => b.classList.toggle('active', b.dataset.lens === id));
+    const L = this.lenses[id];
+    if (L && !L._init) { L._init = true; L.init && L.init(); }
+    requestAnimationFrame(() => { Stage.resizeAll(); L && L.draw && L.draw(this.now()); });
+    try { history.replaceState(null, '', '#' + id); } catch (e) {}
+  },
+  frame() {
+    const L = this.lenses[this.active];
+    if (L && L.draw && L.animated) L.draw(this.now());
+  }
+};
+function loop() { GM.frame(); requestAnimationFrame(loop); }
+
+/* ---- HiDPI canvas stage ---- */
+class Stage {
+  constructor(canvas, aspect) {
+    this.c = canvas; this.ctx = canvas.getContext('2d'); this.aspect = aspect || 0.6;
+    this.W = 600; this.H = 360; Stage.all.push(this); this.resize();
+  }
+  resize() {
+    const w = Math.max(200, Math.round(this.c.clientWidth || this.c.parentElement.clientWidth || 600));
+    const ar = typeof this.aspect === 'function' ? this.aspect(w) : this.aspect;
+    const h = Math.round(w * ar);
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    if (this.c.width !== Math.round(w * dpr) || this.c.height !== Math.round(h * dpr)) {
+      this.c.width = Math.round(w * dpr); this.c.height = Math.round(h * dpr);
+      this.c.style.height = h + 'px';
+    }
+    this.W = w; this.H = h; this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  clear(bg) { const x = this.ctx; x.save(); x.setTransform(1, 0, 0, 1, 0, 0); x.clearRect(0, 0, this.c.width, this.c.height); x.restore(); if (bg) { x.fillStyle = bg; x.fillRect(0, 0, this.W, this.H); } }
+  static resizeAll() { Stage.all.forEach(s => { if (s.c.offsetParent !== null) s.resize(); }); }
+}
+Stage.all = [];
+let _rz; window.addEventListener('resize', () => { clearTimeout(_rz); _rz = setTimeout(() => { Stage.resizeAll(); const L = GM.lenses[GM.active]; L && L.draw && L.draw(GM.now()); }, 80); });
+
+/* ---- drawing helpers ---- */
+function glow(ctx, color, blur) { ctx.shadowColor = color; ctx.shadowBlur = blur; }
+function noglow(ctx) { ctx.shadowBlur = 0; ctx.shadowColor = 'transparent'; }
+function line(ctx, pts, color, w = 2, g = 0, dash) {
+  if (pts.length < 2) return;
+  ctx.save(); ctx.strokeStyle = color; ctx.lineWidth = w; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+  if (dash) ctx.setLineDash(dash); if (g) glow(ctx, color, g);
+  ctx.beginPath(); let pen = false;
+  for (const p of pts) { if (!p || !isFinite(p[0]) || !isFinite(p[1])) { pen = false; continue; } if (!pen) { ctx.moveTo(p[0], p[1]); pen = true; } else ctx.lineTo(p[0], p[1]); }
+  ctx.stroke(); ctx.restore();
+}
+function dot(ctx, x, y, r, color, g = 0, stroke) {
+  ctx.save(); if (g) glow(ctx, color, g); ctx.fillStyle = color; ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); ctx.fill();
+  if (stroke) { ctx.shadowBlur = 0; ctx.strokeStyle = stroke; ctx.lineWidth = 1.5; ctx.stroke(); } ctx.restore();
+}
+function text(ctx, s, x, y, o = {}) {
+  ctx.save(); ctx.fillStyle = o.color || C.ink2; ctx.font = o.font || `12px ${SANS}`;
+  ctx.textAlign = o.align || 'left'; ctx.textBaseline = o.base || 'alphabetic';
+  if (o.glow) glow(ctx, o.color || C.ink, o.glow);
+  if (o.bg) { const m = ctx.measureText(s); const pad = 4; const w = m.width + pad * 2; let bx = x - pad; if (ctx.textAlign === 'center') bx = x - w / 2; if (ctx.textAlign === 'right') bx = x - w + pad; ctx.fillStyle = o.bg; ctx.fillRect(bx, y - 12, w, 16); ctx.fillStyle = o.color || C.ink2; }
+  ctx.fillText(s, x, y); ctx.restore();
+}
+function arrow(ctx, x0, y0, x1, y1, color, w = 2, g = 0, head = 9) {
+  const a = Math.atan2(y1 - y0, x1 - x0);
+  ctx.save(); ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = w; ctx.lineCap = 'round'; if (g) glow(ctx, color, g);
+  ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1 - Math.cos(a) * head * .6, y1 - Math.sin(a) * head * .6); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x1 - head * Math.cos(a - .42), y1 - head * Math.sin(a - .42)); ctx.lineTo(x1 - head * Math.cos(a + .42), y1 - head * Math.sin(a + .42)); ctx.closePath(); ctx.fill(); ctx.restore();
+}
+function rgba(hex, a) { const h = hex.replace('#', ''); const n = parseInt(h.length === 3 ? h.split('').map(c => c + c).join('') : h, 16); return `rgba(${n >> 16 & 255},${n >> 8 & 255},${n & 255},${a})`; }
+
+/* ---- plot frame with linear or log axes ---- */
+class Frame {
+  constructor(ctx, box, xr, yr, o = {}) {
+    Object.assign(this, { ctx, box, xr, yr, xlog: !!o.xlog, ylog: !!o.ylog });
+    const [x, y, w, h] = box; this.x0 = x; this.y0 = y; this.w = w; this.h = h;
+  }
+  tx(v) { const [a, b] = this.xr; const t = this.xlog ? (Math.log10(v) - Math.log10(a)) / (Math.log10(b) - Math.log10(a)) : (v - a) / (b - a); return this.x0 + t * this.w; }
+  ty(v) { const [a, b] = this.yr; const t = this.ylog ? (Math.log10(v) - Math.log10(a)) / (Math.log10(b) - Math.log10(a)) : (v - a) / (b - a); return this.y0 + this.h - t * this.h; }
+  ix(px) { const [a, b] = this.xr; const t = (px - this.x0) / this.w; return this.xlog ? Math.pow(10, Math.log10(a) + t * (Math.log10(b) - Math.log10(a))) : a + t * (b - a); }
+  iy(py) { const [a, b] = this.yr; const t = (this.y0 + this.h - py) / this.h; return this.ylog ? Math.pow(10, Math.log10(a) + t * (Math.log10(b) - Math.log10(a))) : a + t * (b - a); }
+  pts(xs, f) { return xs.map(x => { const y = f(x); return (y == null || !isFinite(y)) ? null : [this.tx(x), this.ty(y)]; }); }
+  clip() { const c = this.ctx; c.save(); c.beginPath(); c.rect(this.x0, this.y0, this.w, this.h); c.clip(); }
+  unclip() { this.ctx.restore(); }
+  axes(o = {}) {
+    const c = this.ctx; c.save();
+    c.fillStyle = o.bg || 'rgba(3,22,30,.6)'; c.fillRect(this.x0, this.y0, this.w, this.h);
+    c.strokeStyle = 'rgba(125,249,255,.07)'; c.lineWidth = 1;
+    const xt = o.xticks || ticks(this.xr, this.xlog, o.nx || 6), yt = o.yticks || ticks(this.yr, this.ylog, o.ny || 5);
+    c.beginPath(); xt.forEach(v => { const X = Math.round(this.tx(v)) + .5; c.moveTo(X, this.y0); c.lineTo(X, this.y0 + this.h); });
+    yt.forEach(v => { const Y = Math.round(this.ty(v)) + .5; c.moveTo(this.x0, Y); c.lineTo(this.x0 + this.w, Y); }); c.stroke();
+    c.strokeStyle = 'rgba(125,249,255,.22)'; c.strokeRect(this.x0 + .5, this.y0 + .5, this.w - 1, this.h - 1);
+    c.fillStyle = C.muted; c.font = `10.5px ${MONO}`;
+    const fx = o.fx || (v => fmtTick(v, this.xlog)), fy = o.fy || (v => fmtTick(v, this.ylog));
+    if (!o.noxl) { c.textAlign = 'center'; c.textBaseline = 'top'; xt.forEach(v => c.fillText(fx(v), this.tx(v), this.y0 + this.h + 5)); }
+    if (!o.noyl) { c.textAlign = 'right'; c.textBaseline = 'middle'; yt.forEach(v => c.fillText(fy(v), this.x0 - 6, this.ty(v))); }
+    if (o.xlabel) { c.textAlign = 'center'; c.textBaseline = 'top'; c.fillStyle = C.ink2; c.font = `11.5px ${SANS}`; c.fillText(o.xlabel, this.x0 + this.w / 2, this.y0 + this.h + 21); }
+    if (o.ylabel) { c.save(); c.translate(this.x0 - (o.ylabelOff || 44), this.y0 + this.h / 2); c.rotate(-Math.PI / 2); c.textAlign = 'center'; c.textBaseline = 'bottom'; c.fillStyle = C.ink2; c.font = `11.5px ${SANS}`; c.fillText(o.ylabel, 0, 0); c.restore(); }
+    c.restore();
+  }
+  hline(v, color, dash = [4, 4], w = 1) { line(this.ctx, [[this.x0, this.ty(v)], [this.x0 + this.w, this.ty(v)]], color, w, 0, dash); }
+  vline(v, color, dash = [4, 4], w = 1) { line(this.ctx, [[this.tx(v), this.y0], [this.tx(v), this.y0 + this.h]], color, w, 0, dash); }
+}
+function ticks(r, log, n) {
+  let [a, b] = r; if (a > b) [a, b] = [b, a];
+  if (log) { const out = []; for (let e = Math.ceil(Math.log10(a) - 1e-9); e <= Math.floor(Math.log10(b) + 1e-9); e++) out.push(Math.pow(10, e)); if (out.length > 9) return out.filter((_, i) => i % 2 === 0); return out; }
+  const span = b - a, raw = span / n, mag = Math.pow(10, Math.floor(Math.log10(raw))); const f = raw / mag;
+  const st = (f < 1.5 ? 1 : f < 3.5 ? 2 : f < 7.5 ? 5 : 10) * mag; const out = [];
+  for (let v = Math.ceil(a / st) * st; v <= b + st * 1e-6; v += st) out.push(Math.abs(v) < st * 1e-9 ? 0 : v);
+  return out;
+}
+function fmtTick(v, log) {
+  if (log) { const e = Math.round(Math.log10(v)); return e === 0 ? '1' : e === 1 ? '10' : '10' + sup(e); }
+  if (v === 0) return '0'; const a = Math.abs(v);
+  if (a >= 1e4 || a < 1e-3) return v.toExponential(0).replace('e', 'e'); return +v.toPrecision(4) + '';
+}
+const SUPS = { '-': '⁻', '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹' };
+function sup(n) { return String(n).split('').map(ch => SUPS[ch] || ch).join(''); }
+/* scientific number formatting with unicode exponent */
+function sci(v, d = 3) {
+  if (v == null || !isFinite(v)) return '—';
+  if (v === 0) return '0';
+  const a = Math.abs(v);
+  if (a >= 1e-3 && a < 1e5) { const s = v.toPrecision(d + 1); return (+s).toString().length > s.length ? s : s.replace(/(\.\d*?[1-9])0+$/, '$1').replace(/\.0+$/, ''); }
+  const e = Math.floor(Math.log10(a)); const m = v / Math.pow(10, e);
+  return m.toFixed(d - 1) + '×10' + sup(e);
+}
+function fix(v, d = 4) { return (v == null || !isFinite(v)) ? '—' : (v >= 0 ? '+' : '−') + Math.abs(v).toFixed(d); }
+function sgn(v, d = 3) { if (v == null || !isFinite(v)) return '—'; const s = sci(Math.abs(v), d); return (v > 0 ? '+' : v < 0 ? '−' : '') + s; }
+
+/* ---- complex numbers as [re, im] ---- */
+const cx = {
+  add: (a, b) => [a[0] + b[0], a[1] + b[1]], sub: (a, b) => [a[0] - b[0], a[1] - b[1]],
+  mul: (a, b) => [a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0]],
+  div: (a, b) => { const d = b[0] * b[0] + b[1] * b[1]; return [(a[0] * b[0] + a[1] * b[1]) / d, (a[1] * b[0] - a[0] * b[1]) / d]; },
+  sc: (a, s) => [a[0] * s, a[1] * s], conj: a => [a[0], -a[1]], abs: a => Math.hypot(a[0], a[1]), arg: a => Math.atan2(a[1], a[0]),
+  exp: a => { const e = Math.exp(a[0]); return [e * Math.cos(a[1]), e * Math.sin(a[1])]; },
+  log: a => [Math.log(Math.hypot(a[0], a[1])), Math.atan2(a[1], a[0])],
+  sqrt: a => { const r = Math.hypot(a[0], a[1]); const re = Math.sqrt((r + a[0]) / 2); const im = Math.sign(a[1] || 1) * Math.sqrt(Math.max(0, (r - a[0]) / 2)); return [re, im]; },
+  i: [0, 1], one: [1, 0], zero: [0, 0], of: (re, im = 0) => [re, im]
+};
+/* 2x2 complex matrices as [[a,b],[c,d]] */
+const m2 = {
+  mul: (A, B) => [[cx.add(cx.mul(A[0][0], B[0][0]), cx.mul(A[0][1], B[1][0])), cx.add(cx.mul(A[0][0], B[0][1]), cx.mul(A[0][1], B[1][1]))],
+                  [cx.add(cx.mul(A[1][0], B[0][0]), cx.mul(A[1][1], B[1][0])), cx.add(cx.mul(A[1][0], B[0][1]), cx.mul(A[1][1], B[1][1]))]],
+  sub: (A, B) => A.map((r, i) => r.map((v, j) => cx.sub(v, B[i][j]))), add: (A, B) => A.map((r, i) => r.map((v, j) => cx.add(v, B[i][j]))),
+  sc: (A, s) => A.map(r => r.map(v => cx.sc(v, s))), tr: A => cx.add(A[0][0], A[1][1]),
+  fro: A => Math.sqrt(A.flat().reduce((s, v) => s + v[0] * v[0] + v[1] * v[1], 0)),
+  det: A => cx.sub(cx.mul(A[0][0], A[1][1]), cx.mul(A[0][1], A[1][0]))
+};
+
+/* ---- small real linear algebra ---- */
+function sym2eig(a, b, c) { /* eigenvalues of [[a,b],[b,c]] ascending, with unit eigenvectors */
+  const t = (a + c) / 2, d = Math.hypot((a - c) / 2, b); const l1 = t - d, l2 = t + d;
+  let v1 = Math.abs(b) > 1e-300 ? [b, l1 - a] : (a <= c ? [1, 0] : [0, 1]); const n1 = Math.hypot(v1[0], v1[1]); v1 = [v1[0] / n1, v1[1] / n1];
+  return { l: [l1, l2], v: [v1, [-v1[1], v1[0]]] };
+}
+function jacobiEig(A) { /* symmetric n x n, returns ascending eigenvalues and eigenvectors (columns) */
+  const n = A.length; const a = A.map(r => r.slice()); const V = a.map((r, i) => r.map((_, j) => i === j ? 1 : 0));
+  for (let sweep = 0; sweep < 60; sweep++) {
+    let off = 0; for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) off += a[i][j] * a[i][j];
+    if (off < 1e-26) break;
+    for (let p = 0; p < n; p++) for (let q = p + 1; q < n; q++) {
+      if (Math.abs(a[p][q]) < 1e-300) continue;
+      const th = (a[q][q] - a[p][p]) / (2 * a[p][q]); const t = Math.sign(th || 1) / (Math.abs(th) + Math.sqrt(th * th + 1));
+      const cs = 1 / Math.sqrt(t * t + 1), sn = t * cs;
+      for (let k = 0; k < n; k++) { const akp = a[k][p], akq = a[k][q]; a[k][p] = cs * akp - sn * akq; a[k][q] = sn * akp + cs * akq; }
+      for (let k = 0; k < n; k++) { const apk = a[p][k], aqk = a[q][k]; a[p][k] = cs * apk - sn * aqk; a[q][k] = sn * apk + cs * aqk; }
+      for (let k = 0; k < n; k++) { const vkp = V[k][p], vkq = V[k][q]; V[k][p] = cs * vkp - sn * vkq; V[k][q] = sn * vkp + cs * vkq; }
+    }
+  }
+  const idx = [...Array(n).keys()].sort((i, j) => a[i][i] - a[j][j]);
+  return { l: idx.map(i => a[i][i]), V: idx.map(i => V.map(r => r[i])) };
+}
+/* deterministic random numbers so every viewer sees the same draws */
+function mulberry(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function gauss(r) { let u = 0, v = 0; while (u === 0) u = r(); v = r(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(TAU * v); }
+
+/* ---- slider binding ---- */
+function bindRange(id, onChange, fmt) {
+  const el = document.getElementById(id); const out = document.querySelector(`output[for="${id}"]`);
+  const upd = () => { const v = parseFloat(el.value); if (out) out.textContent = fmt ? fmt(v) : v; onChange(v); };
+  el.addEventListener('input', upd); if (out) out.textContent = fmt ? fmt(parseFloat(el.value)) : el.value;
+  return { el, get v() { return parseFloat(el.value); }, set(v) { el.value = v; if (out) out.textContent = fmt ? fmt(parseFloat(el.value)) : el.value; } };
+}
+function setText(id, s) { const e = document.getElementById(id); if (e) e.textContent = s; }
+function setHTML(id, s) { const e = document.getElementById(id); if (e) e.innerHTML = s; }
+function setNote(id, s, cls) { const e = document.getElementById(id); if (e) { e.textContent = s; e.className = 'note ' + (cls || ''); } }
+function copyText(s, msgEl) {
+  const done = ok => { if (msgEl) { msgEl.textContent = ok ? 'Copied to the clipboard.' : 'Copy was blocked here. The text is selected below; press Ctrl+C or Cmd+C.'; } };
+  try { navigator.clipboard.writeText(s).then(() => done(true), () => done(false)); } catch (e) { done(false); }
+}
+/* drag on a canvas: calls fn(x, y) in CSS pixels while the pointer is down */
+function dragOn(canvas, fn) {
+  let down = false;
+  const at = e => { const r = canvas.getBoundingClientRect(); fn(e.clientX - r.left, e.clientY - r.top, e); };
+  canvas.addEventListener('pointerdown', e => { down = true; canvas.setPointerCapture(e.pointerId); at(e); });
+  canvas.addEventListener('pointermove', e => { if (down) at(e); });
+  canvas.addEventListener('pointerup', () => down = false); canvas.addEventListener('pointercancel', () => down = false);
+}
+/* contour-integral particles: points running around a circle */
+function contourParticles(ctx, cxp, cyp, rp, t, color, n = 18, speed = .35) {
+  for (let k = 0; k < n; k++) {
+    const th = (k / n + t * speed) * TAU; const x = cxp + rp * Math.cos(th), y = cyp - rp * Math.sin(th);
+    dot(ctx, x, y, 1.9, color, 8);
+  }
+}
+/* marching squares on a scalar grid, returns segments in grid coords */
+function marching(F, nx, ny) {
+  const segs = [];
+  for (let j = 0; j < ny - 1; j++) for (let i = 0; i < nx - 1; i++) {
+    const a = F[j * nx + i], b = F[j * nx + i + 1], c = F[(j + 1) * nx + i + 1], d = F[(j + 1) * nx + i];
+    const pts = [];
+    const e = (v0, v1, x0, y0, x1, y1) => { if ((v0 > 0) !== (v1 > 0)) { const t = v0 / (v0 - v1); pts.push([x0 + (x1 - x0) * t, y0 + (y1 - y0) * t]); } };
+    e(a, b, i, j, i + 1, j); e(b, c, i + 1, j, i + 1, j + 1); e(d, c, i, j + 1, i + 1, j + 1); e(a, d, i, j, i, j + 1);
+    if (pts.length === 2) segs.push(pts); else if (pts.length === 4) { segs.push([pts[0], pts[1]]); segs.push([pts[2], pts[3]]); }
+  }
+  return segs;
+}
+/* the unit set of a real symmetric 2x2 form: ellipse, parallel lines or hyperbola, drawn around (ox,oy) with scale s px */
+function drawConic(ctx, ox, oy, s, a, b, c, o = {}) {
+  const E = sym2eig(a, b, c); const [l1, l2] = E.l; const [v1, v2] = E.v; const R = o.R || 3.2;
+  const P = (p, q) => [ox + s * (p * v1[0] + q * v2[0]), oy - s * (p * v1[1] + q * v2[1])];
+  const tol = o.tol || 1e-12 * Math.max(Math.abs(l1), Math.abs(l2), 1e-300);
+  const out = { kind: '', l: [l1, l2] };
+  if (l1 > tol && l2 > tol) { /* ellipse g=1 */
+    const pts = []; for (let k = 0; k <= 160; k++) { const th = k / 160 * TAU; pts.push(P(Math.cos(th) / Math.sqrt(l1), Math.sin(th) / Math.sqrt(l2))); }
+    ctx.save(); ctx.fillStyle = rgba(o.pos || C.pos, .09); ctx.beginPath(); pts.forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1])); ctx.fill(); ctx.restore();
+    line(ctx, pts, o.pos || C.pos, 2.2, 14); out.kind = 'definite';
+  } else if (l1 < -tol && l2 < -tol) {
+    const pts = []; for (let k = 0; k <= 160; k++) { const th = k / 160 * TAU; pts.push(P(Math.cos(th) / Math.sqrt(-l1), Math.sin(th) / Math.sqrt(-l2))); }
+    line(ctx, pts, o.neg || C.neg, 2.2, 14, [6, 4]); out.kind = 'negative definite';
+  } else if (Math.abs(l1) <= tol || Math.abs(l2) <= tol) { /* degenerate: parallel lines along the null eigenvector */
+    const lp = Math.abs(l1) <= tol ? l2 : l1; const nullv = Math.abs(l1) <= tol ? 0 : 1; const q = 1 / Math.sqrt(Math.abs(lp));
+    const along = t => nullv === 0 ? [t, 0] : [0, t]; const off = nullv === 0 ? [0, q] : [q, 0];
+    for (const sg of [1, -1]) { const pts = [-R, R].map(t => { const A = along(t); return P(A[0] + sg * off[0], A[1] + sg * off[1]); }); line(ctx, pts, lp > 0 ? (o.pos || C.pos) : (o.neg || C.neg), 2, 12); }
+    const nl = [-R, R].map(t => { const A = along(t); return P(A[0], A[1]); }); line(ctx, nl, C.null, 2.4, 18);
+    out.kind = 'degenerate';
+  } else { /* hyperbola: l1 < 0 < l2 ; g = +1 branches and g = -1 branches and the null lines */
+    const ap = 1 / Math.sqrt(l2), an = 1 / Math.sqrt(-l1);
+    const br = (sgn, pos) => { const pts = []; for (let k = -80; k <= 80; k++) { const u = k / 80 * 2.4; if (pos) pts.push(P(an * Math.sinh(u), sgn * ap * Math.cosh(u))); else pts.push(P(sgn * an * Math.cosh(u), ap * Math.sinh(u))); } return pts; };
+    line(ctx, br(1, true), o.pos || C.pos, 2.1, 12); line(ctx, br(-1, true), o.pos || C.pos, 2.1, 12);
+    line(ctx, br(1, false), o.neg || C.neg, 1.8, 10, [6, 4]); line(ctx, br(-1, false), o.neg || C.neg, 1.8, 10, [6, 4]);
+    const k = Math.sqrt(-l1 / l2); /* null directions: -|l1| p^2 + l2 q^2 = 0  => q = ± p sqrt(|l1|/l2) */
+    for (const sg of [1, -1]) { const pts = [-R, R].map(t => P(t, sg * t * k)); line(ctx, pts, C.null, 2.2, 18); }
+    out.kind = 'indefinite';
+  }
+  return out;
+}
+/* legend box inside a plot frame: items are [label, color, dash] */
+function legend(ctx, F, items, pos = 'tr') {
+  ctx.save(); ctx.font = `11px ${SANS}`;
+  const w = Math.max(...items.map(i => ctx.measureText(i[0]).width)) + 28, h = items.length * 15 + 8;
+  const x = pos[1] === 'r' ? F.x0 + F.w - w - 8 : F.x0 + 8, y = pos[0] === 't' ? F.y0 + 6 : F.y0 + F.h - h - 6;
+  ctx.fillStyle = 'rgba(5,9,20,.78)'; ctx.strokeStyle = 'rgba(53,81,111,.8)'; ctx.fillRect(x, y, w, h); ctx.strokeRect(x + .5, y + .5, w - 1, h - 1); ctx.restore();
+  items.forEach(([lab, col, dash], i) => { const yy = y + 15 + i * 15; line(ctx, [[x + 7, yy - 4], [x + 21, yy - 4]], col, 2.2, 0, dash); text(ctx, lab, x + 26, yy, { color: col, font: `11px ${SANS}` }); });
+}
+
+/* ---- play clock helpers ---- */
+function advance(L, t, key, max, loopTo, min) {
+  const st = L.st;
+  if (st.play) {
+    const dt = L._last == null ? 0 : Math.min(0.1, Math.max(0, t - L._last)); st[key] += dt * st.speed * (st.dir || 1);
+    if (st[key] > max) st[key] = loopTo; if (min != null && st[key] < min) st[key] = loopTo;
+  }
+  L._last = t;
+}
+function syncBtn(id, play) { const b = document.getElementById(id); if (b) b.textContent = play ? 'Pause' : 'Play'; }
+
+/* ---- Einstein addition, real and complex ---- */
+const oplus = (a, b) => (a + b) / (1 + a * b);
+const coplus = (a, b) => cx.div(cx.add(a, b), cx.add(cx.one, cx.mul(a, b)));
+
+/* ---- the Smith disk: unit circle, real diameter, rings of constant |Γ| ---- */
+function smithDisk(c, ox, oy, R, o = {}) {
+  c.save();
+  const g = c.createRadialGradient(ox, oy, 0, ox, oy, R); g.addColorStop(0, 'rgba(22,40,68,.55)'); g.addColorStop(1, 'rgba(10,20,36,.25)');
+  c.fillStyle = g; c.beginPath(); c.arc(ox, oy, R, 0, TAU); c.fill();
+  c.strokeStyle = 'rgba(120,150,190,.14)'; c.lineWidth = 1;
+  for (const q of (o.rings || [0.25, 0.5, 0.75])) { c.beginPath(); c.arc(ox, oy, R * q, 0, TAU); c.stroke(); }
+  c.beginPath(); c.moveTo(ox - R, oy); c.lineTo(ox + R, oy); c.moveTo(ox, oy - R); c.lineTo(ox, oy + R); c.stroke();
+  c.restore();
+  line(c, circlePts(ox, oy, R, 180), o.rim || '#e8dcb8', 1.8, 10);
+  if (!o.nolabels) {
+    text(c, '|Γ| = 1', ox + R * .72, oy - R * .72 - 6, { color: C.muted, font: `10.5px ${MONO}` });
+    [0.5].forEach(q => text(c, '½', ox + R * q + 3, oy - 4, { color: C.dim, font: `10px ${MONO}` }));
+  }
+}
+function circlePts(ox, oy, R, n = 120) { const p = []; for (let i = 0; i <= n; i++) { const a = i / n * TAU; p.push([ox + R * Math.cos(a), oy - R * Math.sin(a)]); } return p; }
+
+/* ---- optical constants: linear interpolation of n and k, as the paper's scripts do ---- */
+function nkAt(metal, lam) {
+  const T = DATA.nk[metal]; if (lam <= T[0][0]) return [T[0][1], T[0][2]]; if (lam >= T[T.length - 1][0]) return [T[T.length - 1][1], T[T.length - 1][2]];
+  for (let i = 0; i < T.length - 1; i++) if (lam >= T[i][0] && lam <= T[i + 1][0]) { const f = (lam - T[i][0]) / (T[i + 1][0] - T[i][0]); return [lerp(T[i][1], T[i + 1][1], f), lerp(T[i][2], T[i + 1][2], f)]; }
+}
+const OPT = {
+  gamma: N => cx.div(cx.sub(cx.one, N), cx.add(cx.one, N)),
+  r12: (N, ns) => cx.div(cx.sub(N, [ns, 0]), cx.add(N, [ns, 0])),
+  echo: (N, d, lam, ns) => cx.mul(OPT.r12(N, ns), cx.exp(cx.mul([0, 4 * Math.PI * d / lam], N))),   /* x = r12 e^{4πiNd/λ} */
+  r: (N, d, lam, ns) => coplus(OPT.gamma(N), OPT.echo(N, d, lam, ns)),                                   /* r = Γ ⊕ x, the top face */
+  R: (N, d, lam, ns) => { const r = OPT.r(N, d, lam, ns); return r[0] * r[0] + r[1] * r[1]; },
+  shunt: (y, n0, nb) => { const Y = cx.add([nb, 0], y); return cx.div(cx.sub([n0, 0], Y), cx.add([n0, 0], Y)); }
+};
+/* the circle of Theorem 6.2 for front surface a: centre x_c = −conj(C)/A with A = 1 − |a|⁴, C = conj(a)(1 − a²) */
+function frontCircle(a) {
+  const A = 1 - Math.pow(cx.abs(a), 4); const Cc = cx.mul(cx.conj(a), cx.sub(cx.one, cx.mul(a, a)));
+  const xc = cx.sc(cx.conj(Cc), -1 / A); return { A, C: Cc, xc, rad: cx.abs(xc) };
+}
+const NBSP = ' ';
+
+/* ===== UPG Mixer: shared helpers ===== */
+const MINUS = '−';
+function signed(x, d = 6) { if (x == null || !isFinite(x)) return '—'; return (x < 0 ? MINUS : x > 0 ? '+' : '') + Math.abs(x).toFixed(d); }
+function fx(x, d = 4) { if (x == null || !isFinite(x)) return '—'; return (x < 0 ? MINUS : '') + Math.abs(x).toFixed(d); }
+/* a row of buttons acting as one choice; onPick(value) */
+function btnGroup(id, onPick, initial) {
+  const box = document.getElementById(id); if (!box) return { set() {} };
+  const bs = Array.from(box.querySelectorAll('button'));
+  const mark = v => bs.forEach(b => b.classList.toggle('active', b.dataset.v === String(v)));
+  bs.forEach(b => b.addEventListener('click', () => { mark(b.dataset.v); onPick(b.dataset.v); }));
+  if (initial != null) mark(initial);
+  return { set: mark };
+}
+/* a play/pause button inside a button group */
+function playBtn(id, L) {
+  const box = document.getElementById(id); if (!box) return; const b = box.querySelector('button[data-v="play"]'); if (!b) return;
+  b.addEventListener('click', () => { L.st.play = !L.st.play; b.textContent = L.st.play ? 'Pause' : 'Play'; b.classList.toggle('active', L.st.play); });
+}
+/* ---- real dense linear algebra ---- */
+const LA = {
+  zeros: (n, m) => Array.from({ length: n }, () => new Array(m == null ? n : m).fill(0)),
+  eye: n => Array.from({ length: n }, (_, i) => Array.from({ length: n }, (_, j) => i === j ? 1 : 0)),
+  mul: (A, B) => A.map(r => B[0].map((_, j) => r.reduce((s, a, k) => s + a * B[k][j], 0))),
+  T: A => A[0].map((_, j) => A.map(r => r[j])),
+  add: (A, B, s = 1) => A.map((r, i) => r.map((v, j) => v + s * B[i][j])),
+  sc: (A, s) => A.map(r => r.map(v => v * s)),
+  fro: A => Math.sqrt(A.reduce((s, r) => s + r.reduce((t, v) => t + v * v, 0), 0)),
+  tr: A => A.reduce((s, r, i) => s + r[i], 0),
+  sym: (n, rnd) => { const A = LA.zeros(n); for (let i = 0; i < n; i++) for (let j = i; j < n; j++) { const v = gauss(rnd); A[i][j] = v; A[j][i] = v; } return A; },
+  /* log det of a symmetric positive definite matrix by Cholesky; null if not positive */
+  logdetPD(A) { const n = A.length, L = LA.zeros(n); let s = 0;
+    for (let i = 0; i < n; i++) for (let j = 0; j <= i; j++) { let v = A[i][j]; for (let k = 0; k < j; k++) v -= L[i][k] * L[j][k];
+      if (i === j) { if (v <= 0) return null; L[i][i] = Math.sqrt(v); s += Math.log(L[i][i]); } else L[i][j] = v / L[j][j]; }
+    return 2 * s; },
+  /* determinant by LU with partial pivoting */
+  det(A) { const n = A.length, M = A.map(r => r.slice()); let d = 1;
+    for (let c = 0; c < n; c++) { let p = c; for (let r = c + 1; r < n; r++) if (Math.abs(M[r][c]) > Math.abs(M[p][c])) p = r;
+      if (Math.abs(M[p][c]) < 1e-300) return 0; if (p !== c) { [M[p], M[c]] = [M[c], M[p]]; d = -d; } d *= M[c][c];
+      for (let r = c + 1; r < n; r++) { const f = M[r][c] / M[c][c]; for (let k = c; k < n; k++) M[r][k] -= f * M[c][k]; } }
+    return d; },
+  inv(A) { const n = A.length, M = A.map((r, i) => r.concat(LA.eye(n)[i]));
+    for (let c = 0; c < n; c++) { let p = c; for (let r = c + 1; r < n; r++) if (Math.abs(M[r][c]) > Math.abs(M[p][c])) p = r;
+      [M[p], M[c]] = [M[c], M[p]]; const d = M[c][c]; for (let k = 0; k < 2 * n; k++) M[c][k] /= d;
+      for (let r = 0; r < n; r++) if (r !== c) { const f = M[r][c]; for (let k = 0; k < 2 * n; k++) M[r][k] -= f * M[c][k]; } }
+    return M.map(r => r.slice(n)); }
+};
+/* complex Hermitian eigenproblem (Re, Im parts) through the real embedding [[Re, −Im], [Im, Re]] */
+function hermEig(Re, Im) {
+  const n = Re.length, E = LA.zeros(2 * n);
+  for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) { E[i][j] = Re[i][j]; E[i + n][j + n] = Re[i][j]; E[i][j + n] = -Im[i][j]; E[i + n][j] = Im[i][j]; }
+  const R = jacobiEig(E); const l = [], vr = [], vi = [];
+  for (let k = 0; k < 2 * n; k += 2) { l.push(R.l[k]); const v = R.V[k]; vr.push(v.slice(0, n)); vi.push(v.slice(n)); }
+  return { l, vr, vi };
+}
+/* signature of a Hermitian matrix given by (Re, Im): each eigenvalue appears twice in the embedding */
+function hermSignature(Re, Im, tol = 1e-9) {
+  const n = Re.length, E = LA.zeros(2 * n);
+  for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) { E[i][j] = Re[i][j]; E[i + n][j + n] = Re[i][j]; E[i][j + n] = -Im[i][j]; E[i + n][j] = Im[i][j]; }
+  const l = jacobiEig(E).l; let s = 0; l.forEach(x => { if (x > tol) s++; else if (x < -tol) s--; }); return s / 2;
+}
+/* diverging colour for a value in [−1, 1] */
+function divColor(v, a = 1) {
+  const t = clamp(v, -1, 1); const p = [124, 186, 255], q = [255, 141, 152], z = [22, 34, 56];
+  const c = t >= 0 ? p : q; const u = Math.pow(Math.abs(t), 0.7);
+  return `rgba(${Math.round(z[0] + (c[0] - z[0]) * u)},${Math.round(z[1] + (c[1] - z[1]) * u)},${Math.round(z[2] + (c[2] - z[2]) * u)},${a})`;
+}
+/* matrix heatmap at (x, y) with square cells; o.hl = [[r0,r1,c0,c1,color]] outlines */
+function heat(c, M, x, y, cell, vmax, o = {}) {
+  const n = M.length, m = M[0].length;
+  for (let i = 0; i < n; i++) for (let j = 0; j < m; j++) { c.fillStyle = o.color ? o.color(M[i][j]) : divColor(M[i][j] / vmax); c.fillRect(x + j * cell + 0.5, y + i * cell + 0.5, cell - 1, cell - 1); }
+  (o.hl || []).forEach(([r0, r1, c0, c1, col]) => { c.save(); c.strokeStyle = col; c.lineWidth = 2; glow(c, col, 8); c.strokeRect(x + c0 * cell, y + r0 * cell, (c1 - c0) * cell, (r1 - r0) * cell); c.restore(); });
+  if (o.label) text(c, o.label, x + m * cell / 2, y - 8, { align: 'center', color: o.lcolor || C.ink2, font: `13px ${SERIF}` });
+}
+function gcd(a, b) { a = Math.abs(a); b = Math.abs(b); while (b) [a, b] = [b, a % b]; return a; }
+/* canvas shape, and the first clear row below the caption tag on each canvas */
+function ASP(w) { return w < 640 ? 0.98 : 0.74; }
+function top0(S) { return S.W < 520 ? 64 : 48; }
+/* text kept inside [lo, hi]: shifted in from whichever side it would cross */
+function textFit(ctx, s, x, y, o, lo, hi) {
+  ctx.save(); ctx.font = o.font || `12px ${SANS}`; const w = ctx.measureText(s).width; ctx.restore();
+  const al = o.align || 'left'; let x0 = al === 'center' ? x - w / 2 : al === 'right' ? x - w : x;
+  x0 = Math.max(lo, Math.min(hi - w, x0));
+  text(ctx, s, x0, y, Object.assign({}, o, { align: 'left' }));
+}
+
+/* ===== Lens 1: the period of a circuit, n = 1/(2π√(LC)); the octave of 3 July 1899 ===== */
+const Tone = {
+  animated: true,
+  st: { J: 15 },
+  n15: 20700,                       /* his record: 15 jars a side, "n = 20,700 per sec. approx." */
+  nOf(J) { return this.n15 * Math.sqrt(15 / J); },   /* his law at fixed L: n goes as 1/√C, and C as the jars */
+  init() {
+    this.sC = new Stage($('#tCirc'), ASP);
+    this.sL = new Stage($('#tLaw'), ASP);
+    this.rJ = bindRange('tJ', v => { this.st.J = v; this.bP.set(String(v)); }, v => v);
+    this.bP = btnGroup('tPick', v => { this.st.J = +v; this.rJ.set(+v); }, '15');
+    this.ph = 0; this._lt = null;
+  },
+  set(p) { Object.assign(this.st, p); this.rJ.set(this.st.J); this.bP.set(String(this.st.J)); this.draw(GM.now()); },
+  draw(t) {
+    const st = this.st, J = st.J, n = this.nOf(J), n48 = this.nOf(48);
+    const dt = this._lt == null ? 0 : Math.min(0.1, Math.max(0, t - this._lt)); this._lt = t;
+    this.ph += dt * TAU * 0.55 * (n / this.n15);        /* drawn swing: 0.55 per second at his 20,700 */
+    const q = Math.cos(this.ph), i = Math.sin(this.ph);
+    /* ---- the circuit ---- */
+    const S = this.sC, c = S.ctx; S.clear();
+    const W = S.W, H = S.H, T0 = top0(S), bx = W * 0.06, bw = W * 0.42, by = T0 + 40, bh = H - by - 60;
+    const cols = Math.ceil(Math.sqrt(J * 1.6)), rows = Math.ceil(J / cols), jw = bw / cols, jh = Math.min(bh / rows, jw * 1.6);
+    for (let k = 0; k < J; k++) {
+      const x = bx + (k % cols) * jw, y = by + Math.floor(k / cols) * jh, w = jw * 0.72, h = jh * 0.78;
+      c.save(); c.strokeStyle = rgba(C.teal, 0.55); c.lineWidth = 1.2; c.strokeRect(x, y, w, h);
+      const f = Math.abs(q), col = q >= 0 ? C.blue : C.violet;
+      glow(c, col, 8 * f); c.fillStyle = rgba(col, 0.15 + 0.65 * f); c.fillRect(x + 2, y + h * (1 - 0.85 * f), w - 4, h * 0.85 * f - 2); c.restore();
+    }
+    text(c, `${J} jars on each side`, bx + bw / 2, by + rows * jh + 18, { align: 'center', color: C.ink2, font: `12.5px ${SANS}` });
+    /* coil */
+    const cx = W * 0.69, cy0 = T0 + 40, cy1 = H - 40, cr = W * 0.08, turns = 14, fI = Math.abs(i);
+    for (let k = 0; k < turns; k++) {
+      const y = cy0 + (cy1 - cy0) * (k + 0.5) / turns;
+      c.save(); c.strokeStyle = rgba(C.teal, 0.35 + 0.6 * fI); c.lineWidth = 2; glow(c, C.teal, 14 * fI);
+      c.beginPath(); c.ellipse(cx, y, cr, cr * 0.28, 0, 0, TAU); c.stroke(); c.restore();
+    }
+    for (let k = 0; k < 3; k++) { const r = cr * (1.6 + 0.9 * k) * (0.6 + 0.4 * fI); c.save(); c.strokeStyle = rgba(C.teal, 0.18 * fI); c.lineWidth = 1.2; c.beginPath(); c.ellipse(cx, (cy0 + cy1) / 2, r, (cy1 - cy0) * 0.62, 0, 0, TAU); c.stroke(); c.restore(); }
+        /* wires, with the current flowing */
+    const wy0 = T0 + 18, wy1 = H - 16, jx = bx + bw + 6, bb = by + rows * jh;
+    line(c, [[bx + bw / 2, by - 4], [bx + bw / 2, wy0], [cx, wy0], [cx, cy0 - 4]], rgba(C.teal, 0.5), 1.6);
+    line(c, [[bx + bw / 2, bb + 26], [bx + bw / 2, wy1], [cx, wy1], [cx, cy1 + 4]], rgba(C.teal, 0.5), 1.6);
+    const u = ((this.ph / TAU) % 1 + 1) % 1;
+    for (let k = 0; k < 6; k++) { const s = ((k / 6) + u * Math.sign(i || 1)) % 1; const x = bx + bw / 2 + (cx - bx - bw / 2) * ((s + 1) % 1); dot(c, x, wy0, 2.4, rgba(C.teal, 0.3 + 0.7 * fI), 8 * fI); }
+    text(c, 'the charge in the jars', bx + bw / 2 + 8, wy0 + 16, { color: C.blue, font: `12px ${SANS}` });
+    text(c, 'the field', cx + cr + 6, (cy0 + cy1) / 2 - 4, { color: C.teal, font: `12px ${SANS}` });
+    text(c, 'in the coil', cx + cr + 6, (cy0 + cy1) / 2 + 12, { color: C.teal, font: `12px ${SANS}` });
+    /* ---- the law ---- */
+    const L = this.sL, g = L.ctx; L.clear();
+    const T1 = top0(L), F = new Frame(g, [66, T1, L.W - 88, L.H * 0.58 - T1], [4, 60], [0, 42000]);
+    F.axes({ noxl: true, ylabel: 'tone n (per second)', ylabelOff: 52, yticks: [0, 10000, 20000, 30000, 40000], fy: v => v.toLocaleString('en-US') });
+    const xs = []; for (let k = 0; k <= 200; k++) xs.push(4 + 56 * k / 200);
+    line(g, F.pts(xs, x => this.nOf(x)), C.blue, 2.6, 10);
+    /* the octave bracket: 48 jars and 12 jars */
+    const p48 = [F.tx(48), F.ty(n48)], p12 = [F.tx(12), F.ty(this.nOf(12))];
+    line(g, [[p12[0], p12[1]], [p12[0], F.ty(n48)]], rgba(C.blue, 0.6), 1.2, 0, [3, 3]);
+    line(g, [[p12[0], F.ty(n48)], [p48[0], p48[1]]], rgba(C.blue, 0.6), 1.2, 0, [3, 3]);
+    dot(g, p48[0], p48[1], 5, C.blue, 12); dot(g, p12[0], p12[1], 5, C.blue, 12);
+    text(g, '48 jars', p48[0] + 8, p48[1] - 8, { color: C.blue, font: `11.5px ${SANS}` });
+    text(g, '× 2', p12[0] - 5, (p12[1] + F.ty(n48)) / 2 + 4, { align: 'right', color: C.blue, font: `bold 11.5px ${SANS}` });
+    textFit(g, L.W < 520 ? '12 jars: the octave' : '12 jars: the octave, twice the tone of 48', F.tx(17), F.ty(n48) + 16, { color: C.blue, font: `11.5px ${SANS}` }, F.x0 + 4, F.x0 + F.w - 4);
+    line(g, [[F.tx(15), F.ty(20700)], [F.tx(27), F.ty(31000)]], rgba(C.gold, 0.6), 1); dot(g, F.tx(15), F.ty(20700), 6.5, C.gold, 14); text(g, 'his 20,700 at 15 jars', F.tx(27) + 4, F.ty(31000) - 2, { color: C.gold, font: `11.5px ${SANS}` });
+    F.vline(J, rgba(C.teal, 0.6), [2, 3], 1); dot(g, F.tx(J), F.ty(n), 4.5, C.teal, 12);
+    const G = new Frame(g, [66, L.H * 0.58 + 22, L.W - 88, L.H * 0.42 - 70], [4, 60], [0, 1.3]);
+    G.axes({ xlabel: 'jars on each side', ylabel: 'energy ÷ 48', ylabelOff: 52, yticks: [0, 0.25, 1] });
+    line(g, G.pts(xs, x => x / 48), rgba(C.blue, 0.9), 2, 6);
+    G.hline(0.25, rgba(C.blue, 0.5), [3, 3], 1); textFit(g, L.W < 520 ? '"only 1/4 of the energy"' : '¼ at 12 jars: "only 1/4 of the energy"', G.tx(27), G.ty(0.25) - 6, { color: C.gold, font: `11px ${SANS}` }, G.x0 + 4, G.x0 + G.w - 4);
+    dot(g, G.tx(J), G.ty(J / 48), 4.5, C.teal, 12);
+    setText('t-n', Math.round(n).toLocaleString('en-US')); setNote('t-nn', J === 15 ? 'his record, 3 July 1899' : `n = 20,700 × √(15 ÷ ${J})`, J === 15 ? 'null' : 'pos');
+    setText('t-r', `× ${(n / n48).toFixed(3)}`); setNote('t-rn', J === 12 ? 'exactly twice: the octave' : '1/√(jars ÷ 48)', J === 12 ? 'rec' : '');
+    setText('t-e', `× ${(J / 48).toFixed(3)}`); setNote('t-en', J === 12 ? 'a quarter, as he wrote' : '½CV² at one voltage', J === 12 ? 'rec' : '');
+    const lam = 186000 / n; setText('t-w', `${lam.toFixed(2)} mi`); setNote('t-wn', `a quarter of it: ${(lam / 4).toFixed(2)} mi`, J === 15 ? 'null' : '');
+  }
+};
+GM.add('tone', Tone);
+
+/* ===== Lens 2: magnification m = pL/R = p/2γ; his extra coil of 2 January 1900 ===== */
+const Mag = {
+  animated: true,
+  st: { lr: 0 },
+  p: 585000, L: 0.018,               /* his figures, 2 January 1900 */
+  init() {
+    this.sR = new Stage($('#mRing'), ASP);
+    this.sL = new Stage($('#mLaw'), ASP);
+    this.rR = bindRange('mR', v => { this.st.lr = v; }, v => { const R = Math.pow(10, v); return (R < 10 ? R.toFixed(2) : Math.round(R).toLocaleString('en-US')) + ' ohm'; });
+    this.bP = btnGroup('mPick', v => { this.st.lr = +v; this.rR.set(+v); }, '0');
+  },
+  set(p) { Object.assign(this.st, p); this.rR.set(this.st.lr); this.draw(GM.now()); },
+  draw(t) {
+    const R = +Math.pow(10, this.st.lr).toPrecision(4), p = this.p, L = this.L, gam = R / (2 * L), wr = Math.sqrt(Math.max(0, p * p - gam * gam)), m = p * L / R;
+    const nE = p / (TAU * gam);          /* vibrations to 1/e = m/π */
+    /* ---- the ring-down ---- */
+    const S = this.sR, c = S.ctx; S.clear();
+    const span = 3 * nE;                 /* three time constants, in vibrations */
+    const F = new Frame(c, [60, top0(S), S.W - 80, S.H - top0(S) - 50], [0, span], [-1.15, 1.15]);
+    F.axes({ xlabel: 'vibrations after the push', ylabel: 'swing', ylabelOff: 40, ny: 4, nx: S.W < 520 ? 3 : 4, fx: v => v >= 1000 ? Math.round(v).toLocaleString('en-US') : +v.toPrecision(3) + '' });
+    const drawn = 48, per = span / drawn, xs = [];
+    for (let k = 0; k <= 1200; k++) xs.push(span * k / 1200);
+    F.clip();
+    line(c, F.pts(xs, x => Math.exp(-x / nE) * Math.cos(TAU * x / per)), rgba(C.blue, 0.85), 1.4, 6);
+    line(c, F.pts(xs, x => Math.exp(-x / nE)), C.teal, 2, 8); line(c, F.pts(xs, x => -Math.exp(-x / nE)), C.teal, 2, 8);
+    F.unclip();
+    F.vline(nE, rgba(C.gold, 0.7), [4, 3], 1.2); text(c, '1/e', F.tx(nE) + 5, F.y0 + 14, { color: C.gold, font: `11.5px ${SANS}` });
+    const cur = (t * 0.22 % 1) * span, amp = Math.exp(-cur / nE);
+    F.vline(cur, rgba(C.ink, 0.35), [2, 3], 1); dot(c, F.tx(cur), F.ty(amp), 4.5, C.teal, 12);
+    text(c, `each drawn swing stands for ${per >= 10 ? Math.round(per).toLocaleString('en-US') : per.toFixed(2)} real vibrations`, F.x0 + F.w - 6, F.y0 + F.h - 8, { align: 'right', color: C.muted, font: `11px ${SANS}` });
+    /* ---- the law ---- */
+    const G2 = this.sL, g = G2.ctx; G2.clear();
+    const G = new Frame(g, [66, top0(G2), G2.W - 88, G2.H - top0(G2) - 50], [0.1, 3162], [1, 1e5], { xlog: true, ylog: true });
+    G.axes({ xlabel: 'resistance R (ohm)', ylabel: 'magnifying factor m', ylabelOff: 50 });
+    const rs = []; for (let k = 0; k <= 200; k++) rs.push(Math.pow(10, -1 + 4.5 * k / 200));
+    line(g, G.pts(rs, r => p * L / r), C.blue, 2.6, 10);
+    dot(g, G.tx(1), G.ty(10530), 6.5, C.gold, 14); text(g, '10,530: coil alone (his)', G.tx(1) + 10, G.ty(10530) - 8, { color: C.gold, font: `11.5px ${SANS}` });
+    dot(g, G.tx(1000), G.ty(10.53), 6.5, C.gold, 14); text(g, '"about 10" with the lamps', G.tx(1000) - 10, G.ty(10.53) - 12, { align: 'right', color: C.gold, font: `11.5px ${SANS}` });
+    dot(g, G.tx(R), G.ty(m), 5, C.teal, 14);
+    text(g, 'halve R, double m: his cooling patent 685,012', G.x0 + 8, G.y0 + G.h - 10, { color: C.blue, font: `11px ${SANS}` });
+    setText('m-g', `${gam < 100 ? gam.toFixed(1) : Math.round(gam).toLocaleString('en-US')} per second`); setNote('m-gn', 'γ = R/2L', '');
+    setText('m-w', `${Math.round(wr).toLocaleString('en-US')} − i·${gam < 100 ? gam.toFixed(1) : Math.round(gam).toLocaleString('en-US')}`); setNote('m-wn', 'real: the swing; imaginary: the dying away', '');
+    setText('m-m', m >= 100 ? Math.round(m).toLocaleString('en-US') : m.toFixed(2)); setNote('m-mn', `p ÷ 2γ = ${m >= 100 ? Math.round(p / (2 * gam)).toLocaleString('en-US') : (p / (2 * gam)).toFixed(2)}`, 'rec');
+    const tE = 1 / gam; setText('m-t', tE >= 0.001 ? `${tE.toFixed(3)} s` : `${(tE * 1e6).toFixed(0)} millionths of a second`); setNote('m-tn', `about ${nE >= 10 ? Math.round(nE).toLocaleString('en-US') : nE.toFixed(1)} vibrations`, '');
+  }
+};
+GM.add('magnify', Mag);
+
+/* ===== Lens 3: his measured November coils; two tuned circuits, coupled, ring at two tones ===== */
+/* roots of a polynomial with real coefficients c[0] + c[1] z + ... + c[n] z^n (Durand–Kerner) */
+function polyRoots(c) {
+  while (c.length > 1 && Math.abs(c[c.length - 1]) < 1e-12) c = c.slice(0, -1);
+  const n = c.length - 1; if (n < 1) return []; const a = c.map(v => v / c[n]);
+  const ev = z => { let r = [1, 0]; for (let k = n - 1; k >= 0; k--) { r = [r[0] * z[0] - r[1] * z[1] + a[k], r[0] * z[1] + r[1] * z[0]]; } return r; };
+  let Z = [], zk = [1, 0]; for (let k = 0; k < n; k++) { Z.push(zk.slice()); zk = [zk[0] * 0.4 - zk[1] * 0.9, zk[0] * 0.9 + zk[1] * 0.4]; }
+  const div = (x, y) => { const q = y[0] * y[0] + y[1] * y[1]; return [(x[0] * y[0] + x[1] * y[1]) / q, (x[1] * y[0] - x[0] * y[1]) / q]; };
+  for (let it = 0; it < 800; it++) { let mv = 0;
+    Z = Z.map((z, i) => { let den = [1, 0]; Z.forEach((w, j) => { if (j !== i) { const d = [z[0] - w[0], z[1] - w[1]]; den = [den[0] * d[0] - den[1] * d[1], den[0] * d[1] + den[1] * d[0]]; } });
+      const st = div(ev(z), den); mv = Math.max(mv, Math.hypot(...st)); return [z[0] - st[0], z[1] - st[1]]; });
+    if (mv < 1e-15) break; }
+  return Z;
+}
+const Cpl = {
+  animated: true,
+  st: { lk: -0.2295, R1: 1 },
+  /* his measured values, in his units (cm of inductance = 1e-9 H; cm of capacity = 1/9e11 F) */
+  L1: 230945e-9, L2: 9023000e-9, R2: 1.382, C2: 622 / 9e11,
+  init() {
+    this.C1 = this.L2 * this.C2 / this.L1; this.w0 = 1 / Math.sqrt(this.L2 * this.C2); this.n0 = this.w0 / TAU;
+    this.sR = new Stage($('#cResp'), ASP);
+    this.sS = new Stage($('#cSplit'), w => w < 640 ? 1.15 : 0.74);
+    this.rK = bindRange('cK', v => { this.st.lk = v; this.bP.set(''); }, v => 'k = ' + Math.pow(10, v).toFixed(v < -2 ? 5 : 4));
+    this.rR = bindRange('cR', v => { this.st.R1 = v; }, v => v.toFixed(1) + ' ohm');
+    const kOf = M => M * 1e-9 / Math.sqrt(this.L1 * this.L2);
+    this.bP = btnGroup('cPick', v => { const k = v === 'loose' ? 0.001 : kOf(+v); this.st.lk = Math.log10(k); this.rK.set(this.st.lk); }, '851021');
+    this.kM1 = kOf(851021); this.kM2 = kOf(863313);
+  },
+  set(p) { Object.assign(this.st, p); this.rK.set(this.st.lk); this.rR.set(this.st.R1); this.draw(GM.now()); },
+  modes(k, R1) {                      /* complex tones: roots of (1−k²)z⁴ + (a1+a2)z³ + (2+a1a2)z² + (a1+a2)z + 1 */
+    const a1 = R1 / (this.L1 * this.w0), a2 = this.R2 / (this.L2 * this.w0);
+    const r = polyRoots([1, a1 + a2, 2 + a1 * a2, a1 + a2, 1 - k * k]).filter(z => z[1] > 0).sort((u, v) => u[1] - v[1]);
+    return r.map(z => ({ n: z[1] * this.n0, d: -z[0] * this.w0 }));
+  },
+  resp(x, k, R1) {                    /* |voltage on his secondary| for a drive in the primary, up to a constant */
+    const a1 = R1 / (this.L1 * this.w0), a2 = this.R2 / (this.L2 * this.w0), y = x - 1 / x;
+    const re = a1 * a2 - y * y + k * k * x * x, im = y * (a1 + a2);
+    return k / Math.hypot(re, im);
+  },
+  build() {
+    const key = this.st.lk.toFixed(4) + '|' + this.st.R1.toFixed(2);
+    if (this._key === key) return; this._key = key;
+    const k = Math.pow(10, this.st.lk), R1 = this.st.R1;
+    this.m = this.modes(k, R1);
+    /* response, with dense samples about each tone so the sharp peaks are caught */
+    const ns = []; for (let i = 0; i <= 1400; i++) ns.push(30000 + 100000 * i / 1400);
+    this.m.forEach(q => { for (let j = -300; j <= 300; j++) ns.push(q.n + j * Math.max(2, q.d / 150)); });
+    ns.sort((a, b) => a - b);
+    const vals = ns.map(n => this.resp(n / this.n0, k, R1)); const mx = Math.max(...vals);
+    this.curve = ns.map((n, i) => [n, vals[i] / mx]).filter(p => p[0] >= 30000 && p[0] <= 130000);
+    /* the fan of tones against coupling, recomputed when R₁ moves */
+    if (this._R !== R1) {
+      this._R = R1; this.fan = [];
+      for (let i = 0; i <= 260; i++) { const kk = Math.pow(10, -4 + (Math.log10(0.9) + 4) * i / 260); const mm = this.modes(kk, R1); if (mm.length === 2) this.fan.push([kk, mm[0], mm[1]]); }
+      const a1 = R1 / (this.L1 * this.w0), a2 = this.R2 / (this.L2 * this.w0); this.kEP = Math.abs(a1 - a2) / 2;
+    }
+  },
+  draw(t) {
+    this.build();
+    const st = this.st, k = Math.pow(10, st.lk), m = this.m, n0 = this.n0;
+    /* ---- response ---- */
+    const S = this.sR, c = S.ctx; S.clear();
+    const F = new Frame(c, [66, top0(S) + 14, S.W - 88, S.H - top0(S) - 64], [30000, 130000], [1e-3, 1.6], { ylog: true });
+    F.axes({ xlabel: 'drive in the primary (per second)', ylabel: 'secondary swing (top = 1)', ylabelOff: 50, fx: v => (v / 1000) + 'k', xticks: [30000, 50000, 63734, 80000, 100000, 130000].filter(v => v !== 63734) });
+    F.vline(n0, rgba(C.ink, 0.25), [3, 4], 1); text(c, 'each alone:', F.tx(n0) + 5, F.ty(0.25), { color: C.muted, font: `11px ${SANS}` }); text(c, '63,700', F.tx(n0) + 5, F.ty(0.25) + 14, { color: C.muted, font: `11px ${SANS}` });
+    [[50000, 'fifty thousand (his 1900)'], [100000, 'twice that']].forEach(([v, s], i) => {
+      line(c, [[F.tx(v), F.y0 + F.h], [F.tx(v), F.y0 + F.h - 12]], C.gold, 3, 8); text(c, s, F.tx(v) + 6, F.y0 + F.h - 16 - (i ? 0 : 16), { color: C.gold, font: `11.5px ${SANS}` });
+    });
+    F.clip(); line(c, this.curve.map(p => [F.tx(p[0]), F.ty(Math.max(1e-3, p[1]))]), C.blue, 2.2, 10); F.unclip();
+    const u = (t * 0.07) % 1, nd = 30000 + 100000 * (0.5 - 0.5 * Math.cos(TAU * u));
+    const ai = this.curve.findIndex(p => p[0] >= nd), yv = ai >= 0 ? this.curve[ai][1] : 1e-3;
+    F.vline(nd, rgba(C.teal, 0.45), [2, 3], 1); dot(c, F.tx(nd), F.ty(Math.max(1e-3, yv)), 4 + 6 * Math.sqrt(yv), C.teal, 8 + 30 * yv);
+    m.forEach((q, i) => text(c, (Math.round(q.n / 10) * 10).toLocaleString('en-US'), F.tx(q.n), F.ty(1.6) + 14, { align: 'center', color: C.blue, font: `bold 12px ${SANS}` }));
+    /* ---- the fan ---- */
+    const G2 = this.sS, g = G2.ctx; G2.clear();
+    const top = top0(G2), hA = (G2.H - top - 70) * 0.6, hB = (G2.H - top - 70) * 0.4;
+    const A = new Frame(g, [66, top, G2.W - 88, hA], [1e-4, 0.9], [30000, 130000], { xlog: true });
+    A.axes({ noxl: true, ylabel: 'tones', ylabelOff: 50, fy: v => (v / 1000) + 'k', yticks: [40000, 60000, 80000, 100000, 120000] });
+    const band = (F2, a, b, col, al) => { g.save(); g.fillStyle = rgba(col, al); g.fillRect(F2.tx(a), F2.y0, F2.tx(b) - F2.tx(a), F2.h); g.restore(); };
+    band(A, 0.57, 0.60, C.gold, 0.28); band(A, this.kEP * 0.7, this.kEP, C.violet, 0.22);
+    line(g, this.fan.map(p => [A.tx(p[0]), A.ty(p[1].n)]), C.blue, 2.2, 8); line(g, this.fan.map(p => [A.tx(p[0]), A.ty(p[2].n)]), C.blue, 2.2, 8);
+    text(g, 'his measured k, 0.57 to 0.60', A.tx(0.57) - 6, A.y0 + 16, { align: 'right', color: C.gold, font: `11.5px ${SANS}` });
+    { const s1 = 'the tones meet', s2 = `near k ≈ ${this.kEP < 0.01 ? this.kEP.toFixed(4) : this.kEP.toFixed(3)} (our words)`; g.font = `11.5px ${SANS}`;
+      const wd = Math.max(g.measureText(s1).width, g.measureText(s2).width), xl = A.tx(this.kEP) + 6, rt = xl + wd > A.x0 + A.w - 4;
+      const xx = rt ? A.tx(this.kEP * 0.7) - 6 : xl, al = rt ? 'right' : 'left';
+      textFit(g, s1, xx, A.y0 + A.h - 24, { align: al, color: C.violet, font: `11.5px ${SANS}` }, A.x0 + 4, A.x0 + A.w - 4); textFit(g, s2, xx, A.y0 + A.h - 9, { align: al, color: C.violet, font: `11.5px ${SANS}` }, A.x0 + 4, A.x0 + A.w - 4); }
+    A.vline(k, rgba(C.teal, 0.6), [2, 3], 1); m.forEach(q => dot(g, A.tx(k), A.ty(q.n), 4.5, C.teal, 12));
+    const B = new Frame(g, [66, top + hA + 14, G2.W - 88, hB], [1e-4, 0.9], [10, 1e5], { xlog: true, ylog: true });
+    B.axes({ xlabel: 'coupling k (log scale)', ylabel: 'per second', ylabelOff: 50, yticks: [10, 1000, 1e5] });
+    band(B, 0.57, 0.60, C.gold, 0.28); band(B, this.kEP * 0.7, this.kEP, C.violet, 0.22);
+    line(g, this.fan.map(p => [B.tx(p[0]), B.ty(Math.max(10, p[2].n - p[1].n))]), C.blue, 2, 6);
+    line(g, this.fan.map(p => [B.tx(p[0]), B.ty(p[1].d)]), rgba(C.violet, 0.9), 1.4, 0, [4, 3]);
+    line(g, this.fan.map(p => [B.tx(p[0]), B.ty(p[2].d)]), rgba(C.violet, 0.9), 1.4, 0, [4, 3]);
+    text(g, 'gap between the tones', B.x0 + B.w - 6, B.ty(3e4) + 4, { align: 'right', color: C.blue, font: `11px ${SANS}` });
+    text(g, 'how fast each dies away', B.x0 + 8, B.y0 + 14, { color: C.violet, font: `11px ${SANS}` });
+    B.vline(k, rgba(C.teal, 0.6), [2, 3], 1);
+    const lo = m[0], hi = m[1] || m[0];
+    setText('c-k', `${k.toFixed(k < 0.01 ? 4 : 3)} · ${(1 - k * k).toFixed(3)}`);
+    setNote('c-kn', Math.abs(k - this.kM1) < 2e-4 ? 'M = 851,021 cm; his July "nearly 0.6"' : Math.abs(k - this.kM2) < 2e-4 ? 'M = 863,313 cm' : `M = ${Math.round(k * Math.sqrt(this.L1 * this.L2) * 1e9).toLocaleString('en-US')} cm`, Math.abs(k - this.kM1) < 2e-4 || Math.abs(k - this.kM2) < 2e-4 ? 'null' : '');
+    setText('c-lo', (Math.round(lo.n / 10) * 10).toLocaleString('en-US')); setNote('c-lon', `dies away at ${Math.round(lo.d).toLocaleString('en-US')} per second`, '');
+    setText('c-hi', (Math.round(hi.n / 10) * 10).toLocaleString('en-US')); setNote('c-hin', `dies away at ${Math.round(hi.d).toLocaleString('en-US')} per second`, '');
+    const r = hi.n / lo.n; setText('c-r', r.toFixed(3));
+    setNote('c-rn', r > 1.9 ? 'close to an octave' : k < this.kEP * 1.05 ? 'the tones have met' : `n₀/√(1 − k) ÷ n₀/√(1 + k) = ${Math.sqrt((1 + k) / (1 - k)).toFixed(3)}`, r > 1.9 ? 'rec' : '');
+  }
+};
+GM.add('coupled', Cpl);
+
+/* ===== Lens 4: the quarter wave; zero at the ground, maximum at the free top; odd tones only ===== */
+const Qtr = {
+  animated: true,
+  st: { T: 0.3, mode: 1, wire: 'jul' },
+  wires: {
+    jul: { name: '1 mile of secondary', ft: 5280, n: 20700, when: '3 July 1899' },
+    jan2: { name: '2,750 ft: extra coil and ground wire', ft: 2750, n: 93110, when: '2 January 1900' },
+    out: { name: '2,198 ft: outdoor coil', ft: 2198, n: 129500, when: 'January 1900' }
+  },
+  init() {
+    this.sW = new Stage($('#qWireC'), ASP);
+    this.sS = new Stage($('#qSpeed'), ASP);
+    this.rT = bindRange('qT', v => { this.st.T = v; }, v => v.toFixed(2));
+    this.bM = btnGroup('qMode', v => { this.st.mode = +v; }, '1');
+    this.bW = btnGroup('qWire', v => { this.st.wire = v; }, 'jul');
+    this._lt = null;
+  },
+  set(p) { Object.assign(this.st, p); this.rT.set(this.st.T); this.bM.set(String(this.st.mode)); this.bW.set(this.st.wire); this.draw(GM.now()); },
+  speed(w) { return 4 * (w.ft / 5280) * w.n; },
+  draw(t) {
+    const st = this.st;
+    const dt = this._lt == null ? 0 : Math.min(0.1, Math.max(0, t - this._lt)); this._lt = t;
+    st.T = (st.T + dt * 0.35) % 4; this.rT.set(st.T);
+    const md = st.mode, ok = md % 2 === 1;
+    /* ---- the wire ---- */
+    const S = this.sW, c = S.ctx; S.clear();
+    const gx = S.W * 0.42, gy = S.H - 54, ty = top0(S) + 30, Lp = gy - ty, amp = S.W * 0.22;
+    /* ground */
+    line(c, [[gx - S.W * 0.32, gy], [gx + S.W * 0.32, gy]], rgba(C.teal, 0.6), 2);
+    for (let k = -6; k <= 6; k++) line(c, [[gx + k * S.W * 0.05, gy], [gx + k * S.W * 0.05 - 10, gy + 12]], rgba(C.teal, 0.35), 1.2);
+    text(c, 'ground: potential zero', gx + S.W * 0.2, gy + 30, { align: 'center', color: C.ink2, font: `12px ${SANS}` });
+    line(c, [[gx, gy], [gx, ty]], rgba(C.ink, 0.55), 2.2);
+    dot(c, gx, ty, 7, C.teal, 16);
+    const A = y => Math.sin(md * Math.PI * y / 2);                 /* y = 0 at the ground, 1 at the top */
+    const ph = Math.cos(TAU * md * st.T), col = ok ? C.blue : C.red;
+    const env = [], env2 = [], wav = [];
+    for (let i = 0; i <= 200; i++) { const y = i / 200, Y = gy - y * Lp; env.push([gx + amp * A(y), Y]); env2.push([gx - amp * A(y), Y]); wav.push([gx + amp * A(y) * ph, Y]); }
+    line(c, env, rgba(col, 0.35), 1.2, 0, [4, 4]); line(c, env2, rgba(col, 0.35), 1.2, 0, [4, 4]);
+    line(c, wav, col, 2.8, 14);
+    for (let i = 1; i < 12; i++) { const y = i / 12, Y = gy - y * Lp, a = A(y) * ph; if (Math.abs(a) > 0.08) arrow(c, gx, Y, gx + amp * a, Y, rgba(col, 0.35), 1.2, 0, 6); }
+    const topA = A(1);
+    if (ok) text(c, `free top: maximum (${md === 1 ? 'the quarter wave' : md + ' quarter waves'})`, gx, ty - 16, { align: 'center', color: C.blue, font: `12px ${SANS}` });
+    else {
+      text(c, 'the free top must be a maximum; here it is zero', gx, ty - 16, { align: 'center', color: C.red, font: `12px ${SANS}` });
+      line(c, [[gx - 9, ty - 9], [gx + 9, ty + 9]], C.red, 2.4); line(c, [[gx + 9, ty - 9], [gx - 9, ty + 9]], C.red, 2.4);
+    }
+    /* nodes */
+    for (let j = 0; j <= md; j++) { const y = 2 * j / md; if (y > 1.0001) break; if (Math.abs(topA) < 1e-6 && y > 0.999) continue; dot(c, gx, gy - y * Lp, 4, rgba(C.ink, 0.8)); }
+    text(c, `${md} × the lowest tone${ok ? '' : ': not allowed'}`, 14, gy - 14, { align: 'left', color: ok ? C.ink2 : C.red, font: `12.5px ${SANS}` });
+    /* ---- the speeds ---- */
+    const G2 = this.sS, g = G2.ctx; G2.clear();
+    const keys = ['jul', 'jan2', 'out'], F = new Frame(g, [66, top0(G2) + 8, G2.W - 88, G2.H - top0(G2) - 68], [0, 3], [0, 1.35]);
+    F.axes({ noxl: true, ylabel: 'speed ÷ 186,000 mi/s', ylabelOff: 50, yticks: [0, 0.25, 0.5, 0.75, 1, 1.25] });
+    F.hline(1, rgba(C.gold, 0.9), [5, 4], 1.4); text(g, 'his 186,000', F.x0 + 6, F.ty(1) - 6, { color: C.gold, font: `11.5px ${SANS}` });
+    if (this._w !== st.wire) { this._w = st.wire; this._wt = t; }
+    const grow = 0.5 - 0.5 * Math.cos(Math.min(1, Math.max(0, t - this._wt) / 1.4) * Math.PI);
+    keys.forEach((k, i) => {
+      const w = this.wires[k], r = this.speed(w) / 186000, x0 = F.tx(i + 0.2), x1 = F.tx(i + 0.8), sel = k === st.wire, h = r * (sel ? grow : 1);
+      g.save(); glow(g, C.blue, sel ? 16 : 0); g.fillStyle = rgba(C.blue, sel ? 0.9 : 0.4); g.fillRect(x0, F.ty(h), x1 - x0, F.ty(0) - F.ty(h)); g.restore();
+      text(g, r.toFixed(2), (x0 + x1) / 2, F.ty(h) - 7, { align: 'center', color: sel ? C.teal : C.ink2, font: `bold 12.5px ${SANS}` });
+      text(g, G2.W < 520 ? w.when.replace(' January', ' Jan').replace('January', 'Jan') : w.when, (x0 + x1) / 2, F.y0 + F.h + 16, { align: 'center', color: sel ? C.teal : C.muted, font: `11.5px ${SANS}` });
+      if (G2.W < 520) { text(g, `${w.ft.toLocaleString('en-US')} ft`, (x0 + x1) / 2, F.y0 + F.h + 30, { align: 'center', color: C.gold, font: `11px ${SANS}` }); text(g, `at ${w.n.toLocaleString('en-US')}`, (x0 + x1) / 2, F.y0 + F.h + 43, { align: 'center', color: C.gold, font: `11px ${SANS}` }); }
+      else text(g, `${w.ft.toLocaleString('en-US')} ft at ${w.n.toLocaleString('en-US')}`, (x0 + x1) / 2, F.y0 + F.h + 32, { align: 'center', color: C.gold, font: `11px ${SANS}` });
+    });
+    const w = this.wires[st.wire], v = this.speed(w);
+    setText('q-l', w.name); setNote('q-ln', w.when, 'null');
+    setText('q-n', w.n.toLocaleString('en-US')); setNote('q-nn', 'his figure', 'null');
+    setText('q-v', `${(Math.round(v / 100) * 100).toLocaleString('en-US')} mi/s`); setNote('q-vn', '4 × length × frequency', '');
+    const r = v / 186000; setText('q-x', `${r.toFixed(2)}`);
+    setNote('q-xn', st.wire === 'jul' ? '"the vibration was much slower": his reason' : st.wire === 'out' ? 'tuning held off: "Two of these lamps were broken"' : 'no reason in his records; both readings stand', st.wire === 'jan2' ? '' : 'null');
+  }
+};
+GM.add('quarter', Qtr);
+
+/* ===== Lens 5: his earth, patent 787,412; across at c, around at π/2 × c on average, lowest tone 5.89 ===== */
+const Earth = {
+  animated: true,
+  st: { T: 0.02, play: true },
+  PI: 3.1416, c: 300000, D: 12726,          /* his π, his speed of light, his diameter (km) */
+  init() {
+    this.sG = new Stage($('#eGlobe'), ASP);
+    this.sT = new Stage($('#eTones'), ASP);
+    this.rT = bindRange('eT', v => { this.st.T = v; }, v => v.toFixed(4) + ' s');
+    playBtn('ePlay', this);
+    const b = document.querySelector('#ePlay button[data-v="play"]'); if (b) { b.textContent = this.st.play ? 'Pause' : 'Play'; b.classList.toggle('active', this.st.play); }
+    this._lt = null;
+  },
+  set(p) { Object.assign(this.st, p); this.rT.set(this.st.T); this.draw(GM.now()); },
+  draw(t) {
+    const st = this.st, P = this.PI, c = this.c, D = this.D, Tr = 2 * D / c;   /* 0.08484 s there and back */
+    const dt = this._lt == null ? 0 : Math.min(0.1, Math.max(0, t - this._lt)); this._lt = t;
+    if (st.play) { st.T = (st.T + dt * Tr / 7) % Tr; this.rT.set(st.T); }   /* one round trip in 7 seconds of screen time */
+    const T = st.T, half = Tr / 2, p = T <= half ? T / half : 2 - T / half;   /* pulse along the diameter, 0 to 1 and back */
+    const th = T <= half ? Math.acos(1 - 2 * p) : TAU - Math.acos(1 - 2 * p);  /* the footprint: the surface point over the pulse */
+    /* ---- the globe ---- */
+    const S = this.sG, g = S.ctx; S.clear();
+    const T0 = top0(S), R = Math.min(S.W * 0.34, (S.H - T0 - 78) / 2), ox = S.W * 0.5, oy = T0 + 22 + R;
+    g.save(); const rg = g.createRadialGradient(ox - R * 0.3, oy - R * 0.3, R * 0.1, ox, oy, R); rg.addColorStop(0, 'rgba(40,147,224,.22)'); rg.addColorStop(1, 'rgba(3,20,26,.9)');
+    g.fillStyle = rg; g.beginPath(); g.arc(ox, oy, R, 0, TAU); g.fill(); glow(g, C.teal, 18); g.strokeStyle = rgba(C.teal, 0.7); g.lineWidth = 1.6; g.stroke(); g.restore();
+    const sx = ox - R, ax = ox + R;                                          /* transmitter on the left, the opposite point on the right */
+    line(g, [[sx, oy], [ax, oy]], rgba(C.ink, 0.35), 1.2, 0, [5, 4]);
+    /* the arc the footprint has covered */
+    g.save(); g.strokeStyle = C.gold; g.lineWidth = 3.2; glow(g, C.gold, 12); g.beginPath();
+    for (let i = 0; i <= 120; i++) { const a = th * i / 120, X = ox - R * Math.cos(a), Y = oy - R * Math.sin(a); i ? g.lineTo(X, Y) : g.moveTo(X, Y); } g.stroke(); g.restore();
+    const px = sx + 2 * R * p, fx = ox - R * Math.cos(th), fy = oy - R * Math.sin(th);
+    line(g, [[px, oy], [fx, fy]], rgba(C.gold, 0.5), 1, 0, [3, 3]);
+    for (let k = 0; k < 4; k++) dot(g, px - (T <= half ? 1 : -1) * k * 7, oy, 5 - k, rgba(C.blue, 1 - k * 0.22), 16);
+    dot(g, fx, fy, 6, C.gold, 16);
+    dot(g, sx, oy, 6, C.teal, 16); text(g, 'his transmitter', sx - 10, oy + 26, { align: 'left', color: C.ink2, font: `12px ${SANS}` });
+    text(g, 'the opposite point', ax + 10, oy + 26, { align: 'right', color: C.ink2, font: `12px ${SANS}` });
+    text(g, 'across: 300,000 km/s', ox, oy - 10, { align: 'center', color: C.blue, font: `12px ${SANS}` });
+    text(g, 'round the surface: 471,240 km/s on average', ox, S.H - 34, { align: 'center', color: C.gold, font: `12px ${SANS}` });
+    text(g, `t = ${T.toFixed(4)} s of 0.08484`, 14, S.H - 14, { color: C.teal, font: `12px ${MONO}` });
+    text(g, 'diameter 12,726 km', S.W - 14, S.H - 14, { align: 'right', color: C.muted, font: `11.5px ${SANS}` });
+    /* ---- the tones ---- */
+    const G2 = this.sT, h = G2.ctx; G2.clear();
+    const f0 = c / (4 * D), T1 = top0(G2) + 22, F = new Frame(h, [30, T1, G2.W - 54, G2.H - T1 - 56], [0, 60], [0, 1.18]);
+    F.axes({ xlabel: 'tone (per second)', noyl: true, yticks: [], xticks: [0, 10, 20, 30, 40, 50, 60] });
+    for (let j = 1; j * f0 < 60; j++) {
+      const f = j * f0, X = F.tx(f), odd = j % 2 === 1;
+      if (odd) {
+        const bob = 0.5 + 0.5 * Math.sin(TAU * t * 0.25 * j);
+        line(h, [[X, F.ty(0)], [X, F.ty(1)]], C.blue, 3, 14);
+        dot(h, X, F.ty(0.2 + 0.75 * bob), 4.5, C.teal, 12);
+        text(h, f.toFixed(f < 10 ? 2 : 1), X, F.ty(1) - 8, { align: 'center', color: C.blue, font: `bold 12px ${SANS}` });
+      } else {
+        line(h, [[X, F.ty(0)], [X, F.ty(0.62)]], rgba(C.ink, 0.28), 1.4, 0, [4, 4]);
+        text(h, '×', X, F.ty(0.62) - 6, { align: 'center', color: C.red, font: `bold 13px ${SANS}` });
+      }
+    }
+    line(h, [[F.tx(6), F.y0 + F.h], [F.tx(6), F.y0 + F.h - 12]], C.gold, 3, 8); text(h, 'his "six per second"', F.tx(6) + 6, F.y0 + F.h - 16, { color: C.gold, font: `11.5px ${SANS}` });
+    text(h, 'blue: odd multiples, allowed · dashed: even, not', F.x0, T1 - 10, { color: C.ink2, font: `11.5px ${SANS}` });
+    const v = P / 2 * c, o = 471240 * 0.08484;
+    setText('e-v', '471,240 km/s'); setNote('e-vn', `(3.1416 ÷ 2) × 300,000 = ${v.toLocaleString('en-US')}`, 'rec');
+    setText('e-t', `${Tr.toFixed(5)} s`); setNote('e-tn', '2 × 12,726 ÷ 300,000: his 0.08484', 'rec');
+    setText('e-o', `${o.toLocaleString('en-US', { minimumFractionDigits: 4, maximumFractionDigits: 4 })} km`); setNote('e-on', `3.1416 × 12,726 = ${(P * D).toLocaleString('en-US', { minimumFractionDigits: 4, maximumFractionDigits: 4 })}: once round`, 'rec');
+    setText('e-f', `${f0.toFixed(2)} per second`); setNote('e-fn', '1 ÷ (2 × 0.08484); he wrote "six"', 'null');
+  }
+};
+GM.add('earth', Earth);
+
+/* ===== Lens 6: the storm of 3 July 1899; a stationary wave pinned to the storm sweeps past a still detector ===== */
+const Storm = {
+  animated: true,
+  st: { lam: 50, T: 0.4, read: 'half', play: true },
+  init() {
+    this.sM = new Stage($('#sMap'), ASP);
+    this.sD = new Stage($('#sDet'), ASP);
+    this.rL = bindRange('sL', v => { this.st.lam = v; }, v => v.toFixed(1) + ' km');
+    this.rT = bindRange('sT', v => { this.st.T = v; }, v => v.toFixed(2) + ' h');
+    this.bR = btnGroup('sRead', v => { this.st.read = v; }, 'half');
+    playBtn('sPlay', this);
+    const b = document.querySelector('#sPlay button[data-v="play"]'); if (b) { b.textContent = this.st.play ? 'Pause' : 'Play'; b.classList.toggle('active', this.st.play); }
+    this._lt = null;
+  },
+  set(p) { Object.assign(this.st, p); this.rL.set(this.st.lam); this.rT.set(this.st.T); this.bR.set(this.st.read); this.draw(GM.now()); },
+  speed() { return this.st.read === 'half' ? this.st.lam : 2 * this.st.lam; },         /* km per hour: λ/2 or λ per half hour */
+  sig(d) { const s = Math.sin(TAU * d / this.st.lam); return this.st.read === 'half' ? Math.abs(s) : Math.max(0, s); },
+  draw(t) {
+    const st = this.st, v = this.speed(), lam = st.lam;
+    const dt = this._lt == null ? 0 : Math.min(0.1, Math.max(0, t - this._lt)); this._lt = t;
+    const Tend = Math.min(10, 220 / v + 0.6);
+    if (st.play) { st.T += dt * 0.45; if (st.T > Tend) st.T = 0; this.rT.set(st.T); }
+    const d = 80 + v * st.T;                                                        /* storm distance, km */
+    /* ---- the map ---- */
+    const S = this.sM, c = S.ctx; S.clear();
+    const T0 = top0(S), F = new Frame(c, [30, T0 + 78, S.W - 50, S.H - T0 - 78 - 74], [-10, 330], [-1.25, 1.25]);
+    F.axes({ xlabel: 'km from his detector', noyl: true, yticks: [0], xticks: [0, 50, 100, 150, 200, 250, 300] });
+    const ph = Math.cos(TAU * t * 0.9), xs = []; for (let i = 0; i <= 700; i++) xs.push(-10 + 340 * i / 700);
+    const A = x => Math.sin(TAU * (d - x) / lam);                                 /* node at the storm */
+    F.clip();
+    line(c, F.pts(xs, x => x <= d ? A(x) : null), rgba(C.blue, 0.3), 1, 0, [3, 3]);
+    line(c, F.pts(xs, x => x <= d ? -A(x) : null), rgba(C.blue, 0.3), 1, 0, [3, 3]);
+    line(c, F.pts(xs, x => x <= d ? A(x) * ph : null), C.blue, 2.2, 10);
+    F.unclip();
+    /* the storm */
+    const X = F.tx(d), cy = F.y0 - 40;
+    c.save(); c.fillStyle = 'rgba(95,179,198,.25)'; glow(c, C.teal, 10);
+    [[-16, 0, 13], [0, -6, 16], [16, 0, 13]].forEach(([dx, dy, r]) => { c.beginPath(); c.arc(X + dx, cy + dy, r, 0, TAU); c.fill(); }); c.restore();
+    const fl = (Math.sin(t * 7.3) + Math.sin(t * 11.1)) > 1.1;
+    line(c, [[X, cy + 12], [X - 6, cy + 26], [X + 4, cy + 28], [X - 2, F.ty(0)]], fl ? C.ink : rgba(C.teal, 0.6), fl ? 2.6 : 1.6, fl ? 18 : 6);
+    dot(c, X, F.ty(0), 4, C.teal, 10);
+    { const rt = X > S.W * 0.55; text(c, 'the storm:', X + (rt ? -36 : 36), cy - 2, { align: rt ? 'right' : 'left', color: C.ink2, font: `12px ${SANS}` }); text(c, 'a node where it strikes', X + (rt ? -36 : 36), cy + 13, { align: rt ? 'right' : 'left', color: C.ink2, font: `12px ${SANS}` }); }
+    /* the detector */
+    const s0 = this.sig(d), DX = F.tx(0);
+    c.save(); c.fillStyle = C.panel; c.strokeStyle = rgba(C.teal, 0.7); c.lineWidth = 1.4; c.fillRect(DX - 11, F.y0 + F.h + 40, 22, 18); c.strokeRect(DX - 11, F.y0 + F.h + 40, 22, 18); c.restore();
+    dot(c, DX, F.y0 + F.h + 49, 5, rgba(C.teal, 0.25 + 0.75 * s0), 24 * s0);
+    line(c, [[DX, F.y0 + F.h + 40], [DX, F.y0 + F.h]], rgba(C.teal, 0.5), 1);
+    text(c, 'his detector', DX + 16, F.y0 + F.h + 54, { color: C.ink2, font: `12px ${SANS}` });
+    /* the wavelength ruler */
+    const rx = F.tx(d) - F.tx(d - lam);
+    line(c, [[F.tx(d - lam), F.y0 + 10], [F.tx(d), F.y0 + 10]], C.gold, 1.4); text(c, `λ = ${lam.toFixed(1)} km`, F.tx(d) - rx / 2, F.y0 + 24, { align: 'center', color: C.gold, font: `11px ${SANS}` });
+    text(c, `${st.T.toFixed(2)} h · storm at ${d.toFixed(0)} km`, S.W - 14, S.H - 10, { align: 'right', color: C.teal, font: `12px ${MONO}` });
+    /* ---- the detector trace ---- */
+    const G2 = this.sD, g = G2.ctx; G2.clear();
+    const H = new Frame(g, [52, top0(G2) + 20, G2.W - 72, G2.H - top0(G2) - 80], [0, 10], [0, 1.25]);
+    H.axes({ xlabel: 'hours since the storm was 80 km away', ylabel: 'signal at the detector', ylabelOff: 32, yticks: [0, 1] });
+    const t300 = 220 / v;
+    g.save(); g.fillStyle = rgba(C.gold, 0.1); g.fillRect(H.tx(0), H.y0, H.tx(Math.min(10, t300)) - H.tx(0), H.h); g.restore();
+    if (t300 <= 10) { H.vline(t300, rgba(C.gold, 0.8), [4, 3], 1.2); text(g, '300 km', H.tx(t300) + 5, H.y0 + 14, { color: C.gold, font: `11.5px ${SANS}` }); }
+    const ts = []; for (let i = 0; i <= 1600; i++) ts.push(10 * i / 1600);
+    line(g, H.pts(ts, x => this.sig(80 + v * x)), rgba(C.blue, 0.25), 1.2);
+    line(g, H.pts(ts.filter(x => x <= st.T), x => this.sig(80 + v * x)), C.blue, 2.2, 8);
+    dot(g, H.tx(st.T), H.ty(s0), 5, C.teal, 14);
+    const per = st.read === 'half' ? lam / 2 / v : lam / v;                     /* hours between restarts: half an hour either way */
+    text(g, `a restart every ${(per * 60).toFixed(0)} minutes, as he saw`, H.x0 + H.w, H.y0 - 8, { align: 'right', color: C.gold, font: `11.5px ${SANS}` });
+    const hrs = 220 / v, nr = st.read === 'half' ? 440 / lam : 220 / lam;
+    setText('s-v', `${v.toFixed(0)} km/h`); setNote('s-vn', st.read === 'half' ? 'half a wave each half hour' : 'a full wave each half hour', '');
+    setText('s-f', `${Math.round(300000 / lam).toLocaleString('en-US')} per second`); setNote('s-fn', 'c ÷ λ; under his 20,000', '');
+    setText('s-h', `${hrs.toFixed(1)} hours`); setNote('s-hn', '220 km at the storm\'s speed', '');
+    setText('s-n', `${nr.toFixed(1)}`); setNote('s-nn', st.read === 'half' ? 'half-wave reading: 6 to 18' : 'full-wave reading: 3 to 9', '');
+  }
+};
+GM.add('storm', Storm);
+
+/* ===== Lens 7: the ball on the wire; the rise is the wire it was threaded on ===== */
+/* model curves computed from his coil, wire and ball (scripts/models/figdata_ball.py); feet and cm */
+const BALLDATA = {"18in":{"h":[8.91,10.17,11.43,12.68,13.94,15.2,16.46,17.71,18.97,20.23,21.48,22.74,24.0,25.25,26.51,27.77,29.02,30.28,31.54,32.8,34.05,35.31,36.57,37.82,39.08,40.34,41.59,42.85,44.11,45.37,46.62,47.88,49.14,50.39,51.65,52.91,54.16,55.42,56.68,57.93],"a":[5.45,7.53,8.4,8.79,8.97,9.06,9.08,9.08,9.07,9.04,9.01,8.99,8.96,8.93,8.9,8.88,8.86,8.85,8.84,8.83,8.83,8.83,8.83,8.84,8.86,8.88,8.91,8.95,9.0,9.06,9.13,9.21,9.32,9.46,9.63,9.86,10.18,10.67,11.59,13.44],"H":[9.417,33.75,58.75],"m":[6.51,8.83,14.73]},"30in":{"h":[10.66,11.91,13.15,14.4,15.64,16.88,18.13,19.37,20.62,21.86,23.11,24.35,25.59,26.84,28.08,29.33,30.57,31.81,33.06,34.3,35.55,36.79,38.03,39.28,40.52,41.77,43.01,44.26,45.5,46.74,47.99,49.23,50.48,51.72,52.96,54.21,55.45,56.7,57.94,59.18],"a":[13.89,16.0,17.06,17.58,17.84,17.95,17.99,17.98,17.95,17.91,17.86,17.8,17.75,17.71,17.66,17.63,17.59,17.57,17.55,17.54,17.54,17.55,17.56,17.59,17.62,17.67,17.73,17.81,17.91,18.02,18.16,18.34,18.55,18.81,19.15,19.59,20.2,21.11,22.63,24.57],"H":[10.25,34.0,57.75],"m":[12.96,17.54,22.34]}};
+const Ball = {
+  animated: true,
+  st: { H: 34, ball: '30in' },
+  his: { '18in': [[9 + 5 / 12, 7.90], [33.75, 17.3], [58.75, 26.60]], '30in': [[10.25, 18.13], [34, 20.1], [57.75, 22.88]] },
+  free: { '18in': 22.86, '30in': 38.1 },
+  geo: { '18in': { foot: 0, r: 0.75, turns: 689, when: '23 October 1899' }, '30in': { foot: 1.25, r: 1.25, turns: 1314, when: '11 November 1899' } },
+  init() {
+    this.sS = new Stage($('#bScene'), ASP);
+    this.sC = new Stage($('#bCurve'), ASP);
+    this.rH = bindRange('bH', v => { this.st.H = v; }, v => { const f = Math.floor(v), i = Math.round((v - f) * 12); return `${f} ft ${i} in`; });
+    this.bB = btnGroup('bBall', v => { this.st.ball = v; }, '30in');
+  },
+  set(p) { Object.assign(this.st, p); this.rH.set(this.st.H); this.bB.set(this.st.ball); this.draw(GM.now()); },
+  curve(k) {
+    const d = BALLDATA[k], pts = d.h.map((h, i) => [h, d.a[i]]);
+    const last = d.H.length - 1; if (d.H[last] > pts[pts.length - 1][0]) pts.push([d.H[last], d.m[last]]);
+    return pts;
+  },
+  at(k, h) { const p = this.curve(k); if (h <= p[0][0]) return p[0][1]; for (let i = 1; i < p.length; i++) if (h <= p[i][0]) { const u = (h - p[i - 1][0]) / (p[i][0] - p[i - 1][0]); return lerp(p[i - 1][1], p[i][1], u); } return p[p.length - 1][1]; },
+  draw(t) {
+    const st = this.st, k = st.ball, G = this.geo[k], H = clamp(st.H, 9, 59), m = this.at(k, H);
+    /* ---- the scene ---- */
+    const S = this.sS, c = S.ctx; S.clear();
+    const gy = S.H - 34, sc = (S.H - 34 - top0(S) - 10) / 62, X = S.W * 0.46, Y = h => gy - h * sc;
+    line(c, [[16, gy], [S.W - 16, gy]], rgba(C.teal, 0.55), 2); text(c, 'ground', 18, gy + 20, { color: C.muted, font: `11.5px ${SANS}` });
+    if (G.foot > 0) { line(c, [[X - 60, Y(G.foot)], [X + 60, Y(G.foot)]], rgba(C.ink, 0.4), 1.4); text(c, 'his floor, 1 ft 3 in', X + 66, Y(G.foot) - 3, { color: C.muted, font: `11px ${SANS}` }); }
+    /* the coil: 14-inch drum, 8 ft long */
+    const cw = Math.max(16, 14 / 12 * sc * 2.2), c0 = Y(G.foot), c1 = Y(G.foot + 8);
+    const pulse = 0.5 + 0.5 * Math.sin(t * 3);
+    c.save(); c.strokeStyle = rgba(C.teal, 0.8); c.lineWidth = 1; glow(c, C.teal, 6 * pulse);
+    for (let y = c1 + 2; y < c0; y += 2.6) { c.beginPath(); c.moveTo(X - cw / 2, y); c.lineTo(X + cw / 2, y + 1.2); c.stroke(); } c.restore();
+    c.save(); c.strokeStyle = rgba(C.teal, 0.5); c.strokeRect(X - cw / 2, c1, cw, c0 - c1); c.restore();
+    text(c, `${G.turns.toLocaleString('en-US')}-turn coil, 8 ft`, X - cw / 2 - 8, (c0 + c1) / 2, { align: 'right', color: C.ink2, font: `11.5px ${SANS}` });
+    /* the No. 10 wire, 50 ft, with charge running up it */
+    const w1 = Y(G.foot + 8 + 50);
+    line(c, [[X, c1], [X, w1]], rgba(C.ink, 0.7), 1.6);
+    for (let i = 0; i < 9; i++) { const u = ((i / 9) + t * 0.18) % 1, yy = c1 + (w1 - c1) * u; dot(c, X, yy, 2, rgba(C.teal, 0.3 + 0.6 * u), 6); }
+    text(c, 'No. 10 wire, about 50 ft', X + 12, w1 + 4, { color: C.ink2, font: `11.5px ${SANS}` });
+    /* the ball */
+    const br = Math.max(7, G.r * sc), by = Y(H), gl = 10 + 18 * (m / this.free[k]);
+    c.save(); const rg = c.createRadialGradient(X - br * 0.35, by - br * 0.35, 1, X, by, br); rg.addColorStop(0, 'rgba(201,247,255,.9)'); rg.addColorStop(1, 'rgba(40,147,224,.55)');
+    glow(c, C.teal, gl); c.fillStyle = rg; c.beginPath(); c.arc(X, by, br, 0, TAU); c.fill(); c.restore();
+    for (let r = 0; r < 3; r++) { const rr = br + 6 + ((t * 14 + r * 12) % 36); c.save(); c.strokeStyle = rgba(C.teal, 0.35 * (1 - (rr - br - 6) / 36)); c.lineWidth = 1; c.beginPath(); c.arc(X, by, rr, 0, TAU); c.stroke(); c.restore(); }
+    line(c, [[X + br + 4, by], [X + br + 30, by]], rgba(C.gold, 0.5), 1, 0, [3, 3]);
+    text(c, `${k === '30in' ? '30' : '18'}-inch ball, ${H.toFixed(1)} ft`, X + br + 34, by + 4, { color: C.gold, font: `12px ${SANS}` });
+    text(c, G.when, S.W - 14, gy + 20, { align: 'right', color: C.muted, font: `11.5px ${SANS}` });
+    /* ---- the curve ---- */
+    const L2 = this.sC, g = L2.ctx; L2.clear();
+    const F = new Frame(g, [60, top0(L2), L2.W - 84, L2.H - top0(L2) - 54], [0, 62], [0, 42]);
+    F.axes({ xlabel: 'ball centre above ground (ft)', ylabel: 'capacity the ball adds (cm)', ylabelOff: 42 });
+    F.hline(this.free[k], rgba(C.ink, 0.5), [4, 4], 1.2); text(g, `ball alone, free: ${this.free[k]} cm`, F.x0 + 8, F.ty(this.free[k]) - 6, { color: C.ink2, font: `11.5px ${SANS}` });
+    line(g, this.curve(k).map(p => [F.tx(p[0]), F.ty(p[1])]), C.blue, 2.6, 10);
+    BALLDATA[k].H.forEach((h, i) => dot(g, F.tx(h), F.ty(BALLDATA[k].m[i]), 4, C.bg, 0, C.blue));
+    this.his[k].forEach(([h, v]) => dot(g, F.tx(h), F.ty(v), 6, C.gold, 12));
+    text(g, 'amber: his readings', F.x0 + 8, F.ty(33.5), { color: C.gold, font: `11.5px ${SANS}` }); text(g, 'blue: computed from his coil, wire and ball', F.x0 + 8, F.ty(33.5) + 15, { color: C.blue, font: `11.5px ${SANS}` });
+    if (k === '18in') text(g, 'top minus lowest = 18.70 cm (his)', F.tx(58.75) - 10, F.ty(26.6) + 4, { align: 'right', color: C.gold, font: `11px ${SANS}` });
+    F.vline(H, rgba(C.teal, 0.5), [2, 3], 1); dot(g, F.tx(H), F.ty(m), 5, C.teal, 14);
+    const near = this.his[k].reduce((a, b) => Math.abs(b[0] - H) < Math.abs(a[0] - H) ? b : a);
+    const ft = v => { const f = Math.floor(v), i = Math.round((v - f) * 12); return i ? `${f} ft ${i} in` : `${f} ft`; };
+    setText('b-h', ft(H)); setNote('b-hn', 'slide it up the wire', '');
+    setText('b-m', `${m.toFixed(1)} cm`); setNote('b-mn', 'the circuit, rebuilt from his dimensions', '');
+    setText('b-r', `${near[1]} cm`); setNote('b-rn', `at ${ft(near[0])}${k === '30in' && near[0] > 50 ? ': the model within 2.4%' : ''}`, 'null');
+    setText('b-f', `${this.free[k]} cm`); setNote('b-fn', 'C = r in his units', '');
+  }
+};
+GM.add('ball', Ball);
+
+/* ===== Lens 8: the structure, November 1899; his own doubt: the fundamental or the first octave ===== */
+const Struct = {
+  animated: true,
+  st: { tune: 'fund' },
+  comp: 464.8,
+  reads: [['', 339.7], ['', 311.2], ['', 310.6], ['', 304.7], ['', 305.0], ['new coil', 267.5], ['hood', 358]],
+  wire: [['28 Oct', 77.4, 81.5], ['10 Nov', 83.2, 81.5], ['16 Nov', 85.85, 84.4]],
+  init() {
+    this.sB = new Stage($('#uBars'), ASP);
+    this.sW = new Stage($('#uWire'), ASP);
+    this.bT = btnGroup('uTune', v => { this.st.tune = v; }, 'fund');
+    this.f = 1; this._lt = null;
+  },
+  set(p) { Object.assign(this.st, p); this.bT.set(this.st.tune); this.draw(GM.now()); },
+  draw(t) {
+    const st = this.st, target = st.tune === 'oct' ? 4 : 1;
+    const dt = this._lt == null ? 0 : Math.min(0.1, Math.max(0, t - this._lt)); this._lt = t;
+    this.f += (target - this.f) * Math.min(1, dt * 3.2); if (Math.abs(target - this.f) < 1e-3) this.f = target;
+    const f = this.f;
+    /* ---- the bars ---- */
+    const S = this.sB, c = S.ctx; S.clear();
+    const F = new Frame(c, [60, top0(S) + 8, S.W - 80, S.H - top0(S) - 64], [0, this.reads.length + 1], [0, 1550]);
+    F.axes({ noxl: true, ylabel: 'capacity (cm)', ylabelOff: 44, yticks: [0, 250, 500, 750, 1000, 1250, 1500] });
+    const bw = (F.tx(1) - F.tx(0)) * 0.62;
+    const bar = (i, v, col, a, lab, lab2) => {
+      const x = F.tx(i + 0.5) - bw / 2; c.save(); c.fillStyle = rgba(col, a); glow(c, col, 10); c.fillRect(x, F.ty(v), bw, F.ty(0) - F.ty(v)); c.restore();
+      text(c, lab, x + bw / 2, F.ty(v) - 7, { align: 'center', color: col, font: `bold 11.5px ${SANS}` });
+      if (lab2) (S.W < 520 ? lab2.split(' ') : [lab2]).forEach((s, j) => text(c, s, x + bw / 2, F.y0 + F.h + 16 + 13 * j, { align: 'center', color: C.muted, font: `10.5px ${SANS}` }));
+    };
+    bar(0, this.comp, C.blue, 0.85, '464.8', 'computed');
+    this.reads.forEach(([d, v], i) => bar(i + 1, v * f, C.gold, 0.7, Math.round(v * f).toLocaleString('en-US'), d));
+    F.hline(this.comp, rgba(C.blue, 0.8), [5, 4], 1.4);
+    text(c, f > 1.01 ? `his readings × ${f.toFixed(2)}${f > 3.99 ? ': the octave reading' : ''}` : 'his readings, as the fundamental', F.x0 + F.w - 6, F.y0 + 16, { align: 'right', color: C.gold, font: `12px ${SANS}` });
+    /* ---- read ÷ formula, on one log scale ---- */
+    const G2 = this.sW, g = G2.ctx; G2.clear();
+    const G = new Frame(g, [24, top0(G2) + 22, G2.W - 48, G2.H - top0(G2) - 78], [0.25, 4], [0, 3], { xlog: true });
+    G.axes({ xlabel: 'reading ÷ his calculation (log scale)', noyl: true, yticks: [], xticks: [0.25, 0.5, 1, 2, 4], fx: v => v + '' });
+    g.save(); g.fillStyle = rgba(C.green, 0.08); g.fillRect(G.tx(0.95), G.y0, G.tx(1.05) - G.tx(0.95), G.h); g.restore();
+    G.vline(1, rgba(C.ink, 0.5), [4, 4], 1.2);
+    const rows = [[2.5, 'straight wire', this.wire.map(w => w[1] / w[2]), true], [1.5, 'structure, as the fundamental', this.reads.map(r => r[1] / this.comp), st.tune === 'fund'], [0.5, 'structure, as the octave', this.reads.map(r => 4 * r[1] / this.comp), st.tune === 'oct']];
+    rows.forEach(([y, lab, vals, on], ri) => {
+      text(g, lab, G.x0 + 8, G.ty(y) - 16, { color: on ? C.ink : C.muted, font: `12px ${SANS}` });
+      vals.forEach((v, i) => { const wob = on ? 1 + 0.25 * Math.sin(t * 3 + i) : 1; dot(g, G.tx(v), G.ty(y), (ri === 0 ? 6 : 5) * wob, rgba(C.gold, on ? 1 : 0.35), on ? 12 : 0); });
+    });
+    text(g, 'on the line: reading and calculation agree', G.tx(1), G.y0 - 8, { align: 'center', color: C.ink2, font: `11.5px ${SANS}` });
+    const lo = Math.min(...this.reads.map(r => r[1])) * f, hi = Math.max(...this.reads.map(r => r[1])) * f;
+    setText('u-c', '464.8 cm'); setNote('u-cn', 'from its parts, 5 November', 'null');
+    setText('u-r', `${Math.round(lo).toLocaleString('en-US')} to ${Math.round(hi).toLocaleString('en-US')} cm`); setNote('u-rn', st.tune === 'oct' ? 'four times the reading, by his law' : 'his resonance readings', st.tune === 'oct' ? '' : 'null');
+    setText('u-x', `${(this.comp / hi).toFixed(2)} to ${(this.comp / lo).toFixed(2)}`); setNote('u-xn', '"This is to be ascertained"', 'null');
+    setText('u-w', '0.95 to 1.02'); setNote('u-wn', '77.4, 83.2 against 81.5; 85.85 against 84.4', 'rec');
+  }
+};
+GM.add('structure', Struct);
+
+/* ===== Lens 9: nine jets and ten, patent 609,246; separate meetings a turn = lcm(a, b) ===== */
+const Jets = {
+  animated: true,
+  st: { a: 9, b: 10 },
+  init() {
+    this.sW = new Stage($('#jWheel'), ASP);
+    this.sL = new Stage($('#jLine'), ASP);
+    this.rA = bindRange('jA', v => { this.st.a = v; this.bP.set(''); }, v => v);
+    this.rB = bindRange('jB', v => { this.st.b = v; this.bP.set(''); }, v => v);
+    this.bP = btnGroup('jPick', v => { const [a, b] = v.split(',').map(Number); this.st.a = a; this.st.b = b; this.rA.set(a); this.rB.set(b); }, '9,10');
+    this.flash = {};
+  },
+  set(p) { Object.assign(this.st, p); this.rA.set(this.st.a); this.rB.set(this.st.b); this.bP.set(`${this.st.a},${this.st.b}`); this.draw(GM.now()); },
+  draw(t) {
+    const a = Math.round(this.st.a), b = Math.round(this.st.b), g0 = gcd(a, b), L = a * b / g0;
+    const turn = (t / 16) % 1, th = TAU * turn;                  /* one turn in 16 seconds */
+    /* ---- the wheel ---- */
+    const S = this.sW, c = S.ctx; S.clear();
+    const T0 = top0(S), R = Math.min(S.W * 0.4, (S.H - T0 - 40) / 2), ox = S.W / 2, oy = T0 + 12 + R, r = R * 0.62;
+    c.save(); c.strokeStyle = rgba(C.teal, 0.2); c.lineWidth = 1; c.beginPath(); c.arc(ox, oy, R, 0, TAU); c.stroke(); c.beginPath(); c.arc(ox, oy, r, 0, TAU); c.stroke(); c.restore();
+    const tol = TAU / L * 0.18, hits = [];
+    for (let j = 0; j < b; j++) {                                /* the fixed nozzles */
+      const ang = TAU * j / b - Math.PI / 2, x = ox + R * Math.cos(ang), y = oy + R * Math.sin(ang);
+      c.save(); c.translate(x, y); c.rotate(ang); c.fillStyle = rgba(C.gold, 0.85); c.fillRect(-9, -5, 18, 10); c.restore();
+    }
+    for (let i = 0; i < a; i++) {                                /* the turning jets */
+      const ang = th + TAU * i / a - Math.PI / 2;
+      let hit = -1; for (let j = 0; j < b; j++) { let d = ((ang + Math.PI / 2 - TAU * j / b) % TAU + TAU) % TAU; if (d > Math.PI) d -= TAU; if (Math.abs(d) < tol) hit = j; }
+      const x0 = ox + r * 0.2 * Math.cos(ang), y0 = oy + r * 0.2 * Math.sin(ang), x1 = ox + r * Math.cos(ang), y1 = oy + r * Math.sin(ang);
+      line(c, [[x0, y0], [x1, y1]], hit >= 0 ? C.teal : rgba(C.blue, 0.8), hit >= 0 ? 3 : 2, hit >= 0 ? 14 : 4);
+      const x2 = ox + (R - 10) * Math.cos(ang), y2 = oy + (R - 10) * Math.sin(ang);
+      line(c, [[x1, y1], [x2, y2]], rgba(C.teal, hit >= 0 ? 0.9 : 0.12), hit >= 0 ? 2.4 : 1, hit >= 0 ? 10 : 0, hit >= 0 ? null : [2, 4]);
+      if (hit >= 0) { hits.push(hit); const hx = ox + R * Math.cos(ang), hy = oy + R * Math.sin(ang); dot(c, hx, hy, 9, rgba(C.ink, 0.9), 28); }
+    }
+    dot(c, ox, oy, 6, C.blue, 10);
+    text(c, `${a} turning`, 14, S.H - 12, { color: C.blue, font: `12px ${SANS}` });
+    text(c, `${b} fixed`, S.W - 14, S.H - 12, { align: 'right', color: C.gold, font: `12px ${SANS}` });
+    if (hits.length > 1) text(c, `${hits.length} meet at once`, ox, S.H - 12, { align: 'center', color: C.red, font: `bold 12px ${SANS}` });
+    /* ---- the timeline of one turn ---- */
+    const G2 = this.sL, g = G2.ctx; G2.clear();
+    const F = new Frame(g, [24, top0(G2) + 34, G2.W - 48, G2.H * 0.3], [0, 1], [0, 1]);
+    F.axes({ xlabel: 'one turn', noyl: true, yticks: [], xticks: [0, 0.25, 0.5, 0.75, 1], fx: v => v === 0 ? '0' : v === 1 ? '1 turn' : v + '' });
+    for (let m = 0; m < L; m++) {                                /* meeting instants: turn = m / lcm */
+      const u = m / L, X = F.tx(u), past = u <= turn, near = Math.abs(u - turn) < 0.5 / L;
+      line(g, [[X, F.y0 + F.h], [X, F.y0 + F.h * (g0 > 1 ? 0.1 : 0.35)]], near ? C.ink : past ? rgba(C.teal, 0.85) : rgba(C.teal, 0.3), near ? 3 : g0 > 1 ? 2 : 1.2, near ? 16 : 0);
+    }
+    line(g, [[F.tx(turn), F.y0 - 8], [F.tx(turn), F.y0 + F.h + 2]], rgba(C.gold, 0.9), 1.6, 6);
+    text(g, `${L} separate instants${g0 > 1 ? `, ${g0} jets at each` : ''}`, F.x0, F.y0 - 16, { color: C.teal, font: `12.5px ${SANS}` });
+    /* the count, drawn as a grid of a × b pairs, grouped into instants */
+    /* all a × b pairs of jet and nozzle: one column per instant, as many cells as meet then */
+    const gy = F.y0 + F.h + 58, cw = F.w / L, sz = Math.max(1.5, Math.min(12, cw - 1.2)), cur = Math.floor(turn * L + 0.5) % L;
+    for (let m = 0; m < L; m++) for (let q = 0; q < g0; q++) {
+      const x = F.tx(m / L) - sz / 2, y = gy + q * (Math.min(12, sz) + 3), on = m === cur;
+      g.save(); if (on) glow(g, C.ink, 12); g.fillStyle = on ? C.ink : rgba(g0 > 1 ? C.red : C.gold, m / L <= turn ? 0.85 : 0.35); g.fillRect(x, y, sz, Math.min(12, sz)); g.restore();
+    }
+    text(g, G2.W < 520 ? `${a} × ${b} = ${a * b} pairs, a column per instant` : `${a} × ${b} = ${a * b} pairs of jet and nozzle, one column per instant`, F.x0, gy - 10, { color: C.ink2, font: `11.5px ${SANS}` });
+    setText('j-n', `${L}`); setNote('j-nn', a === 9 && b === 10 ? '"ninety makes and breaks"' : 'lcm(a, b)', a === 9 && b === 10 ? 'null' : '');
+    setText('j-p', `${a * b}`); setNote('j-pn', L === a * b ? 'every pair its own instant' : `${a * b - L} pairs lost to sharing`, L === a * b ? 'rec' : 'neg');
+    setText('j-g', `${g0}`); setNote('j-gn', g0 === 1 ? 'none shared' : `${g0} jets meet at each instant`, g0 === 1 ? 'rec' : 'neg');
+    setText('j-r', Math.abs(a - b) === 1 ? 'one more: kept' : g0 === 1 ? 'no shared factor' : 'broken');
+    setNote('j-rn', '"one more nozzle in one set than in the other"', 'null');
+  }
+};
+GM.add('jets', Jets);
+
+/* ===== Lens 10: the turbine; best runner speed one third (square law) or one half (linear law) ===== */
+const Turb = {
+  animated: true,
+  st: { u: 0.4, play: false },
+  Wsq(u) { return 27 / 4 * u * (1 - u) * (1 - u); },      /* torque ∝ (1 − u)², work = torque × u; top = 1 at u = 1/3 */
+  Wli(u) { return 4 * u * (1 - u); },                      /* torque ∝ (1 − u); top = 1 at u = 1/2 */
+  init() {
+    this.sD = new Stage($('#uDisk'), ASP);
+    this.sW = new Stage($('#uWork'), ASP);
+    this.rU = bindRange('uU', v => { this.st.u = v; }, v => v.toFixed(3));
+    playBtn('uPlay', this);
+    this.rot = 0; this.ph = 0; this._lt = null;
+    const rnd = mulberry(7); this.parts = Array.from({ length: 70 }, () => ({ a: rnd() * TAU, r: 0.35 + 0.63 * rnd(), s: 0.8 + 0.4 * rnd() }));
+  },
+  set(p) { Object.assign(this.st, p); this.rU.set(this.st.u); this.draw(GM.now()); },
+  draw(t) {
+    const st = this.st;
+    const dt = this._lt == null ? 0 : Math.min(0.1, Math.max(0, t - this._lt)); this._lt = t;
+    if (st.play) { this.ph += dt * 0.12; st.u = 0.5 - 0.5 * Math.cos(TAU * this.ph); this.rU.set(st.u); }
+    const u = st.u, W = 1.6;                                 /* fluid turns at W rad/s on screen; the runner at u × W */
+    this.rot += dt * W * u;
+    /* ---- the disk ---- */
+    const S = this.sD, c = S.ctx; S.clear();
+    const T0 = top0(S), R = Math.min(S.W * 0.4, (S.H - T0 - 58) / 2), ox = S.W / 2, oy = T0 + 8 + R;
+    c.save(); glow(c, C.teal, 14); c.strokeStyle = rgba(C.teal, 0.8); c.lineWidth = 2; c.beginPath(); c.arc(ox, oy, R, 0, TAU); c.stroke(); c.restore();
+    c.save(); c.fillStyle = 'rgba(40,147,224,.07)'; c.beginPath(); c.arc(ox, oy, R, 0, TAU); c.fill(); c.restore();
+    c.save(); c.strokeStyle = rgba(C.teal, 0.45); c.lineWidth = 1.2; c.beginPath(); c.arc(ox, oy, R * 0.22, 0, TAU); c.stroke(); c.restore();
+    for (let k = 0; k < 6; k++) { const a = this.rot + TAU * k / 6; line(c, [[ox + R * 0.22 * Math.cos(a), oy + R * 0.22 * Math.sin(a)], [ox + R * 0.97 * Math.cos(a), oy + R * 0.97 * Math.sin(a)]], rgba(C.blue, 0.55), 1.6); }
+    dot(c, ox + R * 0.9 * Math.cos(this.rot), oy + R * 0.9 * Math.sin(this.rot), 5, C.blue, 12);
+    this.parts.forEach(p => {                                 /* fluid enters at the rim and spirals to the centre */
+      p.a += dt * W * p.s; p.r -= dt * 0.05 * p.s; if (p.r < 0.25) { p.r = 0.98; }
+      const x = ox + R * p.r * Math.cos(p.a), y = oy + R * p.r * Math.sin(p.a);
+      const tail = 0.18 * (1 - u) + 0.04, x2 = ox + R * p.r * Math.cos(p.a - tail), y2 = oy + R * p.r * Math.sin(p.a - tail);
+      line(c, [[x2, y2], [x, y]], rgba(C.teal, 0.25 + 0.5 * (1 - u)), 1.6);
+    });
+    text(c, 'fluid in at the rim, out at the centre', ox, S.H - 10, { align: 'center', color: C.ink2, font: `12px ${SANS}` });
+    text(c, `runner at ${u.toFixed(2)} of the fluid's speed; slip ${(1 - u).toFixed(2)}`, ox, S.H - 28, { align: 'center', color: C.teal, font: `12px ${SANS}` });
+    /* ---- work ---- */
+    const G2 = this.sW, g = G2.ctx; G2.clear();
+    const F = new Frame(g, [52, top0(G2) + 4, G2.W - 72, G2.H - top0(G2) - 60], [0, 1], [0, 1.4]);
+    F.axes({ xlabel: 'runner speed ÷ fluid speed', ylabel: 'work (top of each = 1)', ylabelOff: 36, xticks: [0, 1 / 3, 0.5, 1], fx: v => v === 0 ? '0' : v === 1 ? '1' : v === 0.5 ? '1/2' : '1/3', yticks: [0, 0.5, 1] });
+    const xs = []; for (let i = 0; i <= 300; i++) xs.push(i / 300);
+    line(g, F.pts(xs, x => this.Wsq(x)), C.blue, 2.6, 10); line(g, F.pts(xs, x => this.Wli(x)), C.violet, 2.6, 10);
+    F.vline(1 / 3, rgba(C.blue, 0.7), [4, 4], 1.2); F.vline(0.5, rgba(C.violet, 0.7), [4, 4], 1.2);
+    text(g, 'square law, 1913: best at 1/3', F.x0 + 8, F.ty(1.3), { color: C.blue, font: `11.5px ${SANS}` });
+    text(g, 'linear law, 1916: best at 1/2', F.x0 + F.w - 8, F.ty(1.13), { align: 'right', color: C.violet, font: `11.5px ${SANS}` });
+    line(g, [[F.tx(0.5), F.y0 + F.h], [F.tx(0.5), F.y0 + F.h - 12]], C.gold, 3, 8); text(g, 'his stated best: half', F.tx(0.5) + 6, F.y0 + F.h - 16, { color: C.gold, font: `11.5px ${SANS}` });
+    F.vline(u, rgba(C.teal, 0.6), [2, 3], 1); dot(g, F.tx(u), F.ty(this.Wsq(u)), 5, C.blue, 12); dot(g, F.tx(u), F.ty(this.Wli(u)), 5, C.violet, 12);
+    setText('w-sq', this.Wsq(u).toFixed(3)); setNote('w-sqn', 'torque ∝ (1 − u)², work ∝ u(1 − u)²', '');
+    setText('w-li', this.Wli(u).toFixed(3)); setNote('w-lin', 'torque ∝ (1 − u), work ∝ u(1 − u)', '');
+    setText('w-b', '1/3 · 1/2'); setNote('w-bn', 'square law · linear law; he wrote half', 'null');
+    const p = Math.round(u * 100); setText('w-e', `${p} × ${100 - p} = ${(p * (100 - p)).toLocaleString('en-US')}`); setNote('w-en', 'greatest at 50 × 50 = 2,500; 90 × 10 = 900', p === 50 ? 'rec' : '');
+  }
+};
+GM.add('turbine', Turb);
+
+/* ===== start-up ===== */
+$$('nav.tabs button').forEach(b => b.addEventListener('click', () => GM.show(b.dataset.lens)));
+window.addEventListener('hashchange', () => { const h = location.hash.replace('#', ''); if (h && h !== GM.active && GM.lenses[h]) GM.show(h); });
+GM.add('ledger', { animated: false, draw() {} });
+window.GM = GM;
+GM.show((location.hash || '#tone').replace('#', ''));
+requestAnimationFrame(loop);
+
+</script>
+</body>
+</html>

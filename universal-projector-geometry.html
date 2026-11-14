@@ -1,0 +1,1771 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Universal Projector Geometry Mixer</title>
+<meta name="description" content="An interactive mixer for Universal Projector Geometry from Electrical Measurements: the redistribution operator, the zero-time footprint, the metric-curvature bound, the winding currency, the obstruction floor, the subadditive seam, the noncommutative anchor, the signature walls, the figure-eight curve, rigidity, refraction and the published condensate band.">
+<style>
+:root{color-scheme:dark;
+  --bg:#050914;--panel:#0a1322;--panel2:#101c30;--line:#263a56;--line2:#35516f;
+  --ink:#eaf2ff;--ink2:#cbd9ea;--muted:#91a8c2;--dim:#5f7896;
+  --gold:#edc775;--teal:#69d7c4;--violet:#bc90ff;--red:#ff8d98;--blue:#7cbaff;--green:#7ee2a8;--orange:#ffb46b;
+  --pos:#7cbaff;--neg:#ff8d98;--rec:#7ee2a8;--null:#edc775;
+  --serif:Georgia,"Iowan Old Style","Palatino Linotype",Palatino,"Times New Roman",serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace}
+*{box-sizing:border-box}
+html{background:#050914}
+body{margin:0;background:radial-gradient(circle at 12% 0,#172442 0,transparent 34rem),radial-gradient(circle at 92% 4%,#1a1437 0,transparent 32rem),var(--bg);color:var(--ink);font:15px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1540px;margin:0 auto;padding-inline:24px}
+@media (max-width:640px){.wrap{padding-inline:16px}}
+header.top{padding-block:34px 18px}
+.eyebrow{font-size:11px;letter-spacing:.19em;color:var(--teal);font-weight:800;text-transform:uppercase}
+h1{font:500 clamp(2.3rem,6vw,5.2rem)/.98 var(--serif);margin:10px 0 12px;color:var(--gold);text-wrap:balance}
+h2{font:500 clamp(1.5rem,2.6vw,1.95rem)/1.15 var(--serif);color:var(--gold);margin:.2em 0 .5em;text-wrap:balance}
+h3{color:#dbe9ff;margin:.3em 0 .35em;font-size:1.05rem;text-wrap:balance}
+p{margin:.45em 0}
+.subtitle{font-size:1.12rem;max-width:62rem;color:var(--ink2)}
+.byline{color:var(--muted);font-size:13px;margin-top:6px}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.stat{background:#091526;border:1px solid var(--line);border-radius:10px;padding:9px 13px;min-width:0}
+.stat b{font-size:1.3rem;color:var(--teal);display:block;font-variant-numeric:tabular-nums}
+.stat span{font-size:13px;color:var(--ink2)}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(5,9,20,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-block:1px solid var(--line)}
+nav.tabs .wrap{display:flex;gap:7px;overflow-x:auto;padding-block:9px;scrollbar-width:thin}
+button,select,input,textarea{font:inherit;color:inherit}
+button{background:#13233a;color:var(--ink);border:1px solid var(--line2);border-radius:8px;padding:7px 12px;cursor:pointer;white-space:nowrap}
+button:hover{border-color:var(--teal);background:#173049}
+button.active{border-color:var(--teal);background:#173a4a;color:#fff}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+button.small{padding:3px 8px;font-size:12px;border-radius:6px}
+main{padding-block:22px 80px}
+.lens{display:none}.lens.active{display:block}
+.lede{max-width:70rem;color:var(--ink2);font-size:1.02rem}
+.kicker{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);font-weight:800}
+.grid2{display:grid;grid-template-columns:320px minmax(0,1fr);gap:18px;margin-top:14px}
+@media (max-width:980px){.grid2{grid-template-columns:minmax(0,1fr)}}
+.controls{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;align-self:start}
+@media (min-width:981px){.controls.sticky{position:sticky;top:64px;max-height:calc(100vh - 80px);overflow:auto}}
+.control{margin:9px 0 13px}
+.control label{display:flex;justify-content:space-between;gap:8px;color:#bed0e5;font-size:12.5px}
+.control output{color:var(--gold);font-family:var(--mono);font-size:12px;font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--teal)}
+select{background:#0d1a2c;border:1px solid var(--line2);border-radius:7px;padding:6px 8px;width:100%}
+.row{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.hr{border-top:1px solid var(--line);margin:14px 0}
+.stage{min-width:0;display:grid;gap:14px}
+.canvasbox{background:linear-gradient(180deg,#07101e,#050913);border:1px solid var(--line);border-radius:14px;padding:8px;overflow:hidden;position:relative;min-width:0}
+.canvasbox canvas{width:100%;display:block;touch-action:none}
+.canvasbox .ctitle{position:absolute;left:14px;top:10px;font:11px/1.3 var(--mono);color:var(--ink2);background:rgba(8,16,30,.8);border:1px solid var(--line);border-radius:7px;padding:4px 8px;pointer-events:none}
+.caption{font-size:12px;color:var(--muted);padding:6px 8px 2px}
+.split{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.split3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media (max-width:980px){.split,.split3{grid-template-columns:minmax(0,1fr)}}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px 12px;min-width:0}
+.card .lab{font-size:11.5px;letter-spacing:.02em;color:var(--muted)}
+.card .val{font:500 1.35rem/1.25 var(--serif);color:var(--gold);margin:3px 0;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.card .note{font-size:11.5px;color:#aac0d9;letter-spacing:.01em;font-weight:700}
+.note.pos{color:var(--pos)}.note.neg{color:var(--neg)}.note.rec{color:var(--rec)}.note.null{color:var(--null)}.note.vio{color:var(--violet)}
+.eyes{display:grid;gap:8px}
+.eye{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px;align-items:center;padding:7px 8px;border:1px solid var(--line);border-radius:10px;background:#0b1728}
+.eye .sw{width:12px;height:12px;border-radius:3px;box-shadow:0 0 10px currentColor;background:currentColor}
+.eye b{font-size:12.5px;display:block}
+.eye small{display:block;color:var(--muted);font-size:11px;font-family:var(--mono)}
+.eye input[type=checkbox]{accent-color:var(--teal);width:16px;height:16px}
+.eye.off{opacity:.45}
+.eyegrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:10px}
+@media (max-width:1100px){.eyegrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:700px){.eyegrid{grid-template-columns:minmax(0,1fr)}}
+.ecard{background:linear-gradient(180deg,#0e1a2e,#08111f);border:1px solid var(--line);border-radius:13px;padding:13px 14px;cursor:pointer;min-width:0}
+.ecard:hover{border-color:var(--teal)}
+.ecard .kick{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);font-weight:800}
+.ecard h4{margin:.35em 0 .3em;font-size:1rem;color:#e6f0ff;text-wrap:balance}
+.ecard .f{font:1rem/1.35 var(--serif);color:var(--gold);margin:.35em 0;overflow-wrap:anywhere}
+.ecard p{font-size:12.8px;color:#b9cbe0;margin:.3em 0}
+.badges{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
+.badge{font:700 9.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;border:1px solid;border-radius:20px;padding:4px 7px}
+.b-T{color:var(--green);border-color:#2f6d51}.b-L{color:var(--teal);border-color:#2c6d66}.b-N{color:var(--blue);border-color:#2f5889}.b-C{color:var(--violet);border-color:#5d4a86}.b-H{color:var(--orange);border-color:#7a5a33}.b-F{color:var(--red);border-color:#7e3d48}.b-R{color:var(--gold);border-color:#7a6636}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;min-width:0}
+.scope{border-left:4px solid var(--violet);background:#15132a;padding:12px 15px;margin:14px 0;border-radius:0 12px 12px 0;color:#d9d3f3}
+.scope.gold{border-left-color:var(--gold);background:#1b1a14;color:#efe4c4}
+.scope.red{border-left-color:var(--red);background:#23121a;color:#f3d6dc}
+.table{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{padding:8px 10px;text-align:left;border-bottom:1px solid #1c2c45;vertical-align:top}
+th{color:var(--gold);font-weight:700;background:#0b1627;position:sticky;top:0}
+td.num,th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+tr.hl td{background:#15233a}
+.mono{font-family:var(--mono)}
+.gold{color:var(--gold)}.teal{color:var(--teal)}.red{color:var(--red)}.blue{color:var(--blue)}.green{color:var(--green)}.vio{color:var(--violet)}
+.ride{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px}
+.step{flex:0 0 150px;text-align:left;white-space:normal;background:#0b1627;border:1px solid var(--line);border-radius:12px;padding:10px 11px}
+.step b{display:block;font-size:11px;letter-spacing:.08em;color:var(--teal);text-transform:uppercase}
+.step span{display:block;font-size:12px;color:var(--muted);margin-top:3px}
+.step.active{border-color:var(--gold);background:#1a1810}
+.route{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-top:10px}
+.route h3{font:500 1.5rem/1.2 var(--serif);color:var(--gold)}
+.ledger textarea{width:100%;min-height:74px;background:#08111f;border:1px solid var(--line2);border-radius:10px;padding:10px;resize:vertical;font:13px/1.45 var(--mono);color:var(--ink)}
+.trials{display:grid;gap:8px;margin-top:10px}
+.trial{border:1px solid var(--line);border-radius:10px;padding:9px 11px;background:#0b1627;font-size:12.5px}
+.trial .when{font-family:var(--mono);color:var(--muted);font-size:11px}
+.legend{display:flex;gap:8px;flex-wrap:wrap;font-size:11.5px;color:var(--ink2);padding:6px 8px}
+.legend i{display:inline-block;width:14px;height:3px;border-radius:2px;vertical-align:middle;margin-right:5px}
+.pill{display:inline-block;font:700 10.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:5px 8px;border-radius:20px;border:1px solid var(--line2);color:var(--ink2)}
+.pill.pos{color:var(--pos);border-color:#2f5889}.pill.neg{color:var(--neg);border-color:#7e3d48}.pill.null{color:var(--null);border-color:#7a6636}.pill.rec{color:var(--rec);border-color:#2f6d51}
+footer{border-top:1px solid var(--line);color:var(--muted);font-size:12.5px;padding-block:18px 36px}
+.sectionhead{display:flex;justify-content:space-between;align-items:end;gap:14px;flex-wrap:wrap;margin-top:28px}
+.msg{font-size:12px;color:var(--green);min-height:1.2em}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+
+.split64{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:14px}
+@media (max-width:980px){.split64{grid-template-columns:minmax(0,1fr)}}
+.formula{font:1.05rem/1.5 var(--serif);color:var(--ink);margin:.35em 0}
+.formula .g{color:var(--gold)}
+.plab{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);font-weight:800;margin-bottom:4px}
+
+</style>
+</head>
+<body>
+<header class="top wrap">
+  <div class="eyebrow">Jeromie Beasley · UPG Mixer</div>
+  <h1>Universal Projector Geometry</h1>
+  <p class="subtitle">Universal Projector Geometry from Electrical Measurements, run live. Every panel is computed in your browser from the paper's own equations: the redistribution operator and its zero-time footprint, the winding currency, the obstruction floor, the subadditive seam, the noncommutative anchor, the signature walls, the figure-eight curve, rigidity, refraction, and the published condensate band.</p>
+  <div class="byline">Built from version 3.1 of the paper (September 2026). The condensate panel evaluates the published calibrated band of Yi et al.; the covariance panel uses synthetic draws and says so.</div>
+  <div class="stats">
+    <div class="stat"><b>F = (I−Π)ΩΠ + ΠΩ(I−Π)</b><span>change only crosses the boundary</span></div>
+    <div class="stat"><b>‖F‖² = 2 Tr K(0)</b><span>the zero-time footprint</span></div>
+    <div class="stat"><b>|Ω| ≤ 2√det g</b><span>curvature is paid out of the metric</span></div>
+    <div class="stat"><b>Δ = Σ log(1 − μ) ≤ 0</b><span>the seam is a discount</span></div>
+    <div class="stat"><b>R_η = 1/(σ²_min + η)</b><span>rigidity of a declared operator</span></div>
+    <div class="stat"><b>C = −0.99931</b><span>against the measured −1.00 ± 0.02</span></div>
+  </div>
+</header>
+<nav class="tabs" aria-label="Lenses"><div class="wrap"><button data-lens="redis">Change has one place to go</button><button data-lens="footprint">The zero-time footprint</button><button data-lens="bound">The metric pays for curvature</button><button data-lens="winding">Phase keeps the record</button><button data-lens="floor">The obstruction floor</button><button data-lens="seam">The seam is a discount</button><button data-lens="anchor">The noncommutative anchor</button><button data-lens="signature">The integer that steps at walls</button><button data-lens="curve">The figure-eight curve</button><button data-lens="seed">A symmetric start</button><button data-lens="lattice">The lattice split</button><button data-lens="band">A published band</button><button data-lens="refract">Refraction from an action</button><button data-lens="pipe">Covariance to projectors</button><button data-lens="riesz">The block survives</button><button data-lens="ledger">Claim ledger</button></div></nav>
+<main class="wrap">
+<section class="lens" id="lens-redis">
+  <div class="kicker">Section 1 · the redistribution operator</div>
+  <h2>Change can only cross the boundary</h2>
+  <p class="lede">A projector <span class="mono">Π</span> marks what is presently occupied; a generator <span class="mono">Ω</span> is what tries to change it. The part of the change that matters is <span class="mono">F(Ω,Π) = (I−Π)ΩΠ + ΠΩ(I−Π)</span>: it lives only between the occupied subspace and its complement, its trace is zero, and it vanishes exactly when <span class="mono">[Ω,Π] = 0</span>. Turn up the cross-coupling and watch weight leave the occupied block.</p>
+  <div class="grid2">
+    <aside class="controls sticky" aria-label="Controls"><div class="control"><label for="rN">Dimension N <output for="rN"></output></label><input type="range" id="rN" min="4" max="10" step="1" value="8"></div><div class="control"><label for="rK">Rank k of Π <output for="rK"></output></label><input type="range" id="rK" min="1" max="7" step="1" value="3"></div><div class="control"><label for="rTh">Cross-coupling of Ω <output for="rTh"></output></label><input type="range" id="rTh" min="0" max="1" step="0.01" value="0.6"></div><div class="row" style="margin-top:6px" id="rSeed"><button class="small" data-v="1">Generator 1</button><button class="small" data-v="2">Generator 2</button><button class="small" data-v="3">Generator 3</button></div><p class="caption" style="padding-left:0">A seeded random symmetric generator; the diagonal blocks stay fixed as the cross-coupling moves.</p></aside>
+    <div class="stage">
+      <div class="split"><div class="canvasbox"><span class="ctitle">Ω, Π and F(Ω,Π): F lights only the cross blocks</span><canvas id="rMat" aria-label="Ω, Π and F(Ω,Π): F lights only the cross blocks"></canvas></div><div class="canvasbox"><span class="ctitle">weight leaving the occupied block, ‖(I−Π)e^(−iΩt)Π‖²</span><canvas id="rLeak" aria-label="weight leaving the occupied block, ‖(I−Π)e^(−iΩt)Π‖²"></canvas></div></div>
+      <div class="cards"><div class="card"><div class="lab">transport intensity T = ‖F‖_F</div><div class="val" id="r-T"></div><div class="note" id="r-Tn"></div></div><div class="card"><div class="lab">‖[Ω,Π]‖_F</div><div class="val" id="r-C"></div><div class="note" id="r-Cn"></div></div><div class="card"><div class="lab">Tr F and the diagonal blocks</div><div class="val" id="r-tr"></div><div class="note" id="r-trn"></div></div><div class="card"><div class="lab">zero-time footprint Tr K(0)</div><div class="val" id="r-K"></div><div class="note" id="r-Kn"></div></div></div>
+    </div>
+  </div>
+  <div class="scope gold">Theorems 1.2–1.3 [T+V]: F = [Ω,Π]Π + Π[Π,Ω] = ΩΠ + ΠΩ − 2ΠΩΠ; Tr F = 0; ΠFΠ = 0 and (I−Π)F(I−Π) = 0; F = 0 exactly when [Ω,Π] = 0. Proposition 1.5 [T+V]: in the adapted basis ‖F‖²_F = ‖[H,Π]‖²_F = 2 Tr K(0). The leak starts as t² Tr K(0) (the dashed parabola) and then follows the full dynamics.</div>
+</section>
+<section class="lens" id="lens-footprint">
+  <div class="kicker">Section 1 · redistribution and memory</div>
+  <h2>The same footprint, a different memory</h2>
+  <p class="lede">Write the generator in blocks, <span class="mono">H = [[A, B], [B†, D]]</span>, retained sector first. Eliminating the hidden sector leaves a memory kernel <span class="mono">K(t) = B e<sup>−itD</sup> B†</span> and a source term. Its value at zero time, <span class="mono">K(0) = BB†</span>, is fixed by the coupling alone, and it is exactly what redistribution measures. Change the hidden generator <span class="mono">D</span> and keep <span class="mono">B</span>: the footprint stays put while the memory and the retained trajectory change.</p>
+  <div class="grid2">
+    <aside class="controls sticky" aria-label="Controls"><div class="control"><label for="fG">Coupling strength g (scales B) <output for="fG"></output></label><input type="range" id="fG" min="0.1" max="1.5" step="0.01" value="0.8"></div><div class="control"><label for="fL">Second hidden generator: D₁ → D₂ <output for="fL"></output></label><input type="range" id="fL" min="0" max="1" step="0.01" value="1.0"></div><div class="control"><label for="fT">Time t <output for="fT"></output></label><input type="range" id="fT" min="0" max="12" step="0.02" value="3.0"></div><div class="row" style="margin-top:6px" id="fPlay"><button class="small" data-v="play">Play</button></div><p class="caption" style="padding-left:0">Two systems share A and B; only the hidden generator differs.</p></aside>
+    <div class="stage">
+      <div class="split"><div class="canvasbox"><span class="ctitle">two systems: same coupling B, different hidden levels D</span><canvas id="fLev" aria-label="two systems: same coupling B, different hidden levels D"></canvas></div><div class="canvasbox"><span class="ctitle">memory kernel ‖K(t)‖ and retained population</span><canvas id="fKer" aria-label="memory kernel ‖K(t)‖ and retained population"></canvas></div></div>
+      <div class="cards"><div class="card"><div class="lab">‖F₁ − F₂‖ and ‖K₁(0) − K₂(0)‖</div><div class="val" id="f-F"></div><div class="note" id="f-Fn"></div></div><div class="card"><div class="lab">‖K₁(t) − K₂(t)‖ at t</div><div class="val" id="f-K"></div><div class="note" id="f-Kn"></div></div><div class="card"><div class="lab">retained population, systems 1 and 2</div><div class="val" id="f-p"></div><div class="note" id="f-pn"></div></div><div class="card"><div class="lab">hidden source at t = 0</div><div class="val" id="f-src"></div><div class="note" id="f-srcn"></div></div></div>
+    </div>
+  </div>
+  <div class="scope gold">Section 1 [T]: iψ̇_r = Aψ_r + B e^(−itD)ψ_h(0) − i∫₀ᵗ K(t−s)ψ_r(s) ds with K(t) = B e^(−itD) B†. The retained sector runs on its own exactly when B = 0. K(0) = BB† is the instantaneous footprint of the memory, not the memory itself: holding B fixed and changing D leaves K(0) and F unchanged and changes K(t) (Appendix B.9 [V]).</div>
+</section>
+<section class="lens" id="lens-bound">
+  <div class="kicker">Sections 2 and 6.2 · the metric–curvature bound</div>
+  <h2>Curvature is paid out of the metric</h2>
+  <p class="lede">For any two tangents at a projector, <span class="mono">|Ω(V,W)| ≤ 2√(g(V,V)g(W,W) − g(V,W)²)</span>. Equality holds exactly when the two projected tangent vectors are complex-parallel. Two bands force it, because the complement of a rank-one band is one complex line. Beyond two bands a symmetry can supply it: the kagome lattice at bond phase π/6 saturates on its outer bands with curvature present, and a generic phase leaves slack.</p>
+  <div class="grid2">
+    <aside class="controls sticky" aria-label="Controls"><div class="control"><label for="bPhi">Kagome bond phase φ <output for="bPhi"></output></label><input type="range" id="bPhi" min="0.02" max="1.0" step="0.005" value="0.5236"></div><div class="row" style="margin-top:6px" id="bBand"><button class="small" data-v="0">Lowest band</button><button class="small" data-v="2">Highest band</button></div><p class="caption" style="padding-left:0">Three-band kagome lattice with a common phase on each directed bond.</p></aside>
+    <div class="stage">
+      <div class="split"><div class="canvasbox"><span class="ctitle">relative slack (4 det g − Ω²)/(4 det g) across the zone</span><canvas id="bMap" aria-label="relative slack (4 det g − Ω²)/(4 det g) across the zone"></canvas></div><div class="canvasbox"><span class="ctitle">Ω² against 4 det g at every point</span><canvas id="bSc" aria-label="Ω² against 4 det g at every point"></canvas></div></div>
+      <div class="cards"><div class="card"><div class="lab">largest relative slack</div><div class="val" id="b-max"></div><div class="note" id="b-maxn"></div></div><div class="card"><div class="lab">median Ω² (curvature present)</div><div class="val" id="b-med"></div><div class="note" id="b-medn"></div></div><div class="card"><div class="lab">two-band control</div><div class="val" id="b-two"></div><div class="note" id="b-twon"></div></div><div class="card"><div class="lab">saturation</div><div class="val" id="b-sat"></div><div class="note" id="b-satn"></div></div></div>
+    </div>
+  </div>
+  <div class="scope gold">Theorem 6.1 [T+V]: the bound is Cauchy–Schwarz on the off-diagonal block of the tangent. Section 2 [T]: equality exactly for complex-parallel projected tangents, forced when k(N−k) = 1; the kagome example at φ = π/6 [V] (Appendix B.9). Convention: Ω = +i Tr(Π[V,W]), so Tr(ΠV†W) = g − (i/2)Ω.</div>
+</section>
+<section class="lens" id="lens-winding">
+  <div class="kicker">Section 4.1 · the torus anchor</div>
+  <h2>The eigenvalue forgets the direction; the phase keeps it</h2>
+  <p class="lede">On the flat torus the twisted operator has paired eigenvalues <span class="mono">±2π√((m+α)²+(n+β)²)</span>. Its positive projector carries a phase <span class="mono">e<sup>iΦ</sup> = Z/|Z|</span> that the eigenvalue cannot see. Carry the holonomy around a loop: the magnitude only tells you how far you are from the zero, while the phase records how many times you went around it.</p>
+  <div class="grid2">
+    <aside class="controls sticky" aria-label="Controls"><div class="control"><label for="wX">Loop centre α <output for="wX"></output></label><input type="range" id="wX" min="-0.6" max="0.6" step="0.01" value="0.15"></div><div class="control"><label for="wY">Loop centre β <output for="wY"></output></label><input type="range" id="wY" min="-0.6" max="0.6" step="0.01" value="0.1"></div><div class="control"><label for="wR">Loop radius <output for="wR"></output></label><input type="range" id="wR" min="0.05" max="0.6" step="0.01" value="0.35"></div><div class="control"><label for="wS">Position along the path <output for="wS"></output></label><input type="range" id="wS" min="0" max="2" step="0.002" value="0"></div><div class="row" style="margin-top:6px" id="wLoops"><button class="small" data-v="1">One loop</button><button class="small" data-v="2">Two loops</button></div><p class="caption" style="padding-left:0">The zero of the mode (m, n) = (0, 0) sits at the origin.</p></aside>
+    <div class="stage">
+      <div class="split"><div class="canvasbox"><span class="ctitle">holonomy plane (α, β): the loop and the phase arrow Z/|Z|</span><canvas id="wPlane" aria-label="holonomy plane (α, β): the loop and the phase arrow Z/|Z|"></canvas></div><div class="canvasbox"><span class="ctitle">accumulated phase Φ/2π and the magnitude |Z|</span><canvas id="wRec" aria-label="accumulated phase Φ/2π and the magnitude |Z|"></canvas></div></div>
+      <div class="cards"><div class="card"><div class="lab">winding so far</div><div class="val" id="w-w"></div><div class="note" id="w-wn"></div></div><div class="card"><div class="lab">|Z| at the point</div><div class="val" id="w-z"></div><div class="note" id="w-zn"></div></div><div class="card"><div class="lab">spectral asymmetry η</div><div class="val" id="w-eta"></div><div class="note" id="w-etan"></div></div><div class="card"><div class="lab">Tr(P₊σ₁) = cos Φ</div><div class="val" id="w-p"></div><div class="note" id="w-pn"></div></div></div>
+    </div>
+  </div>
+  <div class="scope gold">Theorem 4.1 [T+V]: dΦ/dt = ((m+α)β̇ − (n+β)α̇)/((m+α)² + (n+β)²); loop integrals are 0 off the zero, +1 per enclosure, +2 for a double loop. The spectrum is symmetric under λ → −λ by {σ₃, D} = 0, so η vanishes identically on this family; the integer lives in the winding.</div>
+</section>
+<section class="lens" id="lens-floor">
+  <div class="kicker">Section 4.2 · local neutrality and the global bound</div>
+  <h2>A neutral point does not make the path free</h2>
+  <p class="lede">The potential <span class="mono">U(T) = (T² − a²)² + ε</span> has neutral sectors, yet every path from <span class="mono">−aI</span> to <span class="mono">aI</span> pays <span class="mono">O(γ) = ∫(1/N) Tr U dt &gt; 2aε</span>. Squeezing the crossing into a narrow window brings the cost down toward the floor, never below it. A path that moves no faster than one unit per unit time has no such freedom: it must be <span class="mono">T = tI</span>, and it pays <span class="mono">16a⁵/15 + 2aε</span>.</p>
+  <div class="grid2">
+    <aside class="controls sticky" aria-label="Controls"><div class="control"><label for="oW">Crossing window w (log scale) <output for="oW"></output></label><input type="range" id="oW" min="-2.3" max="0.3" step="0.01" value="-0.5"></div><div class="control"><label for="oE">Regulator ε <output for="oE"></output></label><input type="range" id="oE" min="0.001" max="0.05" step="0.001" value="0.01"></div><div class="row" style="margin-top:6px" id="oPathSel"><button class="small" data-v="win">Windowed path</button><button class="small" data-v="norm">Normalized path T = tI</button></div><p class="caption" style="padding-left:0">a = 1; the eigenvalue runs from −a to a.</p></aside>
+    <div class="stage">
+      <div class="split"><div class="canvasbox"><span class="ctitle">eigenvalue path λ(t) over the landscape (λ² − a²)²</span><canvas id="oPath" aria-label="eigenvalue path λ(t) over the landscape (λ² − a²)²"></canvas></div><div class="canvasbox"><span class="ctitle">running cost ∫(1/N) Tr U against the floor 2aε</span><canvas id="oCost" aria-label="running cost ∫(1/N) Tr U against the floor 2aε"></canvas></div></div>
+      <div class="cards"><div class="card"><div class="lab">O(γ) for this path</div><div class="val" id="o-O"></div><div class="note" id="o-On"></div></div><div class="card"><div class="lab">floor 2aε</div><div class="val" id="o-fl"></div><div class="note" id="o-fln"></div></div><div class="card"><div class="lab">normalized path 16a⁵/15 + 2aε</div><div class="val" id="o-n"></div><div class="note" id="o-nn"></div></div><div class="card"><div class="lab">O(γ) / floor</div><div class="val" id="o-r"></div><div class="note" id="o-rn"></div></div></div>
+    </div>
+  </div>
+  <div class="scope gold">Theorem 4.2 [T+V]: every continuous path satisfies O(γ) &gt; 2aε, the floor is sharp, and every normalized path is T = tI with O = 16a⁵/15 + 2aε (gate B.7: 1.086667 at a = 1, ε = 0.01, falling to 0.0268 as the window closes).</div>
+</section>
+<section class="lens" id="lens-seam">
+  <div class="kicker">Section 4.3 · interface gluing</div>
+  <h2>Joining two regions costs no more than the parts</h2>
+  <p class="lede">Glue patches <span class="mono">A</span> and <span class="mono">B</span> through the interface block <span class="mono">R_M = [[R_A, ε],[ε†, R_B]]</span>. The Schur step gives <span class="mono">O(A∪B) = O(A) + O(B) + Δ</span> with <span class="mono">Δ = Σ log(1 − μ_k) ≤ 0</span>: obstruction that each side carried on its own is partly carried by the other, and at the seam it cancels. A skew-coupled block, run as a control, gives the opposite sign.</p>
+  <div class="grid2">
+    <aside class="controls sticky" aria-label="Controls"><div class="control"><label for="sE">Interface coupling ε <output for="sE"></output></label><input type="range" id="sE" min="0" max="1.2" step="0.005" value="0.55"></div><div class="row" style="margin-top:6px" id="sType"><button class="small" data-v="herm">Interface block (Hermitian)</button><button class="small" data-v="skew">Control: skew block</button></div><p class="caption" style="padding-left:0">Patch operators are seeded; I + R_A and I + R_B are positive definite.</p></aside>
+    <div class="stage">
+      <div class="split"><div class="canvasbox"><span class="ctitle">the glued operator I + R_M: interface blocks in gold</span><canvas id="sMat" aria-label="the glued operator I + R_M: interface blocks in gold"></canvas></div><div class="canvasbox"><span class="ctitle">O(A) + O(B) against O(A∪B), and Δ as ε grows</span><canvas id="sBar" aria-label="O(A) + O(B) against O(A∪B), and Δ as ε grows"></canvas></div></div>
+      <div class="cards"><div class="card"><div class="lab">interface anomaly Δ</div><div class="val" id="s-D"></div><div class="note" id="s-Dn"></div></div><div class="card"><div class="lab">boundary product: largest μ</div><div class="val" id="s-mu"></div><div class="note" id="s-mun"></div></div><div class="card"><div class="lab">glued operator</div><div class="val" id="s-pos"></div><div class="note" id="s-posn"></div></div><div class="card"><div class="lab">O(A) + O(B) → O(A∪B)</div><div class="val" id="s-sum"></div><div class="note" id="s-sumn"></div></div></div>
+    </div>
+  </div>
+  <div class="scope gold">Theorem 4.3 [T] under Assumption 1 (block form; I + R_A, I + R_B and I + R_M positive definite): Δ = Tr log(I − ε†(I+R_A)⁻¹ε(I+R_B)⁻¹) ≤ 0, with equality exactly at ε = 0. Reading [H]: the seam is a discount. Gate B.7: 273 random seams, every Δ negative; the skew control positive on all 400 draws.</div>
+</section>
+<section class="lens" id="lens-anchor">
+  <div class="kicker">Section 4.4 · the noncommutative torus</div>
+  <h2>An integer that needs a large enough failure to commute</h2>
+  <p class="lede">Replace the two holonomy numbers by two unitaries <span class="mono">U, V</span> and read the relator <span class="mono">R = UVU†V†</span>. Its determinant is one, so its eigenphases add to a whole number of turns: the winding <span class="mono">w</span>. The branch guard <span class="mono">g</span> is the distance of the spectrum from −1, the defect <span class="mono">δ</span> how far <span class="mono">R</span> is from the identity. Every pair obeys <span class="mono">δ + g² ≤ 4</span>, and a nonzero winding needs <span class="mono">δ ≥ 16/d²</span>.</p>
+  <div class="grid2">
+    <aside class="controls sticky" aria-label="Controls"><div class="control"><label for="aD">Dimension d <output for="aD"></output></label><input type="range" id="aD" min="3" max="41" step="2" value="9"></div><div class="control"><label for="aM">Power m of the shift <output for="aM"></output></label><input type="range" id="aM" min="1" max="20" step="1" value="1"></div><div class="control"><label for="aS">Spread of the phases (fixed product) <output for="aS"></output></label><input type="range" id="aS" min="0" max="0.9" step="0.01" value="0.35"></div></aside>
+    <div class="stage">
+      <div class="split"><div class="canvasbox"><span class="ctitle">eigenphases of R on the unit circle; the guard is the gap to −1</span><canvas id="aCirc" aria-label="eigenphases of R on the unit circle; the guard is the gap to −1"></canvas></div><div class="canvasbox"><span class="ctitle">the admissible domain δ + g² ≤ 4 and the amplitude floor</span><canvas id="aDom" aria-label="the admissible domain δ + g² ≤ 4 and the amplitude floor"></canvas></div></div>
+      <div class="cards"><div class="card"><div class="lab">winding w</div><div class="val" id="a-w"></div><div class="note" id="a-wn"></div></div><div class="card"><div class="lab">δ and g</div><div class="val" id="a-dg"></div><div class="note" id="a-dgn"></div></div><div class="card"><div class="lab">bound (d/4)√δ and |w|</div><div class="val" id="a-b"></div><div class="note" id="a-bn"></div></div><div class="card"><div class="lab">integer bound ⌊(d−1)/2⌋</div><div class="val" id="a-int"></div><div class="note" id="a-intn"></div></div></div>
+    </div>
+  </div>
+  <div class="scope gold">Theorems 4.5–4.8 [T+V]: w ∈ ℤ with |w| ≤ ⌊(d−1)/2⌋; δ + g² ≤ 4 with equality exactly when Re λ is constant; |w| ≤ (d/4)√δ. Clock with the m-th power of the shift gives R = ωᵐI and w = m; at m = (d−1)/2 the ratio |w|/((d/4)√δ) rises to 1, so the constant ¼ is sharp. The spread moves the phases at fixed product, as a perturbation off the scalar locus does.</div>
+</section>
+<section class="lens" id="lens-signature">
+  <div class="kicker">Sections 2, 4.1 and 5.7 · the Levine–Tristram signature</div>
+  <h2>The record can only step where the polynomial meets the circle</h2>
+  <p class="lede">For a knot with Seifert matrix <span class="mono">V</span>, the signature of <span class="mono">(1−ω)V + (1−ω̄)Vᵀ</span> is an integer step function of <span class="mono">ω = e<sup>2πiα</sup></span>. It can step only at unit-circle roots of the Alexander polynomial, and a root is a possible step, not a forced one: the square knot has double roots on the circle and never steps. Mirror image reverses the signature, so an amphichiral knot such as the figure-eight carries zero everywhere.</p>
+  <div class="grid2">
+    <aside class="controls sticky" aria-label="Controls"><div class="control"><label for="gA">Holonomy α <output for="gA"></output></label><input type="range" id="gA" min="0.001" max="0.999" step="0.001" value="0.25"></div><div class="row" style="margin-top:6px" id="gKnot"><button class="small" data-v="31">Trefoil</button><button class="small" data-v="m31">Mirror trefoil</button><button class="small" data-v="41">Figure-eight</button><button class="small" data-v="sq">Square knot</button><button class="small" data-v="51">Cinquefoil 5₁</button></div><p class="caption" style="padding-left:0">Seifert matrices from the standard presentations.</p></aside>
+    <div class="stage">
+      <div class="split"><div class="canvasbox"><span class="ctitle">signature σ(α) with the unit-circle Alexander roots</span><canvas id="gStep" aria-label="signature σ(α) with the unit-circle Alexander roots"></canvas></div><div class="canvasbox"><span class="ctitle">the unit circle: ω and the roots of Δ</span><canvas id="gCirc" aria-label="the unit circle: ω and the roots of Δ"></canvas></div></div>
+      <div class="cards"><div class="card"><div class="lab">σ at α</div><div class="val" id="g-s"></div><div class="note" id="g-sn"></div></div><div class="card"><div class="lab">unit-circle roots</div><div class="val" id="g-r"></div><div class="note" id="g-rn"></div></div><div class="card"><div class="lab">steps found</div><div class="val" id="g-steps"></div><div class="note" id="g-stepsn"></div></div><div class="card"><div class="lab">chirality</div><div class="val" id="g-ch"></div><div class="note" id="g-chn"></div></div></div>
+    </div>
+  </div>
+  <div class="scope gold">Section 4.1 and Theorem 5.5 [T]: an integer step function that can step only at the unit-circle Alexander roots; the wall set is contained in that discrete locus. Corollary 5.1 [T]: mirror image reverses σ, so an amphichiral knot has σ ≡ 0. Gate B.9: trefoil steps at 1/6 and 5/6; figure-eight and square knot never step.</div>
+</section>
+<section class="lens" id="lens-curve">
+  <div class="kicker">Sections 5.1–5.2 · the continuation laboratory</div>
+  <h2>Continuation runs on the A-polynomial</h2>
+  <p class="lede">Admissible trajectories on the figure-eight knot complement live on the zero set of <span class="mono">A(L,M) = L²M⁴ + L(−M⁸ + M⁶ + 2M⁴ + M² − 1) + M⁴</span>. On the unitary slice, <span class="mono">M = e<sup>iθ</sup></span>, the longitude obeys <span class="mono">L² + 2sL + 1 = 0</span> with <span class="mono">s = 1 + cos 2θ − cos 4θ</span>, and it stays on the circle exactly where <span class="mono">|s| ≤ 1</span>. Moving along the curve, the meridian and longitude are geared by the Jacobian ratio <span class="mono">u̇ = −(J_L/J_M) v̇</span>.</p>
+  <div class="grid2">
+    <aside class="controls sticky" aria-label="Controls"><div class="control"><label for="cP">Position along the unitary arc <output for="cP"></output></label><input type="range" id="cP" min="0" max="1" step="0.002" value="0.35"></div><div class="control"><label for="cM">Mode (m, n) offset m <output for="cM"></output></label><input type="range" id="cM" min="-2" max="2" step="1" value="0"></div><div class="control"><label for="cN">Mode offset n <output for="cN"></output></label><input type="range" id="cN" min="-2" max="2" step="1" value="1"></div></aside>
+    <div class="stage">
+      <div class="split"><div class="canvasbox"><span class="ctitle">holonomy torus: the unitary arcs of A = 0 and the moving point</span><canvas id="cTor" aria-label="holonomy torus: the unitary arcs of A = 0 and the moving point"></canvas></div><div class="canvasbox"><span class="ctitle">Jacobian ratio J_L/J_M and the interaction field dΦ/dv along the arc</span><canvas id="cFld" aria-label="Jacobian ratio J_L/J_M and the interaction field dΦ/dv along the arc"></canvas></div></div>
+      <div class="cards"><div class="card"><div class="lab">M = e^(iθ), L = e^(iφ)</div><div class="val" id="c-ml"></div><div class="note" id="c-mln"></div></div><div class="card"><div class="lab">|A(L, M)| on the point</div><div class="val" id="c-A"></div><div class="note" id="c-An"></div></div><div class="card"><div class="lab">J_L / J_M</div><div class="val" id="c-j"></div><div class="note" id="c-jn"></div></div><div class="card"><div class="lab">interaction field dΦ/dv</div><div class="val" id="c-f"></div><div class="note" id="c-fn"></div></div></div>
+    </div>
+  </div>
+  <div class="scope gold">Equation (12) [C]: the A-polynomial of the figure-eight knot. Section 5.2 [T]: implicit differentiation gives u̇ = −(J_L/J_M)v̇, and the phase law (3) lifted to the curve gives the interaction field (13). The unitary slice is computed here exactly; the arcs end where L = ±1, and on this slice |J_L/J_M| stays below 0.224.</div>
+</section>
+<section class="lens" id="lens-seed">
+  <div class="kicker">Section 5.3 · chirality forcing</div>
+  <h2>Symmetry is broken by a seed, then amplified</h2>
+  <p class="lede">A statically amphichiral substrate carries a zero record, so a persistent distinction needs a chiral substrate or a trajectory that breaks the mirror symmetry. But a mirror-symmetric start under mirror-equivariant transport stays symmetric for all time. An instability amplifies a seed; it does not create one. Drop three balls in the same double well: one exactly at the symmetric point, and two with seeds of opposite sign.</p>
+  <div class="grid2">
+    <aside class="controls sticky" aria-label="Controls"><div class="control"><label for="dMu">Curvature at the symmetric point μ <output for="dMu"></output></label><input type="range" id="dMu" min="-1.5" max="0.5" step="0.01" value="-1.0"></div><div class="control"><label for="dS">Seed size (log₁₀) <output for="dS"></output></label><input type="range" id="dS" min="-9" max="-1" step="0.1" value="-6"></div><div class="control"><label for="dT">Time t <output for="dT"></output></label><input type="range" id="dT" min="0" max="60" step="0.05" value="20"></div><div class="row" style="margin-top:6px" id="dPlay"><button class="small" data-v="play">Play</button></div><p class="caption" style="padding-left:0">V(a) = μa²/2 + a⁴/4 with light damping.</p></aside>
+    <div class="stage">
+      <div class="split"><div class="canvasbox"><span class="ctitle">the double well and three starts</span><canvas id="dWell" aria-label="the double well and three starts"></canvas></div><div class="canvasbox"><span class="ctitle">a(t) for the symmetric start and the two seeds</span><canvas id="dRun" aria-label="a(t) for the symmetric start and the two seeds"></canvas></div></div>
+      <div class="cards"><div class="card"><div class="lab">symmetric start a(t)</div><div class="val" id="d-0"></div><div class="note" id="d-0n"></div></div><div class="card"><div class="lab">seed +: a(t)</div><div class="val" id="d-p"></div><div class="note" id="d-pn"></div></div><div class="card"><div class="lab">seed −: a(t)</div><div class="val" id="d-m"></div><div class="note" id="d-mn"></div></div><div class="card"><div class="lab">figure-eight record</div><div class="val" id="d-41"></div><div class="note" id="d-41n"></div></div></div>
+    </div>
+  </div>
+  <div class="scope gold">Corollary 5.1 [T]: an amphichiral knot has σ ≡ 0, so |n| = 1 cannot be realized at a static amphichiral basepoint. [H]: on the 4₁ laboratory the transport field is the amplifier, seeded by a fluctuation, a boundary orientation or a residual record. Gate B.9: a(0) = 0 stays at 0; seeds ±10⁻⁶ run to ±0.9946.</div>
+</section>
+<section class="lens" id="lens-lattice">
+  <div class="kicker">Section 5.6 · the stable trichotomy</div>
+  <h2>Neutral, chiral, or composite</h2>
+  <p class="lede">A boundary flow either has no global winding vector (an open flow), or it carries <span class="mono">w = (w_α, w_β) ∈ ℤ²</span>. Every such vector is exactly one of three kinds: zero (a neutral loop), primitive with <span class="mono">gcd = 1</span> (a chiral loop), or a composite <span class="mono">k·w₀</span>. The trichotomy is the statement that composites split into primitive loops under perturbation. That selection needs a stress functional, which the paper leaves open.</p>
+  <div class="grid2">
+    <aside class="controls sticky" aria-label="Controls"><div class="control"><label for="lP">w_α <output for="lP"></output></label><input type="range" id="lP" min="-6" max="6" step="1" value="2"></div><div class="control"><label for="lQ">w_β <output for="lQ"></output></label><input type="range" id="lQ" min="-6" max="6" step="1" value="3"></div><div class="row" style="margin-top:6px" id="lPick"><button class="small" data-v="23">(2, 3)</button><button class="small" data-v="46">(4, 6)</button><button class="small" data-v="00">(0, 0)</button><button class="small" data-v="15">(1, 5)</button><button class="small" data-v="33">(3, 3)</button></div><p class="caption" style="padding-left:0">Pick a vector or move the sliders.</p></aside>
+    <div class="stage">
+      <div class="split"><div class="canvasbox"><span class="ctitle">ℤ²: neutral (gold), primitive (teal), composite (violet)</span><canvas id="lGrid" aria-label="ℤ²: neutral (gold), primitive (teal), composite (violet)"></canvas></div><div class="canvasbox"><span class="ctitle">the loop on the boundary torus</span><canvas id="lTor" aria-label="the loop on the boundary torus"></canvas></div></div>
+      <div class="cards"><div class="card"><div class="lab">gcd(w_α, w_β)</div><div class="val" id="l-g"></div><div class="note" id="l-gn"></div></div><div class="card"><div class="lab">class</div><div class="val" id="l-k"></div><div class="note" id="l-kn"></div></div><div class="card"><div class="lab">composite as k·w₀</div><div class="val" id="l-sp"></div><div class="note" id="l-spn"></div></div><div class="card"><div class="lab">stress functional</div><div class="val" id="l-open"></div><div class="note" id="l-openn"></div></div></div>
+    </div>
+  </div>
+  <div class="scope gold">Theorem 5.4 [T]: the lattice split is exhaustive. [H]: the selection that removes composites. Candidates for the stress: the departure from normality Φ(C) = ½‖[C,Cᵀ]‖²_F = 2‖[S,K]‖²_F, or the layered spectral stress 𝒮 = ∂ρ∂ρ + Δ²g + χ_η ∂η∂η.</div>
+</section>
+<section class="lens" id="lens-band">
+  <div class="kicker">Section 6.5 · realization on published tomography data</div>
+  <h2>The pipeline on a measured band</h2>
+  <p class="lede">Yi and colleagues reconstructed the Bloch states of a two-dimensional Raman lattice of ⁸⁷Rb condensates. Their calibrated band is <span class="mono">h = (2t_so sin q_y, 2t_so sin q_x, δ/2 − 2t₀(cos q_x + cos q_y))</span> with <span class="mono">t₀ = 0.09</span>, <span class="mono">t_so = −0.05</span>. On it the winding currency, the saturated bound and the rigidity of the declared operator <span class="mono">h·σ</span> are computed here from the published parameters. This is a calculation on a published model, not new laboratory data.</p>
+  <div class="grid2">
+    <aside class="controls sticky" aria-label="Controls"><div class="control"><label for="nD">Detuning δ (recoil units) <output for="nD"></output></label><input type="range" id="nD" min="-1.0" max="0.25" step="0.005" value="-0.2"></div><div class="control"><label for="nE">Regulator η (log₁₀) <output for="nE"></output></label><input type="range" id="nE" min="-12" max="-2" step="0.1" value="-12"></div><div class="row" style="margin-top:6px" id="nSign"><button class="small" data-v="plus">Ω = +i Tr(Π[V,W])</button><button class="small" data-v="minus">Opposite sign</button></div><p class="caption" style="padding-left:0">The sign convention of the curvature.</p></aside>
+    <div class="stage">
+      <div class="split"><div class="canvasbox"><span class="ctitle">Berry curvature of the lower band over the zone</span><canvas id="nMap" aria-label="Berry curvature of the lower band over the zone"></canvas></div><div class="canvasbox"><span class="ctitle">Chern number and largest rigidity R_η across δ</span><canvas id="nSweep" aria-label="Chern number and largest rigidity R_η across δ"></canvas></div></div>
+      <div class="cards"><div class="card"><div class="lab">Chern number</div><div class="val" id="n-C"></div><div class="note" id="n-Cn"></div></div><div class="card"><div class="lab">bound |Ω| = 2√det g</div><div class="val" id="n-sat"></div><div class="note" id="n-satn"></div></div><div class="card"><div class="lab">quantum volume vol_g</div><div class="val" id="n-vol"></div><div class="note" id="n-voln"></div></div><div class="card"><div class="lab">rigidity max R_η = 1/(min|h|² + η)</div><div class="val" id="n-R"></div><div class="note" id="n-Rn"></div></div></div>
+    </div>
+  </div>
+  <div class="scope gold">Section 6.5 [C+V]: framework Chern −0.99931 against the published −1.00 ± 0.02 at δ = −0.2; the bound saturates pointwise; vol_g = 1.145 &gt; |C|. Rigidity of the declared operator h·σ, whose smallest singular value |h| is half the local gap, sweeps from 1.0×10² to 4.0×10⁶ toward the walls at δ = 0 and −8t₀ (η = 10⁻¹²) and saturates below 1/η.</div>
+</section>
+<section class="lens" id="lens-refract">
+  <div class="kicker">Section 6.3 · geometric refraction</div>
+  <h2>Rigidity bends a path that crosses a wall</h2>
+  <p class="lede">Give rigidity a dynamical role with the scalar action <span class="mono">S = ∫(½R|q̇|² − V)dτ</span>. Across a planar interface the tangential momentum <span class="mono">R v sin θ</span> is conserved and so is the energy, so <span class="mono">R₁(E−V₁)sin²θ₁ = R₂(E−V₂)sin²θ₂</span>. Beyond the critical angle the path turns back. With <span class="mono">R = 1/(s² + η)</span> the transmitted angle never collapses to zero at fixed η.</p>
+  <div class="grid2">
+    <aside class="controls sticky" aria-label="Controls"><div class="control"><label for="qR1">Rigidity R₁ (left) <output for="qR1"></output></label><input type="range" id="qR1" min="0.3" max="4" step="0.01" value="2.0"></div><div class="control"><label for="qR2">Rigidity R₂ (right) <output for="qR2"></output></label><input type="range" id="qR2" min="0.3" max="4" step="0.01" value="0.8"></div><div class="control"><label for="qV">Potential step V₂ − V₁ <output for="qV"></output></label><input type="range" id="qV" min="-0.5" max="0.6" step="0.01" value="0"></div><div class="control"><label for="qTh">Incidence angle θ₁ (degrees) <output for="qTh"></output></label><input type="range" id="qTh" min="1" max="85" step="0.5" value="30"></div><div class="row" style="margin-top:6px" id="qPlay"><button class="small" data-v="play">Play</button></div><p class="caption" style="padding-left:0">Energy E = 1; the interface is smoothed over a short width.</p></aside>
+    <div class="stage">
+      <div class="split"><div class="canvasbox"><span class="ctitle">the path across the interface (shading: rigidity)</span><canvas id="qMed" aria-label="the path across the interface (shading: rigidity)"></canvas></div><div class="canvasbox"><span class="ctitle">the conserved quantity along the path, and sin²θ₂ against s₂ at fixed η</span><canvas id="qLaw" aria-label="the conserved quantity along the path, and sin²θ₂ against s₂ at fixed η"></canvas></div></div>
+      <div class="cards"><div class="card"><div class="lab">R₁(E−V₁)sin²θ₁</div><div class="val" id="q-l"></div><div class="note" id="q-ln"></div></div><div class="card"><div class="lab">R₂(E−V₂)sin²θ₂ (measured)</div><div class="val" id="q-r"></div><div class="note" id="q-rn"></div></div><div class="card"><div class="lab">θ₂ measured and predicted</div><div class="val" id="q-t"></div><div class="note" id="q-tn"></div></div><div class="card"><div class="lab">critical angle</div><div class="val" id="q-c"></div><div class="note" id="q-cn"></div></div></div>
+    </div>
+  </div>
+  <div class="scope gold">Proposition 6.2 [T] under the scalar action [H]. Gate B.9: the Euler–Lagrange flow reproduces the law to 10⁻¹¹ and returns the path above the critical angle. Angles are velocity angles from the normal, not principal angles; identifying R_η with an optical index stays open [H].</div>
+</section>
+<section class="lens" id="lens-pipe">
+  <div class="kicker">Sections 6.1 and 8 · the intrinsic quantities</div>
+  <h2>From samples to a projector path</h2>
+  <p class="lede">Form a covariance, eigendecompose it, keep the top <span class="mono">k</span> directions as a projector <span class="mono">Π_k</span>, and follow that projector as a setting moves. Principal angles, persistence <span class="mono">P = Tr(Π_k(t)Π_k(t+Δt))</span> and the effective dimension <span class="mono">D_C = 1/IPR</span> are functionals of the projector path alone. The gap at the cut sets how easily the projector turns: its compliance is <span class="mono">1/γ_k</span>. The samples here are synthetic draws from a declared model, not instrument data.</p>
+  <div class="grid2">
+    <aside class="controls sticky" aria-label="Controls"><div class="control"><label for="pK">Rank k <output for="pK"></output></label><input type="range" id="pK" min="1" max="5" step="1" value="3"></div><div class="control"><label for="pC">Cycle position <output for="pC"></output></label><input type="range" id="pC" min="0" max="1" step="0.002" value="0.2"></div><div class="control"><label for="pDt">Step Δt along the cycle <output for="pDt"></output></label><input type="range" id="pDt" min="0.01" max="0.25" step="0.005" value="0.08"></div><div class="row" style="margin-top:6px" id="pPlay"><button class="small" data-v="play">Play</button></div><p class="caption" style="padding-left:0">Six-dimensional synthetic covariance; the dominant direction strengthens and turns as the cycle runs.</p></aside>
+    <div class="stage">
+      <div class="split"><div class="canvasbox"><span class="ctitle">covariance spectrum, the rank-k cut and its gap</span><canvas id="pSpec" aria-label="covariance spectrum, the rank-k cut and its gap"></canvas></div><div class="canvasbox"><span class="ctitle">principal angles between Π_k(t) and Π_k(t+Δt)</span><canvas id="pAng" aria-label="principal angles between Π_k(t) and Π_k(t+Δt)"></canvas></div></div>
+      <div class="cards"><div class="card"><div class="lab">persistence P = Σcos²θᵢ</div><div class="val" id="p-P"></div><div class="note" id="p-Pn"></div></div><div class="card"><div class="lab">effective dimension D_C</div><div class="val" id="p-D"></div><div class="note" id="p-Dn"></div></div><div class="card"><div class="lab">gap γ_k and compliance 1/γ_k</div><div class="val" id="p-gap"></div><div class="note" id="p-gapn"></div></div><div class="card"><div class="lab">largest principal angle</div><div class="val" id="p-max"></div><div class="note" id="p-maxn"></div></div></div>
+    </div>
+  </div>
+  <div class="scope gold">Section 6.1 [T]: cos θᵢ = σᵢ(Π_k(t)Π_k(t+Δt)); P = Σcos²θᵢ ∈ [0, k]; D_C = 1/IPR is bounded by the rank. The response of Π_k to a perturbation has singular values 1/|λᵢ − λⱼ| across the cut [T+V]. Rigidity is a separate object, R_η = 1/(σ_min(A_intr)² + η), for a declared transport operator.</div>
+</section>
+<section class="lens" id="lens-riesz">
+  <div class="kicker">Section 8 · projector persistence</div>
+  <h2>Individual projectors fail; the cluster does not</h2>
+  <p class="lede">Take <span class="mono">H(γ) = σ_x + iγσ_z</span>. Its eigenvalues <span class="mono">±√(1−γ²)</span> collide at <span class="mono">γ = 1</span>, and each rank-one projector blows up on the way in. A contour around both eigenvalues gives the Riesz projector of the pair, and it stays exactly the identity, with trace two, straight through the collision.</p>
+  <div class="grid2">
+    <aside class="controls sticky" aria-label="Controls"><div class="control"><label for="zG">Non-Hermiticity γ <output for="zG"></output></label><input type="range" id="zG" min="0" max="0.999" step="0.001" value="0.6"></div><div class="row" style="margin-top:6px" id="zPlay"><button class="small" data-v="play">Play</button></div><p class="caption" style="padding-left:0">The contour is a fixed circle of radius 1.6.</p></aside>
+    <div class="stage">
+      <div class="split"><div class="canvasbox"><span class="ctitle">complex plane: the eigenvalues and the contour</span><canvas id="zPlane" aria-label="complex plane: the eigenvalues and the contour"></canvas></div><div class="canvasbox"><span class="ctitle">norms of the individual projectors against the pair projector</span><canvas id="zNorm" aria-label="norms of the individual projectors against the pair projector"></canvas></div></div>
+      <div class="cards"><div class="card"><div class="lab">eigenvalues ±√(1−γ²)</div><div class="val" id="z-ev"></div><div class="note" id="z-evn"></div></div><div class="card"><div class="lab">‖P₊‖ (individual)</div><div class="val" id="z-p"></div><div class="note" id="z-pn"></div></div><div class="card"><div class="lab">Tr Π over the pair</div><div class="val" id="z-tr"></div><div class="note" id="z-trn"></div></div><div class="card"><div class="lab">Petermann factor 1/(1−γ²)</div><div class="val" id="z-k"></div><div class="note" id="z-kn"></div></div></div>
+    </div>
+  </div>
+  <div class="scope gold">Theorem 8.1 [T]: ‖Π′ − Π‖ ≤ K_Γ ε for Riesz projectors of a bounded non-normal operator. For non-normal A the Riesz projector is oblique; principal angles apply to the orthogonal projector onto its range (two oblique rank-one idempotents can have Tr(Π₀Π₁) = 2).</div>
+</section>
+<section class="lens" id="lens-ledger">
+  <div class="kicker">Every claim with its grade</div>
+  <h2>Claim ledger</h2>
+  <p class="lede">Grades: [T] exact or derived; [V] verified by a gated check; [C] cited from the literature; [D] data-reported, pending its protocol; [H] hypothesis, protocol or interpretation. Lean: machine-checked in the upg-lean repository (forty theorems in eight modules).</p>
+  <div class="table"><table><thead><tr><th>Claim</th><th>Where</th><th>Grade</th></tr></thead><tbody><tr><td>F(Ω,Π) is traceless, off-diagonal, and vanishes exactly when [Ω,Π] = 0</td><td>Theorems 1.2–1.3</td><td class="mono">T+V</td></tr><tr><td>‖F‖² = ‖[H,Π]‖² = 2 Tr K(0): redistribution is the zero-time footprint of the memory kernel</td><td>Proposition 1.5</td><td class="mono">T+V, Lean</td></tr><tr><td>K(0) fixes the footprint, not the memory: same B, different D gives different K(t)</td><td>Section 1, B.9</td><td class="mono">T+V</td></tr><tr><td>Saturation of the metric–curvature bound exactly for complex-parallel projected tangents</td><td>Section 2</td><td class="mono">T</td></tr><tr><td>Kagome outer bands at bond phase π/6 saturate with curvature present</td><td>Section 2, B.9</td><td class="mono">V</td></tr><tr><td>Phase transport on the torus anchor gives integer windings 0, +1, +2</td><td>Theorem 4.1</td><td class="mono">T+V</td></tr><tr><td>Every path pays O(γ) &gt; 2aε; the floor is sharp; normalized paths pay 16a⁵/15 + 2aε</td><td>Theorem 4.2</td><td class="mono">T+V</td></tr><tr><td>Gluing is subadditive: Δ = Σ log(1 − μ_k) ≤ 0</td><td>Theorem 4.3</td><td class="mono">T under Assumption 1</td></tr><tr><td>The seam is a discount</td><td>Section 4.3</td><td class="mono">H</td></tr><tr><td>w ∈ ℤ, |w| ≤ ⌊(d−1)/2⌋; δ + g² ≤ 4; |w| ≤ (d/4)√δ with sharp constant ¼</td><td>Theorems 4.5–4.8, Prop. 4.9</td><td class="mono">T+V</td></tr><tr><td>Bott index equals the Chern number under short-range, gapped hypotheses</td><td>Section 4.4</td><td class="mono">C</td></tr><tr><td>A-polynomial of the figure-eight knot</td><td>Equation (12)</td><td class="mono">C</td></tr><tr><td>Jacobian gearing u̇ = −(J_L/J_M)v̇ and the interaction field</td><td>Section 5.2</td><td class="mono">T</td></tr><tr><td>An amphichiral knot carries σ ≡ 0; distinction needs a chiral substrate or a symmetry-breaking trajectory</td><td>Corollary 5.1</td><td class="mono">T</td></tr><tr><td>The transport field amplifies a seed on the 4₁ laboratory</td><td>Section 5.3</td><td class="mono">H</td></tr><tr><td>Every winding vector is neutral, primitive or composite</td><td>Theorem 5.4</td><td class="mono">T</td></tr><tr><td>Composites split under perturbation; the stress functional is not yet fixed</td><td>Section 5.6</td><td class="mono">H</td></tr><tr><td>Knot complements realize the rigidity class; the signature steps only at unit-circle Alexander roots</td><td>Theorem 5.5</td><td class="mono">T</td></tr><tr><td>Seifert substrates excluded</td><td>Lemma 5.7</td><td class="mono">C</td></tr><tr><td>R_η = 1/(σ_min(A_intr)² + η) ≤ 1/η; the gap sets compliance, not rigidity</td><td>Section 6.1</td><td class="mono">T+V</td></tr><tr><td>Rigidity value on the transmon covariance</td><td>Section 6.1</td><td class="mono">open: A_intr to be declared</td></tr><tr><td>|Ω| ≤ 2√(g(V,V)g(W,W) − g(V,W)²)</td><td>Theorem 6.1</td><td class="mono">T+V</td></tr><tr><td>R₁(E−V₁)sin²θ₁ = R₂(E−V₂)sin²θ₂ under the scalar action</td><td>Proposition 6.2</td><td class="mono">T given H</td></tr><tr><td>Refraction angle 14.22° in the window [14.21°, 14.23°]</td><td>Section 6.4</td><td class="mono">D, pending the split protocol</td></tr><tr><td>Published Raman-lattice band: Chern −0.99931 against −1.00 ± 0.02; saturation; vol_g = 1.145</td><td>Section 6.5</td><td class="mono">C+V</td></tr><tr><td>Friction shield: suppressed antisymmetric correlations</td><td>Section 6.7</td><td class="mono">D+H</td></tr><tr><td>Khovanov Laplacian: ker Δ ≅ Kh in each bidegree</td><td>Section 7</td><td class="mono">T</td></tr><tr><td>Alignment of the non-harmonic spectrum with continuum gradients</td><td>Section 7</td><td class="mono">H</td></tr><tr><td>Riesz projectors are locally Lipschitz: ‖Π′ − Π‖ ≤ K_Γ ε</td><td>Theorem 8.1</td><td class="mono">T</td></tr></tbody></table></div>
+</section>
+</main>
+<footer class="wrap">UPG Mixer · Jeromie Beasley · built from Universal Projector Geometry from Electrical Measurements: A Coordinate-Free Framework for Transport, Persistence, and Emergent Structure, version 3.1 (September 2026).</footer>
+
+<script>
+/* ===== Dirac Time Mixer: shared core (from the VOTKP Mixer) ===== */
+'use strict';
+const CSS = getComputedStyle(document.documentElement);
+const C = {};
+['bg','panel','line','ink','ink2','muted','dim','gold','teal','violet','red','blue','green','orange','pos','neg','rec','null'].forEach(k => C[k] = CSS.getPropertyValue('--' + k).trim());
+const MONO = 'ui-monospace,SFMono-Regular,Menlo,Consolas,monospace';
+const SERIF = 'Georgia,"Iowan Old Style",Palatino,serif';
+const SANS = 'system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif';
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const lerp = (a, b, t) => a + (b - a) * t;
+const TAU = Math.PI * 2;
+
+/* ---- global clock and lens registry (the recorder can freeze time) ---- */
+const GM = {
+  lenses: {}, order: [], active: null, frozen: null, t0: performance.now(),
+  calm: window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches,
+  now() { return this.frozen != null ? this.frozen : (performance.now() - this.t0) / 1000; },
+  freeze(t) { this.frozen = t; }, thaw() { this.frozen = null; },
+  add(id, lens) { this.lenses[id] = lens; this.order.push(id); },
+  show(id) {
+    if (!this.lenses[id]) id = this.order[0];
+    this.active = id;
+    $$('.lens').forEach(s => s.classList.toggle('active', s.id === 'lens-' + id));
+    $$('nav.tabs button').forEach(b => b.classList.toggle('active', b.dataset.lens === id));
+    const L = this.lenses[id];
+    if (L && !L._init) { L._init = true; L.init && L.init(); }
+    requestAnimationFrame(() => { Stage.resizeAll(); L && L.draw && L.draw(this.now()); });
+    try { history.replaceState(null, '', '#' + id); } catch (e) {}
+  },
+  frame() {
+    const L = this.lenses[this.active];
+    if (L && L.draw && L.animated) L.draw(this.now());
+  }
+};
+function loop() { GM.frame(); requestAnimationFrame(loop); }
+
+/* ---- HiDPI canvas stage ---- */
+class Stage {
+  constructor(canvas, aspect) {
+    this.c = canvas; this.ctx = canvas.getContext('2d'); this.aspect = aspect || 0.6;
+    this.W = 600; this.H = 360; Stage.all.push(this); this.resize();
+  }
+  resize() {
+    const w = Math.max(200, Math.round(this.c.clientWidth || this.c.parentElement.clientWidth || 600));
+    const ar = typeof this.aspect === 'function' ? this.aspect(w) : this.aspect;
+    const h = Math.round(w * ar);
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    if (this.c.width !== Math.round(w * dpr) || this.c.height !== Math.round(h * dpr)) {
+      this.c.width = Math.round(w * dpr); this.c.height = Math.round(h * dpr);
+      this.c.style.height = h + 'px';
+    }
+    this.W = w; this.H = h; this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  clear(bg) { const x = this.ctx; x.save(); x.setTransform(1, 0, 0, 1, 0, 0); x.clearRect(0, 0, this.c.width, this.c.height); x.restore(); if (bg) { x.fillStyle = bg; x.fillRect(0, 0, this.W, this.H); } }
+  static resizeAll() { Stage.all.forEach(s => { if (s.c.offsetParent !== null) s.resize(); }); }
+}
+Stage.all = [];
+let _rz; window.addEventListener('resize', () => { clearTimeout(_rz); _rz = setTimeout(() => { Stage.resizeAll(); const L = GM.lenses[GM.active]; L && L.draw && L.draw(GM.now()); }, 80); });
+
+/* ---- drawing helpers ---- */
+function glow(ctx, color, blur) { ctx.shadowColor = color; ctx.shadowBlur = blur; }
+function noglow(ctx) { ctx.shadowBlur = 0; ctx.shadowColor = 'transparent'; }
+function line(ctx, pts, color, w = 2, g = 0, dash) {
+  if (pts.length < 2) return;
+  ctx.save(); ctx.strokeStyle = color; ctx.lineWidth = w; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+  if (dash) ctx.setLineDash(dash); if (g) glow(ctx, color, g);
+  ctx.beginPath(); let pen = false;
+  for (const p of pts) { if (!p || !isFinite(p[0]) || !isFinite(p[1])) { pen = false; continue; } if (!pen) { ctx.moveTo(p[0], p[1]); pen = true; } else ctx.lineTo(p[0], p[1]); }
+  ctx.stroke(); ctx.restore();
+}
+function dot(ctx, x, y, r, color, g = 0, stroke) {
+  ctx.save(); if (g) glow(ctx, color, g); ctx.fillStyle = color; ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); ctx.fill();
+  if (stroke) { ctx.shadowBlur = 0; ctx.strokeStyle = stroke; ctx.lineWidth = 1.5; ctx.stroke(); } ctx.restore();
+}
+function text(ctx, s, x, y, o = {}) {
+  ctx.save(); ctx.fillStyle = o.color || C.ink2; ctx.font = o.font || `12px ${SANS}`;
+  ctx.textAlign = o.align || 'left'; ctx.textBaseline = o.base || 'alphabetic';
+  if (o.glow) glow(ctx, o.color || C.ink, o.glow);
+  if (o.bg) { const m = ctx.measureText(s); const pad = 4; const w = m.width + pad * 2; let bx = x - pad; if (ctx.textAlign === 'center') bx = x - w / 2; if (ctx.textAlign === 'right') bx = x - w + pad; ctx.fillStyle = o.bg; ctx.fillRect(bx, y - 12, w, 16); ctx.fillStyle = o.color || C.ink2; }
+  ctx.fillText(s, x, y); ctx.restore();
+}
+function arrow(ctx, x0, y0, x1, y1, color, w = 2, g = 0, head = 9) {
+  const a = Math.atan2(y1 - y0, x1 - x0);
+  ctx.save(); ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = w; ctx.lineCap = 'round'; if (g) glow(ctx, color, g);
+  ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1 - Math.cos(a) * head * .6, y1 - Math.sin(a) * head * .6); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x1 - head * Math.cos(a - .42), y1 - head * Math.sin(a - .42)); ctx.lineTo(x1 - head * Math.cos(a + .42), y1 - head * Math.sin(a + .42)); ctx.closePath(); ctx.fill(); ctx.restore();
+}
+function rgba(hex, a) { const h = hex.replace('#', ''); const n = parseInt(h.length === 3 ? h.split('').map(c => c + c).join('') : h, 16); return `rgba(${n >> 16 & 255},${n >> 8 & 255},${n & 255},${a})`; }
+
+/* ---- plot frame with linear or log axes ---- */
+class Frame {
+  constructor(ctx, box, xr, yr, o = {}) {
+    Object.assign(this, { ctx, box, xr, yr, xlog: !!o.xlog, ylog: !!o.ylog });
+    const [x, y, w, h] = box; this.x0 = x; this.y0 = y; this.w = w; this.h = h;
+  }
+  tx(v) { const [a, b] = this.xr; const t = this.xlog ? (Math.log10(v) - Math.log10(a)) / (Math.log10(b) - Math.log10(a)) : (v - a) / (b - a); return this.x0 + t * this.w; }
+  ty(v) { const [a, b] = this.yr; const t = this.ylog ? (Math.log10(v) - Math.log10(a)) / (Math.log10(b) - Math.log10(a)) : (v - a) / (b - a); return this.y0 + this.h - t * this.h; }
+  ix(px) { const [a, b] = this.xr; const t = (px - this.x0) / this.w; return this.xlog ? Math.pow(10, Math.log10(a) + t * (Math.log10(b) - Math.log10(a))) : a + t * (b - a); }
+  iy(py) { const [a, b] = this.yr; const t = (this.y0 + this.h - py) / this.h; return this.ylog ? Math.pow(10, Math.log10(a) + t * (Math.log10(b) - Math.log10(a))) : a + t * (b - a); }
+  pts(xs, f) { return xs.map(x => { const y = f(x); return (y == null || !isFinite(y)) ? null : [this.tx(x), this.ty(y)]; }); }
+  clip() { const c = this.ctx; c.save(); c.beginPath(); c.rect(this.x0, this.y0, this.w, this.h); c.clip(); }
+  unclip() { this.ctx.restore(); }
+  axes(o = {}) {
+    const c = this.ctx; c.save();
+    c.fillStyle = o.bg || 'rgba(10,19,34,.55)'; c.fillRect(this.x0, this.y0, this.w, this.h);
+    c.strokeStyle = 'rgba(120,150,190,.12)'; c.lineWidth = 1;
+    const xt = o.xticks || ticks(this.xr, this.xlog, o.nx || 6), yt = o.yticks || ticks(this.yr, this.ylog, o.ny || 5);
+    c.beginPath(); xt.forEach(v => { const X = Math.round(this.tx(v)) + .5; c.moveTo(X, this.y0); c.lineTo(X, this.y0 + this.h); });
+    yt.forEach(v => { const Y = Math.round(this.ty(v)) + .5; c.moveTo(this.x0, Y); c.lineTo(this.x0 + this.w, Y); }); c.stroke();
+    c.strokeStyle = 'rgba(120,150,190,.35)'; c.strokeRect(this.x0 + .5, this.y0 + .5, this.w - 1, this.h - 1);
+    c.fillStyle = C.muted; c.font = `10.5px ${MONO}`;
+    const fx = o.fx || (v => fmtTick(v, this.xlog)), fy = o.fy || (v => fmtTick(v, this.ylog));
+    if (!o.noxl) { c.textAlign = 'center'; c.textBaseline = 'top'; xt.forEach(v => c.fillText(fx(v), this.tx(v), this.y0 + this.h + 5)); }
+    if (!o.noyl) { c.textAlign = 'right'; c.textBaseline = 'middle'; yt.forEach(v => c.fillText(fy(v), this.x0 - 6, this.ty(v))); }
+    if (o.xlabel) { c.textAlign = 'center'; c.textBaseline = 'top'; c.fillStyle = C.ink2; c.font = `11.5px ${SANS}`; c.fillText(o.xlabel, this.x0 + this.w / 2, this.y0 + this.h + 21); }
+    if (o.ylabel) { c.save(); c.translate(this.x0 - (o.ylabelOff || 44), this.y0 + this.h / 2); c.rotate(-Math.PI / 2); c.textAlign = 'center'; c.textBaseline = 'bottom'; c.fillStyle = C.ink2; c.font = `11.5px ${SANS}`; c.fillText(o.ylabel, 0, 0); c.restore(); }
+    c.restore();
+  }
+  hline(v, color, dash = [4, 4], w = 1) { line(this.ctx, [[this.x0, this.ty(v)], [this.x0 + this.w, this.ty(v)]], color, w, 0, dash); }
+  vline(v, color, dash = [4, 4], w = 1) { line(this.ctx, [[this.tx(v), this.y0], [this.tx(v), this.y0 + this.h]], color, w, 0, dash); }
+}
+function ticks(r, log, n) {
+  let [a, b] = r; if (a > b) [a, b] = [b, a];
+  if (log) { const out = []; for (let e = Math.ceil(Math.log10(a) - 1e-9); e <= Math.floor(Math.log10(b) + 1e-9); e++) out.push(Math.pow(10, e)); if (out.length > 9) return out.filter((_, i) => i % 2 === 0); return out; }
+  const span = b - a, raw = span / n, mag = Math.pow(10, Math.floor(Math.log10(raw))); const f = raw / mag;
+  const st = (f < 1.5 ? 1 : f < 3.5 ? 2 : f < 7.5 ? 5 : 10) * mag; const out = [];
+  for (let v = Math.ceil(a / st) * st; v <= b + st * 1e-6; v += st) out.push(Math.abs(v) < st * 1e-9 ? 0 : v);
+  return out;
+}
+function fmtTick(v, log) {
+  if (log) { const e = Math.round(Math.log10(v)); return e === 0 ? '1' : e === 1 ? '10' : '10' + sup(e); }
+  if (v === 0) return '0'; const a = Math.abs(v);
+  if (a >= 1e4 || a < 1e-3) return v.toExponential(0).replace('e', 'e'); return +v.toPrecision(4) + '';
+}
+const SUPS = { '-': '⁻', '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹' };
+function sup(n) { return String(n).split('').map(ch => SUPS[ch] || ch).join(''); }
+/* scientific number formatting with unicode exponent */
+function sci(v, d = 3) {
+  if (v == null || !isFinite(v)) return '—';
+  if (v === 0) return '0';
+  const a = Math.abs(v);
+  if (a >= 1e-3 && a < 1e5) { const s = v.toPrecision(d + 1); return (+s).toString().length > s.length ? s : s.replace(/(\.\d*?[1-9])0+$/, '$1').replace(/\.0+$/, ''); }
+  const e = Math.floor(Math.log10(a)); const m = v / Math.pow(10, e);
+  return m.toFixed(d - 1) + '×10' + sup(e);
+}
+function fix(v, d = 4) { return (v == null || !isFinite(v)) ? '—' : (v >= 0 ? '+' : '−') + Math.abs(v).toFixed(d); }
+function sgn(v, d = 3) { if (v == null || !isFinite(v)) return '—'; const s = sci(Math.abs(v), d); return (v > 0 ? '+' : v < 0 ? '−' : '') + s; }
+
+/* ---- complex numbers as [re, im] ---- */
+const cx = {
+  add: (a, b) => [a[0] + b[0], a[1] + b[1]], sub: (a, b) => [a[0] - b[0], a[1] - b[1]],
+  mul: (a, b) => [a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0]],
+  div: (a, b) => { const d = b[0] * b[0] + b[1] * b[1]; return [(a[0] * b[0] + a[1] * b[1]) / d, (a[1] * b[0] - a[0] * b[1]) / d]; },
+  sc: (a, s) => [a[0] * s, a[1] * s], conj: a => [a[0], -a[1]], abs: a => Math.hypot(a[0], a[1]), arg: a => Math.atan2(a[1], a[0]),
+  exp: a => { const e = Math.exp(a[0]); return [e * Math.cos(a[1]), e * Math.sin(a[1])]; },
+  log: a => [Math.log(Math.hypot(a[0], a[1])), Math.atan2(a[1], a[0])],
+  sqrt: a => { const r = Math.hypot(a[0], a[1]); const re = Math.sqrt((r + a[0]) / 2); const im = Math.sign(a[1] || 1) * Math.sqrt(Math.max(0, (r - a[0]) / 2)); return [re, im]; },
+  i: [0, 1], one: [1, 0], zero: [0, 0], of: (re, im = 0) => [re, im]
+};
+/* 2x2 complex matrices as [[a,b],[c,d]] */
+const m2 = {
+  mul: (A, B) => [[cx.add(cx.mul(A[0][0], B[0][0]), cx.mul(A[0][1], B[1][0])), cx.add(cx.mul(A[0][0], B[0][1]), cx.mul(A[0][1], B[1][1]))],
+                  [cx.add(cx.mul(A[1][0], B[0][0]), cx.mul(A[1][1], B[1][0])), cx.add(cx.mul(A[1][0], B[0][1]), cx.mul(A[1][1], B[1][1]))]],
+  sub: (A, B) => A.map((r, i) => r.map((v, j) => cx.sub(v, B[i][j]))), add: (A, B) => A.map((r, i) => r.map((v, j) => cx.add(v, B[i][j]))),
+  sc: (A, s) => A.map(r => r.map(v => cx.sc(v, s))), tr: A => cx.add(A[0][0], A[1][1]),
+  fro: A => Math.sqrt(A.flat().reduce((s, v) => s + v[0] * v[0] + v[1] * v[1], 0)),
+  det: A => cx.sub(cx.mul(A[0][0], A[1][1]), cx.mul(A[0][1], A[1][0]))
+};
+
+/* ---- small real linear algebra ---- */
+function sym2eig(a, b, c) { /* eigenvalues of [[a,b],[b,c]] ascending, with unit eigenvectors */
+  const t = (a + c) / 2, d = Math.hypot((a - c) / 2, b); const l1 = t - d, l2 = t + d;
+  let v1 = Math.abs(b) > 1e-300 ? [b, l1 - a] : (a <= c ? [1, 0] : [0, 1]); const n1 = Math.hypot(v1[0], v1[1]); v1 = [v1[0] / n1, v1[1] / n1];
+  return { l: [l1, l2], v: [v1, [-v1[1], v1[0]]] };
+}
+function jacobiEig(A) { /* symmetric n x n, returns ascending eigenvalues and eigenvectors (columns) */
+  const n = A.length; const a = A.map(r => r.slice()); const V = a.map((r, i) => r.map((_, j) => i === j ? 1 : 0));
+  for (let sweep = 0; sweep < 60; sweep++) {
+    let off = 0; for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) off += a[i][j] * a[i][j];
+    if (off < 1e-26) break;
+    for (let p = 0; p < n; p++) for (let q = p + 1; q < n; q++) {
+      if (Math.abs(a[p][q]) < 1e-300) continue;
+      const th = (a[q][q] - a[p][p]) / (2 * a[p][q]); const t = Math.sign(th || 1) / (Math.abs(th) + Math.sqrt(th * th + 1));
+      const cs = 1 / Math.sqrt(t * t + 1), sn = t * cs;
+      for (let k = 0; k < n; k++) { const akp = a[k][p], akq = a[k][q]; a[k][p] = cs * akp - sn * akq; a[k][q] = sn * akp + cs * akq; }
+      for (let k = 0; k < n; k++) { const apk = a[p][k], aqk = a[q][k]; a[p][k] = cs * apk - sn * aqk; a[q][k] = sn * apk + cs * aqk; }
+      for (let k = 0; k < n; k++) { const vkp = V[k][p], vkq = V[k][q]; V[k][p] = cs * vkp - sn * vkq; V[k][q] = sn * vkp + cs * vkq; }
+    }
+  }
+  const idx = [...Array(n).keys()].sort((i, j) => a[i][i] - a[j][j]);
+  return { l: idx.map(i => a[i][i]), V: idx.map(i => V.map(r => r[i])) };
+}
+/* deterministic random numbers so every viewer sees the same draws */
+function mulberry(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function gauss(r) { let u = 0, v = 0; while (u === 0) u = r(); v = r(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(TAU * v); }
+
+/* ---- slider binding ---- */
+function bindRange(id, onChange, fmt) {
+  const el = document.getElementById(id); const out = document.querySelector(`output[for="${id}"]`);
+  const upd = () => { const v = parseFloat(el.value); if (out) out.textContent = fmt ? fmt(v) : v; onChange(v); };
+  el.addEventListener('input', upd); if (out) out.textContent = fmt ? fmt(parseFloat(el.value)) : el.value;
+  return { el, get v() { return parseFloat(el.value); }, set(v) { el.value = v; if (out) out.textContent = fmt ? fmt(parseFloat(el.value)) : el.value; } };
+}
+function setText(id, s) { const e = document.getElementById(id); if (e) e.textContent = s; }
+function setHTML(id, s) { const e = document.getElementById(id); if (e) e.innerHTML = s; }
+function setNote(id, s, cls) { const e = document.getElementById(id); if (e) { e.textContent = s; e.className = 'note ' + (cls || ''); } }
+function copyText(s, msgEl) {
+  const done = ok => { if (msgEl) { msgEl.textContent = ok ? 'Copied to the clipboard.' : 'Copy was blocked here. The text is selected below; press Ctrl+C or Cmd+C.'; } };
+  try { navigator.clipboard.writeText(s).then(() => done(true), () => done(false)); } catch (e) { done(false); }
+}
+/* drag on a canvas: calls fn(x, y) in CSS pixels while the pointer is down */
+function dragOn(canvas, fn) {
+  let down = false;
+  const at = e => { const r = canvas.getBoundingClientRect(); fn(e.clientX - r.left, e.clientY - r.top, e); };
+  canvas.addEventListener('pointerdown', e => { down = true; canvas.setPointerCapture(e.pointerId); at(e); });
+  canvas.addEventListener('pointermove', e => { if (down) at(e); });
+  canvas.addEventListener('pointerup', () => down = false); canvas.addEventListener('pointercancel', () => down = false);
+}
+/* contour-integral particles: points running around a circle */
+function contourParticles(ctx, cxp, cyp, rp, t, color, n = 18, speed = .35) {
+  for (let k = 0; k < n; k++) {
+    const th = (k / n + t * speed) * TAU; const x = cxp + rp * Math.cos(th), y = cyp - rp * Math.sin(th);
+    dot(ctx, x, y, 1.9, color, 8);
+  }
+}
+/* marching squares on a scalar grid, returns segments in grid coords */
+function marching(F, nx, ny) {
+  const segs = [];
+  for (let j = 0; j < ny - 1; j++) for (let i = 0; i < nx - 1; i++) {
+    const a = F[j * nx + i], b = F[j * nx + i + 1], c = F[(j + 1) * nx + i + 1], d = F[(j + 1) * nx + i];
+    const pts = [];
+    const e = (v0, v1, x0, y0, x1, y1) => { if ((v0 > 0) !== (v1 > 0)) { const t = v0 / (v0 - v1); pts.push([x0 + (x1 - x0) * t, y0 + (y1 - y0) * t]); } };
+    e(a, b, i, j, i + 1, j); e(b, c, i + 1, j, i + 1, j + 1); e(d, c, i, j + 1, i + 1, j + 1); e(a, d, i, j, i, j + 1);
+    if (pts.length === 2) segs.push(pts); else if (pts.length === 4) { segs.push([pts[0], pts[1]]); segs.push([pts[2], pts[3]]); }
+  }
+  return segs;
+}
+/* the unit set of a real symmetric 2x2 form: ellipse, parallel lines or hyperbola, drawn around (ox,oy) with scale s px */
+function drawConic(ctx, ox, oy, s, a, b, c, o = {}) {
+  const E = sym2eig(a, b, c); const [l1, l2] = E.l; const [v1, v2] = E.v; const R = o.R || 3.2;
+  const P = (p, q) => [ox + s * (p * v1[0] + q * v2[0]), oy - s * (p * v1[1] + q * v2[1])];
+  const tol = o.tol || 1e-12 * Math.max(Math.abs(l1), Math.abs(l2), 1e-300);
+  const out = { kind: '', l: [l1, l2] };
+  if (l1 > tol && l2 > tol) { /* ellipse g=1 */
+    const pts = []; for (let k = 0; k <= 160; k++) { const th = k / 160 * TAU; pts.push(P(Math.cos(th) / Math.sqrt(l1), Math.sin(th) / Math.sqrt(l2))); }
+    ctx.save(); ctx.fillStyle = rgba(o.pos || C.pos, .09); ctx.beginPath(); pts.forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1])); ctx.fill(); ctx.restore();
+    line(ctx, pts, o.pos || C.pos, 2.2, 14); out.kind = 'definite';
+  } else if (l1 < -tol && l2 < -tol) {
+    const pts = []; for (let k = 0; k <= 160; k++) { const th = k / 160 * TAU; pts.push(P(Math.cos(th) / Math.sqrt(-l1), Math.sin(th) / Math.sqrt(-l2))); }
+    line(ctx, pts, o.neg || C.neg, 2.2, 14, [6, 4]); out.kind = 'negative definite';
+  } else if (Math.abs(l1) <= tol || Math.abs(l2) <= tol) { /* degenerate: parallel lines along the null eigenvector */
+    const lp = Math.abs(l1) <= tol ? l2 : l1; const nullv = Math.abs(l1) <= tol ? 0 : 1; const q = 1 / Math.sqrt(Math.abs(lp));
+    const along = t => nullv === 0 ? [t, 0] : [0, t]; const off = nullv === 0 ? [0, q] : [q, 0];
+    for (const sg of [1, -1]) { const pts = [-R, R].map(t => { const A = along(t); return P(A[0] + sg * off[0], A[1] + sg * off[1]); }); line(ctx, pts, lp > 0 ? (o.pos || C.pos) : (o.neg || C.neg), 2, 12); }
+    const nl = [-R, R].map(t => { const A = along(t); return P(A[0], A[1]); }); line(ctx, nl, C.null, 2.4, 18);
+    out.kind = 'degenerate';
+  } else { /* hyperbola: l1 < 0 < l2 ; g = +1 branches and g = -1 branches and the null lines */
+    const ap = 1 / Math.sqrt(l2), an = 1 / Math.sqrt(-l1);
+    const br = (sgn, pos) => { const pts = []; for (let k = -80; k <= 80; k++) { const u = k / 80 * 2.4; if (pos) pts.push(P(an * Math.sinh(u), sgn * ap * Math.cosh(u))); else pts.push(P(sgn * an * Math.cosh(u), ap * Math.sinh(u))); } return pts; };
+    line(ctx, br(1, true), o.pos || C.pos, 2.1, 12); line(ctx, br(-1, true), o.pos || C.pos, 2.1, 12);
+    line(ctx, br(1, false), o.neg || C.neg, 1.8, 10, [6, 4]); line(ctx, br(-1, false), o.neg || C.neg, 1.8, 10, [6, 4]);
+    const k = Math.sqrt(-l1 / l2); /* null directions: -|l1| p^2 + l2 q^2 = 0  => q = ± p sqrt(|l1|/l2) */
+    for (const sg of [1, -1]) { const pts = [-R, R].map(t => P(t, sg * t * k)); line(ctx, pts, C.null, 2.2, 18); }
+    out.kind = 'indefinite';
+  }
+  return out;
+}
+/* legend box inside a plot frame: items are [label, color, dash] */
+function legend(ctx, F, items, pos = 'tr') {
+  ctx.save(); ctx.font = `11px ${SANS}`;
+  const w = Math.max(...items.map(i => ctx.measureText(i[0]).width)) + 28, h = items.length * 15 + 8;
+  const x = pos[1] === 'r' ? F.x0 + F.w - w - 8 : F.x0 + 8, y = pos[0] === 't' ? F.y0 + 6 : F.y0 + F.h - h - 6;
+  ctx.fillStyle = 'rgba(5,9,20,.78)'; ctx.strokeStyle = 'rgba(53,81,111,.8)'; ctx.fillRect(x, y, w, h); ctx.strokeRect(x + .5, y + .5, w - 1, h - 1); ctx.restore();
+  items.forEach(([lab, col, dash], i) => { const yy = y + 15 + i * 15; line(ctx, [[x + 7, yy - 4], [x + 21, yy - 4]], col, 2.2, 0, dash); text(ctx, lab, x + 26, yy, { color: col, font: `11px ${SANS}` }); });
+}
+
+/* ---- play clock helpers ---- */
+function advance(L, t, key, max, loopTo, min) {
+  const st = L.st;
+  if (st.play) {
+    const dt = L._last == null ? 0 : Math.min(0.1, Math.max(0, t - L._last)); st[key] += dt * st.speed * (st.dir || 1);
+    if (st[key] > max) st[key] = loopTo; if (min != null && st[key] < min) st[key] = loopTo;
+  }
+  L._last = t;
+}
+function syncBtn(id, play) { const b = document.getElementById(id); if (b) b.textContent = play ? 'Pause' : 'Play'; }
+
+/* ---- Einstein addition, real and complex ---- */
+const oplus = (a, b) => (a + b) / (1 + a * b);
+const coplus = (a, b) => cx.div(cx.add(a, b), cx.add(cx.one, cx.mul(a, b)));
+
+/* ---- the Smith disk: unit circle, real diameter, rings of constant |Γ| ---- */
+function smithDisk(c, ox, oy, R, o = {}) {
+  c.save();
+  const g = c.createRadialGradient(ox, oy, 0, ox, oy, R); g.addColorStop(0, 'rgba(22,40,68,.55)'); g.addColorStop(1, 'rgba(10,20,36,.25)');
+  c.fillStyle = g; c.beginPath(); c.arc(ox, oy, R, 0, TAU); c.fill();
+  c.strokeStyle = 'rgba(120,150,190,.14)'; c.lineWidth = 1;
+  for (const q of (o.rings || [0.25, 0.5, 0.75])) { c.beginPath(); c.arc(ox, oy, R * q, 0, TAU); c.stroke(); }
+  c.beginPath(); c.moveTo(ox - R, oy); c.lineTo(ox + R, oy); c.moveTo(ox, oy - R); c.lineTo(ox, oy + R); c.stroke();
+  c.restore();
+  line(c, circlePts(ox, oy, R, 180), o.rim || '#e8dcb8', 1.8, 10);
+  if (!o.nolabels) {
+    text(c, '|Γ| = 1', ox + R * .72, oy - R * .72 - 6, { color: C.muted, font: `10.5px ${MONO}` });
+    [0.5].forEach(q => text(c, '½', ox + R * q + 3, oy - 4, { color: C.dim, font: `10px ${MONO}` }));
+  }
+}
+function circlePts(ox, oy, R, n = 120) { const p = []; for (let i = 0; i <= n; i++) { const a = i / n * TAU; p.push([ox + R * Math.cos(a), oy - R * Math.sin(a)]); } return p; }
+
+/* ---- optical constants: linear interpolation of n and k, as the paper's scripts do ---- */
+function nkAt(metal, lam) {
+  const T = DATA.nk[metal]; if (lam <= T[0][0]) return [T[0][1], T[0][2]]; if (lam >= T[T.length - 1][0]) return [T[T.length - 1][1], T[T.length - 1][2]];
+  for (let i = 0; i < T.length - 1; i++) if (lam >= T[i][0] && lam <= T[i + 1][0]) { const f = (lam - T[i][0]) / (T[i + 1][0] - T[i][0]); return [lerp(T[i][1], T[i + 1][1], f), lerp(T[i][2], T[i + 1][2], f)]; }
+}
+const OPT = {
+  gamma: N => cx.div(cx.sub(cx.one, N), cx.add(cx.one, N)),
+  r12: (N, ns) => cx.div(cx.sub(N, [ns, 0]), cx.add(N, [ns, 0])),
+  echo: (N, d, lam, ns) => cx.mul(OPT.r12(N, ns), cx.exp(cx.mul([0, 4 * Math.PI * d / lam], N))),   /* x = r12 e^{4πiNd/λ} */
+  r: (N, d, lam, ns) => coplus(OPT.gamma(N), OPT.echo(N, d, lam, ns)),                                   /* r = Γ ⊕ x, the top face */
+  R: (N, d, lam, ns) => { const r = OPT.r(N, d, lam, ns); return r[0] * r[0] + r[1] * r[1]; },
+  shunt: (y, n0, nb) => { const Y = cx.add([nb, 0], y); return cx.div(cx.sub([n0, 0], Y), cx.add([n0, 0], Y)); }
+};
+/* the circle of Theorem 6.2 for front surface a: centre x_c = −conj(C)/A with A = 1 − |a|⁴, C = conj(a)(1 − a²) */
+function frontCircle(a) {
+  const A = 1 - Math.pow(cx.abs(a), 4); const Cc = cx.mul(cx.conj(a), cx.sub(cx.one, cx.mul(a, a)));
+  const xc = cx.sc(cx.conj(Cc), -1 / A); return { A, C: Cc, xc, rad: cx.abs(xc) };
+}
+const NBSP = ' ';
+
+/* ===== UPG Mixer: shared helpers ===== */
+const MINUS = '−';
+function signed(x, d = 6) { if (x == null || !isFinite(x)) return '—'; return (x < 0 ? MINUS : x > 0 ? '+' : '') + Math.abs(x).toFixed(d); }
+function fx(x, d = 4) { if (x == null || !isFinite(x)) return '—'; return (x < 0 ? MINUS : '') + Math.abs(x).toFixed(d); }
+/* a row of buttons acting as one choice; onPick(value) */
+function btnGroup(id, onPick, initial) {
+  const box = document.getElementById(id); if (!box) return { set() {} };
+  const bs = Array.from(box.querySelectorAll('button'));
+  const mark = v => bs.forEach(b => b.classList.toggle('active', b.dataset.v === String(v)));
+  bs.forEach(b => b.addEventListener('click', () => { mark(b.dataset.v); onPick(b.dataset.v); }));
+  if (initial != null) mark(initial);
+  return { set: mark };
+}
+/* a play/pause button inside a button group */
+function playBtn(id, L) {
+  const box = document.getElementById(id); if (!box) return; const b = box.querySelector('button[data-v="play"]'); if (!b) return;
+  b.addEventListener('click', () => { L.st.play = !L.st.play; b.textContent = L.st.play ? 'Pause' : 'Play'; b.classList.toggle('active', L.st.play); });
+}
+/* ---- real dense linear algebra ---- */
+const LA = {
+  zeros: (n, m) => Array.from({ length: n }, () => new Array(m == null ? n : m).fill(0)),
+  eye: n => Array.from({ length: n }, (_, i) => Array.from({ length: n }, (_, j) => i === j ? 1 : 0)),
+  mul: (A, B) => A.map(r => B[0].map((_, j) => r.reduce((s, a, k) => s + a * B[k][j], 0))),
+  T: A => A[0].map((_, j) => A.map(r => r[j])),
+  add: (A, B, s = 1) => A.map((r, i) => r.map((v, j) => v + s * B[i][j])),
+  sc: (A, s) => A.map(r => r.map(v => v * s)),
+  fro: A => Math.sqrt(A.reduce((s, r) => s + r.reduce((t, v) => t + v * v, 0), 0)),
+  tr: A => A.reduce((s, r, i) => s + r[i], 0),
+  sym: (n, rnd) => { const A = LA.zeros(n); for (let i = 0; i < n; i++) for (let j = i; j < n; j++) { const v = gauss(rnd); A[i][j] = v; A[j][i] = v; } return A; },
+  /* log det of a symmetric positive definite matrix by Cholesky; null if not positive */
+  logdetPD(A) { const n = A.length, L = LA.zeros(n); let s = 0;
+    for (let i = 0; i < n; i++) for (let j = 0; j <= i; j++) { let v = A[i][j]; for (let k = 0; k < j; k++) v -= L[i][k] * L[j][k];
+      if (i === j) { if (v <= 0) return null; L[i][i] = Math.sqrt(v); s += Math.log(L[i][i]); } else L[i][j] = v / L[j][j]; }
+    return 2 * s; },
+  /* determinant by LU with partial pivoting */
+  det(A) { const n = A.length, M = A.map(r => r.slice()); let d = 1;
+    for (let c = 0; c < n; c++) { let p = c; for (let r = c + 1; r < n; r++) if (Math.abs(M[r][c]) > Math.abs(M[p][c])) p = r;
+      if (Math.abs(M[p][c]) < 1e-300) return 0; if (p !== c) { [M[p], M[c]] = [M[c], M[p]]; d = -d; } d *= M[c][c];
+      for (let r = c + 1; r < n; r++) { const f = M[r][c] / M[c][c]; for (let k = c; k < n; k++) M[r][k] -= f * M[c][k]; } }
+    return d; },
+  inv(A) { const n = A.length, M = A.map((r, i) => r.concat(LA.eye(n)[i]));
+    for (let c = 0; c < n; c++) { let p = c; for (let r = c + 1; r < n; r++) if (Math.abs(M[r][c]) > Math.abs(M[p][c])) p = r;
+      [M[p], M[c]] = [M[c], M[p]]; const d = M[c][c]; for (let k = 0; k < 2 * n; k++) M[c][k] /= d;
+      for (let r = 0; r < n; r++) if (r !== c) { const f = M[r][c]; for (let k = 0; k < 2 * n; k++) M[r][k] -= f * M[c][k]; } }
+    return M.map(r => r.slice(n)); }
+};
+/* complex Hermitian eigenproblem (Re, Im parts) through the real embedding [[Re, −Im], [Im, Re]] */
+function hermEig(Re, Im) {
+  const n = Re.length, E = LA.zeros(2 * n);
+  for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) { E[i][j] = Re[i][j]; E[i + n][j + n] = Re[i][j]; E[i][j + n] = -Im[i][j]; E[i + n][j] = Im[i][j]; }
+  const R = jacobiEig(E); const l = [], vr = [], vi = [];
+  for (let k = 0; k < 2 * n; k += 2) { l.push(R.l[k]); const v = R.V[k]; vr.push(v.slice(0, n)); vi.push(v.slice(n)); }
+  return { l, vr, vi };
+}
+/* signature of a Hermitian matrix given by (Re, Im): each eigenvalue appears twice in the embedding */
+function hermSignature(Re, Im, tol = 1e-9) {
+  const n = Re.length, E = LA.zeros(2 * n);
+  for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) { E[i][j] = Re[i][j]; E[i + n][j + n] = Re[i][j]; E[i][j + n] = -Im[i][j]; E[i + n][j] = Im[i][j]; }
+  const l = jacobiEig(E).l; let s = 0; l.forEach(x => { if (x > tol) s++; else if (x < -tol) s--; }); return s / 2;
+}
+/* diverging colour for a value in [−1, 1] */
+function divColor(v, a = 1) {
+  const t = clamp(v, -1, 1); const p = [124, 186, 255], q = [255, 141, 152], z = [22, 34, 56];
+  const c = t >= 0 ? p : q; const u = Math.pow(Math.abs(t), 0.7);
+  return `rgba(${Math.round(z[0] + (c[0] - z[0]) * u)},${Math.round(z[1] + (c[1] - z[1]) * u)},${Math.round(z[2] + (c[2] - z[2]) * u)},${a})`;
+}
+/* matrix heatmap at (x, y) with square cells; o.hl = [[r0,r1,c0,c1,color]] outlines */
+function heat(c, M, x, y, cell, vmax, o = {}) {
+  const n = M.length, m = M[0].length;
+  for (let i = 0; i < n; i++) for (let j = 0; j < m; j++) { c.fillStyle = o.color ? o.color(M[i][j]) : divColor(M[i][j] / vmax); c.fillRect(x + j * cell + 0.5, y + i * cell + 0.5, cell - 1, cell - 1); }
+  (o.hl || []).forEach(([r0, r1, c0, c1, col]) => { c.save(); c.strokeStyle = col; c.lineWidth = 2; glow(c, col, 8); c.strokeRect(x + c0 * cell, y + r0 * cell, (c1 - c0) * cell, (r1 - r0) * cell); c.restore(); });
+  if (o.label) text(c, o.label, x + m * cell / 2, y - 8, { align: 'center', color: o.lcolor || C.ink2, font: `13px ${SERIF}` });
+}
+function gcd(a, b) { a = Math.abs(a); b = Math.abs(b); while (b) [a, b] = [b, a % b]; return a; }
+
+/* ===== Lens 1: the redistribution operator (Section 1) ===== */
+const Redis = {
+  animated: true,
+  st: { N: 8, k: 3, th: 0.6, seed: 1, tw: 0 },
+  init() {
+    this.sM = new Stage($('#rMat'), w => w < 640 ? 0.62 : 0.5);
+    this.sL = new Stage($('#rLeak'), w => w < 640 ? 0.62 : 0.5);
+    this.rN = bindRange('rN', v => { this.st.N = v; if (this.st.k > v - 1) this.rK.set(this.st.k = v - 1); this.build(); }, v => v);
+    this.rK = bindRange('rK', v => { this.st.k = Math.min(v, this.st.N - 1); this.build(); }, v => v);
+    this.rT = bindRange('rTh', v => { this.st.th = v; this.build(); }, v => v.toFixed(2));
+    this.bS = btnGroup('rSeed', v => { this.st.seed = +v; this.build(); }, 1);
+    this.build();
+  },
+  set(p) { Object.assign(this.st, p); this.rN.set(this.st.N); this.rK.set(this.st.k); this.rT.set(this.st.th); this.bS.set(this.st.seed); this.build(); },
+  build() {
+    const { N, k, th, seed } = this.st, key = [N, k, th, seed].join(',');
+    if (this._key === key) return; this._key = key;
+    const rnd = mulberry(1000 * seed + N), O0 = LA.sym(N, rnd);
+    const inP = i => i < k;
+    const Om = O0.map((r, i) => r.map((v, j) => (inP(i) === inP(j) ? v : th * v)));
+    const Pi = LA.zeros(N); for (let i = 0; i < k; i++) Pi[i][i] = 1;
+    const F = Om.map((r, i) => r.map((v, j) => (inP(i) !== inP(j) ? v : 0)));
+    const PO = LA.mul(Pi, Om), OP = LA.mul(Om, Pi); const Cm = LA.add(OP, PO, -1);
+    const E = jacobiEig(Om);
+    let K0 = 0; for (let i = 0; i < k; i++) for (let j = k; j < N; j++) K0 += Om[i][j] * Om[i][j];
+    Object.assign(this, { Om, Pi, F, Cm, E, K0 });
+    this.T = LA.fro(F); this.Cn = LA.fro(Cm); this.trF = LA.tr(F);
+    let dg = 0; for (let i = 0; i < N; i++) for (let j = 0; j < N; j++) if (inP(i) === inP(j)) dg += F[i][j] * F[i][j];
+    this.diag = Math.sqrt(dg);
+    this.vmax = Math.max(...Om.flat().map(Math.abs), 1e-9);
+  },
+  leak(t) { /* ‖(I−Π) e^{−iΩt} Π‖_F² with the real eigendecomposition of Ω */
+    const { N, k } = this.st, { l, V } = this.E; let s = 0;
+    for (let i = k; i < N; i++) for (let j = 0; j < k; j++) {
+      let re = 0, im = 0; for (let q = 0; q < N; q++) { const w = V[q][i] * V[q][j]; re += w * Math.cos(l[q] * t); im -= w * Math.sin(l[q] * t); }
+      s += re * re + im * im;
+    }
+    return s;
+  },
+  draw(t) {
+    this.build(); const S = this.sM, c = S.ctx; S.clear(); const { N, k } = this.st;
+    const tall = S.H > 0.9 * S.W;   /* a tall canvas (the video recording) stacks F under Ω and Π */
+    const cell = tall ? Math.min((S.W - 60) / (2 * N), (S.H - 130) / (2 * N)) : Math.min((S.W - 90) / (3 * N), (S.H - 70) / N);
+    const gap = tall ? (S.W - 2 * N * cell) / 3 : (S.W - 3 * N * cell) / 4;
+    const y = tall ? (S.H - 2 * N * cell - 60) / 2 + 22 : (S.H - N * cell) / 2 + 10;
+    const xs = tall ? [gap, 2 * gap + N * cell, (S.W - N * cell) / 2] : [gap, 2 * gap + N * cell, 3 * gap + 2 * N * cell];
+    const yF = tall ? y + N * cell + 40 : y;
+    const pulse = 0.55 + 0.45 * Math.sin(t * 2.2);
+    heat(c, this.Om, xs[0], y, cell, this.vmax, { label: 'Ω', hl: [[0, k, 0, k, rgba(C.teal, 0.9)], [k, N, k, N, rgba(C.teal, 0.5)]] });
+    heat(c, this.Pi, xs[1], y, cell, 1, { label: 'Π', color: v => v > 0.5 ? rgba(C.gold, 0.85) : 'rgba(22,34,56,1)' });
+    heat(c, this.F, xs[2], yF, cell, this.vmax, { label: 'F(Ω,Π)', lcolor: C.gold, hl: [[0, k, k, N, rgba(C.gold, pulse)], [k, N, 0, k, rgba(C.gold, pulse)]] });
+    text(c, '= (I−Π)ΩΠ + ΠΩ(I−Π)', xs[2] + N * cell / 2, yF + N * cell + 20, { align: 'center', color: C.muted, font: `12px ${SERIF}` });
+    /* leak panel */
+    const L = this.sL, g = L.ctx; L.clear(); const tmax = 6;
+    const F = new Frame(g, [58, 34, L.W - 78, L.H - 78], [0, tmax], [0, Math.max(0.3, k)]);
+    F.axes({ xlabel: 'time t', ylabel: 'weight outside the occupied block', ylabelOff: 42, ny: 4 });
+    const xsT = []; for (let i = 0; i <= 240; i++) xsT.push(i / 240 * tmax);
+    F.clip();
+    line(g, F.pts(xsT, x => Math.min(k, this.K0 * x * x)), rgba(C.gold, 0.6), 1.5, 0, [5, 4]);
+    const tc = (t * 0.9) % (tmax + 1);
+    line(g, F.pts(xsT.filter(x => x <= tc), x => this.leak(x)), C.teal, 2.4, 10);
+    F.unclip();
+    if (tc <= tmax) dot(g, F.tx(tc), F.ty(this.leak(tc)), 4, C.teal, 12);
+    text(g, 't² Tr K(0)', F.x0 + F.w * 0.18, F.y0 + 16, { color: C.gold, font: `12px ${SANS}` });
+    text(g, this.T < 1e-12 ? 'F = 0: nothing leaves' : 'weight leaving Π', F.x0 + F.w - 8, F.y0 + 16, { align: 'right', color: C.teal, font: `12px ${SANS}` });
+    setText('r-T', this.T.toFixed(4)); setNote('r-Tn', this.T < 1e-12 ? 'zero: Ω commutes with Π' : 'nonzero: Ω moves weight across Π', this.T < 1e-12 ? 'rec' : 'null');
+    setText('r-C', this.Cn.toFixed(4)); setNote('r-Cn', 'equals ‖F‖ in the adapted basis', 'rec');
+    setText('r-tr', `${fx(this.trF, 1)} · ${this.diag.toExponential(0)}`); setNote('r-trn', 'traceless; ΠFΠ = (I−Π)F(I−Π) = 0', 'rec');
+    setText('r-K', this.K0.toFixed(4)); setNote('r-Kn', `‖F‖² = 2 Tr K(0) = ${(2 * this.K0).toFixed(4)}`, 'rec');
+  }
+};
+GM.add('redis', Redis);
+
+/* ===== Lens 2: the zero-time footprint (Section 1) ===== */
+const Foot = {
+  animated: true,
+  st: { g: 0.8, lam: 1.0, t: 3.0, play: false, speed: 1 },
+  A: [0.3, -0.3], D1: [0.4, 1.3, 2.6], D2: [-1.8, 0.2, 3.4],
+  B0: [[0.9, -0.6, 0.5], [0.4, 0.8, -0.7]],
+  init() {
+    this.sL = new Stage($('#fLev'), w => w < 640 ? 0.7 : 0.56);
+    this.sK = new Stage($('#fKer'), w => w < 640 ? 0.7 : 0.56);
+    this.rG = bindRange('fG', v => { this.st.g = v; this._k = null; }, v => v.toFixed(2));
+    this.rL = bindRange('fL', v => { this.st.lam = v; this._k = null; }, v => v.toFixed(2));
+    this.rT = bindRange('fT', v => { this.st.t = v; }, v => v.toFixed(2));
+    playBtn('fPlay', this);
+  },
+  set(p) { Object.assign(this.st, p); this.rG.set(this.st.g); this.rL.set(this.st.lam); this.rT.set(this.st.t); this._k = null; this.draw(GM.now()); },
+  D2of() { const l = this.st.lam; return this.D1.map((d, i) => (1 - l) * d + l * this.D2[i]); },
+  B() { return this.B0.map(r => r.map(v => v * this.st.g)); },
+  sys(D) { /* full 5x5 real symmetric generator and its eigendecomposition */
+    const B = this.B(), H = LA.zeros(5);
+    H[0][0] = this.A[0]; H[1][1] = this.A[1]; D.forEach((d, q) => H[2 + q][2 + q] = d);
+    for (let a = 0; a < 2; a++) for (let q = 0; q < 3; q++) { H[a][2 + q] = B[a][q]; H[2 + q][a] = B[a][q]; }
+    return jacobiEig(H);
+  },
+  prepare() {
+    const key = this.st.g + ',' + this.st.lam; if (this._k === key) return; this._k = key;
+    this.E1 = this.sys(this.D1); this.E2 = this.sys(this.D2of());
+  },
+  K(D, t) { const B = this.B(); const R = [[0, 0], [0, 0]], I = [[0, 0], [0, 0]];
+    for (let a = 0; a < 2; a++) for (let b = 0; b < 2; b++) for (let q = 0; q < 3; q++) { const w = B[a][q] * B[b][q]; R[a][b] += w * Math.cos(D[q] * t); I[a][b] -= w * Math.sin(D[q] * t); }
+    return { R, I }; },
+  knorm(D, t) { const k = this.K(D, t); let s = 0; for (let a = 0; a < 2; a++) for (let b = 0; b < 2; b++) s += k.R[a][b] ** 2 + k.I[a][b] ** 2; return Math.sqrt(s); },
+  kdiff(t) { const a = this.K(this.D1, t), b = this.K(this.D2of(), t); let s = 0; for (let i = 0; i < 2; i++) for (let j = 0; j < 2; j++) s += (a.R[i][j] - b.R[i][j]) ** 2 + (a.I[i][j] - b.I[i][j]) ** 2; return Math.sqrt(s); },
+  pop(E, t) { /* retained population for ψ(0) = e1 */
+    const { l, V } = E; let s = 0;
+    for (let a = 0; a < 2; a++) { let re = 0, im = 0; for (let q = 0; q < 5; q++) { const w = V[q][a] * V[q][0]; re += w * Math.cos(l[q] * t); im -= w * Math.sin(l[q] * t); } s += re * re + im * im; }
+    return s; },
+  draw(tt) {
+    const st = this.st; if (st.play) { advance(this, tt, 't', 12, 0); this.rT.set(st.t); } else this._last = tt;
+    this.prepare(); const t = st.t, D2 = this.D2of(), B = this.B();
+    /* level diagrams */
+    const S = this.sL, c = S.ctx; S.clear();
+    const half = S.W / 2, ey = e => S.H * 0.52 - e * S.H * 0.1;
+    [[this.D1, 0, C.teal, 'system 1: D₁'], [D2, half, C.violet, 'system 2: D₂']].forEach(([D, x0, col, lab]) => {
+      const xr = x0 + half * 0.22, xh = x0 + half * 0.72;
+      text(c, lab, x0 + half / 2, 50, { align: 'center', color: col, font: `13px ${SERIF}` });
+      text(c, 'retained', xr, S.H - 14, { align: 'center', color: C.muted, font: `11px ${SANS}` });
+      text(c, 'hidden', xh, S.H - 14, { align: 'center', color: C.muted, font: `11px ${SANS}` });
+      for (let a = 0; a < 2; a++) for (let q = 0; q < 3; q++) {
+        const w = Math.abs(B[a][q]); const p0 = [xr + 26, ey(this.A[a])], p1 = [xh - 26, ey(D[q])];
+        line(c, [p0, p1], rgba(C.gold, 0.25 + 0.5 * Math.min(1, w)), 0.8 + 3 * w);
+        for (let s = 0; s < 3; s++) { const u = ((tt * (0.25 + 0.5 * w) + s / 3 + a * 0.17 + q * 0.29) % 1); dot(c, lerp(p0[0], p1[0], u), lerp(p0[1], p1[1], u), 1.8, C.gold, 8); }
+      }
+      this.A.forEach(a => line(c, [[xr - 24, ey(a)], [xr + 24, ey(a)]], C.teal, 3, 10));
+      D.forEach(d => line(c, [[xh - 24, ey(d)], [xh + 24, ey(d)]], col, 3, 10));
+    });
+    line(c, [[half, 40], [half, S.H - 30]], rgba('#35516f', 0.8), 1);
+    text(c, 'same coupling B in both', S.W / 2, S.H - 34, { align: 'center', color: C.gold, font: `12px ${SANS}`, bg: 'rgba(5,9,20,.8)' });
+    /* kernels */
+    const L = this.sK, g = L.ctx; L.clear(); const tmax = 12;
+    const kmax = Math.max(0.2, this.knorm(this.D1, 0) * 1.1);
+    const F = new Frame(g, [56, 30, L.W - 76, L.H * 0.5 - 40], [0, tmax], [0, kmax]);
+    F.axes({ noxl: true, ylabel: '‖K(t)‖', ylabelOff: 40, ny: 3 });
+    const xs = []; for (let i = 0; i <= 300; i++) xs.push(i / 300 * tmax);
+    line(g, F.pts(xs, x => this.knorm(this.D1, x)), C.teal, 2.2, 8);
+    line(g, F.pts(xs, x => this.knorm(D2, x)), C.violet, 2.2, 8, [6, 4]);
+    F.vline(t, rgba(C.gold, 0.8), [3, 3], 1.4);
+    dot(g, F.tx(0), F.ty(this.knorm(this.D1, 0)), 5, C.gold, 14);
+    text(g, 'K₁(0) = K₂(0)', F.tx(0) + 10, F.ty(this.knorm(this.D1, 0)) + 16, { color: C.gold, font: `12px ${SANS}` });
+    const G = new Frame(g, [56, L.H * 0.5 + 12, L.W - 76, L.H * 0.5 - 50], [0, tmax], [0, 1.02]);
+    G.axes({ xlabel: 'time t', ylabel: 'retained population', ylabelOff: 40, ny: 2 });
+    line(g, G.pts(xs, x => this.pop(this.E1, x)), C.teal, 2.2, 8);
+    line(g, G.pts(xs, x => this.pop(this.E2, x)), C.violet, 2.2, 8, [6, 4]);
+    G.vline(t, rgba(C.gold, 0.8), [3, 3], 1.4);
+    legend(g, F, [['system 1', C.teal], ['system 2', C.violet, [6, 4]]], 'tr');
+    const p1 = this.pop(this.E1, t), p2 = this.pop(this.E2, t);
+    setText('f-F', '0 · 0'); setNote('f-Fn', 'same F, same K(0) = BBᵀ', 'rec');
+    setText('f-K', this.kdiff(t).toFixed(4)); setNote('f-Kn', st.lam < 1e-9 ? 'identical systems' : 'the memory differs', st.lam < 1e-9 ? 'rec' : 'null');
+    setText('f-p', `${p1.toFixed(3)} · ${p2.toFixed(3)}`); setNote('f-pn', 'start in the retained sector', '');
+    setText('f-src', '0'); setNote('f-srcn', 'hidden amplitude starts at zero here', '');
+  }
+};
+GM.add('footprint', Foot);
+
+/* ===== Lens 3: the metric-curvature bound and its saturation (Sections 2, 6.2) ===== */
+function cmul(Ar, Ai, Br, Bi) { const n = Ar.length, Rr = LA.zeros(n), Ri = LA.zeros(n);
+  for (let i = 0; i < n; i++) for (let k = 0; k < n; k++) { const ar = Ar[i][k], ai = Ai[i][k]; if (!ar && !ai) continue;
+    for (let j = 0; j < n; j++) { Rr[i][j] += ar * Br[k][j] - ai * Bi[k][j]; Ri[i][j] += ar * Bi[k][j] + ai * Br[k][j]; } }
+  return [Rr, Ri]; }
+function projOf(vr, vi) { const n = vr.length, Pr = LA.zeros(n), Pi = LA.zeros(n);
+  for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) { Pr[i][j] = vr[i] * vr[j] + vi[i] * vi[j]; Pi[i][j] = vi[i] * vr[j] - vr[i] * vi[j]; }
+  return [Pr, Pi]; }
+/* quantum geometric tensor of band b of a Hermitian family Hf(q) -> {Re, Im}; returns {g (2x2), Om, gaps} */
+function qgtBand(Hf, q, b, h = 1e-4) {
+  const P = qq => { const [R, I] = Hf(qq); const E = hermEig(R, I); return { P: projOf(E.vr[b], E.vi[b]), l: E.l }; };
+  const c0 = P(q); const d = [];
+  for (let m = 0; m < 2; m++) { const e = [0, 0]; e[m] = h; const a = P([q[0] + e[0], q[1] + e[1]]).P, bb = P([q[0] - e[0], q[1] - e[1]]).P;
+    d.push([a[0].map((r, i) => r.map((v, j) => (v - bb[0][i][j]) / (2 * h))), a[1].map((r, i) => r.map((v, j) => (v - bb[1][i][j]) / (2 * h)))]); }
+  const Q = (m, n) => { const [Xr, Xi] = cmul(c0.P[0], c0.P[1], d[m][0], d[m][1]); const [Yr, Yi] = cmul(Xr, Xi, d[n][0], d[n][1]); return [LA.tr(Yr), LA.tr(Yi)]; };
+  const qxx = Q(0, 0), qyy = Q(1, 1), qxy = Q(0, 1);
+  const g = [[qxx[0], qxy[0]], [qxy[0], qyy[0]]]; const Om = -2 * qxy[1];
+  return { g, Om, l: c0.l };
+}
+const Bound = {
+  animated: true,
+  st: { phi: 0.5236, band: 0 },
+  kag(q, phi) {
+    const [kx, ky] = q; const a1 = [1, 0], a2 = [0.5, Math.sqrt(3) / 2], a3 = [a2[0] - a1[0], a2[1] - a1[1]];
+    const dot2 = (a) => kx * a[0] + ky * a[1]; const c = Math.cos(phi), s = Math.sin(phi);
+    const R = LA.zeros(3), I = LA.zeros(3);
+    const put = (i, j, amp) => { R[i][j] += amp * c; I[i][j] += amp * s; R[j][i] += amp * c; I[j][i] -= amp * s; };
+    put(0, 1, -2 * Math.cos(dot2(a1) / 2)); put(1, 2, -2 * Math.cos(dot2(a2) / 2)); put(2, 0, -2 * Math.cos(dot2(a3) / 2));
+    return [R, I];
+  },
+  init() {
+    this.sM = new Stage($('#bMap'), w => w < 640 ? 0.9 : 0.8);
+    this.sS = new Stage($('#bSc'), w => w < 640 ? 0.9 : 0.8);
+    this.rP = bindRange('bPhi', v => { this.st.phi = v; }, v => v.toFixed(3) + (Math.abs(v - Math.PI / 6) < 0.003 ? ' = π/6' : ''));
+    this.bB = btnGroup('bBand', v => { this.st.band = +v; }, 0);
+    const two = qgtBand(q => { const [x, y] = q, m = 1 + Math.cos(x) + Math.cos(y), sx = Math.sin(x), sy = Math.sin(y);
+      return [[[m, sx], [sx, -m]], [[0, -sy], [sy, 0]]]; }, [0.7, -1.1], 0);
+    this.twoSlack = (4 * (two.g[0][0] * two.g[1][1] - two.g[0][1] ** 2) - two.Om ** 2) / (4 * (two.g[0][0] * two.g[1][1] - two.g[0][1] ** 2));
+  },
+  set(p) { Object.assign(this.st, p); this.rP.set(this.st.phi); this.bB.set(this.st.band); this.draw(GM.now()); },
+  compute() {
+    const key = this.st.phi.toFixed(4) + ',' + this.st.band; if (this._key === key) return; this._key = key;
+    const n = 30, pts = [], b = this.st.band, phi = this.st.phi;
+    for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) {
+      const q = [-2.4 + 4.8 * (i + 0.5) / n, -2.4 + 4.8 * (j + 0.5) / n];
+      const r = qgtBand(qq => this.kag(qq, phi), q, b);
+      const gap = Math.min(...r.l.map((x, k) => k === b ? 1e9 : Math.abs(x - r.l[b])));
+      const fd = 4 * (r.g[0][0] * r.g[1][1] - r.g[0][1] ** 2);
+      pts.push({ i, j, ok: gap >= 0.08 && fd > 1e-12, fd, o2: r.Om * r.Om, sl: fd > 1e-12 ? (fd - r.Om * r.Om) / fd : null });
+    }
+    this.pts = pts; this.n = n;
+    const ok = pts.filter(p => p.ok); this.maxSl = Math.max(...ok.map(p => p.sl));
+    const o2 = ok.map(p => p.o2).sort((a, b) => a - b); this.medO2 = o2[Math.floor(o2.length / 2)];
+    this.fmax = Math.max(...ok.map(p => p.fd));
+  },
+  draw(t) {
+    this.compute(); const S = this.sM, c = S.ctx; S.clear(); const n = this.n;
+    const side = Math.min(S.W - 40, S.H - 50), x0 = (S.W - side) / 2, y0 = 34, cs = side / n;
+    this.pts.forEach(p => {
+      if (!p.ok) { c.fillStyle = 'rgba(40,52,74,.6)'; c.fillRect(x0 + p.i * cs, y0 + (n - 1 - p.j) * cs, cs - 0.6, cs - 0.6); return; }
+      const u = clamp(Math.log10(Math.max(p.sl, 1e-12)) / 12 + 1, 0, 1); /* 1e-12 -> 0 (saturated), 1 -> 1 */
+      c.fillStyle = u < 0.05 ? rgba(C.teal, 0.9) : `rgba(${Math.round(105 + 83 * u)},${Math.round(215 - 71 * u)},${Math.round(196 + 59 * u)},${0.35 + 0.6 * u})`;
+      c.fillRect(x0 + p.i * cs, y0 + (n - 1 - p.j) * cs, cs - 0.6, cs - 0.6);
+    });
+    const sx = x0 + ((t * 0.12) % 1) * side; line(c, [[sx, y0], [sx, y0 + side]], rgba(C.gold, 0.7), 1.5, 8);
+    text(c, 'teal: saturated to machine precision   ·   violet: slack', S.W / 2, y0 + side + 16, { align: 'center', color: C.muted, font: `11.5px ${SANS}` });
+    /* scatter */
+    const L = this.sS, g = L.ctx; L.clear(); const m = this.fmax * 1.05;
+    const F = new Frame(g, [58, 30, L.W - 80, L.H - 76], [0, m], [0, m]);
+    F.axes({ xlabel: '4 det g', ylabel: 'Ω²', ylabelOff: 42, nx: 4, ny: 4 });
+    line(g, [[F.tx(0), F.ty(0)], [F.tx(m), F.ty(m)]], rgba(C.gold, 0.8), 1.4, 0, [6, 4]);
+    text(g, 'equality |Ω| = 2√det g', F.tx(m * 0.52), F.ty(m * 0.58) - 6, { color: C.gold, font: `11.5px ${SANS}` });
+    const col = Math.floor(((t * 0.12) % 1) * n);
+    this.pts.forEach(p => { if (!p.ok) return; const hot = p.i === col; dot(g, F.tx(p.fd), F.ty(p.o2), hot ? 3.2 : 2, hot ? C.gold : (p.sl < 1e-6 ? C.teal : C.violet), hot ? 10 : 0); });
+    setText('b-max', sci(this.maxSl, 2)); setNote('b-maxn', this.maxSl < 1e-6 ? 'saturated everywhere' : 'slack left: the bound is strict', this.maxSl < 1e-6 ? 'rec' : 'vio');
+    setText('b-med', sci(this.medO2, 2)); setNote('b-medn', 'curvature genuinely present', 'rec');
+    setText('b-two', sci(Math.abs(this.twoSlack), 1)); setNote('b-twon', 'two bands saturate identically', 'rec');
+    const sat = this.maxSl < 1e-6; setText('b-sat', sat ? 'yes' : 'no'); setNote('b-satn', sat ? 'complex-parallel tangents: rank-one structure' : 'generic phase', sat ? 'rec' : 'null');
+  }
+};
+GM.add('bound', Bound);
+
+/* ===== Lens 4: the torus anchor and the phase record (Section 4.1) ===== */
+const Wind = {
+  animated: true,
+  st: { cx: 0.15, cy: 0.1, r: 0.35, s: 0, loops: 1, play: true, speed: 0.12 },
+  init() {
+    this.sP = new Stage($('#wPlane'), w => w < 640 ? 0.9 : 0.82);
+    this.sR = new Stage($('#wRec'), w => w < 640 ? 0.9 : 0.82);
+    this.rX = bindRange('wX', v => { this.st.cx = v; }, v => v.toFixed(2));
+    this.rY = bindRange('wY', v => { this.st.cy = v; }, v => v.toFixed(2));
+    this.rR = bindRange('wR', v => { this.st.r = v; }, v => v.toFixed(2));
+    this.rS = bindRange('wS', v => { this.st.s = v; this.st.play = false; }, v => v.toFixed(3));
+    this.bL = btnGroup('wLoops', v => { this.st.loops = +v; this.st.s = 0; this.st.play = true; }, 1);
+  },
+  set(p) { Object.assign(this.st, p); this.rX.set(this.st.cx); this.rY.set(this.st.cy); this.rR.set(this.st.r); this.rS.set(this.st.s); this.bL.set(this.st.loops); this.draw(GM.now()); },
+  pt(s) { const { cx, cy, r } = this.st; return [cx + r * Math.cos(TAU * s), cy + r * Math.sin(TAU * s)]; },
+  phase(s) { /* unwrapped arg of Z along the path from 0 to s */
+    let ph = Math.atan2(this.pt(0)[1], this.pt(0)[0]); const ph0 = ph; const n = Math.max(2, Math.ceil(s * 400)); let prev = ph;
+    for (let i = 1; i <= n; i++) { const p = this.pt(s * i / n); let a = Math.atan2(p[1], p[0]); while (a - prev > Math.PI) a -= TAU; while (a - prev < -Math.PI) a += TAU; prev = a; }
+    return { ph: prev, d: prev - ph0 };
+  },
+  draw(t) {
+    const st = this.st;
+    if (st.play) { advance(this, t, 's', st.loops + 0.35, 0); this.rS.set(Math.min(st.s, st.loops)); } else this._last = t;
+    const sv = Math.min(st.s, st.loops);
+    const S = this.sP, c = S.ctx; S.clear();
+    const side = Math.min(S.W, S.H) - 60, ox = S.W / 2, oy = S.H / 2 + 6, sc = side / 2.4; const X = a => ox + a * sc, Y = b => oy - b * sc;
+    c.save(); c.strokeStyle = 'rgba(120,150,190,.12)'; for (let g = -1; g <= 1; g += 0.25) { c.beginPath(); c.moveTo(X(g), Y(-1.2)); c.lineTo(X(g), Y(1.2)); c.moveTo(X(-1.2), Y(g)); c.lineTo(X(1.2), Y(g)); c.stroke(); } c.restore();
+    for (let m = -1; m <= 1; m++) for (let n = -1; n <= 1; n++) dot(c, X(m), Y(n), m === 0 && n === 0 ? 6 : 3.5, m === 0 && n === 0 ? C.red : rgba(C.red, 0.45), m === 0 && n === 0 ? 14 : 0);
+    text(c, 'zero of mode (0, 0)', X(0) + 10, Y(0) + 18, { color: C.red, font: `11.5px ${SANS}` });
+    const pts = []; for (let i = 0; i <= 200; i++) pts.push(this.pt(i / 200)); line(c, pts.map(p => [X(p[0]), Y(p[1])]), rgba(C.teal, 0.35), 1.5, 0, [5, 4]);
+    const trail = []; const nn = Math.max(2, Math.ceil(sv * 240)); for (let i = 0; i <= nn; i++) { const p = this.pt(sv * i / nn); trail.push([X(p[0]), Y(p[1])]); }
+    line(c, trail, C.teal, 2.6, 12);
+    const p = this.pt(sv), P = this.phase(sv); const ang = Math.atan2(p[1], p[0]);
+    arrow(c, X(p[0]), Y(p[1]), X(p[0]) + 46 * Math.cos(ang), Y(p[1]) - 46 * Math.sin(ang), C.gold, 2.4, 10);
+    dot(c, X(p[0]), Y(p[1]), 5, C.gold, 14);
+    text(c, 'Z/|Z|', X(p[0]) + 52 * Math.cos(ang), Y(p[1]) - 52 * Math.sin(ang), { align: 'center', color: C.gold, font: `12px ${SERIF}` });
+    text(c, 'α', X(1.15), Y(0) - 6, { color: C.muted, font: `13px ${SERIF}` }); text(c, 'β', X(0) + 6, Y(1.12), { color: C.muted, font: `13px ${SERIF}` });
+    /* paired spectrum inset */
+    const lv = []; for (let m = -1; m <= 1; m++) for (let n = -1; n <= 1; n++) lv.push(TAU * Math.hypot(m + p[0], n + p[1]));
+    const ix = S.W - 38, iy = oy, ih = side * 0.42, vmax = TAU * 2.2;
+    line(c, [[ix, iy - ih], [ix, iy + ih]], rgba('#cbd9ea', 0.3), 1);
+    lv.forEach(l => { [1, -1].forEach(sg => line(c, [[ix - 10, iy - sg * l / vmax * ih], [ix + 10, iy - sg * l / vmax * ih]], sg > 0 ? C.pos : C.neg, 2, 6)); });
+    text(c, '±λ', ix, iy - ih - 8, { align: 'center', color: C.muted, font: `11px ${SERIF}` });
+    /* record panel */
+    const L = this.sR, g = L.ctx; L.clear();
+    const F = new Frame(g, [56, 30, L.W - 76, L.H * 0.55 - 30], [0, st.loops], [-0.25, st.loops + 0.25]);
+    F.axes({ noxl: true, ylabel: 'Φ / 2π', ylabelOff: 38, yticks: Array.from({ length: st.loops + 1 }, (_, i) => i) });
+    for (let k = 0; k <= st.loops; k++) F.hline(k, rgba(C.gold, 0.35), [4, 4]);
+    const xs = []; for (let i = 0; i <= 200; i++) xs.push(sv * i / 200);
+    const enc = Math.hypot(st.cx, st.cy) < st.r;
+    line(g, xs.map(s => [F.tx(s), F.ty(this.phase(s).d / TAU)]), C.gold, 2.4, 10);
+    const G = new Frame(g, [56, L.H * 0.55 + 22, L.W - 76, L.H * 0.45 - 62], [0, st.loops], [0, TAU * (Math.hypot(st.cx, st.cy) + st.r) * 1.1]);
+    G.axes({ xlabel: 'turns of the loop', ylabel: '|Z|', ylabelOff: 38, ny: 3 });
+    line(g, xs.map(s => { const q = this.pt(s); return [G.tx(s), G.ty(TAU * Math.hypot(q[0], q[1]))]; }), C.blue, 2.2, 8);
+    text(g, 'the magnitude returns to where it started', G.x0 + 8, G.y0 + 14, { color: C.blue, font: `11.5px ${SANS}` });
+    const w = P.d / TAU;
+    setText('w-w', w.toFixed(3)); setNote('w-wn', enc ? `encloses the zero: ${st.loops} per ${st.loops} loop${st.loops > 1 ? 's' : ''}` : 'misses the zero: returns to 0', enc ? 'rec' : 'null');
+    setText('w-z', (TAU * Math.hypot(p[0], p[1])).toFixed(3)); setNote('w-zn', 'orientation-blind', '');
+    setText('w-eta', '0'); setNote('w-etan', 'paired spectrum: {σ₃, D} = 0', 'rec');
+    setText('w-p', fx(Math.cos(ang), 3)); setNote('w-pn', 'the projector keeps the direction', 'rec');
+  }
+};
+GM.add('winding', Wind);
+
+/* ===== Lens 5: the obstruction floor (Section 4.2) ===== */
+const Floor = {
+  animated: true,
+  st: { lw: -0.5, eps: 0.01, path: 'win', u: 0, play: true, speed: 0.22 },
+  init() {
+    this.sP = new Stage($('#oPath'), w => w < 640 ? 0.8 : 0.7);
+    this.sC = new Stage($('#oCost'), w => w < 640 ? 0.8 : 0.7);
+    this.rW = bindRange('oW', v => { this.st.lw = v; }, v => 'w = ' + Math.pow(10, v).toFixed(v < -1 ? 4 : 3));
+    this.rE = bindRange('oE', v => { this.st.eps = v; }, v => v.toFixed(3));
+    this.bP = btnGroup('oPathSel', v => { this.st.path = v; }, 'win');
+  },
+  set(p) { Object.assign(this.st, p); this.rW.set(this.st.lw); this.rE.set(this.st.eps); this.bP.set(this.st.path); this.draw(GM.now()); },
+  lam(t) { const w = Math.pow(10, this.st.lw); return this.st.path === 'norm' ? t : Math.tanh(t / w) / Math.tanh(1 / w); },
+  U: (l, eps) => (l * l - 1) ** 2 + eps,
+  cum(path) { const n = 2000, eps = this.st.eps, out = [0]; let s = 0; const f = path === 'norm' ? (t => t) : (t => this.lam(t));
+    for (let i = 1; i <= n; i++) { const t0 = -1 + 2 * (i - 1) / n, t1 = -1 + 2 * i / n; s += 0.5 * (this.U(f(t0), eps) + this.U(f(t1), eps)) * (2 / n); out.push(s); } return out; },
+  draw(t) {
+    const st = this.st; if (st.play) advance(this, t, 'u', 1.25, 0); else this._last = t;
+    const uu = Math.min(1, st.u), tc = -1 + 2 * uu;
+    const S = this.sP, c = S.ctx; S.clear();
+    const F = new Frame(c, [52, 26, S.W - 70, S.H - 70], [-1, 1], [-1.25, 1.25]);
+    F.axes({ xlabel: 'path time t', ylabel: 'eigenvalue λ', ylabelOff: 36, ny: 4 });
+    const nx = 60, ny = 50;
+    for (let i = 0; i < nx; i++) for (let j = 0; j < ny; j++) { const l = -1.25 + 2.5 * (j + 0.5) / ny; const v = (l * l - 1) ** 2;
+      c.fillStyle = `rgba(255,141,152,${Math.min(0.55, 0.08 + 0.5 * v)})`; c.fillRect(F.x0 + i * F.w / nx, F.ty(l + 1.25 / ny), F.w / nx + 0.5, F.h / ny + 0.5); }
+    [1 / Math.sqrt(3), -1 / Math.sqrt(3)].forEach(l => F.hline(l, rgba(C.green, 0.7), [5, 4], 1.2));
+    text(c, 'neutral sectors ±a/√3', F.x0 + 6, F.ty(1 / Math.sqrt(3)) - 6, { color: C.green, font: `11.5px ${SANS}` });
+    [1, -1].forEach(l => F.hline(l, rgba(C.teal, 0.45), [2, 4], 1));
+    const xs = []; for (let i = 0; i <= 400; i++) xs.push(-1 + 2 * i / 400);
+    line(c, F.pts(xs, x => x), rgba(C.gold, 0.8), 1.6, 0, [6, 4]);
+    line(c, F.pts(xs, x => this.lam(x)), st.path === 'norm' ? C.gold : C.teal, 2.6, 12);
+    dot(c, F.tx(tc), F.ty(this.lam(tc)), 5, C.gold, 14);
+    text(c, 'T = tI', F.tx(0.55), F.ty(0.55) + 16, { color: C.gold, font: `12px ${SERIF}` });
+    /* cost panel */
+    const L = this.sC, g = L.ctx; L.clear();
+    const cw = this.cum(st.path), cn = this.cum('norm'), Ow = cw[cw.length - 1], On = cn[cn.length - 1], fl = 2 * st.eps;
+    const G = new Frame(g, [56, 26, L.W - 76, L.H - 70], [-1, 1], [0, On * 1.12]);
+    G.axes({ xlabel: 'path time t', ylabel: 'running cost', ylabelOff: 40, ny: 4 });
+    const at = arr => xs.map((x, i) => [G.tx(x), G.ty(arr[Math.round((x + 1) / 2 * 2000)])]);
+    line(g, at(cn), rgba(C.gold, 0.85), 1.8, 0, [6, 4]);
+    const k = Math.round(uu * 400); line(g, at(cw).slice(0, k + 1), C.teal, 2.6, 12);
+    G.hline(fl, C.red, [3, 3], 1.6); text(g, 'floor 2aε', G.x0 + G.w - 6, G.ty(fl) - 6, { align: 'right', color: C.red, font: `12px ${SANS}` });
+    dot(g, G.tx(tc), G.ty(cw[Math.round(uu * 2000)]), 5, C.teal, 14);
+    text(g, '16a⁵/15 + 2aε', G.x0 + G.w - 6, G.ty(On) - 8, { align: 'right', color: C.gold, font: `12px ${SERIF}` });
+    setText('o-O', Ow.toFixed(6)); setNote('o-On', st.path === 'norm' ? 'the normalized path' : 'windowed crossing', '');
+    setText('o-fl', fl.toFixed(4)); setNote('o-fln', 'never reached, approached as w → 0', 'rec');
+    setText('o-n', On.toFixed(6)); setNote('o-nn', `16/15 + 2ε = ${(16 / 15 + fl).toFixed(6)}`, 'rec');
+    setText('o-r', (Ow / fl).toFixed(3)); setNote('o-rn', 'always above 1', 'rec');
+  }
+};
+GM.add('floor', Floor);
+
+/* ===== Lens 6: the seam is a discount (Section 4.3) ===== */
+const Seam = {
+  animated: true,
+  st: { e: 0.55, type: 'herm' },
+  init() {
+    this.sM = new Stage($('#sMat'), w => w < 640 ? 0.8 : 0.72);
+    this.sB = new Stage($('#sBar'), w => w < 640 ? 0.8 : 0.72);
+    this.rE = bindRange('sE', v => { this.st.e = v; }, v => v.toFixed(3));
+    this.bT = btnGroup('sType', v => { this.st.type = v; }, 'herm');
+    const r = mulberry(4242); const pd = () => { const X = LA.zeros(3).map(row => row.map(() => gauss(r) * 0.55)); return LA.add(LA.mul(X, LA.T(X)), LA.eye(3), 0.6); };
+    this.IA = pd(); this.IB = pd(); this.E0 = LA.zeros(3).map(row => row.map(() => gauss(r) * 0.6));
+    this.curve = { herm: [], skew: [] }; for (let i = 0; i <= 240; i++) { const e = 1.2 * i / 240; this.curve.herm.push([e, this.delta(e, 'herm')]); this.curve.skew.push([e, this.delta(e, 'skew')]); }
+  },
+  set(p) { Object.assign(this.st, p); this.rE.set(this.st.e); this.bT.set(this.st.type); this.draw(GM.now()); },
+  glued(e, type) { const E = LA.sc(this.E0, e), M = LA.zeros(6);
+    for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) { M[i][j] = this.IA[i][j]; M[3 + i][3 + j] = this.IB[i][j]; M[i][3 + j] = E[i][j]; M[3 + j][i] = type === 'herm' ? E[i][j] : -E[i][j]; }
+    return M; },
+  O(M) { return LA.logdetPD(M); },
+  delta(e, type) { const M = this.glued(e, type); const base = this.O(this.IA) + this.O(this.IB);
+    if (type === 'herm') { const l = this.O(M); return l == null ? null : l - base; }
+    const d = LA.det(M); return d > 0 ? Math.log(d) - base : null; },
+  mus(e) { const E = LA.sc(this.E0, e), iA = LA.inv(this.IA), X = LA.mul(LA.mul(LA.T(E), iA), E); 
+    const L = LA.zeros(3); for (let i = 0; i < 3; i++) for (let j = 0; j <= i; j++) { let v = this.IB[i][j]; for (let k = 0; k < j; k++) v -= L[i][k] * L[j][k]; L[i][j] = i === j ? Math.sqrt(v) : v / L[j][j]; }
+    const Li = LA.inv(L); const Z = LA.mul(LA.mul(Li, X), LA.T(Li)); const sy = Z.map((r, i) => r.map((v, j) => 0.5 * (v + Z[j][i])));
+    return jacobiEig(sy).l; },
+  draw(t) {
+    const st = this.st, S = this.sM, c = S.ctx; S.clear();
+    const M = this.glued(st.e, st.type); const vmax = Math.max(...M.flat().map(Math.abs));
+    const cell = Math.min((S.W - 80) / 6, (S.H - 96) / 6), x0 = (S.W - 6 * cell) / 2, y0 = 62; const pu = 0.55 + 0.45 * Math.sin(t * 2.4);
+    heat(c, M, x0, y0, cell, vmax, { label: st.type === 'herm' ? 'I + R_M,  interface block Hermitian' : 'control: skew interface block', lcolor: st.type === 'herm' ? C.gold : C.violet,
+      hl: [[0, 3, 0, 3, rgba(C.teal, 0.8)], [3, 6, 3, 6, rgba(C.violet, 0.8)], [0, 3, 3, 6, rgba(C.gold, pu)], [3, 6, 0, 3, rgba(C.gold, pu)]] });
+    text(c, 'A', x0 - 12, y0 + 1.5 * cell + 5, { align: 'center', color: C.teal, font: `14px ${SERIF}` });
+    text(c, 'B', x0 - 12, y0 + 4.5 * cell + 5, { align: 'center', color: C.violet, font: `14px ${SERIF}` });
+    text(c, 'ε', x0 + 4.5 * cell, y0 + 1.5 * cell + 5, { align: 'center', color: '#fff', font: `15px ${SERIF}` });
+    text(c, st.type === 'herm' ? 'ε†' : '−ε†', x0 + 1.5 * cell, y0 + 4.5 * cell + 5, { align: 'center', color: '#fff', font: `15px ${SERIF}` });
+    /* bars and the curve */
+    const L = this.sB, g = L.ctx; L.clear();
+    const OA = this.O(this.IA), OB = this.O(this.IB), D = this.delta(st.e, st.type), OAB = D == null ? null : OA + OB + D;
+    const items = [['O(A)', OA, C.teal], ['O(B)', OB, C.violet], ['O(A)+O(B)', OA + OB, C.blue], ['O(A∪B)', OAB, C.gold]];
+    const top = Math.max(...items.map(i => i[1] || 0)) * 1.25, bot = Math.min(0, ...items.map(i => i[1] == null ? 0 : i[1])) * 1.3;
+    const F = new Frame(g, [56, 40, L.W - 76, L.H * 0.44 - 38], [0, 4], [bot, top]); F.axes({ noxl: true, ylabel: 'obstruction', ylabelOff: 40, ny: 3 });
+    items.forEach(([lab, v, col], i) => { if (v == null) return; const x = F.tx(i + 0.5), w = F.w / 4 * 0.46; g.save(); glow(g, col, 10); g.fillStyle = rgba(col, 0.85); g.fillRect(x - w / 2, Math.min(F.ty(v), F.ty(0)), w, Math.abs(F.ty(0) - F.ty(v))); g.restore(); F.hline(0, rgba('#fff', 0.35), null, 1);
+      text(g, lab, x, F.y0 + F.h + 15, { align: 'center', color: col, font: `12px ${SANS}` }); text(g, fx(v, 3), x, v >= 0 ? F.ty(v) - 6 : F.ty(0) - 6, { align: 'center', color: C.ink, font: `11px ${MONO}` }); });
+    const ys = this.curve.herm.concat(this.curve.skew).map(p => p[1]).filter(v => v != null);
+    const G = new Frame(g, [56, L.H * 0.44 + 36, L.W - 76, L.H * 0.56 - 80], [0, 1.2], [Math.max(-3, Math.min(...ys)), Math.max(...ys) * 1.1]);
+    G.axes({ xlabel: 'interface coupling ε', ylabel: 'Δ', ylabelOff: 40, ny: 4 }); G.hline(0, rgba('#fff', 0.4), null, 1);
+    const pl = (arr, col, dash) => { const pts = arr.map(([e, v]) => v == null ? null : [G.tx(e), G.ty(Math.max(G.yr[0], v))]); line(g, pts, col, 2.2, 8, dash); };
+    pl(this.curve.herm, C.gold); pl(this.curve.skew, C.violet, [6, 4]);
+    const lastOk = this.curve.herm.filter(p => p[1] != null).pop();
+    if (lastOk && lastOk[0] < 1.19) { G.vline(lastOk[0], rgba(C.red, 0.7), [3, 3], 1.2); text(g, 'glued operator stops being positive', G.tx(lastOk[0]) - 6, G.y0 + G.h - 8, { align: 'right', color: C.red, font: `11px ${SANS}` }); }
+    if (D != null) dot(g, G.tx(st.e), G.ty(Math.max(G.yr[0], D)), 5, st.type === 'herm' ? C.gold : C.violet, 14);
+    legend(g, G, [['Hermitian block', C.gold], ['skew control', C.violet, [6, 4]]], 'tl');
+    const mu = this.mus(st.e); const mmax = Math.max(...mu);
+    setText('s-D', D == null ? 'outside' : signed(D, 5)); setNote('s-Dn', D == null ? 'Assumption 1 fails: I + R_M not positive' : st.type === 'herm' ? 'subadditive: never above zero' : 'skew control: the opposite sign', D == null ? 'neg' : st.type === 'herm' ? 'rec' : 'vio');
+    setText('s-mu', mmax.toFixed(4)); setNote('s-mun', mmax < 1 ? 'every μ in [0, 1)' : 'μ ≥ 1: positivity lost', mmax < 1 ? 'rec' : 'neg');
+    const pos = st.type === 'herm' ? this.O(M) != null : true; setText('s-pos', pos ? 'positive' : 'not positive'); setNote('s-posn', st.type === 'herm' ? 'Assumption 1' : 'determinant positive', pos ? 'rec' : 'neg');
+    setText('s-sum', OAB == null ? '—' : `${fx(OA + OB, 3)} → ${fx(OAB, 3)}`); setNote('s-sumn', st.type === 'herm' ? 'the seam is a discount' : 'control', st.type === 'herm' ? 'rec' : 'vio');
+  }
+};
+GM.add('seam', Seam);
+
+/* ===== Lens 7: the noncommutative anchor (Section 4.4) ===== */
+const Anchor = {
+  animated: true,
+  st: { d: 9, m: 1, sp: 0.35 },
+  init() {
+    this.sC = new Stage($('#aCirc'), w => w < 640 ? 0.9 : 0.8);
+    this.sD = new Stage($('#aDom'), w => w < 640 ? 0.9 : 0.8);
+    this.rD = bindRange('aD', v => { this.st.d = v; this.clampM(); }, v => v);
+    this.rM = bindRange('aM', v => { this.st.m = v; this.clampM(); }, v => v);
+    this.rS = bindRange('aS', v => { this.st.sp = v; }, v => v.toFixed(2));
+  },
+  clampM() { const mx = Math.floor((this.st.d - 1) / 2); if (this.st.m > mx) { this.st.m = mx; this.rM.set(mx); } },
+  set(p) { Object.assign(this.st, p); this.rD.set(this.st.d); this.rM.set(this.st.m); this.rS.set(this.st.sp); this.clampM(); this.draw(GM.now()); },
+  phases(t) { const { d, m, sp } = this.st; const base = TAU * m / d; return Array.from({ length: d }, (_, j) => base + sp * Math.sin(TAU * j / d + 0.6 * t)); },
+  read(th) { const d = th.length; const pa = th.map(x => { let a = x % TAU; if (a > Math.PI) a -= TAU; if (a <= -Math.PI) a += TAU; return a; });
+    const w = pa.reduce((s, a) => s + a, 0) / TAU; const dl = th.reduce((s, x) => s + 4 * Math.sin(x / 2) ** 2, 0) / d; const g = Math.min(...th.map(x => 2 * Math.abs(Math.cos(x / 2))));
+    return { w, dl, g, pa }; },
+  draw(t) {
+    const st = this.st, th = this.phases(t), R = this.read(th), S = this.sC, c = S.ctx; S.clear();
+    const ox = S.W / 2, oy = S.H / 2 + 8, rad = Math.min(S.W, S.H) * 0.36;
+    line(c, circlePts(ox, oy, rad, 200), rgba('#e8dcb8', 0.8), 1.6, 8);
+    line(c, [[ox - rad - 30, oy], [ox - rad + 6, oy]], rgba(C.red, 0.8), 2, 0, [4, 3]);
+    dot(c, ox - rad, oy, 5, C.red, 12); text(c, '−1', ox - rad - 18, oy - 10, { align: 'center', color: C.red, font: `13px ${SERIF}` });
+    dot(c, ox + rad, oy, 4, C.green, 10); text(c, '1', ox + rad + 12, oy - 8, { color: C.green, font: `13px ${SERIF}` });
+    const gi = th.reduce((b, x, i) => (2 * Math.abs(Math.cos(x / 2)) < 2 * Math.abs(Math.cos(th[b] / 2)) ? i : b), 0);
+    const pg = [ox + rad * Math.cos(th[gi]), oy - rad * Math.sin(th[gi])];
+    line(c, [pg, [ox - rad, oy]], rgba(C.gold, 0.8), 1.6, 8, [3, 3]); text(c, 'g', (pg[0] + ox - rad) / 2 - 8, (pg[1] + oy) / 2 - 6, { color: C.gold, font: `italic 14px ${SERIF}` });
+    th.forEach((x, i) => dot(c, ox + rad * Math.cos(x), oy - rad * Math.sin(x), 4.2, i === gi ? C.gold : C.teal, 10));
+    text(c, `d = ${st.d} eigenvalues of R = UVU†V†`, ox, S.H - 12, { align: 'center', color: C.ink2, font: `12.5px ${SANS}` });
+    /* domain */
+    const L = this.sD, g = L.ctx; L.clear();
+    const F = new Frame(g, [56, 40, L.W - 76, L.H - 82], [0, 4], [0, 4]); F.axes({ xlabel: 'defect δ', ylabel: 'guard g²', ylabelOff: 38, nx: 4, ny: 4 });
+    g.save(); g.fillStyle = rgba(C.teal, 0.12); g.beginPath(); g.moveTo(F.tx(0), F.ty(0)); g.lineTo(F.tx(0), F.ty(4)); g.lineTo(F.tx(4), F.ty(0)); g.closePath(); g.fill(); g.restore();
+    line(g, [[F.tx(0), F.ty(4)], [F.tx(4), F.ty(0)]], C.teal, 2, 8); text(g, 'δ + g² = 4', F.tx(2.3), F.ty(1.9) - 8, { color: C.teal, font: `12px ${SERIF}` });
+    const aw = Math.abs(Math.round(R.w)); if (aw > 0) { const fl = 16 * aw * aw / (st.d * st.d); if (fl <= 4) { F.vline(fl, rgba(C.red, 0.8), [4, 3], 1.4); text(g, `floor 16w²/d² = ${fl.toFixed(3)}`, F.tx(fl) + 5, F.y0 + F.h - 10, { color: C.red, font: `11.5px ${SANS}` }); } }
+    for (let dd = 3; dd <= 41; dd += 2) { const a = Math.PI / dd; dot(g, F.tx(4 * Math.sin(a) ** 2), F.ty(4 * Math.cos(a) ** 2), 2.4, rgba(C.gold, 0.55)); }
+    text(g, 'clock and shift, m = 1', F.tx(0.4), F.ty(3.25), { color: C.gold, font: `11px ${SANS}` });
+    dot(g, F.tx(R.dl), F.ty(R.g * R.g), 6, C.violet, 16);
+    const bound = st.d / 4 * Math.sqrt(R.dl);
+    setText('a-w', R.w.toFixed(6)); setNote('a-wn', R.g > 1e-9 ? 'an integer while the guard is open' : 'guard closed: the branch fails', R.g > 1e-9 ? 'rec' : 'neg');
+    setText('a-dg', `${R.dl.toFixed(3)} · ${R.g.toFixed(3)}`); const sm = R.dl + R.g * R.g; setNote('a-dgn', `δ + g² = ${sm.toFixed(6)} ≤ 4` + (Math.abs(sm - 4) < 1e-9 ? ': equal half-angles' : ''), 'rec');
+    setText('a-b', `${bound.toFixed(3)} ≥ ${Math.abs(R.w).toFixed(0)}`); setNote('a-bn', `ratio |w| / bound = ${(Math.abs(R.w) / bound).toFixed(4)}`, '');
+    setText('a-int', Math.floor((st.d - 1) / 2)); setNote('a-intn', st.m === Math.floor((st.d - 1) / 2) ? 'reached: the largest winding' : 'the ceiling on |w|', 'rec');
+  }
+};
+GM.add('anchor', Anchor);
+
+/* ===== Lens 8: signature walls (Section 4.1, Theorem 5.5, Corollary 5.1) ===== */
+/* complex determinant by elimination with partial pivoting; entries as [re, im] */
+function cdet(M) {
+  const n = M.length, A = M.map(r => r.map(z => [z[0], z[1]])); let d = [1, 0];
+  const mul = (a, b) => [a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0]];
+  const div = (a, b) => { const q = b[0] * b[0] + b[1] * b[1]; return [(a[0] * b[0] + a[1] * b[1]) / q, (a[1] * b[0] - a[0] * b[1]) / q]; };
+  for (let k = 0; k < n; k++) {
+    let p = k; for (let i = k + 1; i < n; i++) if (Math.hypot(...A[i][k]) > Math.hypot(...A[p][k])) p = i;
+    if (Math.hypot(...A[p][k]) < 1e-300) return [0, 0];
+    if (p !== k) { [A[p], A[k]] = [A[k], A[p]]; d = [-d[0], -d[1]]; }
+    d = mul(d, A[k][k]);
+    for (let i = k + 1; i < n; i++) { const f = div(A[i][k], A[k][k]); for (let j = k; j < n; j++) { const m = mul(f, A[k][j]); A[i][j] = [A[i][j][0] - m[0], A[i][j][1] - m[1]]; } }
+  }
+  return d;
+}
+/* Durand-Kerner roots of a real-coefficient polynomial c[0] + c[1] t + ... */
+function polyRoots(c) {
+  while (c.length > 1 && Math.abs(c[c.length - 1]) < 1e-12) c = c.slice(0, -1);
+  const n = c.length - 1; if (n < 1) return []; const a = c.map(v => v / c[n]);
+  const ev = z => { let r = [1, 0]; for (let k = n - 1; k >= 0; k--) { r = [r[0] * z[0] - r[1] * z[1] + a[k], r[0] * z[1] + r[1] * z[0]]; } return r; };
+  let Z = [], zk = [1, 0]; for (let k = 0; k < n; k++) { Z.push(zk.slice()); zk = [zk[0] * 0.4 - zk[1] * 0.9, zk[0] * 0.9 + zk[1] * 0.4]; }
+  const div = (x, y) => { const q = y[0] * y[0] + y[1] * y[1]; return [(x[0] * y[0] + x[1] * y[1]) / q, (x[1] * y[0] - x[0] * y[1]) / q]; };
+  for (let it = 0; it < 500; it++) { let mv = 0;
+    Z = Z.map((z, i) => { let den = [1, 0]; Z.forEach((w, j) => { if (j !== i) { const d = [z[0] - w[0], z[1] - w[1]]; den = [den[0] * d[0] - den[1] * d[1], den[0] * d[1] + den[1] * d[0]]; } });
+      const st = div(ev(z), den); mv = Math.max(mv, Math.hypot(...st)); return [z[0] - st[0], z[1] - st[1]]; });
+    if (mv < 1e-14) break; }
+  return Z;
+}
+const Sig = {
+  animated: true,
+  st: { a: 0.25, knot: '31', auto: true, speed: 0.07 },
+  V: {
+    '31': [[-1, 1], [0, -1]],
+    'm31': [[1, -1], [0, 1]],
+    '41': [[1, 1], [0, -1]],
+    'sq': [[-1, 1, 0, 0], [0, -1, 0, 0], [0, 0, 1, 0], [0, 0, -1, 1]],
+    '51': [[-1, 1, 0, 0], [0, -1, 1, 0], [0, 0, -1, 1], [0, 0, 0, -1]]
+  },
+  names: { '31': 'trefoil', 'm31': 'mirror trefoil', '41': 'figure-eight', 'sq': 'square knot', '51': 'cinquefoil' },
+  init() {
+    this.sS = new Stage($('#gStep'), w => w < 640 ? 0.8 : 0.7);
+    this.sC = new Stage($('#gCirc'), w => w < 640 ? 0.9 : 0.8);
+    this.rA = bindRange('gA', v => { this.st.a = v; this.st.auto = false; }, v => v.toFixed(3));
+    this.bK = btnGroup('gKnot', v => { this.st.knot = v; }, '31');
+  },
+  set(p) { if (p.a != null && p.auto == null) p.auto = false; Object.assign(this.st, p); this.rA.set(this.st.a); this.bK.set(this.st.knot); this.draw(GM.now()); },
+  form(V, a) { /* (1-w)V + (1-conj w)V^T as (Re, Im) */
+    const n = V.length, c = Math.cos(TAU * a), s = Math.sin(TAU * a), Re = LA.zeros(n), Im = LA.zeros(n);
+    for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) { Re[i][j] = (1 - c) * (V[i][j] + V[j][i]); Im[i][j] = -s * V[i][j] + s * V[j][i]; }
+    return [Re, Im]; },
+  sig(V, a) { const [R, I] = this.form(V, a); return hermSignature(R, I, 1e-9); },
+  compute() {
+    const k = this.st.knot; if (this._k === k) return; this._k = k; const V = this.V[k], n = V.length;
+    /* Alexander polynomial det(V^T - t V): sample at n+1 points on the unit circle and invert the DFT */
+    const N = n + 1, vals = [];
+    for (let j = 0; j < N; j++) { const w = [Math.cos(TAU * j / N), Math.sin(TAU * j / N)]; vals.push(cdet(V.map((r, i) => r.map((_, jj) => [V[jj][i] - w[0] * V[i][jj], -w[1] * V[i][jj]])))); }
+    const coef = []; for (let m = 0; m < N; m++) { let re = 0; for (let j = 0; j < N; j++) { const an = -TAU * j * m / N; re += vals[j][0] * Math.cos(an) - vals[j][1] * Math.sin(an); } coef.push(re / N); }
+    this.coef = coef.map(v => { const r = Math.round(v); return Math.abs(v - r) < 1e-7 ? r : v; });
+    this.roots = polyRoots(this.coef.slice());
+    this.uroots = this.roots.filter(z => Math.abs(Math.hypot(...z) - 1) < 1e-6).map(z => { let a = Math.atan2(z[1], z[0]) / TAU; if (a < 0) a += 1; return a; }).sort((x, y) => x - y);
+    this.ur = []; this.uroots.forEach(a => { if (!this.ur.some(b => Math.abs(b - a) < 1e-5)) this.ur.push(a); });
+    this.mult = this.ur.map(a => this.uroots.filter(b => Math.abs(b - a) < 1e-5).length);
+    this.curve = []; for (let i = 0; i < 1000; i++) { const a = (i + 0.37) / 1000; this.curve.push([a, this.sig(V, a)]); }   /* off the rational grid, so no sample sits on a root */
+    this.steps = 0; for (let i = 1; i < this.curve.length; i++) if (this.curve[i][1] !== this.curve[i - 1][1]) this.steps++;
+    const vals2 = this.curve.map(p => p[1]); this.smin = Math.min(...vals2); this.smax = Math.max(...vals2);
+  },
+  draw(t) {
+    const st = this.st; this.compute();
+    if (st.auto) { const dt = this._last == null ? 0 : Math.min(0.1, Math.max(0, t - this._last)); st.a += dt * st.speed; if (st.a > 0.999) st.a = 0.001; this.rA.set(st.a); }
+    this._last = t;
+    const V = this.V[st.knot], s = this.sig(V, st.a);
+    const S = this.sS, c = S.ctx; S.clear();
+    const lo = Math.min(-4.5, this.smin - 0.5), hi = Math.max(1.5, this.smax + 0.5);
+    const F = new Frame(c, [56, 40, S.W - 76, S.H - 86], [0, 1], [lo, hi]);
+    F.axes({ xlabel: 'holonomy α   (ω = e^{2πiα})', ylabel: 'signature σ(α)', ylabelOff: 38, yticks: [-4, -3, -2, -1, 0, 1].filter(v => v >= lo && v <= hi) });
+    F.hline(0, rgba('#fff', 0.3), null, 1);
+    const pulse = 0.5 + 0.5 * Math.sin(t * 3);
+    this.ur.forEach((a, i) => { F.vline(a, rgba(C.gold, 0.45 + 0.4 * pulse), [4, 3], 1.4); text(c, this.mult[i] > 1 ? 'double root' : 'root', F.tx(a), F.y0 + 12, { align: 'center', color: C.gold, font: `10.5px ${SANS}` }); });
+    const seg = []; this.curve.forEach(([a, v], i) => { if (i && v !== this.curve[i - 1][1]) { seg.push(null); } seg.push([F.tx(a), F.ty(v)]); });
+    line(c, seg, st.knot === 'm31' ? C.violet : C.teal, 3, 12);
+    F.vline(st.a, rgba(C.ink, 0.5), [2, 3], 1); dot(c, F.tx(st.a), F.ty(s), 6, C.gold, 16);
+    text(c, `σ = ${s}`, F.tx(st.a) + (st.a > 0.8 ? -10 : 10), F.ty(s) - 12, { align: st.a > 0.8 ? 'right' : 'left', color: C.gold, font: `13px ${SERIF}` });
+    text(c, this.names[st.knot], F.x0 + F.w - 8, F.y0 + F.h - 10, { align: 'right', color: C.ink2, font: `12px ${SANS}` });
+    /* unit circle and the roots of the Alexander polynomial */
+    const L = this.sC, g = L.ctx; L.clear();
+    const rmax = Math.max(1.25, ...this.roots.map(z => Math.hypot(...z))) * 1.1; const ox = L.W / 2, oy = L.H / 2 + 2, sc = Math.min(L.W, L.H - 90) * 0.46 / rmax;
+    line(g, [[ox - rmax * sc, oy], [ox + rmax * sc, oy]], rgba('#cbd9ea', 0.25), 1); line(g, [[ox, oy - rmax * sc], [ox, oy + rmax * sc]], rgba('#cbd9ea', 0.25), 1);
+    line(g, circlePts(ox, oy, sc, 200), rgba('#e8dcb8', 0.7), 1.6, 6);
+    const wx = ox + sc * Math.cos(TAU * st.a), wy = oy - sc * Math.sin(TAU * st.a);
+    arrow(g, ox, oy, wx, wy, rgba(C.gold, 0.8), 1.6, 6); dot(g, wx, wy, 5.5, C.gold, 14); text(g, 'ω', wx + 10 * Math.cos(TAU * st.a), wy - 10 * Math.sin(TAU * st.a), { align: 'center', color: C.gold, font: `italic 14px ${SERIF}` });
+    this.roots.forEach(z => { const on = Math.abs(Math.hypot(...z) - 1) < 1e-6; dot(g, ox + sc * z[0], oy - sc * z[1], on ? 5 + 2 * pulse : 4, on ? C.red : C.blue, on ? 14 : 8); });
+    text(g, 'red: roots on the circle  ·  blue: roots off it', ox, L.H - 12, { align: 'center', color: C.muted, font: `11px ${SANS}` });
+    const pstr = this.coef.map((v, i) => v ? `${v > 0 ? (i ? '+' : '') : '−'}${Math.abs(v) === 1 && i ? '' : Math.abs(+v.toFixed(6))}${i ? (i > 1 ? 't' + sup(i) : 't') : ''}` : '').join(' ').trim();
+    text(g, `Δ(t) ∝ ${pstr}`, ox, L.H - 32, { align: 'center', color: C.ink2, font: `12px ${SERIF}` });
+    setText('g-s', signed(s, 0)); setNote('g-sn', 'an integer at every admissible α', 'rec');
+    setText('g-r', this.ur.length ? this.ur.map((a, i) => a.toFixed(4) + (this.mult[i] > 1 ? '²' : '')).join(', ') : 'none'); setNote('g-rn', this.ur.length ? 'computed from det(Vᵀ − tV)' : 'no root on the unit circle', '');
+    setText('g-steps', String(this.steps)); setNote('g-stepsn', this.steps < this.ur.length ? 'a root does not force a step' : this.ur.length ? 'every step sits on a root' : 'no roots, no steps', this.steps < this.ur.length ? 'vio' : 'rec');
+    const amph = this.smin === 0 && this.smax === 0; setText('g-ch', amph ? 'σ ≡ 0' : st.knot === 'm31' ? 'mirror: σ reversed' : 'chiral'); setNote('g-chn', amph ? (st.knot === '41' ? 'amphichiral: the record vanishes' : 'amphichiral: the halves cancel') : 'mirror image reverses σ', amph ? 'null' : 'rec');
+  }
+};
+GM.add('signature', Sig);
+
+/* ===== Lens 9: continuation on the A-polynomial of the figure-eight knot (Section 5, Eqs. 12-13) ===== */
+const Curve = {
+  animated: true,
+  st: { p: 0.35, m: 0, n: 1, auto: true, speed: 0.06 },
+  init() {
+    this.sT = new Stage($('#cTor'), w => w < 640 ? 0.9 : 0.8);
+    this.sF = new Stage($('#cFld'), w => w < 640 ? 0.9 : 0.8);
+    this.rP = bindRange('cP', v => { this.st.p = v; this.st.auto = false; }, v => v.toFixed(3));
+    this.rM = bindRange('cM', v => { this.st.m = v; }, v => v);
+    this.rN = bindRange('cN', v => { this.st.n = v; }, v => v);
+    this.arc = []; for (let i = 0; i <= 600; i++) this.arc.push(this.at(i / 600));
+  },
+  set(p) { if (p.p != null && p.auto == null) p.auto = false; Object.assign(this.st, p); this.rP.set(this.st.p); this.rM.set(this.st.m); this.rN.set(this.st.n); this.draw(GM.now()); },
+  /* point on the unitary arc: M = e^{i th}, L = e^{i ph}, th from pi/3 to 2pi/3 */
+  at(p) {
+    const th = Math.PI / 3 + p * Math.PI / 3, s = 1 + Math.cos(2 * th) - Math.cos(4 * th);
+    const ph = Math.sign(Math.PI / 2 - th) * Math.acos(clamp(-s, -1, 1));
+    const den = 4 * Math.sin(2 * th) - 8 * Math.sin(4 * th);
+    const ratio = Math.abs(den) < 1e-9 ? 1 / (2 * Math.sqrt(5)) : 2 * Math.sin(ph) / den;
+    return { th, ph, ratio };
+  },
+  /* complex A(L, M) = L^2 M^4 + L P(M) + M^4 with P(M) = -M^8 + M^6 + 2M^4 + M^2 - 1 */
+  A(th, ph) {
+    const e = (k, a) => [Math.cos(k * a), Math.sin(k * a)], add = (x, y) => [x[0] + y[0], x[1] + y[1]], mul = (x, y) => [x[0] * y[0] - x[1] * y[1], x[0] * y[1] + x[1] * y[0]], sc = (k, x) => [k * x[0], k * x[1]];
+    const Pm = add(add(sc(-1, e(8, th)), e(6, th)), add(sc(2, e(4, th)), add(e(2, th), [-1, 0])));
+    const L = e(1, ph); return Math.hypot(...add(add(mul(mul(L, L), e(4, th)), mul(L, Pm)), e(4, th)));
+  },
+  field(pt) { const u = pt.th / TAU, v = pt.ph / TAU, mu = this.st.m + u, nv = this.st.n + v; return (mu + nv * pt.ratio) / (mu * mu + nv * nv); },
+  draw(t) {
+    const st = this.st;
+    if (st.auto) { const dt = this._last == null ? 0 : Math.min(0.1, Math.max(0, t - this._last)); st.p += dt * st.speed; if (st.p > 1) st.p = 0; this.rP.set(st.p); }
+    this._last = t;
+    const pt = this.at(st.p);
+    const S = this.sT, c = S.ctx; S.clear();
+    const F = new Frame(c, [56, 44, S.W - 76, S.H - 90], [0, TAU], [-Math.PI, Math.PI]);
+    const pis = v => { const r = Math.round(v / Math.PI * 3); const map = { '-3': '−π', '0': '0', '3': 'π', '6': '2π', '2': '2π/3', '4': '4π/3', '1': 'π/3', '5': '5π/3', '-1': '−π/3', '-2': '−2π/3' }; return map[String(r)] || ''; };
+    F.axes({ xlabel: 'meridian phase θ   (M = e^{iθ})', ylabel: 'longitude phase φ   (L = e^{iφ})', ylabelOff: 40, xticks: [0, Math.PI / 3, 2 * Math.PI / 3, Math.PI, 4 * Math.PI / 3, 5 * Math.PI / 3, TAU], yticks: [-Math.PI, -Math.PI / 3, Math.PI / 3, Math.PI, 0], fx: pis, fy: pis });
+    [[0, 1], [1, 1], [0, -1], [1, -1]].forEach(([shift, sg]) => {
+      const pts = this.arc.map(a => [F.tx(a.th + shift * Math.PI), F.ty(sg * a.ph)]); line(c, pts, rgba(C.teal, shift === 0 && sg === 1 ? 0.95 : 0.4), shift === 0 && sg === 1 ? 2.6 : 1.8, shift === 0 && sg === 1 ? 10 : 0);
+    });
+    [Math.PI / 3, 2 * Math.PI / 3, 4 * Math.PI / 3, 5 * Math.PI / 3].forEach(x => [Math.PI, -Math.PI].forEach(y => dot(c, F.tx(x), F.ty(y), 3.5, C.red, 8)));
+    dot(c, F.tx(Math.PI / 2), F.ty(0), 3.5, C.green, 8); dot(c, F.tx(3 * Math.PI / 2), F.ty(0), 3.5, C.green, 8);
+    text(c, 'L = −1', F.tx(Math.PI / 3) - 4, F.ty(Math.PI) + 16, { align: 'right', color: C.red, font: `11px ${SANS}` });
+    text(c, 'L = 1', F.tx(Math.PI / 2) + 8, F.ty(0) - 8, { color: C.green, font: `11px ${SANS}` });
+    /* tangent arrow: du = -(J_L/J_M) dv, in (theta, phi) coordinates */
+    const X = F.tx(pt.th), Y = F.ty(pt.ph), ax = pt.ratio * F.w / TAU, ay = F.h / TAU, nn = Math.hypot(ax, ay);
+    arrow(c, X, Y, X + 40 * ax / nn, Y + 40 * ay / nn, C.gold, 2.2, 10);
+    dot(c, X, Y, 6, C.gold, 16);
+    /* field panel */
+    const L = this.sF, g = L.ctx; L.clear();
+    const G = new Frame(g, [56, 40, L.W - 76, L.H * 0.44 - 38], [0, 1], [-0.02, 0.25]);
+    G.axes({ noxl: true, ylabel: 'J_L / J_M', ylabelOff: 40, ny: 3 });
+    G.hline(1 / (2 * Math.sqrt(5)), rgba(C.red, 0.7), [4, 3], 1.2); text(g, '1/(2√5) at L = 1', G.x0 + G.w - 6, G.ty(1 / (2 * Math.sqrt(5))) + 14, { align: 'right', color: C.red, font: `11px ${SANS}` });
+    line(g, this.arc.map((a, i) => [G.tx(i / 600), G.ty(a.ratio)]), C.violet, 2.4, 8);
+    dot(g, G.tx(st.p), G.ty(pt.ratio), 5, C.gold, 14);
+    const fv = this.arc.map(a => this.field(a)); const fmin = Math.min(...fv), fmax = Math.max(...fv), pad = 0.1 * (fmax - fmin + 1e-6);
+    const H = new Frame(g, [56, L.H * 0.44 + 30, L.W - 76, L.H * 0.56 - 76], [0, 1], [Math.min(0, fmin - pad), Math.max(0, fmax + pad)]);
+    H.axes({ xlabel: 'position along the arc', ylabel: 'dΦ/dv', ylabelOff: 40, ny: 3 }); H.hline(0, rgba('#fff', 0.3), null, 1);
+    line(g, fv.map((v, i) => [H.tx(i / 600), H.ty(v)]), C.teal, 2.4, 8);
+    dot(g, H.tx(st.p), H.ty(this.field(pt)), 5, C.gold, 14);
+    text(g, `mode (m, n) = (${st.m}, ${st.n})`, H.x0 + 8, H.y0 + 14, { color: C.teal, font: `11.5px ${SANS}` });
+    const aerr = this.A(pt.th, pt.ph);
+    setText('c-ml', `θ = ${(pt.th / Math.PI).toFixed(3)}π, φ = ${(pt.ph / Math.PI).toFixed(3)}π`); setNote('c-mln', 'both holonomies unitary', '');
+    setText('c-A', sci(Math.max(aerr, 1e-17), 1)); setNote('c-An', 'the point stays on A = 0', 'rec');
+    setText('c-j', fx(pt.ratio, 4)); setNote('c-jn', 'real on this slice; |ratio| ≤ 1/(2√5)', 'rec');
+    setText('c-f', fx(this.field(pt), 4)); setNote('c-fn', 'Equation (13), per unit v̇', '');
+  }
+};
+GM.add('curve', Curve);
+
+/* ===== Lens 10: a symmetric start needs a seed (Corollary 5.1 and the seed paragraph) ===== */
+const Seed = {
+  animated: true,
+  st: { mu: -1.0, ls: -6, t: 20, play: false, speed: 4 },
+  init() {
+    this.sW = new Stage($('#dWell'), w => w < 640 ? 0.8 : 0.7);
+    this.sR = new Stage($('#dRun'), w => w < 640 ? 0.8 : 0.7);
+    this.rM = bindRange('dMu', v => { this.st.mu = v; }, v => v.toFixed(2));
+    this.rS = bindRange('dS', v => { this.st.ls = v; }, v => '±10' + sup(v.toFixed(1).replace('.0', '')));
+    this.rT = bindRange('dT', v => { this.st.t = v; }, v => v.toFixed(1));
+    playBtn('dPlay', this);
+  },
+  set(p) { Object.assign(this.st, p); this.rM.set(this.st.mu); this.rS.set(this.st.ls); this.rT.set(this.st.t); this.draw(GM.now()); },
+  /* a'' = -mu a - a^3 - 0.2 a', RK4 with dt = 0.01 to t = 60 */
+  run(a0) { const mu = this.st.mu, f = (a, v) => [v, -mu * a - a * a * a - 0.2 * v], h = 0.01, out = [a0]; let a = a0, v = 0;
+    for (let i = 0; i < 6000; i++) { const k1 = f(a, v), k2 = f(a + h / 2 * k1[0], v + h / 2 * k1[1]), k3 = f(a + h / 2 * k2[0], v + h / 2 * k2[1]), k4 = f(a + h * k3[0], v + h * k3[1]);
+      a += h / 6 * (k1[0] + 2 * k2[0] + 2 * k3[0] + k4[0]); v += h / 6 * (k1[1] + 2 * k2[1] + 2 * k3[1] + k4[1]); out.push(a); }
+    return out; },
+  compute() { const key = this.st.mu + ',' + this.st.ls; if (this._key === key) return; this._key = key; const s = Math.pow(10, this.st.ls);
+    this.tr = { z: this.run(0), p: this.run(s), m: this.run(-s) }; },
+  V(a) { return this.st.mu * a * a / 2 + a ** 4 / 4; },
+  draw(t) {
+    const st = this.st; this.compute();
+    if (st.play) { advance(this, t, 't', 60, 0); this.rT.set(st.t); } else this._last = t;
+    const i = clamp(Math.round(st.t / 0.01), 0, 6000), az = this.tr.z[i], ap = this.tr.p[i], am = this.tr.m[i];
+    const S = this.sW, c = S.ctx; S.clear();
+    const xs = []; for (let k = 0; k <= 300; k++) xs.push(-1.8 + 3.6 * k / 300);
+    const vs = xs.map(a => this.V(a)), vmin = Math.min(...vs), vmax = this.V(1.8);
+    const F = new Frame(c, [52, 40, S.W - 70, S.H - 84], [-1.8, 1.8], [vmin - 0.1 * (vmax - vmin), vmax]);
+    F.axes({ xlabel: 'order parameter a', ylabel: 'V(a)', ylabelOff: 36, ny: 3 });
+    line(c, F.pts(xs, a => this.V(a)), C.ink2, 2.2, 6);
+    F.vline(0, rgba(C.gold, 0.5), [4, 4], 1); text(c, 'mirror axis', F.tx(0) + 6, F.y0 + F.h - 8, { color: C.gold, font: `11px ${SANS}` });
+    const ball = (a, col, off) => { const aa = clamp(a, -1.8, 1.8); dot(c, F.tx(aa), F.ty(this.V(aa)) - 9 - off, 7, col, 16); };
+    ball(am, C.violet, 0); ball(ap, C.teal, 0); ball(az, C.gold, 14);
+    legend(c, F, [['symmetric start a = 0', C.gold], ['seed +', C.teal], ['seed −', C.violet]], 'tr');
+    /* run panel */
+    const L = this.sR, g = L.ctx; L.clear();
+    const G = new Frame(g, [56, 40, L.W - 76, L.H - 84], [0, 60], [-1.6, 1.6]);
+    G.axes({ xlabel: 'time t', ylabel: 'a(t)', ylabelOff: 38, ny: 4 }); G.hline(0, rgba('#fff', 0.3), null, 1);
+    const tt = []; for (let k = 0; k <= i; k += 20) tt.push(k); if (tt[tt.length - 1] !== i) tt.push(i);
+    const pl = (arr, col, w) => line(g, tt.map(k => [G.tx(k * 0.01), G.ty(clamp(arr[k], -1.6, 1.6))]), col, w, 10);
+    pl(this.tr.p, C.teal, 2.4); pl(this.tr.m, C.violet, 2.4); pl(this.tr.z, C.gold, 2.8);
+    if (st.mu < 0) { const r = Math.sqrt(-st.mu); [r, -r].forEach(v => G.hline(v, rgba(C.green, 0.45), [3, 4], 1)); }
+    G.vline(st.t, rgba(C.ink, 0.35), [2, 3], 1);
+    setText('d-0', fx(az, 6)); setNote('d-0n', 'stays exactly on the mirror axis', 'null');
+    setText('d-p', signed(ap, 4)); setNote('d-pn', st.mu < 0 ? 'amplified toward +√(−μ)' : 'μ ≥ 0: the seed decays', st.mu < 0 ? 'rec' : 'null');
+    setText('d-m', signed(am, 4)); setNote('d-mn', 'the mirror image of seed +', st.mu < 0 ? 'vio' : 'null');
+    setText('d-41', 'σ ≡ 0'); setNote('d-41n', 'amphichiral: no static |n| = 1', 'null');
+  }
+};
+GM.add('seed', Seed);
+
+/* ===== Lens 11: the lattice split (Theorem 5.4) ===== */
+const Lat = {
+  animated: true,
+  st: { p: 2, q: 3 },
+  init() {
+    this.sG = new Stage($('#lGrid'), w => w < 640 ? 0.9 : 0.82);
+    this.sT = new Stage($('#lTor'), w => w < 640 ? 0.9 : 0.82);
+    this.rP = bindRange('lP', v => { this.st.p = v; this.syncPick(); }, v => v);
+    this.rQ = bindRange('lQ', v => { this.st.q = v; this.syncPick(); }, v => v);
+    this.bK = btnGroup('lPick', v => { this.st.p = +v[0]; this.st.q = +v[1]; this.rP.set(this.st.p); this.rQ.set(this.st.q); }, '23');
+  },
+  syncPick() { this.bK.set(`${this.st.p}${this.st.q}`); },
+  set(p) { Object.assign(this.st, p); this.rP.set(this.st.p); this.rQ.set(this.st.q); this.syncPick(); this.draw(GM.now()); },
+  cls(p, q) { if (p === 0 && q === 0) return 'neutral'; return gcd(p, q) === 1 ? 'chiral' : 'composite'; },
+  col(k) { return k === 'neutral' ? C.gold : k === 'chiral' ? C.teal : C.violet; },
+  torus(a, b, Rt, r, tilt) { const x = (Rt + r * Math.cos(b)) * Math.cos(a), y = (Rt + r * Math.cos(b)) * Math.sin(a), z = r * Math.sin(b);
+    const y2 = y * Math.cos(tilt) - z * Math.sin(tilt), z2 = y * Math.sin(tilt) + z * Math.cos(tilt); return [x, y2, z2]; },
+  draw(t) {
+    const st = this.st, k = this.cls(st.p, st.q), g0 = gcd(st.p, st.q);
+    const S = this.sG, c = S.ctx; S.clear();
+    const N = 6, side = Math.min(S.W - 40, S.H - 40), ox = S.W / 2, oy = S.H / 2 + 4, cs = side / (2 * N + 1);
+    c.save(); c.strokeStyle = 'rgba(120,150,190,.14)'; for (let i = -N; i <= N; i++) { c.beginPath(); c.moveTo(ox + i * cs, oy - N * cs); c.lineTo(ox + i * cs, oy + N * cs); c.moveTo(ox - N * cs, oy + i * cs); c.lineTo(ox + N * cs, oy + i * cs); c.stroke(); } c.restore();
+    for (let i = -N; i <= N; i++) for (let j = -N; j <= N; j++) { const kk = this.cls(i, j); dot(c, ox + i * cs, oy - j * cs, kk === 'neutral' ? 5 : 2.8, rgba(this.col(kk), kk === 'composite' ? 0.55 : 0.85), 0); }
+    const tipx = ox + st.p * cs, tipy = oy - st.q * cs;
+    if (k === 'composite') { const p0 = st.p / g0, q0 = st.q / g0; for (let s = 0; s < g0; s++) { const pulse = ((t * 1.2) % g0) >= s ? 1 : 0.35; arrow(c, ox + s * p0 * cs, oy - s * q0 * cs, ox + (s + 1) * p0 * cs, oy - (s + 1) * q0 * cs, rgba(C.violet, pulse), 2.6, 10); } }
+    else if (k === 'chiral') arrow(c, ox, oy, tipx, tipy, C.teal, 2.8, 12);
+    dot(c, tipx, tipy, 7 + 1.5 * Math.sin(t * 3), this.col(k), 18);
+    text(c, `(${st.p}, ${st.q})`, tipx + 10, tipy - 10, { color: this.col(k), font: `13px ${SERIF}` });
+    text(c, 'w_α', ox + N * cs + 6, oy + 14, { color: C.muted, font: `12px ${SERIF}` }); text(c, 'w_β', ox + 6, oy - N * cs - 4, { color: C.muted, font: `12px ${SERIF}` });
+    /* torus */
+    const L = this.sT, g = L.ctx; L.clear(); const Rt = 1, r = 0.42, tilt = 1.05, sc = Math.min(L.W, L.H) * 0.34, cx = L.W / 2, cy = L.H / 2 + 6;
+    const P = (a, b) => { const v = this.torus(a, b, Rt, r, tilt); return [cx + sc * v[0], cy - sc * v[1], v[2]]; };
+    for (let m = 0; m < 24; m++) { const a = TAU * m / 24; const pts = []; for (let i = 0; i <= 40; i++) { const v = P(a, TAU * i / 40); pts.push([v[0], v[1]]); } line(g, pts, 'rgba(120,150,190,.14)', 1); }
+    for (let m = 0; m < 12; m++) { const b = TAU * m / 12; const pts = []; for (let i = 0; i <= 80; i++) { const v = P(TAU * i / 80, b); pts.push([v[0], v[1]]); } line(g, pts, 'rgba(120,150,190,.14)', 1); }
+    const drawPath = (fa, fb, col, prog) => { const n = 400, m = Math.max(2, Math.floor(n * prog)); let prev = null;
+      for (let i = 0; i <= m; i++) { const s = i / n, v = P(fa(s), fb(s)); if (prev) { const depth = (v[2] + prev[2]) / 2; line(g, [[prev[0], prev[1]], [v[0], v[1]]], rgba(col, depth > 0 ? 0.3 : 0.95), depth > 0 ? 1.4 : 2.6, depth > 0 ? 0 : 8); } prev = v; }
+      if (prev) dot(g, prev[0], prev[1], 5, col, 14); };
+    const prog = (t * 0.18) % 1.25;
+    if (k === 'neutral') { drawPath(s => 0.5 + 0.35 * Math.cos(TAU * s), s => 2.4 + 0.35 * Math.sin(TAU * s), C.gold, Math.min(1, prog)); text(g, 'contractible: shrinks to a point', cx, L.H - 14, { align: 'center', color: C.gold, font: `11.5px ${SANS}` }); }
+    else { const p0 = st.p / g0, q0 = st.q / g0;
+      for (let s = 0; s < g0; s++) drawPath(u => TAU * p0 * u, u => TAU * q0 * u + 0.28 * s, this.col(k), Math.min(1, prog * g0 - s));
+      text(g, k === 'chiral' ? 'one simple closed loop: primitive class' : `${g0} parallel copies of (${p0}, ${q0})`, cx, L.H - 14, { align: 'center', color: this.col(k), font: `11.5px ${SANS}` }); }
+    setText('l-g', String(g0)); setNote('l-gn', k === 'neutral' ? 'w = (0, 0)' : g0 === 1 ? 'primitive' : 'divisible', k === 'chiral' ? 'rec' : k === 'neutral' ? 'null' : 'vio');
+    setText('l-k', k); setNote('l-kn', k === 'chiral' ? 'protected by homotopy invariance' : k === 'neutral' ? 'contractible, metastable' : 'a multiple of a primitive class', k === 'chiral' ? 'rec' : k === 'neutral' ? 'null' : 'vio');
+    setText('l-sp', k === 'composite' ? `${g0}·(${st.p / g0}, ${st.q / g0})` : '—'); setNote('l-spn', k === 'composite' ? 'k ≥ 2 copies of w₀' : 'not composite', k === 'composite' ? 'vio' : '');
+    setText('l-open', 'open [H]'); setNote('l-openn', 'Φ = ½‖[C,Cᵀ]‖² or 𝒮 = ∂ρ∂ρ + Δ²g + χ_η∂η∂η', '');
+  }
+};
+GM.add('lattice', Lat);
+
+/* ===== Lens 12: the pipeline on a measured band (Section 6.5; Yi et al. calibration) ===== */
+const Band = {
+  animated: true,
+  st: { d: -0.2, le: -12, sign: 'plus' },
+  t0: 0.09, tso: -0.05,
+  init() {
+    this.sM = new Stage($('#nMap'), w => w < 640 ? 0.9 : 0.8);
+    this.sS = new Stage($('#nSweep'), w => w < 640 ? 0.9 : 0.8);
+    this.rD = bindRange('nD', v => { this.st.d = v; }, v => v.toFixed(3));
+    this.rE = bindRange('nE', v => { this.st.le = v; }, v => '10' + sup(v.toFixed(1).replace('.0', '')));
+    this.bS = btnGroup('nSign', v => { this.st.sign = v; }, 'plus');
+    this.sweep = []; for (let i = 0; i <= 125; i++) { const d = -1 + 1.25 * i / 125; const r = this.grid(d, 40); this.sweep.push({ d, C: r.C, h2: r.h2 }); }
+  },
+  set(p) { Object.assign(this.st, p); this.rD.set(this.st.d); this.rE.set(this.st.le); this.bS.set(this.st.sign); this.draw(GM.now()); },
+  /* h(q) = (2 tso sin qy, 2 tso sin qx, d/2 - 2 t0 (cos qx + cos qy)); lower band m = -h/|h| */
+  pt(qx, qy, d) {
+    const { t0, tso } = this, h = [2 * tso * Math.sin(qy), 2 * tso * Math.sin(qx), d / 2 - 2 * t0 * (Math.cos(qx) + Math.cos(qy))];
+    const hx = [0, 2 * tso * Math.cos(qx), 2 * t0 * Math.sin(qx)], hy = [2 * tso * Math.cos(qy), 0, 2 * t0 * Math.sin(qy)];
+    const n2 = h[0] * h[0] + h[1] * h[1] + h[2] * h[2], n = Math.sqrt(n2);
+    const cr = [hx[1] * hy[2] - hx[2] * hy[1], hx[2] * hy[0] - hx[0] * hy[2], hx[0] * hy[1] - hx[1] * hy[0]];
+    const Om = 0.5 * (h[0] * cr[0] + h[1] * cr[1] + h[2] * cr[2]) / (n2 * n); /* +i Tr(P[dxP, dyP]) on the lower band */
+    const perp = v => { const s = (v[0] * h[0] + v[1] * h[1] + v[2] * h[2]) / n2; return [(v[0] - s * h[0]) / n, (v[1] - s * h[1]) / n, (v[2] - s * h[2]) / n]; };
+    const ax = perp(hx), ay = perp(hy), gxx = 0.25 * (ax[0] ** 2 + ax[1] ** 2 + ax[2] ** 2), gyy = 0.25 * (ay[0] ** 2 + ay[1] ** 2 + ay[2] ** 2), gxy = 0.25 * (ax[0] * ay[0] + ax[1] * ay[1] + ax[2] * ay[2]);
+    return { Om, det: gxx * gyy - gxy * gxy, h2: n2 };
+  },
+  grid(d, N) { const dq = TAU / N; let C = 0, V = 0, h2 = Infinity, sat = 0, cnt = 0; const M = [];
+    for (let i = 0; i < N; i++) { const row = []; for (let j = 0; j < N; j++) { const qx = -Math.PI + (i + 0.5) * dq, qy = -Math.PI + (j + 0.5) * dq, r = this.pt(qx, qy, d);
+      C += r.Om; V += Math.sqrt(Math.max(r.det, 0)); h2 = Math.min(h2, r.h2); if (r.det > 1e-14) { sat += Math.abs(r.Om) / (2 * Math.sqrt(r.det)); cnt++; } row.push(r.Om); } M.push(row); }
+    return { C: C * dq * dq / TAU, vol: V * dq * dq / Math.PI, h2, sat: sat / cnt, M }; },
+  draw(t) {
+    const st = this.st, sg = st.sign === 'plus' ? 1 : -1, eta = Math.pow(10, st.le);
+    const key = st.d.toFixed(4); if (this._key !== key) { this._key = key; this.cur = this.grid(st.d, 64); }
+    const R = this.cur, N = 64;
+    const S = this.sM, c = S.ctx; S.clear();
+    const side = Math.min(S.W - 70, S.H - 96), x0 = (S.W - side) / 2 + 10, y0 = 44, cs = side / N;
+    const vmax = Math.max(...R.M.flat().map(Math.abs)) || 1;
+    for (let i = 0; i < N; i++) for (let j = 0; j < N; j++) { c.fillStyle = divColor(sg * R.M[i][j] / vmax); c.fillRect(x0 + i * cs, y0 + (N - 1 - j) * cs, cs + 0.4, cs + 0.4); }
+    c.save(); c.strokeStyle = 'rgba(120,150,190,.4)'; c.strokeRect(x0 + 0.5, y0 + 0.5, side - 1, side - 1); c.restore();
+    text(c, 'q_x', x0 + side / 2, y0 + side + 16, { align: 'center', color: C.muted, font: `12px ${SERIF}` }); text(c, 'q_y', x0 - 16, y0 + side / 2, { align: 'center', color: C.muted, font: `12px ${SERIF}` });
+    text(c, '−π', x0, y0 + side + 16, { align: 'center', color: C.muted, font: `10.5px ${MONO}` }); text(c, 'π', x0 + side, y0 + side + 16, { align: 'center', color: C.muted, font: `10.5px ${MONO}` });
+    /* running integral: the integer assembles column by column */
+    const u = (t * 0.1) % 1.2, col = Math.min(N, Math.floor(u * N)); let run = 0; for (let i = 0; i < col; i++) for (let j = 0; j < N; j++) run += R.M[i][j];
+    run *= sg * (TAU / N) ** 2 / TAU; const sx = x0 + col * cs; line(c, [[sx, y0], [sx, y0 + side]], rgba(C.gold, 0.85), 2, 10);
+    text(c, `running ∫Ω/2π = ${signed(run, 3)}`, x0 + side / 2, y0 + side + 36, { align: 'center', color: C.gold, font: `12px ${MONO}` });
+    /* sweep panel */
+    const L = this.sS, g = L.ctx; L.clear();
+    const F = new Frame(g, [56, 40, L.W - 76, L.H * 0.42 - 38], [-1, 0.25], [-1.5, 1.5]);
+    F.axes({ noxl: true, ylabel: 'Chern number', ylabelOff: 40, yticks: [-1, 0, 1] });
+    [0, -8 * this.t0].forEach(w => F.vline(w, rgba(C.red, 0.7), [4, 3], 1.2));
+    line(g, this.sweep.map(s => [F.tx(s.d), F.ty(clamp(sg * s.C, -1.5, 1.5))]), C.teal, 2.4, 8);
+    dot(g, F.tx(st.d), F.ty(clamp(sg * R.C, -1.5, 1.5)), 5.5, C.gold, 14);
+    const lr = s => Math.log10(1 / (s.h2 + eta));
+    const G = new Frame(g, [56, L.H * 0.42 + 26, L.W - 76, L.H * 0.58 - 72], [-1, 0.25], [0, 12.5]);
+    G.axes({ xlabel: 'detuning δ (recoil units)', ylabel: 'log₁₀ max R_η', ylabelOff: 40, yticks: [0, 2, 4, 6, 8, 10, 12] });
+    G.hline(-st.le, rgba(C.red, 0.7), [3, 3], 1.2); text(g, 'cap 1/η', G.x0 + 8, G.ty(-st.le) - 6, { color: C.red, font: `11px ${SANS}` });
+    line(g, this.sweep.map(s => [G.tx(s.d), G.ty(lr(s))]), C.violet, 2.4, 8);
+    dot(g, G.tx(st.d), G.ty(Math.log10(1 / (R.h2 + eta))), 5.5, C.gold, 14);
+    text(g, 'walls at δ = 0 and δ = −8t₀', G.x0 + G.w - 6, G.y0 + G.h - 8, { align: 'right', color: C.red, font: `11px ${SANS}` });
+    const Cn = sg * R.C, Rm = 1 / (R.h2 + eta);
+    setText('n-C', signed(Cn, 5)); setNote('n-Cn', Math.abs(st.d + 0.2) < 0.003 ? (sg > 0 ? 'published: −1.00 ± 0.02' : 'opposite sign to the measurement') : 'grid 64 × 64', Math.abs(Math.round(Cn)) === 1 ? (sg > 0 ? 'rec' : 'vio') : 'null');
+    setText('n-sat', R.sat.toFixed(5)); setNote('n-satn', 'mean of |Ω| / 2√det g: saturated', 'rec');
+    setText('n-vol', R.vol.toFixed(3)); setNote('n-voln', R.vol >= Math.abs(R.C) - 1e-3 ? 'vol_g ≥ |C|' : 'check', 'rec');
+    setText('n-R', sci(Rm, 2)); setNote('n-Rn', Rm > 0.5 / eta ? 'near the cap 1/η' : `min |h| = ${Math.sqrt(R.h2).toExponential(2)}`, Rm > 0.5 / eta ? 'neg' : '');
+  }
+};
+GM.add('band', Band);
+
+/* ===== Lens 13: refraction under the scalar action (Proposition 6.2) ===== */
+const Refr = {
+  animated: true,
+  st: { R1: 2.0, R2: 0.8, dV: 0, th: 30, play: false, speed: 0.25, u: 1 },
+  w: 0.03,
+  init() {
+    this.sM = new Stage($('#qMed'), w => w < 640 ? 0.9 : 0.8);
+    this.sL = new Stage($('#qLaw'), w => w < 640 ? 0.9 : 0.8);
+    this.r1 = bindRange('qR1', v => { this.st.R1 = v; }, v => v.toFixed(2));
+    this.r2 = bindRange('qR2', v => { this.st.R2 = v; }, v => v.toFixed(2));
+    this.rV = bindRange('qV', v => { this.st.dV = v; }, v => signed(v, 2));
+    this.rT = bindRange('qTh', v => { this.st.th = v; }, v => v.toFixed(1) + '°');
+    playBtn('qPlay', this);
+  },
+  set(p) { Object.assign(this.st, p); this.r1.set(this.st.R1); this.r2.set(this.st.R2); this.rV.set(this.st.dV); this.rT.set(this.st.th); this.draw(GM.now()); },
+  Rx(x) { const s = 0.5 * (1 + Math.tanh(x / this.w)); return this.st.R1 + (this.st.R2 - this.st.R1) * s; },
+  dR(x) { const c = 1 / Math.cosh(x / this.w); return (this.st.R2 - this.st.R1) * 0.5 * c * c / this.w; },
+  Vx(x) { return this.st.dV * 0.5 * (1 + Math.tanh(x / this.w)); },
+  dV(x) { const c = 1 / Math.cosh(x / this.w); return this.st.dV * 0.5 * c * c / this.w; },
+  /* Hamilton's equations for H = |p|^2 / (2R(x)) + V(x), E = 1 */
+  trace() {
+    const st = this.st, key = [st.R1, st.R2, st.dV, st.th].join(','); if (this._key === key) return this.T; this._key = key;
+    const th = st.th * Math.PI / 180, E = 1, v1 = Math.sqrt(2 * (E - 0) / st.R1), L0 = 2.6;
+    let x = -L0 * Math.cos(th), y = -L0 * Math.sin(th), px = st.R1 * v1 * Math.cos(th), py = st.R1 * v1 * Math.sin(th);
+    const f = (x, px, py) => { const R = this.Rx(x); return [px / R, py / R, (px * px + py * py) / (2 * R * R) * this.dR(x) - this.dV(x)]; };
+    const pts = [[x, y]], cons = [], sin2 = [], sArr = [0]; let s = 0, cnt = 0;
+    for (let i = 0; i < 60000 && s < 2 * L0; i++) {
+      const h = Math.abs(x) < 8 * this.w ? 0.0002 : 0.002;
+      const k1 = f(x, px, py), k2 = f(x + h / 2 * k1[0], px + h / 2 * k1[2], py), k3 = f(x + h / 2 * k2[0], px + h / 2 * k2[2], py), k4 = f(x + h * k3[0], px + h * k3[2], py);
+      const dx = h / 6 * (k1[0] + 2 * k2[0] + 2 * k3[0] + k4[0]), dy = h / 6 * (k1[1] + 2 * k2[1] + 2 * k3[1] + k4[1]);
+      x += dx; y += dy; px += h / 6 * (k1[2] + 2 * k2[2] + 2 * k3[2] + k4[2]); s += Math.hypot(dx, dy);
+      cnt += h; if (cnt >= 0.012) { cnt = 0; const R = this.Rx(x), vx = px / R, vy = py / R, sn = vy * vy / (vx * vx + vy * vy); pts.push([x, y]); sArr.push(s); sin2.push(sn); cons.push(R * (E - this.Vx(x)) * sn); }
+    }
+    const R = this.Rx(x), vx = px / R, vy = py / R; const th2 = Math.atan2(Math.abs(vy), vx) * 180 / Math.PI;
+    this.T = { pts, cons, sin2, sArr, xEnd: x, th2, sn2: vy * vy / (vx * vx + vy * vy), crossed: x > 5 * this.w, L0 };
+    return this.T;
+  },
+  draw(t) {
+    const st = this.st, T = this.trace();
+    if (st.play) { advance(this, t, 'u', 1.2, 0); } else { this._last = t; st.u = 1; }
+    const S = this.sM, c = S.ctx; S.clear();
+    const F = new Frame(c, [30, 40, S.W - 60, S.H - 70], [-3, 3], [-3 * (S.H - 70) / (S.W - 60), 3 * (S.H - 70) / (S.W - 60)]);
+    const sh = (R, x0, x1) => { c.fillStyle = `rgba(124,186,255,${0.05 + 0.1 * R})`; c.fillRect(F.tx(x0), F.y0, F.tx(x1) - F.tx(x0), F.h); };
+    sh(st.R1, -3, 0); sh(st.R2, 0, 3);
+    line(c, [[F.tx(0), F.y0], [F.tx(0), F.y0 + F.h]], rgba('#e8dcb8', 0.8), 1.6, 8);
+    line(c, [[F.tx(-3), F.ty(0)], [F.tx(3), F.ty(0)]], rgba('#cbd9ea', 0.35), 1, 0, [5, 5]);
+    text(c, `R₁ = ${st.R1.toFixed(2)}`, F.tx(-2.9), F.y0 + 16, { color: C.blue, font: `12.5px ${SERIF}` });
+    text(c, `R₂ = ${st.R2.toFixed(2)}${st.dV ? `, ΔV = ${signed(st.dV, 2)}` : ''}`, F.tx(0.12), F.y0 + 16, { color: C.blue, font: `12.5px ${SERIF}` });
+    text(c, 'normal', F.tx(2.9), F.ty(0) - 6, { align: 'right', color: C.muted, font: `11px ${SANS}` });
+    const n = T.pts.length, m = Math.max(2, Math.floor(n * Math.min(1, st.u)));
+    const P = T.pts.slice(0, m).map(p => [F.tx(p[0]), F.ty(p[1])]); line(c, P, C.gold, 2.8, 12);
+    dot(c, P[P.length - 1][0], P[P.length - 1][1], 5.5, C.gold, 16);
+    /* angle arcs at the crossing */
+    const th1 = st.th * Math.PI / 180, ox = F.tx(0), oy = F.ty(0), ar = 34;
+    c.save(); c.strokeStyle = rgba(C.teal, 0.9); c.lineWidth = 1.6; c.beginPath(); c.arc(ox, oy, ar, Math.PI - th1, Math.PI); c.stroke(); c.restore();
+    text(c, 'θ₁', ox - ar - 14, oy + 18, { color: C.teal, font: `13px ${SERIF}` });
+    if (T.crossed) { const t2 = T.th2 * Math.PI / 180; c.save(); c.strokeStyle = rgba(C.violet, 0.9); c.lineWidth = 1.6; c.beginPath(); c.arc(ox, oy, ar + 8, -t2, 0); c.stroke(); c.restore(); text(c, 'θ₂', ox + ar + 14, oy - 10, { color: C.violet, font: `13px ${SERIF}` }); }
+    else text(c, 'turned back: above the critical angle', F.tx(-2.9), F.y0 + F.h - 10, { color: C.red, font: `12px ${SANS}` });
+    /* law panel */
+    const L = this.sL, g = L.ctx; L.clear();
+    const c0 = T.cons[0], G = new Frame(g, [56, 40, L.W - 76, L.H * 0.46 - 38], [0, 2 * T.L0], [0, Math.max(1.05, c0 * 1.3)]);
+    G.axes({ noxl: true, ylabel: 'along the path', ylabelOff: 40, ny: 3 });
+    const k = Math.min(T.cons.length, m);
+    line(g, T.cons.slice(0, k).map((v, i) => [G.tx(T.sArr[i + 1]), G.ty(v)]), C.gold, 2.6, 10);
+    line(g, T.sin2.slice(0, k).map((v, i) => [G.tx(T.sArr[i + 1]), G.ty(v)]), C.teal, 2.2, 8);
+    legend(g, G, [['R(E − V) sin²θ  (conserved)', C.gold], ['sin²θ', C.teal]], 'br');
+    const s1 = 1, th1r = st.th * Math.PI / 180, sn1 = Math.sin(th1r) ** 2;
+    const H = new Frame(g, [56, L.H * 0.46 + 30, L.W - 76, L.H * 0.54 - 76], [0, 1], [0, Math.max(0.05, sn1 * 1.05)]);
+    H.axes({ xlabel: 's₂ = σ_min(A_intr) on side 2   (s₁ = 1)', ylabel: 'sin²θ₂', ylabelOff: 40, ny: 3 });
+    const xs = []; for (let i = 0; i <= 200; i++) xs.push(i / 200);
+    [[1e-1, C.violet], [1e-2, C.blue], [0, C.teal]].forEach(([e, col]) => { line(g, H.pts(xs, s2 => (s2 * s2 + e) / (s1 * s1 + e) * sn1), col, 2, 6); if (e) { const fl = e / (s1 + e) * sn1; H.hline(fl, rgba(col, 0.6), [3, 3], 1); } });
+    legend(g, H, [['η = 10⁻¹', C.violet], ['η = 10⁻²', C.blue], ['η → 0', C.teal]], 'tl');
+    const lhs = st.R1 * 1 * sn1, pred2 = lhs / (st.R2 * (1 - st.dV)), rhs = st.R2 * (1 - st.dV) * T.sn2;
+    setText('q-l', lhs.toFixed(6)); setNote('q-ln', 'incoming side', '');
+    setText('q-r', T.crossed ? rhs.toFixed(6) : '—'); setNote('q-rn', T.crossed ? `difference ${sci(Math.abs(rhs - lhs) + 1e-17, 1)}` : 'no transmitted path', T.crossed ? 'rec' : 'neg');
+    setText('q-t', T.crossed ? `${T.th2.toFixed(3)}° · ${(Math.asin(Math.sqrt(Math.min(1, pred2))) * 180 / Math.PI).toFixed(3)}°` : '—'); setNote('q-tn', 'measured · predicted by (15)', T.crossed ? 'rec' : 'null');
+    const cr = st.R2 * (1 - st.dV) / (st.R1 * 1); setText('q-c', cr < 1 ? `${(Math.asin(Math.sqrt(cr)) * 180 / Math.PI).toFixed(2)}°` : 'none'); setNote('q-cn', cr < 1 ? 'arcsin √(R₂(E−V₂) / R₁(E−V₁))' : 'every angle transmits', cr < 1 ? (st.th > Math.asin(Math.sqrt(cr)) * 180 / Math.PI ? 'neg' : '') : '');
+  }
+};
+GM.add('refract', Refr);
+
+/* ===== Lens 14: from samples to a projector path (Section 6.1); synthetic six-dimensional data ===== */
+const Pipe = {
+  animated: true,
+  st: { k: 3, c: 0.2, dt: 0.08, play: false, speed: 0.05 },
+  u0: [0.215, 0.19, 0.17, 0.155, 0.14, 0.13],
+  u1: [0.9, 0.04, 0.025, 0.015, 0.012, 0.008],
+  init() {
+    this.sS = new Stage($('#pSpec'), w => w < 640 ? 0.9 : 0.8);
+    this.sA = new Stage($('#pAng'), w => w < 640 ? 0.9 : 0.8);
+    this.rK = bindRange('pK', v => { this.st.k = v; }, v => v);
+    this.rC = bindRange('pC', v => { this.st.c = v; }, v => v.toFixed(3));
+    this.rD = bindRange('pDt', v => { this.st.dt = v; }, v => v.toFixed(3));
+    playBtn('pPlay', this);
+    const r = mulberry(606); this.pairs = []; for (let i = 0; i < 6; i++) for (let j = i + 1; j < 6; j++) this.pairs.push([i, j, 0.9 * gauss(r)]);
+  },
+  set(p) { Object.assign(this.st, p); this.rK.set(this.st.k); this.rC.set(this.st.c); this.rD.set(this.st.dt); this.draw(GM.now()); },
+  f(c) { return 0.5 * (1 - Math.cos(TAU * c)); },
+  lam(c) { const f = this.f(c); return this.u0.map((v, i) => (1 - f) * v + f * this.u1[i]); },
+  U(c) { const U = LA.eye(6), s = Math.sin(TAU * c);
+    this.pairs.forEach(([i, j, a]) => { const th = a * s, co = Math.cos(th), si = Math.sin(th); for (let r = 0; r < 6; r++) { const x = U[r][i], y = U[r][j]; U[r][i] = co * x - si * y; U[r][j] = si * x + co * y; } });
+    return U; },
+  angles(c, dt, k) { const A = this.U(c), B = this.U(c + dt), M = LA.zeros(k);
+    for (let i = 0; i < k; i++) for (let j = 0; j < k; j++) { let s = 0; for (let r = 0; r < 6; r++) s += A[r][i] * B[r][j]; M[i][j] = s; }
+    const G = LA.mul(LA.T(M), M), ev = jacobiEig(G).l.map(v => Math.sqrt(clamp(v, 0, 1)));
+    return ev.map(cs => Math.acos(clamp(cs, -1, 1))).sort((a, b) => b - a); },
+  draw(t) {
+    const st = this.st, k = st.k;
+    if (st.play) { advance(this, t, 'c', 1, 0); this.rC.set(st.c); } else this._last = t;
+    const lam = this.lam(st.c), tot = lam.reduce((a, b) => a + b, 0), p = lam.map(v => v / tot), ipr = p.reduce((a, b) => a + b * b, 0), DC = 1 / ipr;
+    const gap = lam[k - 1] - lam[k], ang = this.angles(st.c, st.dt, k), P = ang.reduce((a, b) => a + Math.cos(b) ** 2, 0);
+    const S = this.sS, c = S.ctx; S.clear();
+    const F = new Frame(c, [56, 40, S.W - 76, S.H * 0.56 - 44], [0, 6], [0, 1]);
+    F.axes({ noxl: true, ylabel: 'eigenvalue λᵢ', ylabelOff: 40, ny: 4 });
+    lam.forEach((v, i) => { const x = F.tx(i + 0.5), w = F.w / 6 * 0.5, col = i < k ? C.teal : C.violet; c.save(); glow(c, col, 10); c.fillStyle = rgba(col, 0.85); c.fillRect(x - w / 2, F.ty(v), w, F.ty(0) - F.ty(v)); c.restore(); text(c, `λ${'₁₂₃₄₅₆'[i]}`, x, F.y0 + F.h + 14, { align: 'center', color: col, font: `12px ${SERIF}` }); });
+    F.vline(k, rgba(C.gold, 0.9), [5, 4], 1.8); text(c, `rank-${k} cut`, F.tx(k) + 6, F.y0 + 30, { color: C.gold, font: `11.5px ${SANS}` });
+    const gx = F.tx(k) - 14; arrow(c, gx, F.ty(lam[k]), gx, F.ty(lam[k - 1]), C.red, 1.6, 6); text(c, 'γ_k', gx - 6, (F.ty(lam[k]) + F.ty(lam[k - 1])) / 2, { align: 'right', color: C.red, font: `italic 12px ${SERIF}` });
+    const cs = []; for (let i = 0; i <= 200; i++) cs.push(i / 200);
+    const G = new Frame(c, [56, S.H * 0.56 + 28, S.W - 76, S.H * 0.44 - 74], [0, 1], [0, 6.5]);
+    G.axes({ xlabel: 'cycle position', ylabel: 'D_C', ylabelOff: 40, yticks: [1, 3, 5, 6] });
+    line(c, G.pts(cs, x => { const l = this.lam(x), s = l.reduce((a, b) => a + b, 0); return 1 / l.reduce((a, b) => a + (b / s) ** 2, 0); }), C.blue, 2.4, 8);
+    G.hline(1, rgba(C.green, 0.6), [3, 3], 1); dot(c, G.tx(st.c), G.ty(DC), 5, C.gold, 14);
+    text(c, 'synthetic data: not the instrument', G.x0 + G.w - 6, G.y0 + 14, { align: 'right', color: C.muted, font: `11px ${SANS}` });
+    /* angles panel */
+    const L = this.sA, g = L.ctx; L.clear();
+    const amax = Math.max(8, ...ang.map(a => a * 180 / Math.PI)) * 1.15;
+    const A = new Frame(g, [70, 40, L.W - 96, L.H * 0.56 - 50], [0, amax], [0, k]);
+    A.axes({ xlabel: 'principal angle (degrees)', noyl: true, ny: k });
+    ang.slice().reverse().forEach((a, i) => { const col = [C.gold, C.teal, C.violet, C.blue, C.green][i % 5], y = A.ty(k - i - 0.5), hh = A.h / k * 0.5, deg = a * 180 / Math.PI;
+      g.save(); glow(g, col, 10); g.fillStyle = rgba(col, 0.85); g.fillRect(A.x0, y - hh / 2, A.tx(deg) - A.x0, hh); g.restore();
+      text(g, `θ${'₁₂₃₄₅'[i]}`, A.x0 - 10, y + 4, { align: 'right', color: col, font: `13px ${SERIF}` });
+      text(g, `${deg.toFixed(2)}°`, A.tx(deg) + 6, y + 4, { color: col, font: `11.5px ${MONO}` }); });
+    const H = new Frame(g, [70, L.H * 0.56 + 44, L.W - 96, L.H * 0.44 - 90], [0, 1], [0, k]);
+    H.axes({ xlabel: 'cycle position', ylabel: 'P', ylabelOff: 40, yticks: Array.from({ length: k + 1 }, (_, i) => i) });
+    if (!this._pk || this._pk !== `${k},${st.dt}`) { this._pk = `${k},${st.dt}`; this.Pc = cs.map(x => this.angles(x, st.dt, k).reduce((a, b) => a + Math.cos(b) ** 2, 0)); }
+    line(g, this.Pc.map((v, i) => [H.tx(cs[i]), H.ty(v)]), C.gold, 2.4, 8); dot(g, H.tx(st.c), H.ty(P), 5, C.gold, 14);
+    setText('p-P', `${P.toFixed(4)} of ${k}`); setNote('p-Pn', 'P = Σcos²θᵢ ∈ [0, k]', 'rec');
+    setText('p-D', DC.toFixed(3)); setNote('p-Dn', DC > 5 ? 'near rank saturation' : DC < 1.5 ? 'collapsed to one channel' : 'collapsing', DC < 1.5 ? 'rec' : '');
+    setText('p-gap', `${gap.toFixed(4)} · ${(1 / gap).toFixed(1)}`); setNote('p-gapn', 'compliance, not rigidity', 'vio');
+    setText('p-max', `${(ang[0] * 180 / Math.PI).toFixed(2)}°`); setNote('p-maxn', `between Π_k(t) and Π_k(t + ${st.dt.toFixed(3)})`, '');
+  }
+};
+GM.add('pipe', Pipe);
+
+/* ===== Lens 15: Riesz projectors of a non-normal pair (Section 8) ===== */
+const Riesz = {
+  animated: true,
+  st: { g: 0.6, play: false, speed: 0.08, dir: 1 },
+  init() {
+    this.sP = new Stage($('#zPlane'), w => w < 640 ? 0.9 : 0.8);
+    this.sN = new Stage($('#zNorm'), w => w < 640 ? 0.9 : 0.8);
+    this.rG = bindRange('zG', v => { this.st.g = v; }, v => v.toFixed(3));
+    playBtn('zPlay', this);
+  },
+  set(p) { Object.assign(this.st, p); this.rG.set(this.st.g); this.draw(GM.now()); },
+  /* A = sigma_x + i gamma sigma_z; eigenvalues +-sqrt(1 - gamma^2); right eigenvector v = (1, lambda - i gamma); A^T = A so the left one is v^T */
+  proj(g, sgn) { const l = sgn * Math.sqrt(1 - g * g), v = [[1, 0], [l, -g]];
+    const mul = (a, b) => [a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0]];
+    const vtv = [1 + l * l - g * g, -2 * g * l], q = vtv[0] ** 2 + vtv[1] ** 2, inv = [vtv[0] / q, -vtv[1] / q];
+    const P = [[0, 0], [0, 0]].map((r, i) => r.map((_, j) => mul(mul(v[i], v[j]), inv)));
+    /* operator 2-norm of a complex 2x2 through the largest eigenvalue of P^dagger P */
+    const a = P[0][0], b = P[0][1], c = P[1][0], d = P[1][1], n2 = z => z[0] * z[0] + z[1] * z[1];
+    const fro = n2(a) + n2(b) + n2(c) + n2(d), det = mul(a, d), bc = mul(b, c), dd = n2([det[0] - bc[0], det[1] - bc[1]]);
+    const nrm = Math.sqrt((fro + Math.sqrt(Math.max(0, fro * fro - 4 * dd))) / 2);
+    return { l, P, nrm, tr: [a[0] + d[0], a[1] + d[1]] }; },
+  draw(t) {
+    const st = this.st;
+    if (st.play) { const dt = this._last == null ? 0 : Math.min(0.1, Math.max(0, t - this._last)); st.g += dt * st.speed * st.dir; if (st.g > 0.99) { st.g = 0.99; st.dir = -1; } if (st.g < 0) { st.g = 0; st.dir = 1; } this.rG.set(st.g); }
+    this._last = t;
+    const pp = this.proj(st.g, 1), pm = this.proj(st.g, -1), l = pp.l;
+    const trPair = [pp.tr[0] + pm.tr[0], pp.tr[1] + pm.tr[1]];
+    const sum = pp.P.map((r, i) => r.map((z, j) => [z[0] + pm.P[i][j][0], z[1] + pm.P[i][j][1]]));
+    const devI = Math.max(...sum.flat().map((z, k) => Math.hypot(z[0] - (k === 0 || k === 3 ? 1 : 0), z[1])));
+    const S = this.sP, c = S.ctx; S.clear();
+    const ox = S.W / 2, oy = S.H / 2 + 8, sc = Math.min(S.W * 0.9, S.H - 70) * 0.26;
+    line(c, [[ox - 2.2 * sc, oy], [ox + 2.2 * sc, oy]], rgba('#cbd9ea', 0.3), 1); line(c, [[ox, oy - 1.9 * sc], [ox, oy + 1.9 * sc]], rgba('#cbd9ea', 0.3), 1);
+    text(c, 'Re λ', ox + 2.2 * sc - 4, oy + 16, { align: 'right', color: C.muted, font: `11px ${SANS}` }); text(c, 'Im λ', ox + 6, oy - 1.9 * sc + 10, { color: C.muted, font: `11px ${SANS}` });
+    line(c, circlePts(ox, oy, 1.6 * sc, 160), rgba(C.teal, 0.55), 1.6, 8); contourParticles(c, ox, oy, 1.6 * sc, t, C.teal, 22, 0.12);
+    text(c, 'pair contour: Π = I', ox - 1.2 * sc, oy - 1.2 * sc - 8, { align: 'right', color: C.teal, font: `12px ${SANS}` });
+    const rs = Math.max(0.06, Math.min(0.45, l * 0.8));
+    [l, -l].forEach((x, i) => { line(c, circlePts(ox + x * sc, oy, rs * sc, 80), rgba(C.violet, 0.8), 1.4, 6, [4, 3]); contourParticles(c, ox + x * sc, oy, rs * sc, t + i * 0.3, C.violet, 8, 0.3);
+      dot(c, ox + x * sc, oy, 6, C.gold, 16); });
+    text(c, `±√(1 − γ²) = ±${l.toFixed(3)}`, ox, oy + 1.6 * sc + 22, { align: 'center', color: C.gold, font: `12.5px ${SERIF}` });
+    if (st.g > 0.97) text(c, 'exceptional point approaching: the pair merges', ox, oy + 1.6 * sc + 40, { align: 'center', color: C.red, font: `11.5px ${SANS}` });
+    /* norms */
+    const L = this.sN, g = L.ctx; L.clear();
+    const F = new Frame(g, [60, 40, L.W - 80, L.H - 86], [0, 1], [0.8, 30], { ylog: true });
+    F.axes({ xlabel: 'non-Hermiticity γ', ylabel: 'operator norm', ylabelOff: 44 });
+    const xs = []; for (let i = 0; i <= 300; i++) xs.push(0.996 * i / 300);
+    line(g, F.pts(xs, x => this.proj(x, 1).nrm), C.violet, 2.6, 10);
+    line(g, F.pts(xs, () => 1), C.teal, 2.4, 8);
+    dot(g, F.tx(st.g), F.ty(pp.nrm), 5.5, C.gold, 14); dot(g, F.tx(st.g), F.ty(1), 4.5, C.teal, 10);
+    legend(g, F, [['‖P₊‖ = ‖P₋‖ (individual, oblique)', C.violet], ['‖Π‖ for the pair = 1', C.teal]], 'tl');
+    setText('z-ev', `±${l.toFixed(4)}`); setNote('z-evn', 'real while γ < 1', '');
+    setText('z-p', pp.nrm.toFixed(4)); setNote('z-pn', `= 1/√(1 − γ²) = ${(1 / l).toFixed(4)}`, pp.nrm > 3 ? 'neg' : 'vio');
+    setText('z-tr', `${trPair[0].toFixed(6)}`); setNote('z-trn', `P₊ + P₋ = I to ${sci(devI + 1e-17, 1)}`, 'rec');
+    setText('z-k', (1 / (1 - st.g * st.g)).toFixed(3)); setNote('z-kn', '‖P₊‖², the eigenvector conditioning', '');
+  }
+};
+GM.add('riesz', Riesz);
+
+/* ===== start-up ===== */
+$$('nav.tabs button').forEach(b => b.addEventListener('click', () => GM.show(b.dataset.lens)));
+window.addEventListener('hashchange', () => { const h = location.hash.replace('#', ''); if (h && h !== GM.active && GM.lenses[h]) GM.show(h); });
+GM.add('ledger', { animated: false, draw() {} });
+window.GM = GM;
+GM.show((location.hash || '#redis').replace('#', ''));
+requestAnimationFrame(loop);
+
+</script>
+</body>
+</html>

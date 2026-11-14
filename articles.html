@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Articles · Atlas Memoriae</title>
+<meta name="description" content="Articles by Jeromie Beasley: the work written out for readers, on X and on this site.">
+<meta property="og:title" content="Articles · Atlas Memoriae">
+<meta property="og:description" content="Ex memoria lux, ex luce materia. Articles by Jeromie Beasley.">
+<meta property="og:image" content="library-hero-small.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --night: #11152b;
+    --night-raised: #181d38;
+    --rule: #2c3358;
+    --paper: #eee6d8;
+    --paper-dim: #b7b2c4;
+    --amber: #f0a64a;
+    --cyan: #86d4e4;
+    --serif: "Spectral", Georgia, serif;
+    --sans: "Public Sans", system-ui, sans-serif;
+    --measure: 64ch;
+    color-scheme: dark;
+  }
+  :root[data-theme="dark"] { color-scheme: dark; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { color-scheme: dark; } }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    margin: 0;
+    background: var(--night);
+    color: var(--paper);
+    font: 400 1.125rem/1.65 var(--serif);
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration-color: color-mix(in srgb, currentColor 40%, transparent); text-underline-offset: 3px; }
+  a:hover { text-decoration-color: currentColor; }
+  :focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; border-radius: 2px; }
+  code { font-family: var(--serif); font-style: italic; color: var(--paper); }
+
+  /* Hero: the image is the page's one bold element */
+  .hero {
+    position: relative;
+    min-height: min(78vh, 760px);
+    display: flex;
+    align-items: flex-end;
+    background: var(--night) url("library-hero.jpg") center 78% / cover no-repeat;
+  }
+  .hero::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(17,21,43,0) 45%, rgba(17,21,43,.55) 72%, var(--night) 100%);
+    pointer-events: none;
+  }
+  .hero-text {
+    position: relative; z-index: 1;
+    width: 100%; max-width: 1180px; margin: 0 auto;
+    padding: 0 32px 40px;
+  }
+  .hero h1 {
+    margin: 0;
+    font-weight: 300;
+    font-size: clamp(2.6rem, 7vw, 5.4rem);
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  .hero .motto {
+    margin: 14px 0 0;
+    font-style: italic; font-weight: 300;
+    font-size: clamp(1.25rem, 2.6vw, 1.75rem);
+    line-height: 1.3;
+  }
+  .hero .motto-en { margin: 4px 0 0; font-size: clamp(1rem, 1.6vw, 1.15rem); color: var(--paper); opacity: .85; }
+  .hero .byline { margin: 18px 0 0; font: 500 0.95rem/1.4 var(--sans); color: var(--amber); }
+  .intro blockquote { margin: 0 0 24px; padding: 0; font-style: italic; font-size: 1.2rem; line-height: 1.5; }
+  .hero blockquote {
+    margin: 14px 0 0;
+    max-width: 30ch;
+    font-style: italic; font-weight: 300;
+    font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+    line-height: 1.35;
+    color: var(--paper);
+  }
+  nav.top {
+    position: absolute; top: 0; left: 0; right: 0; z-index: 2;
+    display: flex; justify-content: flex-end; gap: 28px;
+    max-width: 1180px; margin: 0 auto; padding: 20px 32px;
+    font: 500 0.875rem/1 var(--sans);
+  }
+  nav.top a { text-decoration: none; color: var(--paper); text-shadow: 0 1px 8px rgba(0,0,0,.8); }
+  nav.top a:hover { text-decoration: underline; }
+
+  main { max-width: 1180px; margin: 0 auto; padding: 0 32px 96px; }
+  section { margin-top: 88px; }
+  h2 {
+    margin: 0 0 8px;
+    font-weight: 400;
+    font-size: clamp(1.7rem, 3.2vw, 2.3rem);
+    line-height: 1.15;
+  }
+  .section-note { margin: 0 0 32px; max-width: var(--measure); color: var(--paper-dim); font-size: 1.05rem; }
+
+  .intro { margin-top: 40px; max-width: var(--measure); }
+  .intro .lede { font-size: 1.35rem; line-height: 1.5; font-weight: 300; margin: 0 0 20px; }
+  .intro p { margin: 0 0 16px; }
+  .tally { color: var(--paper-dim); }
+  .tally strong { color: var(--paper); font-weight: 600; }
+
+  /* Papers: one dated list, newest first */
+  .controls {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px;
+    margin-bottom: 8px;
+    font: 400 0.95rem/1.4 var(--sans);
+  }
+  .controls input[type="search"] {
+    flex: 1 1 280px; max-width: 420px;
+    padding: 10px 14px;
+    background: var(--night-raised); color: var(--paper);
+    border: 1px solid var(--rule); border-radius: 6px;
+    font: inherit;
+  }
+  .controls input[type="search"]::placeholder { color: var(--paper-dim); }
+  .controls label { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; color: var(--paper); }
+  .controls input[type="checkbox"] { accent-color: var(--cyan); width: 17px; height: 17px; }
+  .showing { font: 400 0.875rem/1.4 var(--sans); color: var(--paper-dim); margin: 0 0 12px; }
+
+  ol.papers { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+  .paper {
+    display: grid; grid-template-columns: 7.5rem 1fr; gap: 0 28px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .paper time { font: 500 0.875rem/1.9 var(--sans); color: var(--amber); font-variant-numeric: tabular-nums; }
+  .paper h3 { margin: 0; font-weight: 400; font-size: 1.28rem; line-height: 1.35; max-width: 60ch; }
+  .paper h3 a { text-decoration: none; }
+  .paper h3 a:hover { text-decoration: underline; text-decoration-color: var(--amber); }
+  .paper-meta { margin: 6px 0 0; font: 400 0.9rem/1.5 var(--sans); color: var(--paper-dim); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+  .paper-meta .doi { color: var(--paper-dim); }
+  .thm { color: var(--cyan); }
+  .paper-proofs { margin: 4px 0 0; font: 400 0.9rem/1.5 var(--sans); color: var(--paper-dim); max-width: 70ch; }
+  .paper-proofs a { color: var(--paper); }
+  .empty { padding: 28px 0; color: var(--paper-dim); font-style: italic; }
+
+  /* Videos */
+  ul.videos { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 460px), 1fr)); gap: 32px 40px; }
+  .video-frame { position: relative; aspect-ratio: 16 / 9; background: var(--night-raised); border-radius: 6px; overflow: hidden; }
+  .video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .video h3 { margin: 12px 0 0; font-weight: 400; font-size: 1.2rem; line-height: 1.35; }
+  .video h3 a { text-decoration: none; }
+  .video h3 a:hover { text-decoration: underline; text-decoration-color: var(--amber); }
+  .video-note { margin: 4px 0 0; font: 400 0.9rem/1.4 var(--sans); color: var(--paper-dim); }
+  .video-note a { color: var(--paper); }
+
+  /* Proofs */
+  ul.proofs { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 56px; }
+  .proof { padding: 22px 0; border-top: 1px solid var(--rule); }
+  .proof-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; font: 600 1rem/1.4 var(--sans); }
+  .proof-head a { color: var(--cyan); text-decoration: none; }
+  .proof-head a:hover { text-decoration: underline; }
+  .thm-n { font: 500 0.9rem/1 var(--sans); color: var(--cyan); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .thm-n::after { content: " theorems"; color: var(--paper-dim); }
+  .proof p { margin: 8px 0 8px; font-size: 1rem; line-height: 1.6; color: var(--paper); }
+  .check { font: 400 0.85rem/1.4 var(--sans); color: var(--paper-dim); }
+  .mathlib { margin-top: 36px; max-width: var(--measure); font-size: 1rem; color: var(--paper-dim); }
+  .mathlib a { color: var(--paper); }
+
+  ul.plain { list-style: none; margin: 0; padding: 0; max-width: var(--measure); }
+  ul.plain li { padding: 14px 0; border-top: 1px solid var(--rule); font-size: 1rem; }
+  ul.plain li > a:first-child { font: 600 1rem/1.4 var(--sans); color: var(--paper); margin-right: 6px; }
+
+  footer { max-width: 1180px; margin: 0 auto; padding: 32px; border-top: 1px solid var(--rule); font: 400 0.85rem/1.6 var(--sans); color: var(--paper-dim); }
+  footer a { color: var(--paper-dim); }
+
+
+  /* Hero actions: mixers and music */
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 12px 14px; margin-top: 22px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 12px 20px; border-radius: 999px;
+    font: 600 0.95rem/1 var(--sans); letter-spacing: .01em;
+    text-decoration: none; cursor: pointer; border: 1px solid transparent;
+  }
+  .btn-primary { background: var(--amber); color: var(--night); }
+  .btn-primary:hover { background: #f6b968; }
+  .btn-ghost { background: rgba(17,21,43,.55); color: var(--paper); border-color: color-mix(in srgb, var(--paper) 45%, transparent); }
+  .btn-ghost:hover { border-color: var(--paper); }
+  nav.top button.linklike {
+    background: none; border: 0; padding: 0; cursor: pointer;
+    font: inherit; color: var(--paper); text-shadow: 0 1px 8px rgba(0,0,0,.8);
+  }
+  nav.top button.linklike:hover { text-decoration: underline; }
+
+  /* Mixers pop-up */
+  dialog.mixers {
+    width: min(720px, calc(100vw - 32px)); max-height: min(86vh, 900px);
+    padding: 0; border: 1px solid var(--rule); border-radius: 10px;
+    background: var(--night-raised); color: var(--paper);
+  }
+  dialog.mixers::backdrop { background: rgba(6,8,20,.72); }
+  .mixers-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding: 24px 28px 8px; }
+  .mixers-head h2 { margin: 0; font-size: 1.8rem; }
+  .mixers-head p { margin: 6px 0 0; color: var(--paper-dim); font-size: 1rem; max-width: 52ch; }
+  .close { flex: none; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--rule); background: none; color: var(--paper); font: 400 1.4rem/1 var(--sans); cursor: pointer; }
+  .close:hover { border-color: var(--paper); }
+  ul.mixer-list { list-style: none; margin: 0; padding: 8px 28px 24px; }
+  .mixer-list li { border-top: 1px solid var(--rule); }
+  .mixer-list a { display: grid; grid-template-columns: 1fr auto; gap: 4px 20px; align-items: center; padding: 16px 0; text-decoration: none; }
+  .mixer-list .m-title { font: 600 1.05rem/1.35 var(--sans); color: var(--paper); }
+  .mixer-list .m-blurb { grid-column: 1; font-size: .98rem; line-height: 1.5; color: var(--paper-dim); }
+  .mixer-list .m-go { grid-column: 2; grid-row: 1 / span 2; font: 600 .85rem/1 var(--sans); color: var(--amber); white-space: nowrap; }
+  .mixer-list a:hover .m-title { text-decoration: underline; text-decoration-color: var(--amber); }
+  .mixers-foot { margin: 0; padding: 0 28px 24px; font: 400 .85rem/1.5 var(--sans); color: var(--paper-dim); }
+
+  @media (max-width: 760px) {
+    body { font-size: 1.0625rem; }
+    .hero { min-height: 62vh; background-position: 44% center; }
+    .hero-text, main, nav.top, footer { padding-left: 16px; padding-right: 16px; }
+    nav.top { gap: 8px 16px; padding-top: 14px; flex-wrap: wrap; justify-content: center; }
+    section { margin-top: 64px; }
+    .paper { grid-template-columns: 1fr; }
+    .paper time { line-height: 1.4; margin-bottom: 4px; }
+    ul.proofs { grid-template-columns: 1fr; }
+    .mixers-head, ul.mixer-list, .mixers-foot { padding-left: 18px; padding-right: 18px; }
+    .mixer-list a { grid-template-columns: 1fr; }
+    .mixer-list .m-go { grid-column: 1; grid-row: auto; margin-top: 6px; }
+  }
+</style>
+<style>
+  .hero.articles { min-height: min(92vh, 900px); }
+  .hero.articles::after { background: linear-gradient(to bottom, rgba(17,21,43,.15) 0%, rgba(17,21,43,0) 30%, rgba(17,21,43,.6) 70%, var(--night) 100%); }
+  .hero.articles h1 { font-size: clamp(2.4rem, 6vw, 4.6rem); }
+  nav.top a[aria-current="page"] { color: var(--amber); }
+  ol.articles { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+  .article { display: grid; grid-template-columns: 7.5rem minmax(0, 1fr); gap: 0 28px; padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .article time { font: 500 0.875rem/1.9 var(--sans); color: var(--amber); font-variant-numeric: tabular-nums; }
+  .art-body { max-width: 560px; min-width: 0; }
+  .art-body h3 { margin: 0 0 10px; font-weight: 400; font-size: 1.28rem; line-height: 1.35; }
+  .art-body h3 a { text-decoration: none; }
+  .art-body h3 a:hover { text-decoration: underline; text-decoration-color: var(--amber); }
+  .art-body .twitter-tweet { margin: 0 !important; }
+  blockquote.twitter-tweet { margin: 0; padding: 18px 20px; background: var(--night-raised); border: 1px solid var(--rule); border-radius: 10px; font: 400 1rem/1.5 var(--sans); }
+  blockquote.twitter-tweet a { color: var(--paper); }
+  .art-where { margin: 8px 0 0; font: 400 0.85rem/1.4 var(--sans); color: var(--paper-dim); }
+  .art-where a { color: var(--paper-dim); }
+  .art-blurb { margin: 0; color: var(--paper-dim); }
+  @media (max-width: 760px) {
+    .article { grid-template-columns: 1fr; }
+    .article time { line-height: 1.4; margin-bottom: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero articles">
+  <nav class="top" aria-label="Sections">
+    <a href="index.html#papers">Papers</a>
+    <a href="articles.html" aria-current="page">Articles</a>
+    <a href="index.html#proofs">Proofs</a>
+    <a href="index.html#mixers">Mixers</a>
+    <a href="index.html#videos">Videos</a>
+    <a href="index.html#tools">Tools</a>
+    <a href="https://suno.com/@dicipler" target="_blank" rel="noopener">Music</a>
+  </nav>
+  <div class="hero-text">
+    <h1>Articles</h1>
+    <p class="motto" lang="la">Ex memoria lux, ex luce materia.</p>
+    <p class="motto-en">The record, written out for readers.</p>
+    <p class="byline"><a href="index.html" style="text-decoration:none">Atlas Memoriae</a> &middot; Jeromie Beasley</p>
+  </div>
+</header>
+
+<main>
+  <section style="margin-top:40px" aria-labelledby="art-h">
+    <h2 id="art-h">All articles</h2>
+    <p class="section-note">Newest first. Each one opens in full where it was published.</p>
+    <ol class="articles">
+      <li class="article" data-kind="x">
+        <time datetime="2026-10-08">2026-10-08</time>
+        <div class="art-body"><blockquote class="twitter-tweet" data-theme="dark" data-dnt="true" data-conversation="none">
+            <a href="https://x.com/d1c1pler/status/2108295280114254218">Read this article on X</a></blockquote><p class="art-where">On X &middot; <a href="https://x.com/d1c1pler/status/2108295280114254218">open</a></p></div>
+      </li>
+      <li class="article" data-kind="x">
+        <time datetime="2026-09-12">2026-09-12</time>
+        <div class="art-body"><blockquote class="twitter-tweet" data-theme="dark" data-dnt="true" data-conversation="none">
+            <a href="https://x.com/d1c1pler/status/2098777982957429163">Read this article on X</a></blockquote><p class="art-where">On X &middot; <a href="https://x.com/d1c1pler/status/2098777982957429163">open</a></p></div>
+      </li>
+      <li class="article" data-kind="x">
+        <time datetime="2026-09-09">2026-09-09</time>
+        <div class="art-body"><blockquote class="twitter-tweet" data-theme="dark" data-dnt="true" data-conversation="none">
+            <a href="https://x.com/d1c1pler/status/2097680638350438504">Read this article on X</a></blockquote><p class="art-where">On X &middot; <a href="https://x.com/d1c1pler/status/2097680638350438504">open</a></p></div>
+      </li>
+      <li class="article" data-kind="x">
+        <time datetime="2026-09-06">2026-09-06</time>
+        <div class="art-body"><blockquote class="twitter-tweet" data-theme="dark" data-dnt="true" data-conversation="none">
+            <a href="https://x.com/d1c1pler/status/2096737991985168854">Read this article on X</a></blockquote><p class="art-where">On X &middot; <a href="https://x.com/d1c1pler/status/2096737991985168854">open</a></p></div>
+      </li>
+      <li class="article" data-kind="x">
+        <time datetime="2026-09-06">2026-09-06</time>
+        <div class="art-body"><blockquote class="twitter-tweet" data-theme="dark" data-dnt="true" data-conversation="none">
+            <a href="https://x.com/d1c1pler/status/2096668986629104123">Read this article on X</a></blockquote><p class="art-where">On X &middot; <a href="https://x.com/d1c1pler/status/2096668986629104123">open</a></p></div>
+      </li>
+      <li class="article" data-kind="x">
+        <time datetime="2026-09-02">2026-09-02</time>
+        <div class="art-body"><blockquote class="twitter-tweet" data-theme="dark" data-dnt="true" data-conversation="none">
+            <a href="https://x.com/d1c1pler/status/2095044768212414575">Read this article on X</a></blockquote><p class="art-where">On X &middot; <a href="https://x.com/d1c1pler/status/2095044768212414575">open</a></p></div>
+      </li>
+      <li class="article" data-kind="x">
+        <time datetime="2026-08-27">2026-08-27</time>
+        <div class="art-body"><blockquote class="twitter-tweet" data-theme="dark" data-dnt="true" data-conversation="none">
+            <a href="https://x.com/d1c1pler/status/2092905672908161053">Read this article on X</a></blockquote><p class="art-where">On X &middot; <a href="https://x.com/d1c1pler/status/2092905672908161053">open</a></p></div>
+      </li>
+      <li class="article" data-kind="x">
+        <time datetime="2026-08-25">2026-08-25</time>
+        <div class="art-body"><blockquote class="twitter-tweet" data-theme="dark" data-dnt="true" data-conversation="none">
+            <a href="https://x.com/d1c1pler/status/2092129536439656491">Read this article on X</a></blockquote><p class="art-where">On X &middot; <a href="https://x.com/d1c1pler/status/2092129536439656491">open</a></p></div>
+      </li>
+      <li class="article" data-kind="x">
+        <time datetime="2026-08-25">2026-08-25</time>
+        <div class="art-body"><blockquote class="twitter-tweet" data-theme="dark" data-dnt="true" data-conversation="none">
+            <a href="https://x.com/d1c1pler/status/2092070829102096417">Read this article on X</a></blockquote><p class="art-where">On X &middot; <a href="https://x.com/d1c1pler/status/2092070829102096417">open</a></p></div>
+      </li>
+      <li class="article" data-kind="x">
+        <time datetime="2026-08-24">2026-08-24</time>
+        <div class="art-body"><blockquote class="twitter-tweet" data-theme="dark" data-dnt="true" data-conversation="none">
+            <a href="https://x.com/d1c1pler/status/2091931778667688263">Read this article on X</a></blockquote><p class="art-where">On X &middot; <a href="https://x.com/d1c1pler/status/2091931778667688263">open</a></p></div>
+      </li>
+      <li class="article" data-kind="x">
+        <time datetime="2026-08-20">2026-08-20</time>
+        <div class="art-body"><blockquote class="twitter-tweet" data-theme="dark" data-dnt="true" data-conversation="none">
+            <a href="https://x.com/d1c1pler/status/2090303767367368909">Read this article on X</a></blockquote><p class="art-where">On X &middot; <a href="https://x.com/d1c1pler/status/2090303767367368909">open</a></p></div>
+      </li>
+      <li class="article" data-kind="x">
+        <time datetime="2026-08-19">2026-08-19</time>
+        <div class="art-body"><blockquote class="twitter-tweet" data-theme="dark" data-dnt="true" data-conversation="none">
+            <a href="https://x.com/d1c1pler/status/2090041391023792387">Read this article on X</a></blockquote><p class="art-where">On X &middot; <a href="https://x.com/d1c1pler/status/2090041391023792387">open</a></p></div>
+      </li>
+      <li class="article" data-kind="x">
+        <time datetime="2026-08-18">2026-08-18</time>
+        <div class="art-body"><blockquote class="twitter-tweet" data-theme="dark" data-dnt="true" data-conversation="none">
+            <a href="https://x.com/d1c1pler/status/2089696144909545488">Read this article on X</a></blockquote><p class="art-where">On X &middot; <a href="https://x.com/d1c1pler/status/2089696144909545488">open</a></p></div>
+      </li>
+      <li class="article" data-kind="x">
+        <time datetime="2026-08-17">2026-08-17</time>
+        <div class="art-body"><blockquote class="twitter-tweet" data-theme="dark" data-dnt="true" data-conversation="none">
+            <a href="https://x.com/d1c1pler/status/2089330543812804957">Read this article on X</a></blockquote><p class="art-where">On X &middot; <a href="https://x.com/d1c1pler/status/2089330543812804957">open</a></p></div>
+      </li>
+    </ol>
+  </section>
+</main>
+
+<footer><a href="index.html">Atlas Memoriae</a> &middot; Jeromie Beasley &middot; <a href="https://x.com/d1c1pler">@d1c1pler on X</a> &middot; <a href="https://suno.com/@dicipler" target="_blank" rel="noopener">Music on Suno</a></footer>
+
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</body>
+</html>

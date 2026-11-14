@@ -1,0 +1,2000 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gravity Ledger Mixer</title>
+<meta name="description" content="An interactive mixer for The Ledger Outlives the Metric: cross the metric wall and watch the record carry on.">
+<style>
+:root{color-scheme:dark;
+  --bg:#050914;--panel:#0a1322;--panel2:#101c30;--line:#263a56;--line2:#35516f;
+  --ink:#eaf2ff;--ink2:#cbd9ea;--muted:#91a8c2;--dim:#5f7896;
+  --gold:#edc775;--teal:#69d7c4;--violet:#bc90ff;--red:#ff8d98;--blue:#7cbaff;--green:#7ee2a8;--orange:#ffb46b;
+  --pos:#7cbaff;--neg:#ff8d98;--rec:#7ee2a8;--null:#edc775;
+  --serif:Georgia,"Iowan Old Style","Palatino Linotype",Palatino,"Times New Roman",serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace}
+*{box-sizing:border-box}
+html{background:#050914}
+body{margin:0;background:radial-gradient(circle at 12% 0,#172442 0,transparent 34rem),radial-gradient(circle at 92% 4%,#1a1437 0,transparent 32rem),var(--bg);color:var(--ink);font:15px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1540px;margin:0 auto;padding-inline:24px}
+@media (max-width:640px){.wrap{padding-inline:16px}}
+header.top{padding-block:34px 18px}
+.eyebrow{font-size:11px;letter-spacing:.19em;color:var(--teal);font-weight:800;text-transform:uppercase}
+h1{font:500 clamp(2.3rem,6vw,5.2rem)/.98 var(--serif);margin:10px 0 12px;color:var(--gold);text-wrap:balance}
+h2{font:500 clamp(1.5rem,2.6vw,1.95rem)/1.15 var(--serif);color:var(--gold);margin:.2em 0 .5em;text-wrap:balance}
+h3{color:#dbe9ff;margin:.3em 0 .35em;font-size:1.05rem;text-wrap:balance}
+p{margin:.45em 0}
+.subtitle{font-size:1.12rem;max-width:62rem;color:var(--ink2)}
+.byline{color:var(--muted);font-size:13px;margin-top:6px}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.stat{background:#091526;border:1px solid var(--line);border-radius:10px;padding:9px 13px;min-width:0}
+.stat b{font-size:1.3rem;color:var(--teal);display:block;font-variant-numeric:tabular-nums}
+.stat span{font-size:13px;color:var(--ink2)}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(5,9,20,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-block:1px solid var(--line)}
+nav.tabs .wrap{display:flex;gap:7px;overflow-x:auto;padding-block:9px;scrollbar-width:thin}
+button,select,input,textarea{font:inherit;color:inherit}
+button{background:#13233a;color:var(--ink);border:1px solid var(--line2);border-radius:8px;padding:7px 12px;cursor:pointer;white-space:nowrap}
+button:hover{border-color:var(--teal);background:#173049}
+button.active{border-color:var(--teal);background:#173a4a;color:#fff}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+button.small{padding:3px 8px;font-size:12px;border-radius:6px}
+main{padding-block:22px 80px}
+.lens{display:none}.lens.active{display:block}
+.lede{max-width:70rem;color:var(--ink2);font-size:1.02rem}
+.kicker{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);font-weight:800}
+.grid2{display:grid;grid-template-columns:320px minmax(0,1fr);gap:18px;margin-top:14px}
+@media (max-width:980px){.grid2{grid-template-columns:minmax(0,1fr)}}
+.controls{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;align-self:start}
+@media (min-width:981px){.controls.sticky{position:sticky;top:64px;max-height:calc(100vh - 80px);overflow:auto}}
+.control{margin:9px 0 13px}
+.control label{display:flex;justify-content:space-between;gap:8px;color:#bed0e5;font-size:12.5px}
+.control output{color:var(--gold);font-family:var(--mono);font-size:12px;font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--teal)}
+select{background:#0d1a2c;border:1px solid var(--line2);border-radius:7px;padding:6px 8px;width:100%}
+.row{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.hr{border-top:1px solid var(--line);margin:14px 0}
+.stage{min-width:0;display:grid;gap:14px}
+.canvasbox{background:linear-gradient(180deg,#07101e,#050913);border:1px solid var(--line);border-radius:14px;padding:8px;overflow:hidden;position:relative;min-width:0}
+.canvasbox canvas{width:100%;display:block;touch-action:none}
+.canvasbox .ctitle{position:absolute;left:14px;top:10px;font:11px/1.3 var(--mono);color:var(--ink2);background:rgba(8,16,30,.8);border:1px solid var(--line);border-radius:7px;padding:4px 8px;pointer-events:none}
+.caption{font-size:12px;color:var(--muted);padding:6px 8px 2px}
+.split{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.split3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media (max-width:980px){.split,.split3{grid-template-columns:minmax(0,1fr)}}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px 12px;min-width:0}
+.card .lab{font-size:11.5px;letter-spacing:.02em;color:var(--muted)}
+.card .val{font:500 1.35rem/1.25 var(--serif);color:var(--gold);margin:3px 0;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.card .note{font-size:11.5px;color:#aac0d9;letter-spacing:.01em;font-weight:700}
+.note.pos{color:var(--pos)}.note.neg{color:var(--neg)}.note.rec{color:var(--rec)}.note.null{color:var(--null)}.note.vio{color:var(--violet)}
+.eyes{display:grid;gap:8px}
+.eye{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px;align-items:center;padding:7px 8px;border:1px solid var(--line);border-radius:10px;background:#0b1728}
+.eye .sw{width:12px;height:12px;border-radius:3px;box-shadow:0 0 10px currentColor;background:currentColor}
+.eye b{font-size:12.5px;display:block}
+.eye small{display:block;color:var(--muted);font-size:11px;font-family:var(--mono)}
+.eye input[type=checkbox]{accent-color:var(--teal);width:16px;height:16px}
+.eye.off{opacity:.45}
+.eyegrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:10px}
+@media (max-width:1100px){.eyegrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:700px){.eyegrid{grid-template-columns:minmax(0,1fr)}}
+.ecard{background:linear-gradient(180deg,#0e1a2e,#08111f);border:1px solid var(--line);border-radius:13px;padding:13px 14px;cursor:pointer;min-width:0}
+.ecard:hover{border-color:var(--teal)}
+.ecard .kick{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);font-weight:800}
+.ecard h4{margin:.35em 0 .3em;font-size:1rem;color:#e6f0ff;text-wrap:balance}
+.ecard .f{font:1rem/1.35 var(--serif);color:var(--gold);margin:.35em 0;overflow-wrap:anywhere}
+.ecard p{font-size:12.8px;color:#b9cbe0;margin:.3em 0}
+.badges{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
+.badge{font:700 9.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;border:1px solid;border-radius:20px;padding:4px 7px}
+.b-T{color:var(--green);border-color:#2f6d51}.b-L{color:var(--teal);border-color:#2c6d66}.b-N{color:var(--blue);border-color:#2f5889}.b-C{color:var(--violet);border-color:#5d4a86}.b-H{color:var(--orange);border-color:#7a5a33}.b-F{color:var(--red);border-color:#7e3d48}.b-R{color:var(--gold);border-color:#7a6636}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;min-width:0}
+.scope{border-left:4px solid var(--violet);background:#15132a;padding:12px 15px;margin:14px 0;border-radius:0 12px 12px 0;color:#d9d3f3}
+.scope.gold{border-left-color:var(--gold);background:#1b1a14;color:#efe4c4}
+.scope.red{border-left-color:var(--red);background:#23121a;color:#f3d6dc}
+.table{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{padding:8px 10px;text-align:left;border-bottom:1px solid #1c2c45;vertical-align:top}
+th{color:var(--gold);font-weight:700;background:#0b1627;position:sticky;top:0}
+td.num,th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+tr.hl td{background:#15233a}
+.mono{font-family:var(--mono)}
+.gold{color:var(--gold)}.teal{color:var(--teal)}.red{color:var(--red)}.blue{color:var(--blue)}.green{color:var(--green)}.vio{color:var(--violet)}
+.ride{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px}
+.step{flex:0 0 150px;text-align:left;white-space:normal;background:#0b1627;border:1px solid var(--line);border-radius:12px;padding:10px 11px}
+.step b{display:block;font-size:11px;letter-spacing:.08em;color:var(--teal);text-transform:uppercase}
+.step span{display:block;font-size:12px;color:var(--muted);margin-top:3px}
+.step.active{border-color:var(--gold);background:#1a1810}
+.route{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-top:10px}
+.route h3{font:500 1.5rem/1.2 var(--serif);color:var(--gold)}
+.ledger textarea{width:100%;min-height:74px;background:#08111f;border:1px solid var(--line2);border-radius:10px;padding:10px;resize:vertical;font:13px/1.45 var(--mono);color:var(--ink)}
+.trials{display:grid;gap:8px;margin-top:10px}
+.trial{border:1px solid var(--line);border-radius:10px;padding:9px 11px;background:#0b1627;font-size:12.5px}
+.trial .when{font-family:var(--mono);color:var(--muted);font-size:11px}
+.legend{display:flex;gap:8px;flex-wrap:wrap;font-size:11.5px;color:var(--ink2);padding:6px 8px}
+.legend i{display:inline-block;width:14px;height:3px;border-radius:2px;vertical-align:middle;margin-right:5px}
+.pill{display:inline-block;font:700 10.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:5px 8px;border-radius:20px;border:1px solid var(--line2);color:var(--ink2)}
+.pill.pos{color:var(--pos);border-color:#2f5889}.pill.neg{color:var(--neg);border-color:#7e3d48}.pill.null{color:var(--null);border-color:#7a6636}.pill.rec{color:var(--rec);border-color:#2f6d51}
+footer{border-top:1px solid var(--line);color:var(--muted);font-size:12.5px;padding-block:18px 36px}
+.sectionhead{display:flex;justify-content:space-between;align-items:end;gap:14px;flex-wrap:wrap;margin-top:28px}
+.msg{font-size:12px;color:var(--green);min-height:1.2em}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+
+</style>
+</head>
+<body>
+<header class="top wrap">
+  <div class="eyebrow">Jeromie Beasley · Compound Eye · Gravity Ledger Mixer</div>
+  <h1>The Ledger Outlives the Metric</h1>
+  <p class="subtitle">A finite operator can lose its metric and keep its record. Drive the dials, cross the wall, and watch what each theorem sees: the metric changes sign while the count and the trace-log carry on.</p>
+  <div class="byline">Built from the full research edition 6 of the paper (24 September 2026) and its proof package. Every number on these screens is computed live from the paper's formulas or copied from its gate logs.</div>
+  <div class="stats">
+    <div class="stat"><b>30</b><span>numbered results, all proved in the paper</span></div>
+    <div class="stat"><b>23</b><span>finite theorems in Lean</span></div>
+    <div class="stat"><b>15</b><span>supplied gate programs</span></div>
+    <div class="stat"><b>31</b><span>chart and contour checks</span></div>
+    <div class="stat"><b>1</b><span>failed prediction kept on the record</span></div>
+    <div class="stat"><b>25</b><span>paper families traced</span></div>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Lenses">
+  <div class="wrap">
+    <button data-lens="mixer">Wall mixer</button>
+    <button data-lens="licence">Licence &amp; record</button>
+    <button data-lens="roundtrip">Round trip</button>
+    <button data-lens="neutral">Neutral tangent</button>
+    <button data-lens="cap">The cap</button>
+    <button data-lens="defects">Defects, wraps &amp; clocks</button>
+    <button data-lens="source">Source probe</button>
+    <button data-lens="screen">Newton → MOND</button>
+    <button data-lens="einstein">Einstein term</button>
+    <button data-lens="entropy">Record vs entropy</button>
+    <button data-lens="ride">The ride</button>
+    <button data-lens="ledger">Claim ledger</button>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- ================= 1. WALL MIXER ================= -->
+<section class="lens" id="lens-mixer">
+  <div class="kicker">Theorem 16 · an analytic wall without an exceptional point</div>
+  <h2>Cross the wall. Mix the eyes.</h2>
+  <p class="lede">One rank-one projector moves on a small chart: <span class="mono">z = x + iy</span>, <span class="mono">w = x + iy²</span>, <span class="mono">P = (1+zw)⁻¹ [[1, w], [z, zw]]</span>. Its metric is positive on one side of <span class="mono">y = 0</span> and indefinite on the other. The operator <span class="mono">H = (2 + y/10)P + (5 + y/5)(I − P)</span> keeps its two eigenvalues apart the whole way, so the contour count and the trace-log never flinch. Each eye below reads one quantity along the same dial.</p>
+  <div class="grid2">
+    <aside class="controls sticky" aria-label="Wall mixer controls">
+      <div class="kicker">Chart dials</div>
+      <div class="control"><label for="wY">Wall dial y <output for="wY"></output></label><input type="range" id="wY" min="-0.24" max="0.24" step="0.001" value="-0.12"></div>
+      <div class="control"><label for="wX">Chart x <output for="wX"></output></label><input type="range" id="wX" min="-0.2" max="0.2" step="0.001" value="0"></div>
+      <div class="control"><label for="wH">Cap step h <output for="wH"></output></label><input type="range" id="wH" min="-0.2" max="0.2" step="0.001" value="0.05"></div>
+      <div class="control"><label for="wSpeed">Sweep speed <output for="wSpeed"></output></label><input type="range" id="wSpeed" min="0.1" max="2" step="0.05" value="0.6"></div>
+      <div class="row"><button id="wPlay">Sweep across the wall</button><button id="wWall">Stand on the wall</button></div>
+      <div class="hr"></div>
+      <div class="row" style="justify-content:space-between"><div class="kicker">Contributing eyes</div><div class="row"><button class="small" id="wAll">All on</button><button class="small" id="wNone">All off</button></div></div>
+      <div class="eyes" id="wEyes" style="margin-top:8px"></div>
+      <div class="control" style="margin-top:12px"><label for="wScale">Trace scale</label>
+        <select id="wScale"><option value="own">Each eye on its own scale</option><option value="sign">Signs only</option></select></div>
+      <p class="caption">Tip: drag on the chart map to move the point. Every eye keeps its own trace; switching one off hides it without deleting it.</p>
+    </aside>
+    <div class="stage">
+      <div class="split3">
+        <div class="canvasbox"><span class="ctitle">chart map · sign of det g</span><canvas id="wMap" aria-label="Chart map colored by the sign of the metric determinant"></canvas></div>
+        <div class="canvasbox"><span class="ctitle">the metric at this point</span><canvas id="wCone" aria-label="Unit set of the metric in the tangent plane"></canvas></div>
+        <div class="canvasbox"><span class="ctitle">the ledger · λ-plane</span><canvas id="wLedger" aria-label="Eigenvalues, contour and running trace-log"></canvas></div>
+      </div>
+      <div class="cards" id="wCards">
+        <div class="card"><div class="lab">det g</div><div class="val" id="wc-det"></div><div class="note" id="wn-det"></div></div>
+        <div class="card"><div class="lab">g_yy (the dial direction)</div><div class="val" id="wc-gyy"></div><div class="note" id="wn-gyy"></div></div>
+        <div class="card"><div class="lab">count N</div><div class="val" id="wc-N"></div><div class="note rec">record · constant</div></div>
+        <div class="card"><div class="lab">trace-log Z</div><div class="val" id="wc-Z"></div><div class="note rec">record · moves smoothly</div></div>
+        <div class="card"><div class="lab">eigenvalue gap</div><div class="val" id="wc-gap"></div><div class="note">no exceptional point</div></div>
+        <div class="card"><div class="lab">proxy det Q̂</div><div class="val" id="wc-Q"></div><div class="note vio">indefinite on both sides</div></div>
+        <div class="card"><div class="lab">overlap above cap</div><div class="val" id="wc-ov"></div><div class="note" id="wn-ov"></div></div>
+        <div class="card"><div class="lab">‖∂yP‖, (∂yP)²</div><div class="val" id="wc-dp"></div><div class="note" id="wn-dp"></div></div>
+      </div>
+      <div class="canvasbox"><span class="ctitle">every enabled eye along the same dial</span><canvas id="wScope" aria-label="Traces of all enabled eyes along the wall dial"></canvas></div>
+      <div class="split">
+        <div class="panel">
+          <div class="kicker">Cross two eyes</div>
+          <div class="row" style="margin:6px 0 8px"><select id="wXeye" aria-label="Horizontal eye"></select><select id="wYeye" aria-label="Vertical eye"></select></div>
+          <div class="canvasbox"><canvas id="wCross" aria-label="One eye plotted against another along the dial"></canvas></div>
+          <p class="caption">Each point is one value of y. Blue is before the wall, red after. Metric eye against ledger eye shows the whole thesis in one curve: the horizontal coordinate changes sign while the vertical one runs straight through.</p>
+        </div>
+        <div class="panel ledger">
+          <div class="kicker">Prediction → intervention → observation</div>
+          <p class="caption" style="padding-left:0">Write what you expect before you move a dial. Snapshot, move, then record what moved. Trials stay in this page until you copy them out.</p>
+          <label class="caption" for="wPred" style="padding-left:0">Before I move anything, I predict…</label>
+          <textarea id="wPred">At y = 0 the metric eye hits zero and the ledger eye does not notice.</textarea>
+          <div class="row" style="margin:8px 0"><button id="wSnap">Snapshot and start trial</button></div>
+          <label class="caption" for="wObs" style="padding-left:0">After the move, I observed…</label>
+          <textarea id="wObs"></textarea>
+          <div class="row" style="margin-top:8px"><button id="wClose">Close latest trial</button><button id="wCopy">Copy all trials</button></div>
+          <div class="msg" id="wMsg"></div>
+          <div class="trials" id="wTrials"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sectionhead"><h2>What every eye sees</h2><span class="caption">Click a card to solo that eye on the scope.</span></div>
+  <div class="eyegrid" id="wEyeCards"></div>
+</section>
+
+<!-- ================= 2. LICENCE & RECORD ================= -->
+<section class="lens" id="lens-licence">
+  <div class="kicker">Proposition 15 · GEOWALL-LEDGER-02 · SUBGRAV-04</div>
+  <h2>The licence expires first. The record never notices.</h2>
+  <p class="lede">A fixed six-level base <span class="mono">D₀ = diag(2, 3, 20, −20, 35, −35)</span> is probed along two tangent directions that tilt from Hermitian toward anti-Hermitian with a dial κ. The exact entry formula gives <span class="mono">g(κ) = G_H − κ² G_A</span>. The matrices <span class="mono">G_H</span>, <span class="mono">G_A</span> and the curvature coefficients here are recomputed from the gate's own seeded family, and they return the gate's wall <span class="mono">κ* = 0.6271277514757786</span>.</p>
+  <div class="grid2">
+    <aside class="controls sticky">
+      <div class="control"><label for="lK">Dial κ <output for="lK"></output></label><input type="range" id="lK" min="0" max="2" step="0.0005" value="0.45"></div>
+      <div class="row"><button id="lPlay">Sweep κ</button><button id="lLic">Licence wall</button><button id="lMet">Metric wall</button><button id="lNeg">Past the second root</button></div>
+      <div class="hr"></div>
+      <div class="kicker">Exterior spectrum moves the block</div>
+      <p class="caption" style="padding-left:0">§7.3: with <span class="mono">H₀ = diag(a, b)</span> and a Hermitian off-diagonal probe, the block metric is <span class="mono">|v|²/(a − b)²</span>. Hold a fixed and move b.</p>
+      <div class="control"><label for="lB">Exterior eigenvalue b <output for="lB"></output></label><input type="range" id="lB" min="2.3" max="8" step="0.01" value="4"></div>
+      <div class="cards" style="grid-template-columns:1fr 1fr"><div class="card"><div class="lab">block metric</div><div class="val" id="lc-block"></div></div><div class="card"><div class="lab">enclosed eigenvalue</div><div class="val">a = 2</div></div></div>
+    </aside>
+    <div class="stage">
+      <div class="canvasbox"><span class="ctitle">along the dial · three regions</span><canvas id="lStrip" aria-label="Metric determinant and licence radicand along kappa"></canvas></div>
+      <div class="split">
+        <div class="canvasbox"><span class="ctitle">unit set of g(κ)</span><canvas id="lCone"></canvas></div>
+        <div class="canvasbox"><span class="ctitle">the ledger · D₀ and its contour</span><canvas id="lLedger"></canvas></div>
+      </div>
+      <div class="cards">
+        <div class="card"><div class="lab">det g</div><div class="val" id="lc-det"></div><div class="note" id="ln-det"></div></div>
+        <div class="card"><div class="lab">licence 4 det g − ω²</div><div class="val" id="lc-lic"></div><div class="note" id="ln-lic"></div></div>
+        <div class="card"><div class="lab">curvature ω</div><div class="val" id="lc-om"></div><div class="note vio">finite through both walls</div></div>
+        <div class="card"><div class="lab">region</div><div class="val" id="lc-reg" style="font-size:1.05rem"></div><div class="note" id="ln-reg"></div></div>
+        <div class="card"><div class="lab">record N, Z</div><div class="val">2, log 6</div><div class="note rec">|N−2| 4.4e−16 · |Z−Z_d| 6.7e−16</div></div>
+      </div>
+      <div class="canvasbox"><span class="ctitle">SUBGRAV-04 · each block reaches its own wall</span><canvas id="lSub" aria-label="Two-block wall positions for nineteen seeds"></canvas></div>
+      <p class="caption">From the gate log: 19 of 20 seeded operators produced a wall in the admissible range (seed 9 did not). Every block's licence wall lies inside its metric-definite region, and the summed record stays within 1.6×10⁻¹⁴ of its reference on every row, including on the walls.</p>
+    </div>
+  </div>
+  <div class="scope">Scope, from §7.1: every row of this experiment is evaluated at the same base point, so <span class="mono">H</span> and the projector are exactly constant and the record is flat by construction. This lens isolates what the tangent probes do. The moving wall, where the spectrum and the trace-log genuinely change, is the Wall mixer.</div>
+</section>
+
+<!-- ================= 3. ROUND TRIP & RECIPROCITY ================= -->
+<section class="lens" id="lens-roundtrip">
+  <div class="kicker">Proposition 4 · Theorem 10 · Corollary 11 · GEOWALL-RECIP-01 · GEOWALL-ROT-01</div>
+  <h2>Only the round trip can carry a sign</h2>
+  <p class="lede">A one-way transition strength is a square and has no sign. The sign lives in the round trip <span class="mono">Q = M₊₋ M₋₊ / Δ²</span>. At a Hermitian point the return leg is the mirror of the outgoing leg and the gap is real, so <span class="mono">Q = |M|²/Δ² ≥ 0</span>. Open the system and the phases stop cancelling.</p>
+  <div class="grid2">
+    <aside class="controls sticky">
+      <div class="kicker">Two-level round trip (live toy)</div>
+      <div class="control"><label for="rG">Openness γ <output for="rG"></output></label><input type="range" id="rG" min="0" max="1" step="0.005" value="0"></div>
+      <div class="row"><button id="rPlay">Open it slowly</button></div>
+      <div class="hr"></div>
+      <div class="kicker">Two probes, one partner (Cor. 11)</div>
+      <div class="control"><label for="rP1">phase of u₁ <output for="rP1"></output></label><input type="range" id="rP1" min="-180" max="180" step="1" value="20"></div>
+      <div class="control"><label for="rP2">phase of u₂ <output for="rP2"></output></label><input type="range" id="rP2" min="-180" max="180" step="1" value="75"></div>
+      <div class="control"><label for="rM2">size of u₂ <output for="rM2"></output></label><input type="range" id="rM2" min="0.2" max="1.6" step="0.01" value="1"></div>
+      <div class="control"><label for="rBeta">Pairing: reciprocal → conjugate <output for="rBeta"></output></label><input type="range" id="rBeta" min="0" max="1" step="0.005" value="0"></div>
+      <div class="row"><button id="rAlign">Align the phases</button><button id="rDef">Phase-related pair u=(1,i), v=(1,−i)</button></div>
+    </aside>
+    <div class="stage">
+      <div class="split">
+        <div class="canvasbox"><span class="ctitle">transition legs and the round trip</span><canvas id="rWheel"></canvas></div>
+        <div class="canvasbox"><span class="ctitle">two-probe form · unit set</span><canvas id="rCone"></canvas></div>
+      </div>
+      <div class="cards">
+        <div class="card"><div class="lab">arg M₊₋ + arg M₋₊ − arg Δ²</div><div class="val" id="rc-arg"></div><div class="note" id="rn-arg"></div></div>
+        <div class="card"><div class="lab">Re Q</div><div class="val" id="rc-Q"></div><div class="note" id="rn-Q"></div></div>
+        <div class="card"><div class="lab">|M₋₊ − conj M₊₋|</div><div class="val" id="rc-mir"></div><div class="note">mirror residual</div></div>
+        <div class="card"><div class="lab">two-probe det g</div><div class="val" id="rc-det"></div><div class="note" id="rn-det"></div></div>
+        <div class="card"><div class="lab">−[Im(ū₁u₂)]²</div><div class="val" id="rc-im"></div><div class="note">Cor. 11 at β = 0</div></div>
+      </div>
+      <div class="split">
+        <div class="canvasbox"><span class="ctitle">GEOWALL-ROT-01 · rotation lifts W linearly</span><canvas id="rRot"></canvas></div>
+        <div class="panel">
+          <div class="kicker">The reciprocity record</div>
+          <table>
+            <tr><td>W at the instrument floor (28 points)</td><td class="num">≤ 1.1×10⁻⁷</td></tr>
+            <tr><td>|det g| on the reciprocal gate</td><td class="num">≤ 8.9×10⁻¹⁶</td></tr>
+            <tr><td>Non-reciprocal control W</td><td class="num">0.24 – 0.98</td></tr>
+            <tr><td>Parity suppression of the even bump</td><td class="num">2.4×10⁷</td></tr>
+            <tr><td>ROT-01 slope of W against a</td><td class="num">1.000</td></tr>
+            <tr><td>ROT-01 predicted sign change of det g</td><td class="num red">failed, kept</td></tr>
+          </table>
+          <p class="caption" style="padding-left:0">The rotation run lifted W exactly as predicted, but det g stayed negative at every tested point, so the predicted wall never appeared. The paper keeps that failure in its ledger.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scope">Scope: Corollary 11 is proved for the normalized single-partner, two-probe bilinear form. A sum over partners, a larger cluster, or probes that break the same pairing can behave differently, and the phase-related pair above shows a definite restriction is algebraically possible. The round-trip model on this lens is a live two-level toy built for this mixer; it is not the paper's Figure 2 operator.</div>
+</section>
+
+<!-- ================= 4. NEUTRAL TANGENT ================= -->
+<section class="lens" id="lens-neutral">
+  <div class="kicker">Theorem 6 · Corollary 7 · INERTIA-05</div>
+  <h2>The full tangent space is split exactly in half</h2>
+  <p class="lede">Put an idempotent in the form <span class="mono">diag(I_k, 0)</span>. Every tangent is off-diagonal, <span class="mono">D = [[0, X], [Y, 0]]</span>, and the trace form is <span class="mono">q = Re Tr(XY)</span>. With <span class="mono">U = (X + Y†)/2</span> and <span class="mono">V = (X − Y†)/2</span> it becomes <span class="mono">q = ‖U‖² − ‖V‖²</span>: as many positive directions as negative, <span class="mono">2k(n − k)</span> each. The self-adjoint tangents are the slice <span class="mono">V = 0</span>, which is why a Hermitian family never sees a negative direction.</p>
+  <div class="grid2">
+    <aside class="controls sticky">
+      <div class="kicker">One tangent, rank one in the plane</div>
+      <div class="control"><label for="nXr">Re X <output for="nXr"></output></label><input type="range" id="nXr" min="-1.2" max="1.2" step="0.01" value="0.8"></div>
+      <div class="control"><label for="nXi">Im X <output for="nXi"></output></label><input type="range" id="nXi" min="-1.2" max="1.2" step="0.01" value="0.2"></div>
+      <div class="control"><label for="nYr">Re Y <output for="nYr"></output></label><input type="range" id="nYr" min="-1.2" max="1.2" step="0.01" value="0.5"></div>
+      <div class="control"><label for="nYi">Im Y <output for="nYi"></output></label><input type="range" id="nYi" min="-1.2" max="1.2" step="0.01" value="-0.4"></div>
+      <div class="row"><button class="small" id="nHerm">Self-adjoint tangent</button><button class="small" id="nCounter">§2 counterexample</button><button class="small" id="nWall">Chart wall ∂yP</button></div>
+      <div class="hr"></div>
+      <div class="kicker">Signature count</div>
+      <div class="control"><label for="nN">matrix size n <output for="nN"></output></label><input type="range" id="nN" min="2" max="12" step="1" value="6"></div>
+      <div class="control"><label for="nK">rank k <output for="nK"></output></label><input type="range" id="nK" min="1" max="11" step="1" value="2"></div>
+      <div class="hr"></div>
+      <div class="kicker">Live restriction census (toy)</div>
+      <div class="control"><label for="nDim">neutral form, half-dimension <output for="nDim"></output></label><input type="range" id="nDim" min="1" max="60" step="1" value="12"></div>
+      <div class="control"><label for="nPlane">plane dimension <output for="nPlane"></output></label><input type="range" id="nPlane" min="2" max="6" step="1" value="2"></div>
+      <div class="row"><button id="nRun">Draw 400 planes</button><button id="nReset">Reset census</button></div>
+    </aside>
+    <div class="stage">
+      <div class="split">
+        <div class="canvasbox"><span class="ctitle">q = ‖U‖² − ‖V‖²</span><canvas id="nPlaneC"></canvas></div>
+        <div class="canvasbox"><span class="ctitle">real tangent dimensions of a rank-k idempotent</span><canvas id="nBars"></canvas></div>
+      </div>
+      <div class="cards">
+        <div class="card"><div class="lab">q(D) = Re Tr(XY)</div><div class="val" id="nc-q"></div><div class="note" id="nn-q"></div></div>
+        <div class="card"><div class="lab">‖U‖²</div><div class="val" id="nc-u"></div><div class="note pos">positive part</div></div>
+        <div class="card"><div class="lab">‖V‖²</div><div class="val" id="nc-v"></div><div class="note neg">negative part</div></div>
+        <div class="card"><div class="lab">signature (n₊, n₋)</div><div class="val" id="nc-sig"></div><div class="note null">always balanced</div></div>
+        <div class="card"><div class="lab">toy census: definite planes</div><div class="val" id="nc-cen"></div><div class="note" id="nn-cen"></div></div>
+      </div>
+      <div class="canvasbox"><span class="ctitle">INERTIA-05 · what a chosen direction space reports</span><canvas id="nInertia"></canvas></div>
+      <p class="caption">Recorded, not recomputed: the self-adjoint control reads (48, 0, 49) on its 97 directions; the open horizon generator reads (96, 98, 0) on its 194 potential-plus-damping directions, and (86, 11, 0) on potentials alone. Among random planes of that 194-direction form, 24.0% of 2-planes and 3.2% of 3-planes read as definite, and none from dimension 5. The live census above draws planes from a toy neutral form so you can watch the same effect happen; its percentages belong to the toy.</p>
+    </div>
+  </div>
+  <div class="scope">Corollary 7: a measured form is the pullback of q to a chosen perturbation space, so its inertia belongs to that choice. The 194 directions are a specified ansatz, not the full tangent space of a 194 × 194 generator, whose real dimension is 75,272. The exact half-split is the theorem about the full space.</div>
+</section>
+
+<!-- ================= 5. THE CAP ================= -->
+<section class="lens" id="lens-cap">
+  <div class="kicker">Theorem 1 · Theorem 8 · Corollary 9 · Corollary 16A</div>
+  <h2>A negative direction pushes the overlap above the cap</h2>
+  <p class="lede">For orthogonal projectors the overlap <span class="mono">Tr(PR)</span> is a sum of squared cosines and cannot exceed the rank. An oblique projector projects along a slanted kernel, and its overlap can. Theorem 8 turns this into a local law: <span class="mono">Re Tr(P(0)P(t)) = k − ½ Re Tr(D²) t² + o(t²)</span>, so a direction with <span class="mono">g(v, v) &lt; 0</span> climbs above k for every small step.</p>
+  <div class="grid2">
+    <aside class="controls sticky">
+      <div class="kicker">Two rank-one projectors in the plane</div>
+      <div class="control"><label for="cA">range of P <output for="cA"></output></label><input type="range" id="cA" min="0" max="180" step="1" value="20"></div>
+      <div class="control"><label for="cSk">slant of P's kernel <output for="cSk"></output></label><input type="range" id="cSk" min="-80" max="80" step="1" value="0"></div>
+      <div class="control"><label for="cB">range of R <output for="cB"></output></label><input type="range" id="cB" min="0" max="180" step="1" value="50"></div>
+      <div class="control"><label for="cSk2">slant of R's kernel <output for="cSk2"></output></label><input type="range" id="cSk2" min="-80" max="80" step="1" value="0"></div>
+      <div class="row"><button class="small" id="cOrth">Both orthogonal</button><button class="small" id="cObl">Oblique pair above the cap</button></div>
+      <div class="hr"></div>
+      <div class="kicker">Exact chart overlap (Cor. 16A)</div>
+      <div class="control"><label for="cY">base point y <output for="cY"></output></label><input type="range" id="cY" min="-0.2" max="0.2" step="0.001" value="-0.1"></div>
+      <div class="row"><button class="small" id="cPaper">y = −1/10, h = 1/4</button><button class="small" id="cWall">On the wall</button></div>
+    </aside>
+    <div class="stage">
+      <div class="split">
+        <div class="canvasbox"><span class="ctitle">oblique projection in the plane</span><canvas id="cGeo"></canvas></div>
+        <div class="canvasbox"><span class="ctitle">overlap excess along the chart, step h</span><canvas id="cCurve"></canvas></div>
+      </div>
+      <div class="cards">
+        <div class="card"><div class="lab">Tr(PR)</div><div class="val" id="cc-ov"></div><div class="note" id="cn-ov"></div></div>
+        <div class="card"><div class="lab">cap k</div><div class="val">1</div><div class="note">rank of each projector</div></div>
+        <div class="card"><div class="lab">orthogonal value cos²θ</div><div class="val" id="cc-cos"></div><div class="note pos">Theorem 1</div></div>
+        <div class="card"><div class="lab">chart excess at h = 1/4</div><div class="val" id="cc-ex"></div><div class="note" id="cn-ex"></div></div>
+      </div>
+      <div class="panel"><div class="kicker">The exact overlap</div>
+        <p style="font:1.05rem/1.5 var(--serif);color:var(--gold);margin:.3em 0">Re Tr(P(0,y) P(0,y+h)) − 1 = h²(2y + h) / [(1 − y³)(1 − (y + h)³)]</p>
+        <p class="caption" style="padding-left:0">The sign of the excess is the sign of 2y + h. On the positive side the local quadratic term is negative, but a finite step can still climb above the cap: at y = −1/10 and h = 1/4 the excess is the exact rational 25000/7980973. On the wall itself the first term is cubic, h³/(1 − h³), and changes sign with h.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 6. DEFECTS, WRAPS & CLOCKS ================= -->
+<section class="lens" id="lens-defects">
+  <div class="kicker">Proposition 14 · Proposition 20 · Proposition 17 · CLOCK-EXPONENT-01</div>
+  <h2>What the record keeps, what it forgets</h2>
+  <p class="lede">Three short stories about the scalar record. A Jordan block breaks the eigenvectors but not the trace. A determinant forgets whole turns of 2πi that the trace-log keeps. And a vanishing order sets the power law you would read off as a clock.</p>
+  <div class="split3">
+    <div class="panel">
+      <div class="kicker">Jordan trace (Prop. 14)</div>
+      <div class="control"><label for="dT">J_t = [[2, 1], [t, 2]], t <output for="dT"></output></label><input type="range" id="dT" min="-0.25" max="0.25" step="0.001" value="0.12"></div>
+      <div class="row"><button class="small" id="dPlay">Sweep t</button><button class="small" id="dZero">Defective point</button></div>
+      <div class="canvasbox" style="margin-top:8px"><canvas id="dJordan"></canvas></div>
+      <div class="cards" style="margin-top:8px"><div class="card"><div class="lab">count N</div><div class="val">2</div></div><div class="card"><div class="lab">Z = log(4 − t)</div><div class="val" id="dc-Z"></div></div><div class="card"><div class="lab">|λ₁ − λ₂| = 2√|t|</div><div class="val" id="dc-sep"></div></div></div>
+      <p class="caption" style="padding-left:0">At t = 0 the two eigenvalues meet and only one eigenvector is left. The contour around both still counts 2 and the trace-log still reads log 4. What the trace loses is the nilpotent part, which the full matrix f(J) keeps.</p>
+    </div>
+    <div class="panel">
+      <div class="kicker">The wrap (Prop. 20)</div>
+      <div class="control"><label for="dD">clock-shift dimension d <output for="dD"></output></label><input type="range" id="dD" min="2" max="64" step="1" value="5"></div>
+      <div class="row"><button class="small" id="dGrow">Grow d</button><button class="small" id="dTwo">d = 2</button></div>
+      <div class="canvasbox" style="margin-top:8px"><canvas id="dWrap"></canvas></div>
+      <div class="cards" style="margin-top:8px"><div class="card"><div class="lab">det R</div><div class="val" id="dc-det"></div></div><div class="card"><div class="lab">wrap w</div><div class="val" id="dc-w"></div></div><div class="card"><div class="lab">defect δ = 4 sin²(π/d)</div><div class="val" id="dc-del"></div></div></div>
+      <p class="caption" style="padding-left:0">With UV = e^(2πi/d) VU, the relator R = UVU†V† is e^(2πi/d) times the identity. Its determinant is exactly 1 at every d, while the sum of its eigenvalue angles is one full turn. As d grows the defect collapses; the integer stays. At d = 2 the eigenvalue sits on the branch cut and the wrap is undefined.</p>
+    </div>
+    <div class="panel">
+      <div class="kicker">Vanishing order (Prop. 17)</div>
+      <div class="control"><label for="dM">order m of λ(t) = c tᵐ <output for="dM"></output></label><input type="range" id="dM" min="1" max="4" step="1" value="1"></div>
+      <div class="canvasbox" style="margin-top:8px"><canvas id="dClock"></canvas></div>
+      <div class="cards" style="margin-top:8px"><div class="card"><div class="lab">line-element exponent</div><div class="val" id="dc-exp"></div></div><div class="card"><div class="lab">zero type</div><div class="val" id="dc-type" style="font-size:1rem"></div></div></div>
+      <p class="caption" style="padding-left:0">√|λ| grows as |t|^(m/2). A transverse crossing (m = 1) gives 1/2; a touching zero (m = 2) gives 1. The gates measured 0.5154 on the crossing case and 0.9934 on the touching case. The paper keeps these as exponents only: matching a power to a horizon lapse needs a physically fixed parameter first.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 7. SOURCE PROBE ================= -->
+<section class="lens" id="lens-source">
+  <div class="kicker">Theorem 26 · Corollaries 27–28 · Counterexample 29 · Proposition 30</div>
+  <h2>Press on the operator and read the record move</h2>
+  <p class="lede">The bridge to <em>Light Keeps the Ledger</em>. Add a source, <span class="mono">K → K + t·bb†</span>, and the selected trace-log changes at the rate <span class="mono">b† P_C K⁻¹ b</span>. For a positive self-adjoint K that is a positive spectral weight, <span class="mono">Σ λ⁻¹ ‖P_λ b‖²</span>, and a family of such readings rebuilds the selected subspace. For an oblique K the same rate can go negative.</p>
+  <div class="grid2">
+    <aside class="controls sticky">
+      <div class="kicker">The source vector</div>
+      <div class="control"><label for="sTh">polar angle <output for="sTh"></output></label><input type="range" id="sTh" min="0" max="180" step="1" value="60"></div>
+      <div class="control"><label for="sPh">azimuth <output for="sPh"></output></label><input type="range" id="sPh" min="-180" max="180" step="1" value="30"></div>
+      <div class="control"><label for="sSel">selected cluster</label><select id="sSel"><option value="2">{2}</option><option value="23" selected>{2, 3}</option><option value="238">{2, 3, 8} whole spectrum: log det</option></select></div>
+      <div class="row"><button id="sSilent">Point at the silent direction</button><button id="sSpin">Spin the sphere</button></div>
+      <div class="hr"></div>
+      <div class="kicker">Counterexample 29</div>
+      <div class="control"><label for="sS">shear s in S = [[1, s], [0, 1]] <output for="sS"></output></label><input type="range" id="sS" min="0" max="4" step="0.01" value="3"></div>
+      <div class="hr"></div>
+      <div class="kicker">Uniform scale (Prop. 30)</div>
+      <div class="control"><label for="sA">K → αK, log₁₀ α <output for="sA"></output></label><input type="range" id="sA" min="-2" max="2" step="0.01" value="0"></div>
+      <div class="hr"></div>
+      <div class="row"><button id="sTomo">Run the tomography</button></div>
+    </aside>
+    <div class="stage">
+      <div class="split">
+        <div class="canvasbox"><span class="ctitle">response q_C(b) on every unit source</span><canvas id="sSphere"></canvas></div>
+        <div class="canvasbox"><span class="ctitle">complete finite source tomography</span><canvas id="sTomoC"></canvas></div>
+      </div>
+      <div class="cards">
+        <div class="card"><div class="lab">q_C(b), finite difference</div><div class="val" id="sc-fd"></div><div class="note">rate of the selected trace-log</div></div>
+        <div class="card"><div class="lab">b† P_C K⁻¹ b</div><div class="val" id="sc-th"></div><div class="note rec">Theorem 26</div></div>
+        <div class="card"><div class="lab">P_C unchanged by α</div><div class="val" id="sc-P"></div><div class="note">projector and metric</div></div>
+        <div class="card"><div class="lab">Z shift k·log α</div><div class="val" id="sc-Z"></div><div class="note">record shifts</div></div>
+        <div class="card"><div class="lab">rate × α</div><div class="val" id="sc-r"></div><div class="note">source rate scales 1/α</div></div>
+      </div>
+      <div class="split">
+        <div class="canvasbox"><span class="ctitle">oblique response with positive eigenvalues</span><canvas id="sOblique"></canvas></div>
+        <div class="panel">
+          <div class="kicker">Counterexample 29, live</div>
+          <p>K = S diag(2, 5) S⁻¹ = [[2, 3s], [0, 5]] and P_C = [[1, −s], [0, 0]]. For b = (1, 1) the rate is exactly <b class="gold">1/2 − s/2</b>.</p>
+          <div class="cards" style="margin-top:6px"><div class="card"><div class="lab">rate b†P_C K⁻¹ b</div><div class="val" id="sc-ob"></div><div class="note" id="sn-ob"></div></div><div class="card"><div class="lab">eigenvalues</div><div class="val">2, 5</div><div class="note pos">always positive</div></div></div>
+          <p class="caption" style="padding-left:0">At s = 3 the rate is −1 and the selected eigenvalue's derivative is −2, as in the paper. The kernel of the oblique projector tilts, so b is projected onto the negative side of the range line. Nothing thermodynamic is negative here; the positive readings of Corollary 27 need a self-adjoint K.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scope">Tomography assumes a known inner product, calibrated sources, a physical way to add tbb†, and access to enough sources. It does not say an optical frequency or a rotation curve supplies these readings. This lens uses a real symmetric K = U diag(2, 3, 8) Uᵀ, so the imaginary probes read zero.</div>
+</section>
+
+<!-- ================= 8. NEWTON -> MOND ================= -->
+<section class="lens" id="lens-screen">
+  <div class="kicker">§14 · Proposition 24 · Proposition 25 · Figure 8</div>
+  <h2>A screen that reads Newton up close and MOND far out</h2>
+  <p class="lede">Assume a spherical screen with <span class="mono">N_A = 4πr²c³/(Għ)</span> slots, the Unruh relation <span class="mono">k_BT = ħa/(2πc)</span>, and a thermal mode density <span class="mono">ρ_p(ω) ∝ ωᵖ</span> up to a cutoff. The energy balance becomes <span class="mono">a·f_p(a/a_D) = GM/r²</span>. With a flat density (p = 0), f → 1 gives Newton and f ≈ (π²/6)(a/a_D) gives the deep-MOND law <span class="mono">a ≈ √(a₀ a_N)</span>, with <span class="mono">a₀ = 6a_D/π²</span>.</p>
+  <div class="grid2">
+    <aside class="controls sticky">
+      <div class="control"><label for="mP">mode density exponent p <output for="mP"></output></label><input type="range" id="mP" min="0" max="2" step="0.05" value="0"></div>
+      <div class="control"><label for="mM">number of modes m <output for="mM"></output></label><input type="range" id="mM" min="0" max="5" step="1" value="5"></div>
+      <div class="control"><label for="mAN">probe a_N / a₀ (log₁₀) <output for="mAN"></output></label><input type="range" id="mAN" min="-4" max="4" step="0.01" value="-0.43"></div>
+      <div class="row"><button class="small" id="mFlat">Flat density, continuum</button><button class="small" id="mP1">p = 1</button><button class="small" id="mFew">10 modes</button><button class="small" id="mWorst">Largest mismatch</button></div>
+      <div class="hr"></div>
+      <div class="kicker">Orbits</div>
+      <div class="control"><label for="mOrb">orbit speed <output for="mOrb"></output></label><input type="range" id="mOrb" min="0" max="2" step="0.05" value="1"></div>
+      <p class="caption" style="padding-left:0">Radii are in units of √(GM/a₀). Speeds are in units of (GMa₀)^(1/4), where the deep-MOND speed is 1.</p>
+    </aside>
+    <div class="stage">
+      <div class="canvasbox"><span class="ctitle">acceleration relation · residual against the fit</span><canvas id="mRel"></canvas></div>
+      <div class="split">
+        <div class="canvasbox"><span class="ctitle">test particles on circular orbits</span><canvas id="mOrbit"></canvas></div>
+        <div class="canvasbox"><span class="ctitle">circular speed against radius</span><canvas id="mCurve"></canvas></div>
+      </div>
+      <div class="cards">
+        <div class="card"><div class="lab">screen a / a₀</div><div class="val" id="mc-a"></div><div class="note" id="mn-a"></div></div>
+        <div class="card"><div class="lab">RAR fit a / a₀</div><div class="val" id="mc-rar"></div><div class="note">McGaugh–Lelli–Schombert fit function</div></div>
+        <div class="card"><div class="lab">log₁₀(a / a_RAR)</div><div class="val" id="mc-dex"></div><div class="note">dex</div></div>
+        <div class="card"><div class="lab">deep coefficient</div><div class="val" id="mc-deep"></div><div class="note" id="mn-deep"></div></div>
+        <div class="card"><div class="lab">high-acceleration offset a − a_N</div><div class="val">a_D/4 = π²a₀/24</div><div class="note">4.93×10⁻¹¹ m s⁻² if a₀ = 1.2×10⁻¹⁰</div></div>
+      </div>
+      <div class="table"><table>
+        <thead><tr><th class="num">a_N/a₀</th><th class="num">flat-density a/a₀</th><th class="num">empirical fit a_RAR/a₀</th><th class="num">log₁₀(a/a_RAR) dex</th></tr></thead>
+        <tbody id="mTab"></tbody></table></div>
+      <p class="caption">The table is recomputed here and matches the paper's to every printed digit. Over an 801-point sweep the largest gap is −0.07954 dex near a_N/a₀ = 0.372, where the screen gives about 0.833 times the fit. SPARC's own residual width about its fit is 0.11 dex.</p>
+    </div>
+  </div>
+  <div class="scope red">These are conditional curves. The screen count, the temperature law and the mode density are assumptions, not results of the finite theorems, and the comparison is to a published fit function, not to galaxy data. Proposition 25 shows the trap: with any finite number of modes the deep branch collapses, so a strict MOND law needs a controlled continuum or zero-mode mechanism. Lensing, clusters and a relativistic field equation are still open.</div>
+</section>
+
+<!-- ================= 9. EINSTEIN TERM ================= -->
+<section class="lens" id="lens-einstein">
+  <div class="kicker">§13 · Proposition 23 · the imported form-space action</div>
+  <h2>Eleven slots and one Einstein coefficient</h2>
+  <p class="lede">Take the form space of a four-dimensional spacetime: scalars, one-forms and two-forms, <span class="mono">1 + 4 + 6 = 11</span> slots. Put the curvature on it and expand the trace-log: <span class="mono">−Tr₁₁ log(I − βℝ) = 3βR + (β²/2)(R² + R_μνR^μν + R_μνρσR^μνρσ) + …</span>. Each sector's trace is R, so the leading term is 3βR, and <span class="mono">β = ℓ_P²/(48π)</span> gives the Einstein–Hilbert normalization <span class="mono">1/(16πG)</span>.</p>
+  <div class="grid2">
+    <aside class="controls sticky">
+      <div class="control"><label for="eBR">curvature strength βR <output for="eBR"></output></label><input type="range" id="eBR" min="-1.5" max="0.95" step="0.01" value="0.35"></div>
+      <div class="row"><button id="ePlay">Fill the slots</button></div>
+      <div class="hr"></div>
+      <div class="control"><label for="eBeta">β in units of ℓ_P² <output for="eBeta"></output></label><input type="range" id="eBeta" min="0.001" max="0.05" step="any" value="0.0066315"></div>
+      <div class="row"><button class="small" id="eMatch">β = 1/(48π)</button></div>
+    </aside>
+    <div class="stage">
+      <div class="canvasbox"><span class="ctitle">constant curvature: eigenvalues R, R/4 (×4), R/6 (×6)</span><canvas id="eSlots"></canvas></div>
+      <div class="split">
+        <div class="canvasbox"><span class="ctitle">exact trace-log against its series</span><canvas id="eSeries"></canvas></div>
+        <div class="canvasbox"><span class="ctitle">health gate on the imported completion</span><canvas id="ePoles"></canvas></div>
+      </div>
+      <div class="cards">
+        <div class="card"><div class="lab">exact −Σ log(1 − βλ)</div><div class="val" id="ec-ex"></div></div>
+        <div class="card"><div class="lab">3βR</div><div class="val" id="ec-1"></div></div>
+        <div class="card"><div class="lab">3βR + 17β²R²/24</div><div class="val" id="ec-2"></div></div>
+        <div class="card"><div class="lab">action coefficient 3β/ℓ_P⁴</div><div class="val" id="ec-coef"></div><div class="note" id="en-coef"></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="scope red">This is a recovery inside an added action, with G entering through ℓ_P. It does not come from the finite projector data. For the unrestricted metric-only vacuum completion, Pereira finds a massive spin-2 branch with m₂² = −6/(5β), tachyonic for β &gt; 0, and a scalar with m₀² = 3/(5β); his September 2026 follow-up adds a tensor-propagation obstruction on generic FLRW backgrounds. Those gates bind the imported completion, not the paper's finite lemmas.</div>
+</section>
+
+<!-- ================= 10. RECORD VS ENTROPY ================= -->
+<section class="lens" id="lens-entropy">
+  <div class="kicker">Proposition 21 · Proposition 22</div>
+  <h2>The record is not a relative entropy, and it is not the geometry</h2>
+  <p class="lede">Two limits on what the scalar record can be. Proposition 21: with <span class="mono">H = λP + μ(I − P)</span> the projector and the selected eigenvalue can be varied separately, so the trace-log and the metric do not determine each other. Proposition 22: a same-reference relative entropy is at a minimum when the states coincide, so its first derivative is zero; the moving wall's record increment starts with slope 1/20. No constant multiple can match them.</p>
+  <div class="grid2">
+    <aside class="controls sticky">
+      <div class="kicker">Independence (Prop. 21)</div>
+      <div class="control"><label for="iX">move the projector: x on the line y = 0 <output for="iX"></output></label><input type="range" id="iX" min="-2" max="2" step="0.01" value="0.6"></div>
+      <div class="control"><label for="iL">move the eigenvalue λ <output for="iL"></output></label><input type="range" id="iL" min="1" max="4" step="0.01" value="2"></div>
+      <div class="hr"></div>
+      <div class="kicker">No-go (Prop. 22)</div>
+      <div class="control"><label for="iC">multiply the relative entropy by c (log₁₀) <output for="iC"></output></label><input type="range" id="iC" min="0" max="6" step="0.01" value="4.7"></div>
+      <div class="control"><label for="iZ">zoom toward y = 0 (log₁₀) <output for="iZ"></output></label><input type="range" id="iZ" min="0" max="4" step="0.01" value="0"></div>
+    </aside>
+    <div class="stage">
+      <div class="split">
+        <div class="canvasbox"><span class="ctitle">projector and record move separately</span><canvas id="iInd"></canvas></div>
+        <div class="canvasbox"><span class="ctitle">record increment against c × relative entropy</span><canvas id="iNo"></canvas></div>
+      </div>
+      <div class="cards">
+        <div class="card"><div class="lab">g_xx = (1 + x²)⁻²</div><div class="val" id="ic-g"></div><div class="note pos">geometry moves with P</div></div>
+        <div class="card"><div class="lab">Z = log λ</div><div class="val" id="ic-Z"></div><div class="note rec">record moves with λ</div></div>
+        <div class="card"><div class="lab">Fisher coefficient I_yy(0)</div><div class="val">1/49000</div><div class="note">where g_yy(0,0) = 0</div></div>
+        <div class="card"><div class="lab">D(ρ(y)‖ρ(0)) near 0</div><div class="val">y²/98000</div><div class="note">slope zero at y = 0</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="scope">The two-level ρ_eig used for the bowl is the chart's positive spectrum normalized by hand; an oblique operator does not thereby become a density matrix. Dorau and Much use relative entropy of quantum-field states on a horizon and then assume an area relation. A different state pair could still be built; it would have to be specified and proved.</div>
+</section>
+
+<!-- ================= 11. THE RIDE ================= -->
+<section class="lens" id="lens-ride">
+  <div class="kicker">The argument, in the order the paper makes it</div>
+  <h2>The ride</h2>
+  <div class="ride" id="rideSteps" role="list"></div>
+  <div class="route" id="rideRoute"></div>
+</section>
+
+<!-- ================= 12. CLAIM LEDGER ================= -->
+<section class="lens" id="lens-ledger">
+  <div class="kicker">§§21–23 · what is proved, what is measured, what is assumed, what is open</div>
+  <h2>Claim ledger</h2>
+  <div class="panel" style="margin:10px 0 14px">
+    <div class="kicker">Evidence grades used on every card</div>
+    <div class="badges" style="margin-top:8px"><span class="badge b-T">T · written proof</span><span class="badge b-L">L · Lean-checked algebra</span><span class="badge b-N">N · numerical or symbolic control</span><span class="badge b-C">C · cited literature</span><span class="badge b-H">H · physical hypothesis</span><span class="badge b-R">R · recorded gate output</span><span class="badge b-F">F · failed prediction, kept</span></div>
+  </div>
+  <div class="table"><table>
+    <thead><tr><th>Result</th><th>Where</th><th>Status</th><th>Scope</th></tr></thead>
+    <tbody id="ledgerRows"></tbody></table></div>
+  <div class="split" style="margin-top:14px">
+    <div class="panel"><div class="kicker">Kept on the record</div><ul id="keptList" style="margin:.5em 0;padding-left:1.2em"></ul></div>
+    <div class="panel"><div class="kicker">What would defeat the simplest physical route (§22)</div><ul id="defeatList" style="margin:.5em 0;padding-left:1.2em"></ul></div>
+  </div>
+  <div class="scope gold">What this mixer is allowed to say. The finite theorems are proved within their hypotheses. The gravity bridges are conditional: the Einstein coefficient comes from an added four-dimensional action, and the Newton and MOND limits come from a separately assumed screen and mode density. No spacetime metric, entropy–area law, universal MOND scale, lensing law or covariant field equation follows from the finite hypotheses. Those are the admission tests for a physical operator.</div>
+  <h2 style="margin-top:26px">Sources</h2>
+  <ol id="refList" class="caption" style="font-size:13px;color:var(--ink2);line-height:1.6"></ol>
+</section>
+
+</main>
+<footer class="wrap">Paper: <em>The Ledger Outlives the Metric</em>, full research edition 6, Jeromie Beasley, 24 September 2026. Compound Eye concept and instrument: Jeromie N. Beasley. Gravity Ledger Mixer v1.0, 25 September 2026. Interactive model calculations; no experimental feed.</footer>
+
+<script>
+/* ===== Gravity Ledger Mixer: shared core ===== */
+'use strict';
+const CSS = getComputedStyle(document.documentElement);
+const C = {};
+['bg','panel','line','ink','ink2','muted','dim','gold','teal','violet','red','blue','green','orange','pos','neg','rec','null'].forEach(k => C[k] = CSS.getPropertyValue('--' + k).trim());
+const MONO = 'ui-monospace,SFMono-Regular,Menlo,Consolas,monospace';
+const SERIF = 'Georgia,"Iowan Old Style",Palatino,serif';
+const SANS = 'system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif';
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const lerp = (a, b, t) => a + (b - a) * t;
+const TAU = Math.PI * 2;
+
+/* ---- global clock and lens registry (the recorder can freeze time) ---- */
+const GM = {
+  lenses: {}, order: [], active: null, frozen: null, t0: performance.now(),
+  calm: window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches,
+  now() { return this.frozen != null ? this.frozen : (performance.now() - this.t0) / 1000; },
+  freeze(t) { this.frozen = t; }, thaw() { this.frozen = null; },
+  add(id, lens) { this.lenses[id] = lens; this.order.push(id); },
+  show(id) {
+    if (!this.lenses[id]) id = this.order[0];
+    this.active = id;
+    $$('.lens').forEach(s => s.classList.toggle('active', s.id === 'lens-' + id));
+    $$('nav.tabs button').forEach(b => b.classList.toggle('active', b.dataset.lens === id));
+    const L = this.lenses[id];
+    if (L && !L._init) { L._init = true; L.init && L.init(); }
+    requestAnimationFrame(() => { Stage.resizeAll(); L && L.draw && L.draw(this.now()); });
+    try { history.replaceState(null, '', '#' + id); } catch (e) {}
+  },
+  frame() {
+    const L = this.lenses[this.active];
+    if (L && L.draw && L.animated) L.draw(this.now());
+  }
+};
+function loop() { GM.frame(); requestAnimationFrame(loop); }
+
+/* ---- HiDPI canvas stage ---- */
+class Stage {
+  constructor(canvas, aspect) {
+    this.c = canvas; this.ctx = canvas.getContext('2d'); this.aspect = aspect || 0.6;
+    this.W = 600; this.H = 360; Stage.all.push(this); this.resize();
+  }
+  resize() {
+    const w = Math.max(200, Math.round(this.c.clientWidth || this.c.parentElement.clientWidth || 600));
+    const ar = typeof this.aspect === 'function' ? this.aspect(w) : this.aspect;
+    const h = Math.round(w * ar);
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    if (this.c.width !== Math.round(w * dpr) || this.c.height !== Math.round(h * dpr)) {
+      this.c.width = Math.round(w * dpr); this.c.height = Math.round(h * dpr);
+      this.c.style.height = h + 'px';
+    }
+    this.W = w; this.H = h; this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  clear(bg) { const x = this.ctx; x.save(); x.setTransform(1, 0, 0, 1, 0, 0); x.clearRect(0, 0, this.c.width, this.c.height); x.restore(); if (bg) { x.fillStyle = bg; x.fillRect(0, 0, this.W, this.H); } }
+  static resizeAll() { Stage.all.forEach(s => { if (s.c.offsetParent !== null) s.resize(); }); }
+}
+Stage.all = [];
+let _rz; window.addEventListener('resize', () => { clearTimeout(_rz); _rz = setTimeout(() => { Stage.resizeAll(); const L = GM.lenses[GM.active]; L && L.draw && L.draw(GM.now()); }, 80); });
+
+/* ---- drawing helpers ---- */
+function glow(ctx, color, blur) { ctx.shadowColor = color; ctx.shadowBlur = blur; }
+function noglow(ctx) { ctx.shadowBlur = 0; ctx.shadowColor = 'transparent'; }
+function line(ctx, pts, color, w = 2, g = 0, dash) {
+  if (pts.length < 2) return;
+  ctx.save(); ctx.strokeStyle = color; ctx.lineWidth = w; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+  if (dash) ctx.setLineDash(dash); if (g) glow(ctx, color, g);
+  ctx.beginPath(); let pen = false;
+  for (const p of pts) { if (!p || !isFinite(p[0]) || !isFinite(p[1])) { pen = false; continue; } if (!pen) { ctx.moveTo(p[0], p[1]); pen = true; } else ctx.lineTo(p[0], p[1]); }
+  ctx.stroke(); ctx.restore();
+}
+function dot(ctx, x, y, r, color, g = 0, stroke) {
+  ctx.save(); if (g) glow(ctx, color, g); ctx.fillStyle = color; ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); ctx.fill();
+  if (stroke) { ctx.shadowBlur = 0; ctx.strokeStyle = stroke; ctx.lineWidth = 1.5; ctx.stroke(); } ctx.restore();
+}
+function text(ctx, s, x, y, o = {}) {
+  ctx.save(); ctx.fillStyle = o.color || C.ink2; ctx.font = o.font || `12px ${SANS}`;
+  ctx.textAlign = o.align || 'left'; ctx.textBaseline = o.base || 'alphabetic';
+  if (o.glow) glow(ctx, o.color || C.ink, o.glow);
+  if (o.bg) { const m = ctx.measureText(s); const pad = 4; const w = m.width + pad * 2; let bx = x - pad; if (ctx.textAlign === 'center') bx = x - w / 2; if (ctx.textAlign === 'right') bx = x - w + pad; ctx.fillStyle = o.bg; ctx.fillRect(bx, y - 12, w, 16); ctx.fillStyle = o.color || C.ink2; }
+  ctx.fillText(s, x, y); ctx.restore();
+}
+function arrow(ctx, x0, y0, x1, y1, color, w = 2, g = 0, head = 9) {
+  const a = Math.atan2(y1 - y0, x1 - x0);
+  ctx.save(); ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = w; ctx.lineCap = 'round'; if (g) glow(ctx, color, g);
+  ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1 - Math.cos(a) * head * .6, y1 - Math.sin(a) * head * .6); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x1 - head * Math.cos(a - .42), y1 - head * Math.sin(a - .42)); ctx.lineTo(x1 - head * Math.cos(a + .42), y1 - head * Math.sin(a + .42)); ctx.closePath(); ctx.fill(); ctx.restore();
+}
+function rgba(hex, a) { const h = hex.replace('#', ''); const n = parseInt(h.length === 3 ? h.split('').map(c => c + c).join('') : h, 16); return `rgba(${n >> 16 & 255},${n >> 8 & 255},${n & 255},${a})`; }
+
+/* ---- plot frame with linear or log axes ---- */
+class Frame {
+  constructor(ctx, box, xr, yr, o = {}) {
+    Object.assign(this, { ctx, box, xr, yr, xlog: !!o.xlog, ylog: !!o.ylog });
+    const [x, y, w, h] = box; this.x0 = x; this.y0 = y; this.w = w; this.h = h;
+  }
+  tx(v) { const [a, b] = this.xr; const t = this.xlog ? (Math.log10(v) - Math.log10(a)) / (Math.log10(b) - Math.log10(a)) : (v - a) / (b - a); return this.x0 + t * this.w; }
+  ty(v) { const [a, b] = this.yr; const t = this.ylog ? (Math.log10(v) - Math.log10(a)) / (Math.log10(b) - Math.log10(a)) : (v - a) / (b - a); return this.y0 + this.h - t * this.h; }
+  ix(px) { const [a, b] = this.xr; const t = (px - this.x0) / this.w; return this.xlog ? Math.pow(10, Math.log10(a) + t * (Math.log10(b) - Math.log10(a))) : a + t * (b - a); }
+  iy(py) { const [a, b] = this.yr; const t = (this.y0 + this.h - py) / this.h; return this.ylog ? Math.pow(10, Math.log10(a) + t * (Math.log10(b) - Math.log10(a))) : a + t * (b - a); }
+  pts(xs, f) { return xs.map(x => { const y = f(x); return (y == null || !isFinite(y)) ? null : [this.tx(x), this.ty(y)]; }); }
+  clip() { const c = this.ctx; c.save(); c.beginPath(); c.rect(this.x0, this.y0, this.w, this.h); c.clip(); }
+  unclip() { this.ctx.restore(); }
+  axes(o = {}) {
+    const c = this.ctx; c.save();
+    c.fillStyle = o.bg || 'rgba(10,19,34,.55)'; c.fillRect(this.x0, this.y0, this.w, this.h);
+    c.strokeStyle = 'rgba(120,150,190,.12)'; c.lineWidth = 1;
+    const xt = o.xticks || ticks(this.xr, this.xlog, o.nx || 6), yt = o.yticks || ticks(this.yr, this.ylog, o.ny || 5);
+    c.beginPath(); xt.forEach(v => { const X = Math.round(this.tx(v)) + .5; c.moveTo(X, this.y0); c.lineTo(X, this.y0 + this.h); });
+    yt.forEach(v => { const Y = Math.round(this.ty(v)) + .5; c.moveTo(this.x0, Y); c.lineTo(this.x0 + this.w, Y); }); c.stroke();
+    c.strokeStyle = 'rgba(120,150,190,.35)'; c.strokeRect(this.x0 + .5, this.y0 + .5, this.w - 1, this.h - 1);
+    c.fillStyle = C.muted; c.font = `10.5px ${MONO}`;
+    const fx = o.fx || (v => fmtTick(v, this.xlog)), fy = o.fy || (v => fmtTick(v, this.ylog));
+    if (!o.noxl) { c.textAlign = 'center'; c.textBaseline = 'top'; xt.forEach(v => c.fillText(fx(v), this.tx(v), this.y0 + this.h + 5)); }
+    if (!o.noyl) { c.textAlign = 'right'; c.textBaseline = 'middle'; yt.forEach(v => c.fillText(fy(v), this.x0 - 6, this.ty(v))); }
+    if (o.xlabel) { c.textAlign = 'center'; c.textBaseline = 'top'; c.fillStyle = C.ink2; c.font = `11.5px ${SANS}`; c.fillText(o.xlabel, this.x0 + this.w / 2, this.y0 + this.h + 21); }
+    if (o.ylabel) { c.save(); c.translate(this.x0 - (o.ylabelOff || 44), this.y0 + this.h / 2); c.rotate(-Math.PI / 2); c.textAlign = 'center'; c.textBaseline = 'bottom'; c.fillStyle = C.ink2; c.font = `11.5px ${SANS}`; c.fillText(o.ylabel, 0, 0); c.restore(); }
+    c.restore();
+  }
+  hline(v, color, dash = [4, 4], w = 1) { line(this.ctx, [[this.x0, this.ty(v)], [this.x0 + this.w, this.ty(v)]], color, w, 0, dash); }
+  vline(v, color, dash = [4, 4], w = 1) { line(this.ctx, [[this.tx(v), this.y0], [this.tx(v), this.y0 + this.h]], color, w, 0, dash); }
+}
+function ticks(r, log, n) {
+  let [a, b] = r; if (a > b) [a, b] = [b, a];
+  if (log) { const out = []; for (let e = Math.ceil(Math.log10(a) - 1e-9); e <= Math.floor(Math.log10(b) + 1e-9); e++) out.push(Math.pow(10, e)); if (out.length > 9) return out.filter((_, i) => i % 2 === 0); return out; }
+  const span = b - a, raw = span / n, mag = Math.pow(10, Math.floor(Math.log10(raw))); const f = raw / mag;
+  const st = (f < 1.5 ? 1 : f < 3.5 ? 2 : f < 7.5 ? 5 : 10) * mag; const out = [];
+  for (let v = Math.ceil(a / st) * st; v <= b + st * 1e-6; v += st) out.push(Math.abs(v) < st * 1e-9 ? 0 : v);
+  return out;
+}
+function fmtTick(v, log) {
+  if (log) { const e = Math.round(Math.log10(v)); return e === 0 ? '1' : e === 1 ? '10' : '10' + sup(e); }
+  if (v === 0) return '0'; const a = Math.abs(v);
+  if (a >= 1e4 || a < 1e-3) return v.toExponential(0).replace('e', 'e'); return +v.toPrecision(4) + '';
+}
+const SUPS = { '-': '⁻', '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹' };
+function sup(n) { return String(n).split('').map(ch => SUPS[ch] || ch).join(''); }
+/* scientific number formatting with unicode exponent */
+function sci(v, d = 3) {
+  if (v == null || !isFinite(v)) return '—';
+  if (v === 0) return '0';
+  const a = Math.abs(v);
+  if (a >= 1e-3 && a < 1e5) { const s = v.toPrecision(d + 1); return (+s).toString().length > s.length ? s : s.replace(/(\.\d*?[1-9])0+$/, '$1').replace(/\.0+$/, ''); }
+  const e = Math.floor(Math.log10(a)); const m = v / Math.pow(10, e);
+  return m.toFixed(d - 1) + '×10' + sup(e);
+}
+function fix(v, d = 4) { return (v == null || !isFinite(v)) ? '—' : (v >= 0 ? '+' : '−') + Math.abs(v).toFixed(d); }
+function sgn(v, d = 3) { if (v == null || !isFinite(v)) return '—'; const s = sci(Math.abs(v), d); return (v > 0 ? '+' : v < 0 ? '−' : '') + s; }
+
+/* ---- complex numbers as [re, im] ---- */
+const cx = {
+  add: (a, b) => [a[0] + b[0], a[1] + b[1]], sub: (a, b) => [a[0] - b[0], a[1] - b[1]],
+  mul: (a, b) => [a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0]],
+  div: (a, b) => { const d = b[0] * b[0] + b[1] * b[1]; return [(a[0] * b[0] + a[1] * b[1]) / d, (a[1] * b[0] - a[0] * b[1]) / d]; },
+  sc: (a, s) => [a[0] * s, a[1] * s], conj: a => [a[0], -a[1]], abs: a => Math.hypot(a[0], a[1]), arg: a => Math.atan2(a[1], a[0]),
+  exp: a => { const e = Math.exp(a[0]); return [e * Math.cos(a[1]), e * Math.sin(a[1])]; },
+  log: a => [Math.log(Math.hypot(a[0], a[1])), Math.atan2(a[1], a[0])],
+  sqrt: a => { const r = Math.hypot(a[0], a[1]); const re = Math.sqrt((r + a[0]) / 2); const im = Math.sign(a[1] || 1) * Math.sqrt(Math.max(0, (r - a[0]) / 2)); return [re, im]; },
+  i: [0, 1], one: [1, 0], zero: [0, 0], of: (re, im = 0) => [re, im]
+};
+/* 2x2 complex matrices as [[a,b],[c,d]] */
+const m2 = {
+  mul: (A, B) => [[cx.add(cx.mul(A[0][0], B[0][0]), cx.mul(A[0][1], B[1][0])), cx.add(cx.mul(A[0][0], B[0][1]), cx.mul(A[0][1], B[1][1]))],
+                  [cx.add(cx.mul(A[1][0], B[0][0]), cx.mul(A[1][1], B[1][0])), cx.add(cx.mul(A[1][0], B[0][1]), cx.mul(A[1][1], B[1][1]))]],
+  sub: (A, B) => A.map((r, i) => r.map((v, j) => cx.sub(v, B[i][j]))), add: (A, B) => A.map((r, i) => r.map((v, j) => cx.add(v, B[i][j]))),
+  sc: (A, s) => A.map(r => r.map(v => cx.sc(v, s))), tr: A => cx.add(A[0][0], A[1][1]),
+  fro: A => Math.sqrt(A.flat().reduce((s, v) => s + v[0] * v[0] + v[1] * v[1], 0)),
+  det: A => cx.sub(cx.mul(A[0][0], A[1][1]), cx.mul(A[0][1], A[1][0]))
+};
+
+/* ---- small real linear algebra ---- */
+function sym2eig(a, b, c) { /* eigenvalues of [[a,b],[b,c]] ascending, with unit eigenvectors */
+  const t = (a + c) / 2, d = Math.hypot((a - c) / 2, b); const l1 = t - d, l2 = t + d;
+  let v1 = Math.abs(b) > 1e-300 ? [b, l1 - a] : (a <= c ? [1, 0] : [0, 1]); const n1 = Math.hypot(v1[0], v1[1]); v1 = [v1[0] / n1, v1[1] / n1];
+  return { l: [l1, l2], v: [v1, [-v1[1], v1[0]]] };
+}
+function jacobiEig(A) { /* symmetric n x n, returns ascending eigenvalues and eigenvectors (columns) */
+  const n = A.length; const a = A.map(r => r.slice()); const V = a.map((r, i) => r.map((_, j) => i === j ? 1 : 0));
+  for (let sweep = 0; sweep < 60; sweep++) {
+    let off = 0; for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) off += a[i][j] * a[i][j];
+    if (off < 1e-26) break;
+    for (let p = 0; p < n; p++) for (let q = p + 1; q < n; q++) {
+      if (Math.abs(a[p][q]) < 1e-300) continue;
+      const th = (a[q][q] - a[p][p]) / (2 * a[p][q]); const t = Math.sign(th || 1) / (Math.abs(th) + Math.sqrt(th * th + 1));
+      const cs = 1 / Math.sqrt(t * t + 1), sn = t * cs;
+      for (let k = 0; k < n; k++) { const akp = a[k][p], akq = a[k][q]; a[k][p] = cs * akp - sn * akq; a[k][q] = sn * akp + cs * akq; }
+      for (let k = 0; k < n; k++) { const apk = a[p][k], aqk = a[q][k]; a[p][k] = cs * apk - sn * aqk; a[q][k] = sn * apk + cs * aqk; }
+      for (let k = 0; k < n; k++) { const vkp = V[k][p], vkq = V[k][q]; V[k][p] = cs * vkp - sn * vkq; V[k][q] = sn * vkp + cs * vkq; }
+    }
+  }
+  const idx = [...Array(n).keys()].sort((i, j) => a[i][i] - a[j][j]);
+  return { l: idx.map(i => a[i][i]), V: idx.map(i => V.map(r => r[i])) };
+}
+/* deterministic random numbers so every viewer sees the same draws */
+function mulberry(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function gauss(r) { let u = 0, v = 0; while (u === 0) u = r(); v = r(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(TAU * v); }
+
+/* ---- slider binding ---- */
+function bindRange(id, onChange, fmt) {
+  const el = document.getElementById(id); const out = document.querySelector(`output[for="${id}"]`);
+  const upd = () => { const v = parseFloat(el.value); if (out) out.textContent = fmt ? fmt(v) : v; onChange(v); };
+  el.addEventListener('input', upd); if (out) out.textContent = fmt ? fmt(parseFloat(el.value)) : el.value;
+  return { el, get v() { return parseFloat(el.value); }, set(v) { el.value = v; if (out) out.textContent = fmt ? fmt(parseFloat(el.value)) : el.value; } };
+}
+function setText(id, s) { const e = document.getElementById(id); if (e) e.textContent = s; }
+function setHTML(id, s) { const e = document.getElementById(id); if (e) e.innerHTML = s; }
+function setNote(id, s, cls) { const e = document.getElementById(id); if (e) { e.textContent = s; e.className = 'note ' + (cls || ''); } }
+function copyText(s, msgEl) {
+  const done = ok => { if (msgEl) { msgEl.textContent = ok ? 'Copied to the clipboard.' : 'Copy was blocked here. The text is selected below; press Ctrl+C or Cmd+C.'; } };
+  try { navigator.clipboard.writeText(s).then(() => done(true), () => done(false)); } catch (e) { done(false); }
+}
+/* drag on a canvas: calls fn(x, y) in CSS pixels while the pointer is down */
+function dragOn(canvas, fn) {
+  let down = false;
+  const at = e => { const r = canvas.getBoundingClientRect(); fn(e.clientX - r.left, e.clientY - r.top, e); };
+  canvas.addEventListener('pointerdown', e => { down = true; canvas.setPointerCapture(e.pointerId); at(e); });
+  canvas.addEventListener('pointermove', e => { if (down) at(e); });
+  canvas.addEventListener('pointerup', () => down = false); canvas.addEventListener('pointercancel', () => down = false);
+}
+/* contour-integral particles: points running around a circle */
+function contourParticles(ctx, cxp, cyp, rp, t, color, n = 18, speed = .35) {
+  for (let k = 0; k < n; k++) {
+    const th = (k / n + t * speed) * TAU; const x = cxp + rp * Math.cos(th), y = cyp - rp * Math.sin(th);
+    dot(ctx, x, y, 1.9, color, 8);
+  }
+}
+/* marching squares on a scalar grid, returns segments in grid coords */
+function marching(F, nx, ny) {
+  const segs = [];
+  for (let j = 0; j < ny - 1; j++) for (let i = 0; i < nx - 1; i++) {
+    const a = F[j * nx + i], b = F[j * nx + i + 1], c = F[(j + 1) * nx + i + 1], d = F[(j + 1) * nx + i];
+    const pts = [];
+    const e = (v0, v1, x0, y0, x1, y1) => { if ((v0 > 0) !== (v1 > 0)) { const t = v0 / (v0 - v1); pts.push([x0 + (x1 - x0) * t, y0 + (y1 - y0) * t]); } };
+    e(a, b, i, j, i + 1, j); e(b, c, i + 1, j, i + 1, j + 1); e(d, c, i, j + 1, i + 1, j + 1); e(a, d, i, j, i, j + 1);
+    if (pts.length === 2) segs.push(pts); else if (pts.length === 4) { segs.push([pts[0], pts[1]]); segs.push([pts[2], pts[3]]); }
+  }
+  return segs;
+}
+/* the unit set of a real symmetric 2x2 form: ellipse, parallel lines or hyperbola, drawn around (ox,oy) with scale s px */
+function drawConic(ctx, ox, oy, s, a, b, c, o = {}) {
+  const E = sym2eig(a, b, c); const [l1, l2] = E.l; const [v1, v2] = E.v; const R = o.R || 3.2;
+  const P = (p, q) => [ox + s * (p * v1[0] + q * v2[0]), oy - s * (p * v1[1] + q * v2[1])];
+  const tol = o.tol || 1e-12 * Math.max(Math.abs(l1), Math.abs(l2), 1e-300);
+  const out = { kind: '', l: [l1, l2] };
+  if (l1 > tol && l2 > tol) { /* ellipse g=1 */
+    const pts = []; for (let k = 0; k <= 160; k++) { const th = k / 160 * TAU; pts.push(P(Math.cos(th) / Math.sqrt(l1), Math.sin(th) / Math.sqrt(l2))); }
+    ctx.save(); ctx.fillStyle = rgba(o.pos || C.pos, .09); ctx.beginPath(); pts.forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1])); ctx.fill(); ctx.restore();
+    line(ctx, pts, o.pos || C.pos, 2.2, 14); out.kind = 'definite';
+  } else if (l1 < -tol && l2 < -tol) {
+    const pts = []; for (let k = 0; k <= 160; k++) { const th = k / 160 * TAU; pts.push(P(Math.cos(th) / Math.sqrt(-l1), Math.sin(th) / Math.sqrt(-l2))); }
+    line(ctx, pts, o.neg || C.neg, 2.2, 14, [6, 4]); out.kind = 'negative definite';
+  } else if (Math.abs(l1) <= tol || Math.abs(l2) <= tol) { /* degenerate: parallel lines along the null eigenvector */
+    const lp = Math.abs(l1) <= tol ? l2 : l1; const nullv = Math.abs(l1) <= tol ? 0 : 1; const q = 1 / Math.sqrt(Math.abs(lp));
+    const along = t => nullv === 0 ? [t, 0] : [0, t]; const off = nullv === 0 ? [0, q] : [q, 0];
+    for (const sg of [1, -1]) { const pts = [-R, R].map(t => { const A = along(t); return P(A[0] + sg * off[0], A[1] + sg * off[1]); }); line(ctx, pts, lp > 0 ? (o.pos || C.pos) : (o.neg || C.neg), 2, 12); }
+    const nl = [-R, R].map(t => { const A = along(t); return P(A[0], A[1]); }); line(ctx, nl, C.null, 2.4, 18);
+    out.kind = 'degenerate';
+  } else { /* hyperbola: l1 < 0 < l2 ; g = +1 branches and g = -1 branches and the null lines */
+    const ap = 1 / Math.sqrt(l2), an = 1 / Math.sqrt(-l1);
+    const br = (sgn, pos) => { const pts = []; for (let k = -80; k <= 80; k++) { const u = k / 80 * 2.4; if (pos) pts.push(P(an * Math.sinh(u), sgn * ap * Math.cosh(u))); else pts.push(P(sgn * an * Math.cosh(u), ap * Math.sinh(u))); } return pts; };
+    line(ctx, br(1, true), o.pos || C.pos, 2.1, 12); line(ctx, br(-1, true), o.pos || C.pos, 2.1, 12);
+    line(ctx, br(1, false), o.neg || C.neg, 1.8, 10, [6, 4]); line(ctx, br(-1, false), o.neg || C.neg, 1.8, 10, [6, 4]);
+    const k = Math.sqrt(-l1 / l2); /* null directions: -|l1| p^2 + l2 q^2 = 0  => q = ± p sqrt(|l1|/l2) */
+    for (const sg of [1, -1]) { const pts = [-R, R].map(t => P(t, sg * t * k)); line(ctx, pts, C.null, 2.2, 18); }
+    out.kind = 'indefinite';
+  }
+  return out;
+}
+
+/* ===== Lens 1: the wall mixer (Theorem 16, Corollaries 16A and 16B) ===== */
+const Chart = {
+  P(x, y) { /* P = (1+zw)^-1 [[1,w],[z,zw]] */
+    const z = [x, y], w = [x, y * y]; const zw = cx.mul(z, w); const s = cx.add([1, 0], zw); const is = cx.div([1, 0], s);
+    return [[is, cx.mul(w, is)], [cx.mul(z, is), cx.mul(zw, is)]];
+  },
+  D(x, y, h = 1e-6) { /* central differences of the exact P */
+    const dx = m2.sc(m2.sub(this.P(x + h, y), this.P(x - h, y)), 1 / (2 * h));
+    const dy = m2.sc(m2.sub(this.P(x, y + h), this.P(x, y - h)), 1 / (2 * h));
+    return [dx, dy];
+  },
+  metric(x, y) { /* g = Re{ sym(dz dw) / (1+zw)^2 } with dz = (1, i), dw = (1, 2iy) : closed form */
+    const z = [x, y], w = [x, y * y]; const s = cx.add([1, 0], cx.mul(z, w)); const f = cx.div([1, 0], cx.mul(s, s));
+    const g11 = f[0], g12 = -(2 * y + 1) / 2 * f[1], g22 = -2 * y * f[0];
+    return [g11, g12, g22];
+  },
+  omega(x, y) { const [Dx, Dy] = this.D(x, y); const P = this.P(x, y); const com = m2.sub(m2.mul(Dx, Dy), m2.mul(Dy, Dx)); const t = m2.tr(m2.mul(P, com)); return cx.mul([0, -1], t)[0]; },
+  overlap(x, y, h) { if (Math.abs(y + h) >= 0.25) return NaN; return m2.tr(m2.mul(this.P(x, y), this.P(x, y + h)))[0] - 1; },
+  dP(x, y) { const [, Dy] = this.D(x, y); return [m2.fro(Dy), m2.fro(m2.mul(Dy, Dy))]; },
+  l1: y => 2 + y / 10, l2: y => 5 + y / 5
+};
+
+const WallEyes = [
+  { id: 'det', name: 'Metric eye', sym: 'det g', color: C.blue, grade: ['T', 'L', 'N'], theorem: 'Theorem 16',
+    f: (x, y) => { const g = Chart.metric(x, y); return g[0] * g[2] - g[1] * g[1]; },
+    formula: 'det g(0, y) = −2y / (1 − y³)⁴', text: 'Positive before the wall, zero on it, negative after. One real equation, so the zero set is a curve: here the whole line y = 0.' },
+  { id: 'gyy', name: 'Null-direction eye', sym: 'g_yy', color: C.orange, grade: ['T', 'N'], theorem: 'Theorem 16',
+    f: (x, y) => Chart.metric(x, y)[2], formula: 'g_yy(0, y) = −2y / (1 − y³)²', text: 'The dial direction itself. It goes null at y = 0 and negative after, while g_xx stays positive.' },
+  { id: 'N', name: 'Count eye', sym: 'N', color: C.green, grade: ['T', 'N'], theorem: 'Theorem 13',
+    f: () => 1, formula: 'N = (1/2πi) ∮ Tr(z − H)⁻¹ dz = 1', text: 'The contour count is an integer and continuous, so it cannot move while the contour stays in the resolvent set.' },
+  { id: 'Z', name: 'Ledger eye', sym: 'Z', color: C.teal, grade: ['T', 'N'], theorem: 'Theorem 16',
+    f: (x, y) => Math.log(Chart.l1(y)), formula: 'Z = log(2 + y/10)', text: 'The selected trace-log changes smoothly through the wall. It is a genuinely moving record, not a constant.' },
+  { id: 'gap', name: 'Spectral eye', sym: 'λ₂ − λ₁', color: '#d8e6fb', grade: ['T'], theorem: 'Theorem 16',
+    f: (x, y) => Chart.l2(y) - Chart.l1(y), formula: 'λ₂ − λ₁ = 3 + y/10', text: 'The eigenvalues never meet, so this metric wall is not an exceptional point.' },
+  { id: 'om', name: 'Curvature eye', sym: 'ω', color: C.violet, grade: ['T', 'N'], theorem: 'Corollary 16B',
+    f: (x, y) => Chart.omega(x, y), formula: 'ω(0, y) = (1 − 2y) / (1 − y³)²', text: 'The real curvature component stays finite and positive across the wall.' },
+  { id: 'Q', name: 'Proxy eye', sym: 'det Q̂', color: C.red, grade: ['T', 'N'], theorem: 'Corollary 16B',
+    f: (x, y) => { const g = Chart.metric(x, y); const o = Chart.omega(x, y); return g[0] * g[2] - g[1] * g[1] - o * o / 4; },
+    formula: 'det Q̂(0, y) = −(1 + 2y)² / [4(1 − y³)⁴]', text: 'The Hermitian proxy is indefinite on both sides, with det Q̂ = −1/4 on the wall. The proxy wall and the metric wall are different walls.' },
+  { id: 'ov', name: 'Cap eye', sym: 'overlap − 1', color: C.gold, grade: ['T', 'N'], theorem: 'Corollary 16A',
+    f: (x, y, h) => Chart.overlap(x, y, h), formula: 'h²(2y + h) / [(1 − y³)(1 − (y + h)³)]', text: 'The overlap with a step h climbs above the rank cap exactly when 2y + h > 0.' },
+  { id: 'dp', name: 'Motion eye', sym: '‖∂yP‖', color: '#f39ad9', grade: ['T', 'N'], theorem: 'Theorem 16',
+    f: (x, y) => Chart.dP(x, y)[0], formula: '∂yP(0, 0) = [[0, 0], [i, 0]], (∂yP)² = 0', text: 'On the wall the projector still moves along the null direction. Outside the self-adjoint class a null direction does not freeze P.' }
+];
+
+GM.add('mixer', (() => {
+  let map, cone, led, scope, cross, heat = null, heatSegs = [], isoSegs = [];
+  const st = { x: 0, y: -0.12, h: 0.05, speed: 0.6, playing: false, t0: 0, on: {}, solo: null, trials: [] };
+  WallEyes.forEach(e => st.on[e.id] = !['gap', 'dp'].includes(e.id));
+  const YS = Array.from({ length: 241 }, (_, i) => -0.249 + 0.498 * i / 240);
+  let traces = {};
+  let sY, sX, sH, sSp;
+  function recompute() { traces = {}; WallEyes.forEach(e => { traces[e.id] = YS.map(y => e.f(st.x, y, st.h)); }); }
+  function visible(e) { return st.solo ? st.solo === e.id : st.on[e.id]; }
+  function buildHeat() {
+    const n = 150; const F = new Float64Array(n * n); heat = document.createElement('canvas'); heat.width = n; heat.height = n;
+    const hx = heat.getContext('2d'); const img = hx.createImageData(n, n);
+    for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) {
+      const x = -0.25 + 0.5 * (i + .5) / n, y = 0.25 - 0.5 * (j + .5) / n; const g = Chart.metric(x, y); const d = g[0] * g[2] - g[1] * g[1];
+      F[j * n + i] = d; const a = Math.tanh(Math.abs(d) * 5); const k = (j * n + i) * 4;
+      const col = d > 0 ? [124, 186, 255] : [255, 141, 152];
+      img.data[k] = 10 + col[0] * a * .42; img.data[k + 1] = 18 + col[1] * a * .42; img.data[k + 2] = 34 + col[2] * a * .42; img.data[k + 3] = 255;
+    }
+    hx.putImageData(img, 0, 0);
+    heatSegs = marching(F, n, n).map(s => s.map(p => [-0.25 + 0.5 * (p[0] + .5) / n, 0.25 - 0.5 * (p[1] + .5) / n]));
+    isoSegs = [];
+    [-0.3, -0.2, -0.1, 0.1, 0.2, 0.3].forEach(lv => { const G = F.map(v => v - lv); isoSegs.push({ lv, segs: marching(G, n, n).map(s => s.map(p => [-0.25 + 0.5 * (p[0] + .5) / n, 0.25 - 0.5 * (p[1] + .5) / n])) }); });
+  }
+  function eyesUI() {
+    const box = $('#wEyes'); box.innerHTML = '';
+    WallEyes.forEach(e => {
+      const row = document.createElement('div'); row.className = 'eye'; row.id = 'eye-' + e.id; row.style.color = e.color;
+      row.innerHTML = `<input type="checkbox" id="chk-${e.id}" aria-label="${e.name}"><div><b style="color:${e.color}">${e.name}</b><small id="ev-${e.id}">${e.sym}</small></div><button class="small" data-solo="${e.id}">Solo</button>`;
+      box.appendChild(row);
+      const cb = row.querySelector('input'); cb.checked = st.on[e.id];
+      cb.addEventListener('change', () => { st.on[e.id] = cb.checked; st.solo = null; syncEyes(); draw(); });
+      row.querySelector('button').addEventListener('click', () => { st.solo = st.solo === e.id ? null : e.id; syncEyes(); draw(); });
+    });
+    const cards = $('#wEyeCards'); cards.innerHTML = '';
+    WallEyes.forEach(e => {
+      const d = document.createElement('div'); d.className = 'ecard'; d.tabIndex = 0; d.setAttribute('role', 'button');
+      d.innerHTML = `<div class="kick" style="color:${e.color}">${e.name}</div><h4>${e.theorem}: ${e.sym}</h4><div class="f">${e.formula}</div><p>${e.text}</p><div class="badges">${e.grade.map(g => `<span class="badge b-${g}">${{ T: 'written proof', L: 'Lean algebra', N: 'independent check' }[g]}</span>`).join('')}</div>`;
+      const act = () => { st.solo = st.solo === e.id ? null : e.id; syncEyes(); draw(); $('#wScope').scrollIntoView({ behavior: GM.calm ? 'auto' : 'smooth', block: 'center' }); };
+      d.addEventListener('click', act); d.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); act(); } });
+      cards.appendChild(d);
+    });
+    const xs = $('#wXeye'), ys = $('#wYeye');
+    WallEyes.forEach(e => { xs.add(new Option('X: ' + e.name + ' (' + e.sym + ')', e.id)); ys.add(new Option('Y: ' + e.name + ' (' + e.sym + ')', e.id)); });
+    xs.value = 'det'; ys.value = 'Z'; xs.addEventListener('change', draw); ys.addEventListener('change', draw);
+  }
+  function syncEyes() {
+    WallEyes.forEach(e => { const r = $('#eye-' + e.id); r.classList.toggle('off', !visible(e)); r.querySelector('input').checked = st.on[e.id]; r.querySelector('button').classList.toggle('active', st.solo === e.id); });
+  }
+  function init() {
+    map = new Stage($('#wMap'), 1); cone = new Stage($('#wCone'), 1); led = new Stage($('#wLedger'), 1);
+    scope = new Stage($('#wScope'), w => w < 600 ? 0.62 : 0.34); cross = new Stage($('#wCross'), 0.78);
+    buildHeat(); eyesUI();
+    sY = bindRange('wY', v => { st.y = v; draw(); }, v => v.toFixed(3));
+    sX = bindRange('wX', v => { st.x = v; recompute(); draw(); }, v => v.toFixed(3));
+    sH = bindRange('wH', v => { st.h = v; traces.ov = YS.map(y => Chart.overlap(st.x, y, st.h)); draw(); }, v => v.toFixed(3));
+    sSp = bindRange('wSpeed', v => { st.speed = v; }, v => v.toFixed(2) + '×');
+    st.y = sY.v; st.x = sX.v; st.h = sH.v; st.speed = sSp.v;
+    $('#wPlay').addEventListener('click', () => { st.playing = !st.playing; st.t0 = GM.now() - Math.asin(clamp(st.y / 0.24, -1, 1)) / st.speed; $('#wPlay').textContent = st.playing ? 'Pause the sweep' : 'Sweep across the wall'; $('#wPlay').classList.toggle('active', st.playing); });
+    $('#wWall').addEventListener('click', () => { st.playing = false; $('#wPlay').textContent = 'Sweep across the wall'; $('#wPlay').classList.remove('active'); st.y = 0; sY.set(0); draw(); });
+    $('#wAll').addEventListener('click', () => { WallEyes.forEach(e => st.on[e.id] = true); st.solo = null; syncEyes(); draw(); });
+    $('#wNone').addEventListener('click', () => { WallEyes.forEach(e => st.on[e.id] = false); st.solo = null; syncEyes(); draw(); });
+    $('#wScale').addEventListener('change', draw);
+    dragOn($('#wMap'), (px, py) => { const f = mapFrame(); const x = clamp(f.ix(px), -0.2, 0.2), y = clamp(f.iy(py), -0.24, 0.24); st.x = Math.round(x * 1000) / 1000; st.y = Math.round(y * 1000) / 1000; sX.set(st.x); sY.set(st.y); recompute(); draw(); });
+    $('#wSnap').addEventListener('click', () => { st.trials.push({ opened: new Date().toISOString(), prediction: $('#wPred').value.trim(), before: snapshot(), after: null, observation: '' }); renderTrials('Trial opened with a snapshot of every eye.'); });
+    $('#wClose').addEventListener('click', () => { const t = st.trials[st.trials.length - 1]; if (!t) { renderTrials('Open a trial first.'); return; } t.after = snapshot(); t.observation = $('#wObs').value.trim(); t.closed = new Date().toISOString(); renderTrials('Trial closed with the new readings.'); });
+    $('#wCopy').addEventListener('click', () => { copyText(JSON.stringify({ mixer: 'Gravity Ledger Mixer v1.0', lens: 'wall', trials: st.trials }, null, 1), $('#wMsg')); });
+    recompute(); syncEyes();
+    GM.lenses.mixer.animated = true;
+  }
+  function snapshot() { const o = { x: st.x, y: st.y, h: st.h }; WallEyes.forEach(e => o[e.sym] = +e.f(st.x, st.y, st.h).toPrecision(8)); return o; }
+  function renderTrials(msg) {
+    $('#wMsg').textContent = msg || ''; const box = $('#wTrials'); box.innerHTML = '';
+    st.trials.slice().reverse().forEach((t, i) => {
+      const d = document.createElement('div'); d.className = 'trial';
+      const b = t.before, a = t.after;
+      d.innerHTML = `<div class="when">trial ${st.trials.length - i} · ${t.opened.slice(11, 19)} UTC</div><div><b>Predicted:</b> ${esc(t.prediction) || '—'}</div><div class="mono" style="font-size:11.5px;color:var(--ink2)">before y=${b.y} det g=${sgn(b['det g'])} Z=${b.Z.toFixed(6)}${a ? ` → after y=${a.y} det g=${sgn(a['det g'])} Z=${a.Z.toFixed(6)}` : ''}</div>${t.observation ? `<div><b>Observed:</b> ${esc(t.observation)}</div>` : ''}`;
+      box.appendChild(d);
+    });
+  }
+  const esc = s => s.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+  function mapFrame() { const W = map.W, H = map.H; const m = Math.min(W, H) - 56; return new Frame(map.ctx, [(W - m) / 2 + 10, 34, m, m - 12], [-0.25, 0.25], [-0.25, 0.25]); }
+  function drawMap(t) {
+    const x = map.ctx; map.clear(); const f = mapFrame();
+    f.axes({ nx: 4, ny: 4, xlabel: 'chart x', fx: v => v.toFixed(2), fy: v => v.toFixed(2) });
+    f.clip(); x.imageSmoothingEnabled = true; x.drawImage(heat, f.x0, f.y0, f.w, f.h);
+    isoSegs.forEach(({ lv, segs }) => segs.forEach(s => line(x, s.map(p => [f.tx(p[0]), f.ty(p[1])]), lv > 0 ? rgba(C.blue, .35) : rgba(C.red, .35), 1)));
+    const pulse = GM.calm ? 1 : 0.75 + 0.25 * Math.sin(t * 3);
+    heatSegs.forEach(s => line(x, s.map(p => [f.tx(p[0]), f.ty(p[1])]), C.gold, 2.4, 16 * pulse));
+    line(x, [[f.tx(st.x), f.y0], [f.tx(st.x), f.y0 + f.h]], rgba(C.ink, .18), 1, 0, [3, 5]);
+    f.unclip();
+    text(x, 'det g > 0 · definite', f.x0 + 8, f.y0 + f.h - 10, { color: C.blue, font: `11px ${MONO}` });
+    text(x, 'det g < 0 · indefinite', f.x0 + 8, f.y0 + 16, { color: C.red, font: `11px ${MONO}` });
+    text(x, 'wall', f.x0 + f.w - 8, f.ty(0) - 6, { color: C.gold, align: 'right', font: `bold 11px ${MONO}` });
+    dot(x, f.tx(st.x), f.ty(st.y), 6, '#fff', 18, C.gold);
+  }
+  function drawCone(t) {
+    const x = cone.ctx; cone.clear(); const W = cone.W, H = cone.H; const ox = W / 2, oy = H / 2 + 4; const s = Math.min(W, H) * 0.15;
+    x.save(); x.strokeStyle = 'rgba(120,150,190,.18)'; x.lineWidth = 1; x.beginPath(); x.moveTo(20, oy); x.lineTo(W - 20, oy); x.moveTo(ox, 40); x.lineTo(ox, H - 16); x.stroke(); x.restore();
+    text(x, 'dx', W - 24, oy - 6, { color: C.muted, font: `11px ${MONO}`, align: 'right' }); text(x, 'dy', ox + 6, 52, { color: C.muted, font: `11px ${MONO}` });
+    const g = Chart.metric(st.x, st.y); const E = sym2eig(g[0], g[1], g[2]); const mx = Math.max(Math.abs(E.l[0]), Math.abs(E.l[1]));
+    x.save(); x.beginPath(); x.rect(4, 34, W - 8, H - 64); x.clip();
+    const out = drawConic(x, ox, oy, s, g[0] / mx, g[1] / mx, g[2] / mx, { R: 6, tol: 1e-9 });
+    x.restore();
+    const [, Dy] = Chart.D(st.x, st.y); const mv = m2.fro(Dy);
+    const L = s * 1.15 * (GM.calm ? 1 : 0.92 + 0.08 * Math.sin(t * 2.4));
+    arrow(x, ox, oy, ox, oy - L, '#f39ad9', 2.2, 12);
+    text(x, '∂yP', ox + 8, oy - L + 8, { color: '#f39ad9', font: `bold 11px ${MONO}` });
+    const lab = { definite: ['positive definite', C.blue], degenerate: ['null direction · the wall', C.gold], indefinite: ['indefinite · two null lines', C.red] }[out.kind] || [out.kind, C.ink2];
+    text(x, lab[0], W / 2, H - 12, { color: lab[1], align: 'center', font: `bold 12px ${SANS}` });
+    text(x, `‖∂yP‖ = ${mv.toFixed(3)}`, W - 12, 52, { color: C.muted, align: 'right', font: `11px ${MONO}` });
+  }
+  function drawLedger(t) {
+    const x = led.ctx; led.clear(); const W = led.W, H = led.H;
+    const fw = W - 50, fh = H - 76, half = 4.8 * fh / fw / 2;
+    const f = new Frame(x, [34, 40, fw, fh], [1.1, 5.9], [-half, half]);
+    f.axes({ nx: 5, ny: 4, xlabel: 'Re λ', fy: v => v.toFixed(1) });
+    f.hline(0, rgba(C.ink, .25), [2, 3]);
+    const l1 = Chart.l1(st.y), l2 = Chart.l2(st.y);
+    const cxp = f.tx(2), cyp = f.ty(0), rp = f.tx(2.4) - f.tx(2);
+    const ry = rp;
+    x.save(); glow(x, C.green, 14); x.strokeStyle = rgba(C.green, .85); x.lineWidth = 2; x.beginPath(); x.arc(cxp, cyp, rp, 0, TAU); x.stroke(); x.restore();
+    const NQ = 64; const cyc = GM.calm ? 1 : ((t * 0.28) % 1.25); const upto = Math.min(NQ, Math.floor(clamp(cyc, 0, 1) * NQ));
+    let Zp = [0, 0];
+    for (let j = 0; j < NQ; j++) {
+      const th = TAU * j / NQ; const z = [2 + 0.4 * Math.cos(th), 0.4 * Math.sin(th)]; const dz = [-0.4 * Math.sin(th) * TAU / NQ, 0.4 * Math.cos(th) * TAU / NQ];
+      const trR = cx.add(cx.div([1, 0], cx.sub(z, [l1, 0])), cx.div([1, 0], cx.sub(z, [l2, 0])));
+      const term = cx.mul(cx.mul(cx.log(z), trR), dz);
+      if (j < upto) { Zp = cx.add(Zp, term); }
+      const px = cxp + rp * Math.cos(th), py = cyp - ry * Math.sin(th);
+      if (j < upto) dot(x, px, py, 2.1, C.teal, 8); else dot(x, px, py, 1.2, rgba(C.teal, .35));
+    }
+    Zp = cx.div(Zp, [0, TAU]);
+    dot(x, f.tx(l1), cyp, 6.5, C.green, 20, '#fff'); dot(x, f.tx(l2), cyp, 6, rgba(C.ink, .7), 6);
+    text(x, `λ₁ = ${l1.toFixed(4)}`, f.tx(l1), cyp + rp + 18, { color: C.green, align: 'center', font: `11px ${MONO}` });
+    text(x, `λ₂ = ${l2.toFixed(4)}`, f.tx(l2), cyp + 24, { color: C.ink2, align: 'center', font: `11px ${MONO}` });
+    text(x, 'contour: centre 2, radius 0.4', f.x0 + 6, f.y0 + 16, { color: C.muted, font: `10.5px ${MONO}` });
+    text(x, `running ∮ log z Tr R dz / 2πi = ${Zp[0].toFixed(6)}`, f.x0 + 6, f.y0 + f.h - 26, { color: C.teal, font: `11px ${MONO}` });
+    text(x, `log λ₁ = ${Math.log(l1).toFixed(6)}   (${upto}/${NQ} nodes)`, f.x0 + 6, f.y0 + f.h - 10, { color: C.ink2, font: `11px ${MONO}` });
+  }
+  function drawScope() {
+    const x = scope.ctx; scope.clear(); const W = scope.W, H = scope.H; const mode = $('#wScale').value;
+    const f = new Frame(x, [56, 40, W - 76, H - 80], [-0.25, 0.25], [-1.12, 1.12]);
+    f.axes({ nx: W < 600 ? 4 : 10, yticks: [-1, 0, 1], fy: v => v === 0 ? '0' : (v > 0 ? '+' : '−'), xlabel: 'wall dial y', fx: v => v.toFixed(2) });
+    x.save(); x.fillStyle = rgba(C.red, .05); x.fillRect(f.tx(0), f.y0, f.x0 + f.w - f.tx(0), f.h); x.fillStyle = rgba(C.blue, .05); x.fillRect(f.x0, f.y0, f.tx(0) - f.x0, f.h); x.restore();
+    f.hline(0, rgba(C.ink, .3), [2, 3]);
+    f.clip();
+    WallEyes.forEach(e => {
+      if (!visible(e)) return; const arr = traces[e.id]; let mx = 0; arr.forEach(v => { if (isFinite(v)) mx = Math.max(mx, Math.abs(v)); });
+      const norm = v => !isFinite(v) ? NaN : mode === 'sign' ? Math.sign(v) * (Math.abs(v) < 1e-14 ? 0 : 1) * 0.9 : (mx > 0 ? v / mx : 0);
+      line(x, YS.map((y, i) => [f.tx(y), f.ty(norm(arr[i]))]), e.color, 2, 10);
+    });
+    f.unclip();
+    f.vline(0, C.gold, [5, 4], 1.5);
+    const X = f.tx(st.y); line(x, [[X, f.y0], [X, f.y0 + f.h]], '#fff', 1.2, 10);
+    WallEyes.forEach(e => {
+      if (!visible(e)) return; const v = e.f(st.x, st.y, st.h); const arr = traces[e.id]; let mx = 0; arr.forEach(q => { if (isFinite(q)) mx = Math.max(mx, Math.abs(q)); });
+      const nv = mode === 'sign' ? Math.sign(v) * (Math.abs(v) < 1e-14 ? 0 : 1) * 0.9 : (mx > 0 ? v / mx : 0);
+      if (isFinite(nv)) dot(x, X, f.ty(nv), 4, e.color, 12, '#fff');
+    });
+    text(x, 'before the wall', f.x0 + 8, f.y0 + 14, { color: C.blue, font: `11px ${MONO}` });
+    text(x, 'after the wall', f.x0 + f.w - 8, f.y0 + 14, { color: C.red, font: `11px ${MONO}`, align: 'right' });
+  }
+  function drawCross() {
+    const x = cross.ctx; cross.clear(); const W = cross.W, H = cross.H;
+    const ex = WallEyes.find(e => e.id === $('#wXeye').value), ey = WallEyes.find(e => e.id === $('#wYeye').value);
+    const ax = traces[ex.id], ay = traces[ey.id];
+    const rng = a => { let lo = Infinity, hi = -Infinity; a.forEach(v => { if (isFinite(v)) { lo = Math.min(lo, v); hi = Math.max(hi, v); } }); if (hi - lo < 1e-12) { lo -= 1; hi += 1; } const p = (hi - lo) * 0.08; return [lo - p, hi + p]; };
+    const f = new Frame(x, [62, 14, W - 80, H - 54], rng(ax), rng(ay));
+    f.axes({ nx: 4, ny: 4, xlabel: ex.sym, ylabel: ey.sym, fx: v => sci(v, 2), fy: v => sci(v, 2), ylabelOff: 54 });
+    if (f.xr[0] < 0 && f.xr[1] > 0) f.vline(0, rgba(C.gold, .6), [4, 4]);
+    if (f.yr[0] < 0 && f.yr[1] > 0) f.hline(0, rgba(C.gold, .6), [4, 4]);
+    const pts = YS.map((y, i) => [f.tx(ax[i]), f.ty(ay[i])]);
+    const mid = YS.findIndex(y => y >= 0);
+    line(x, pts.slice(0, mid + 1), C.blue, 2.4, 12); line(x, pts.slice(mid), C.red, 2.4, 12);
+    const vx = ex.f(st.x, st.y, st.h), vy = ey.f(st.x, st.y, st.h); if (isFinite(vx) && isFinite(vy)) dot(x, f.tx(vx), f.ty(vy), 5.5, '#fff', 16, C.gold);
+  }
+  function cards() {
+    const g = Chart.metric(st.x, st.y); const det = g[0] * g[2] - g[1] * g[1];
+    setText('wc-det', sgn(det, 4)); setNote('wn-det', Math.abs(det) < 1e-13 ? 'metric wall' : det > 0 ? 'definite' : 'indefinite', Math.abs(det) < 1e-13 ? 'null' : det > 0 ? 'pos' : 'neg');
+    setText('wc-gyy', sgn(g[2], 4)); setNote('wn-gyy', Math.abs(g[2]) < 1e-13 ? 'null direction' : g[2] > 0 ? 'positive' : 'negative', Math.abs(g[2]) < 1e-13 ? 'null' : g[2] > 0 ? 'pos' : 'neg');
+    setText('wc-N', '1'); setText('wc-Z', Math.log(Chart.l1(st.y)).toFixed(6));
+    setText('wc-gap', (Chart.l2(st.y) - Chart.l1(st.y)).toFixed(4));
+    const o = Chart.omega(st.x, st.y); setText('wc-Q', sgn(det - o * o / 4, 4));
+    const ov = Chart.overlap(st.x, st.y, st.h); setText('wc-ov', isFinite(ov) ? sgn(ov, 4) : 'outside chart');
+    setNote('wn-ov', !isFinite(ov) ? 'y + h leaves the box' : ov > 0 ? 'above the cap' : ov < 0 ? 'below the cap' : 'at the cap', ov > 0 ? 'null' : 'pos');
+    const [a, b] = Chart.dP(st.x, st.y); setText('wc-dp', a.toFixed(3) + ', ' + sci(b, 2)); setNote('wn-dp', b < 1e-6 ? 'moving, square zero' : 'moving', b < 1e-6 ? 'null' : '');
+    WallEyes.forEach(e => { const v = e.f(st.x, st.y, st.h); setText('ev-' + e.id, e.sym + ' = ' + (e.id === 'N' ? '1' : sgn(v, 4))); });
+  }
+  function draw(t = GM.now()) {
+    if (!map) return;
+    if (st.playing) { st.y = Math.round(0.24 * Math.sin((t - st.t0) * st.speed) * 1000) / 1000; sY.set(st.y); }
+    drawMap(t); drawCone(t); drawLedger(t); drawScope(); drawCross(); cards();
+  }
+  return { init, draw, animated: true, st, set(o) { Object.assign(st, o); if (sY) { sY.set(st.y); sX.set(st.x); sH.set(st.h); } recompute(); syncEyes(); draw(); } };
+})());
+
+/* ===== Lens 2: licence and record (Prop 15, GEOWALL-LEDGER-02, SUBGRAV-04) ===== */
+const FB = { GH: [[0.008868895201271149, 0.005092833342556827], [0.005092833342556827, 0.019628284952858496]],
+  GA: [[0.013927474249431162, -0.00521512487541116], [-0.00521512487541116, 0.011644770714448227]],
+  om: [-0.0014914473202103833, 0, -0.005351578030641587], kstar: 0.6271277514757786, klic: 0.6193725121309881, k2: 1.6704907748426572 };
+FB.g = k => [FB.GH[0][0] - k * k * FB.GA[0][0], FB.GH[0][1] - k * k * FB.GA[0][1], FB.GH[1][1] - k * k * FB.GA[1][1]];
+FB.det = k => { const g = FB.g(k); return g[0] * g[2] - g[1] * g[1]; };
+FB.omega = k => FB.om[0] + FB.om[2] * k * k;
+FB.lic = k => 4 * FB.det(k) - FB.omega(k) ** 2;
+/* SUBGRAV-04 gate log: seed, wall of block A, wall of block B (seed 9 had none in [0, 1]) */
+const SUBGRAV = [[0, .550283095, .570426850], [1, .429780125, .449823039], [2, .533584752, .550401212], [3, 1.176321115, 1.015659546], [4, .924358773, .919750626], [5, .919183640, 1.121619539], [6, .909182122, .976272947], [7, .961467426, 1.210078293], [8, .955771967, .952167222], [9, null, null], [10, 1.043946346, .802108236], [11, 1.189515276, 1.031839253], [12, .785015283, .692354672], [13, .704414389, .668878604], [14, .817813029, .756864252], [15, .466034576, .524268829], [16, .597991940, .645272870], [17, 1.020244681, .997844290], [18, .600120545, .582315824], [19, .813173153, .965436045]];
+
+GM.add('licence', (() => {
+  let strip, cone, led, sub, sK, sB; const st = { k: 0.45, playing: false, t0: 0 };
+  const KS = Array.from({ length: 401 }, (_, i) => 2 * i / 400);
+  let klic2 = null; /* where the radicand turns positive again past the second root */
+  function region(k) {
+    const g = FB.g(k), d = FB.det(k), L = FB.lic(k);
+    if (d > 0 && g[0] > 0) return L >= 0 ? ['protected', 'pos', 'Hermitian proxy positive'] : ['licence failed', 'null', 'metric still definite'];
+    if (d > 0 && g[0] < 0) return ['negative definite', 'neg', 'det g > 0 again, both directions negative'];
+    if (Math.abs(d) < 1e-12) return ['metric wall', 'null', 'det g = 0'];
+    return ['indefinite', 'neg', 'two null directions'];
+  }
+  function init() {
+    strip = new Stage($('#lStrip'), w => w < 700 ? 1.2 : 0.4); cone = new Stage($('#lCone'), 0.85); led = new Stage($('#lLedger'), 0.85); sub = new Stage($('#lSub'), w => w < 600 ? 0.85 : 0.32);
+    for (let k = FB.k2; k < 2; k += 1e-4) { if (FB.lic(k) > 0) { klic2 = k; break; } }
+    sK = bindRange('lK', v => { st.k = v; draw(); }, v => v.toFixed(4));
+    sB = bindRange('lB', v => { st.b = v; draw(); }, v => v.toFixed(2)); st.b = sB.v; st.k = sK.v;
+    $('#lPlay').addEventListener('click', () => { st.playing = !st.playing; st.t0 = GM.now() - st.k / 0.25; $('#lPlay').classList.toggle('active', st.playing); $('#lPlay').textContent = st.playing ? 'Pause' : 'Sweep κ'; });
+    const jump = k => { st.playing = false; $('#lPlay').classList.remove('active'); $('#lPlay').textContent = 'Sweep κ'; st.k = k; sK.set(k); draw(); };
+    $('#lLic').addEventListener('click', () => jump(+FB.klic.toFixed(4)));
+    $('#lMet').addEventListener('click', () => jump(+FB.kstar.toFixed(4)));
+    $('#lNeg').addEventListener('click', () => jump(1.9));
+    dragOn($('#lStrip'), (px, py) => { const [f, z] = stripFrames(); const inZ = px >= z.x0 && px <= z.x0 + z.w && py >= z.y0 && py <= z.y0 + z.h; const k = inZ ? z.ix(px) : f.ix(px); st.k = clamp(Math.round(k / 0.0005) * 0.0005, 0, 2); sK.set(st.k); draw(); });
+  }
+  function stripFrames() {
+    const W = strip.W, H = strip.H; const narrow = W < 700;
+    if (narrow) { const h1 = (H - 110) * 0.5; return [new Frame(strip.ctx, [64, 40, W - 84, h1], [0, 2], [-1, 1]), new Frame(strip.ctx, [64, 40 + h1 + 58, W - 84, h1], [FB.kstar - 0.03, FB.kstar + 0.01], [-3.2, 5.2])]; }
+    const w1 = (W - 150) * 0.6; return [new Frame(strip.ctx, [64, 40, w1, H - 84], [0, 2], [-1, 1]), new Frame(strip.ctx, [64 + w1 + 70, 40, W - 64 - w1 - 70 - 20, H - 84], [FB.kstar - 0.03, FB.kstar + 0.01], [-3.2, 5.2])];
+  }
+  function stripFrame() { return stripFrames()[0]; }
+  function drawStrip(t) {
+    const x = strip.ctx; strip.clear(); const [f, z] = stripFrames(); const narrow = strip.W < 700;
+    const sc = v => Math.sign(v) * Math.log10(1 + Math.abs(v) / 1e-6); /* symmetric log, linear below 1e-6 */
+    const ymax = sc(2e-3); f.yr = [-ymax, ymax];
+    f.axes({ nx: strip.W < 700 ? 5 : 10, yticks: [-sc(1e-3), -sc(1e-5), 0, sc(1e-5), sc(1e-3)], fy: v => { const a = (Math.pow(10, Math.abs(v)) - 1) * 1e-6; return v === 0 ? '0' : (v > 0 ? '+' : '−') + sci(a, 1); }, xlabel: 'dial κ, the whole range (symmetric log scale)', fx: v => v.toFixed(1) });
+    const bands = [[0, FB.klic, C.blue, .07], [FB.klic, FB.kstar, C.gold, .16], [FB.kstar, FB.k2, C.red, .07], [FB.k2, 2, C.violet, .08]];
+    bands.forEach(([a, b, c, al]) => { x.fillStyle = rgba(c, al); x.fillRect(f.tx(a), f.y0, f.tx(b) - f.tx(a), f.h); });
+    f.hline(0, rgba(C.ink, .35), [2, 3]);
+    line(x, KS.map(k => [f.tx(k), f.ty(sc(FB.lic(k)))]), C.red, 2.2, 10);
+    line(x, KS.map(k => [f.tx(k), f.ty(sc(FB.det(k)))]), C.blue, 2.4, 12);
+    line(x, KS.map(k => [f.tx(k), f.ty(sc(FB.omega(k) * 1e-2))]), rgba(C.violet, .8), 1.4, 0, [5, 4]);
+    f.vline(FB.kstar, C.blue, [4, 4], 1.2); f.vline(FB.k2, C.violet, [4, 4], 1.2);
+    text(x, 'walls', f.tx(FB.kstar) + 5, f.y0 + 14, { color: C.gold, font: `10.5px ${MONO}` }); text(x, 'second root', f.tx(FB.k2) + 5, f.y0 + 14, { color: C.violet, font: `10.5px ${MONO}` });
+    const X = f.tx(st.k); line(x, [[X, f.y0], [X, f.y0 + f.h]], '#fff', 1.3, 12);
+    dot(x, X, f.ty(sc(FB.det(st.k))), 5, C.blue, 14, '#fff'); dot(x, X, f.ty(sc(FB.lic(st.k))), 5, C.red, 14, '#fff');
+    const lg = [['det g', C.blue], ['4 det g − ω²', C.red], ['ω / 100', C.violet]];
+    if (strip.W < 700) lg.forEach(([s, c], i) => { const lx = f.x0 + f.w - 262 + i * 90; line(x, [[lx, f.y0 - 10], [lx + 14, f.y0 - 10]], c, 2.4); text(x, s, lx + 18, f.y0 - 6, { color: C.ink2, font: `10px ${MONO}` }); });
+    else lg.forEach(([s, c], i) => { const ly = f.y0 + f.h - 70 + i * 15; line(x, [[f.x0 + 12, ly], [f.x0 + 32, ly]], c, 2.4); text(x, s, f.x0 + 38, ly + 4, { color: C.ink2, font: `11px ${MONO}` }); });
+    text(x, 'protected', f.tx(FB.klic / 2), f.y0 + f.h - 10, { color: C.blue, align: 'center', font: `bold 11px ${SANS}` });
+    text(x, 'indefinite', f.tx((FB.kstar + FB.k2) / 2), f.y0 + f.h - 10, { color: C.red, align: 'center', font: `bold 11px ${SANS}` });
+    text(x, narrow ? 'neg. def.' : 'negative definite', f.tx((FB.k2 + 2) / 2), f.y0 + f.h - 10, { color: C.violet, align: 'center', font: `bold ${narrow ? 10 : 11}px ${SANS}` });
+    /* zoom on the two walls, linear, like the paper's Figure 5 */
+    const zs = Array.from({ length: 161 }, (_, i) => z.xr[0] + (z.xr[1] - z.xr[0]) * i / 160);
+    z.axes({ nx: 4, ny: 4, xlabel: 'κ − κ*, zoomed on the walls', fx: v => (v - FB.kstar).toFixed(3), xticks: [FB.kstar - 0.03, FB.kstar - 0.02, FB.kstar - 0.01, FB.kstar, FB.kstar + 0.01], fy: v => v.toFixed(0) });
+    [[z.xr[0], FB.klic, C.blue, .10], [FB.klic, FB.kstar, C.gold, .16], [FB.kstar, z.xr[1], C.red, .10]].forEach(([a, b, c, al]) => { x.fillStyle = rgba(c, al); x.fillRect(z.tx(a), z.y0, z.tx(b) - z.tx(a), z.h); });
+    z.hline(0, rgba(C.ink, .35), [2, 3]);
+    line(x, zs.map(k => [z.tx(k), z.ty(FB.lic(k) * 1e5)]), C.red, 2.4, 10); line(x, zs.map(k => [z.tx(k), z.ty(FB.det(k) * 1e5)]), C.blue, 2.4, 12);
+    z.vline(FB.klic, C.red, [4, 4], 1.3); z.vline(FB.kstar, C.blue, [4, 4], 1.3);
+    text(x, '×10⁵', z.x0 + 6, z.y0 + 14, { color: C.muted, font: `10.5px ${MONO}` });
+    text(x, 'licence failed,', z.tx((FB.klic + FB.kstar) / 2), z.y0 + 16, { color: C.gold, align: 'center', font: `bold 10.5px ${SANS}` });
+    text(x, 'metric definite', z.tx((FB.klic + FB.kstar) / 2), z.y0 + 30, { color: C.gold, align: 'center', font: `bold 10.5px ${SANS}` });
+    if (st.k >= z.xr[0] && st.k <= z.xr[1]) { const Z = z.tx(st.k); line(x, [[Z, z.y0], [Z, z.y0 + z.h]], '#fff', 1.3, 12); }
+  }
+  function drawCone(t) {
+    const x = cone.ctx; cone.clear(); const W = cone.W, H = cone.H; const ox = W / 2, oy = H / 2 + 8; const s = Math.min(W, H) * 0.2;
+    x.save(); x.strokeStyle = 'rgba(120,150,190,.18)'; x.beginPath(); x.moveTo(16, oy); x.lineTo(W - 16, oy); x.moveTo(ox, 36); x.lineTo(ox, H - 30); x.stroke(); x.restore();
+    const g = FB.g(st.k); const E = sym2eig(g[0], g[1], g[2]); const mx = Math.max(Math.abs(E.l[0]), Math.abs(E.l[1]));
+    x.save(); x.beginPath(); x.rect(4, 30, W - 8, H - 76); x.clip();
+    const o = drawConic(x, ox, oy, s, g[0] / mx, g[1] / mx, g[2] / mx, { R: 6, tol: 2e-6 }); x.restore();
+    const lab = { definite: ['g(v,v) = 1 is an ellipse', C.blue], degenerate: ['on the wall: one null direction', C.gold], indefinite: ['hyperbola: g = +1 solid, g = −1 dashed', C.red], 'negative definite': ['g(v,v) = −1 is an ellipse', C.violet] }[o.kind];
+    text(x, lab[0], W / 2, H - 12, { color: lab[1], align: 'center', font: `bold 12px ${SANS}` });
+    text(x, 't₁', W - 20, oy - 6, { color: C.muted, align: 'right', font: `11px ${MONO}` }); text(x, 't₂', ox + 6, 44, { color: C.muted, font: `11px ${MONO}` });
+    text(x, `eigenvalues ${sgn(E.l[0], 2)}, ${sgn(E.l[1], 2)}`, W / 2, H - 32, { color: C.ink2, align: 'center', font: `11px ${MONO}` });
+  }
+  function drawLedger(t) {
+    const x = led.ctx; led.clear(); const W = led.W, H = led.H;
+    const axY = H - 78; const f = new Frame(x, [24, axY - 10, W - 48, 20], [-40, 40], [-1, 1]);
+    line(x, [[f.x0, axY], [f.x0 + f.w, axY]], 'rgba(120,150,190,.4)', 1);
+    [-40, -20, 0, 20, 40].forEach(v => text(x, v, f.tx(v), axY + 18, { color: C.muted, align: 'center', font: `10.5px ${MONO}` }));
+    [20, -20, 35, -35].forEach(v => dot(x, f.tx(v), axY, 5, rgba(C.ink, .6), 4)); [2, 3].forEach(v => dot(x, f.tx(v), axY, 3.5, C.green, 8));
+    const zw = Math.min(W - 60, 300), zh = Math.min(axY - 90, 150), zx = (W - zw) / 2, zy = 48;
+    x.save(); x.fillStyle = 'rgba(8,16,30,.9)'; x.strokeStyle = rgba(C.green, .45); x.fillRect(zx, zy, zw, zh); x.strokeRect(zx + .5, zy + .5, zw - 1, zh - 1); x.restore();
+    line(x, [[zx + zw / 2, zy + zh], [f.tx(2.5), axY - 4]], rgba(C.green, .35), 1, 0, [3, 3]);
+    const span = 4.0 * zw / zh; const zf = new Frame(x, [zx, zy, zw, zh], [2.5 - span / 2, 2.5 + span / 2], [-2, 2]);
+    const rp = zf.tx(3.7) - zf.tx(2.5);
+    x.save(); glow(x, C.green, 12); x.strokeStyle = C.green; x.lineWidth = 2; x.beginPath(); x.arc(zf.tx(2.5), zf.ty(0), rp, 0, TAU); x.stroke(); x.restore();
+    if (!GM.calm) contourParticles(x, zf.tx(2.5), zf.ty(0), rp, t, C.teal, 16, .3);
+    dot(x, zf.tx(2), zf.ty(0), 5, C.green, 14, '#fff'); dot(x, zf.tx(3), zf.ty(0), 5, C.green, 14, '#fff');
+    text(x, '2', zf.tx(2), zf.ty(0) + 18, { color: C.green, align: 'center', font: `11px ${MONO}` }); text(x, '3', zf.tx(3), zf.ty(0) + 18, { color: C.green, align: 'center', font: `11px ${MONO}` });
+    text(x, 'contour: centre 2.5, radius 1.2', zx + zw / 2, zy - 6, { color: C.muted, align: 'center', font: `10.5px ${MONO}` });
+    text(x, `κ = ${st.k.toFixed(4)}:  N = 2,  Z = log 2 + log 3 = ${Math.log(6).toFixed(6)}`, W / 2, H - 30, { color: C.teal, align: 'center', font: `11.5px ${MONO}` });
+    text(x, 'the base is fixed, so the record is exactly constant', W / 2, H - 12, { color: C.ink2, align: 'center', font: `11px ${SANS}` });
+  }
+  function drawSub() {
+    const x = sub.ctx; sub.clear(); const W = sub.W, H = sub.H;
+    const f = new Frame(x, [64, 40, W - 84, H - 80], [-0.5, 19.5], [0.35, 1.3]);
+    f.axes({ xticks: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18], yticks: [0.4, 0.6, 0.8, 1.0, 1.2], xlabel: 'seed', ylabel: 'wall position κ*', fx: v => v.toFixed(0), fy: v => v.toFixed(1) });
+    SUBGRAV.forEach(([s, a, b]) => {
+      if (a == null) { text(x, 'no wall', f.tx(s), f.ty(0.82), { color: C.red, align: 'center', font: `10px ${MONO}` }); return; }
+      line(x, [[f.tx(s), f.ty(a)], [f.tx(s), f.ty(b)]], rgba(C.ink, .45), 2);
+      dot(x, f.tx(s), f.ty(a), 4.5, C.blue, 10); dot(x, f.tx(s), f.ty(b), 4.5, C.gold, 10);
+    });
+    text(x, '● block A', f.x0 + f.w - 92, f.ty(0.4) + 4, { color: C.blue, align: 'right', font: `11px ${MONO}` }); text(x, '● block B', f.x0 + f.w - 8, f.ty(0.4) + 4, { color: C.gold, align: 'right', font: `11px ${MONO}` });
+  }
+  function cards() {
+    const d = FB.det(st.k), L = FB.lic(st.k), o = FB.omega(st.k); const r = region(st.k);
+    setText('lc-det', sgn(d, 4)); setNote('ln-det', d > 0 ? 'positive' : Math.abs(d) < 1e-12 ? 'zero' : 'negative', d > 0 ? 'pos' : 'neg');
+    setText('lc-lic', sgn(L, 4)); setNote('ln-lic', L >= 0 ? 'radicand holds' : 'radicand fails', L >= 0 ? 'pos' : 'neg');
+    setText('lc-om', sgn(o, 4)); setText('lc-reg', r[0]); setNote('ln-reg', r[2], r[1]);
+    const v = 1, a = 2; setText('lc-block', (v * v / (a - st.b) ** 2).toFixed(4));
+  }
+  function draw(t = GM.now()) {
+    if (!strip) return;
+    if (st.playing) { st.k = Math.round(((t - st.t0) * 0.25 % 2) / 0.0005) * 0.0005; sK.set(st.k); }
+    drawStrip(t); drawCone(t); drawLedger(t); drawSub(); cards();
+  }
+  return { init, draw, animated: true, st, set(o) { Object.assign(st, o); if (sK) sK.set(st.k); draw(); } };
+})());
+
+/* ===== Lens 3: round trip and reciprocity ===== */
+const RT = {
+  V: [[[0.3, 0], [0.5, -0.4]], [[0.5, 0.4], [-0.2, 0]]],
+  H(g) { return [[[1, 1.6 * g], cx.sc([1, 0], 0.55 * Math.exp(0.9 * g))], [cx.mul(cx.sc([1, 0], 0.55 * Math.exp(-0.9 * g)), cx.exp([0, 2 * g])), [-1, -1.6 * g]]]; },
+  solve(g) {
+    const H = this.H(g); const a = H[0][0], b = H[0][1], c = H[1][0], d = H[1][1];
+    const tr2 = cx.sc(cx.add(a, d), .5); const disc = cx.sqrt(cx.add(cx.mul(cx.sc(cx.sub(a, d), .5), cx.sc(cx.sub(a, d), .5)), cx.mul(b, c)));
+    let lp = cx.add(tr2, disc), lm = cx.sub(tr2, disc); if (lp[0] < lm[0]) [lp, lm] = [lm, lp];
+    const rv = l => { const v = [b, cx.sub(l, a)]; const n = Math.hypot(cx.abs(v[0]), cx.abs(v[1])); return [cx.sc(v[0], 1 / n), cx.sc(v[1], 1 / n)]; };
+    const rp = rv(lp), rm = rv(lm);
+    const R = [[rp[0], rm[0]], [rp[1], rm[1]]]; const det = m2.det(R); const idet = cx.div([1, 0], det);
+    const L = [[cx.mul(R[1][1], idet), cx.mul(cx.sc(R[0][1], -1), idet)], [cx.mul(cx.sc(R[1][0], -1), idet), cx.mul(R[0][0], idet)]];
+    const Vr = v => [cx.add(cx.mul(this.V[0][0], v[0]), cx.mul(this.V[0][1], v[1])), cx.add(cx.mul(this.V[1][0], v[0]), cx.mul(this.V[1][1], v[1]))];
+    const dotL = (row, v) => cx.add(cx.mul(row[0], v[0]), cx.mul(row[1], v[1]));
+    const Mpm = dotL(L[0], Vr(rm)), Mmp = dotL(L[1], Vr(rp));
+    const D2 = cx.mul(cx.sub(lp, lm), cx.sub(lp, lm)); const Q = cx.div(cx.mul(Mpm, Mmp), D2);
+    return { lp, lm, Mpm, Mmp, D2, Q };
+  }
+};
+const ROT = [[1e-4, 5.866e-5, 1.283e-13], [3e-4, 1.759e-4, 1.169e-12], [1e-3, 5.863e-4, 1.294e-11], [3e-3, 1.759e-3, 1.166e-10], [1e-2, 5.859e-3, 1.310e-9], [3e-2, 1.749e-2, 1.304e-8], [1e-1, 5.525e-2, 3.089e-7], [2e-1, 9.420e-2, 3.770e-6]];
+
+GM.add('roundtrip', (() => {
+  let wheel, cone, rot; const st = { g: 0, p1: 20, p2: 75, m2: 1, beta: 0, playing: false, t0: 0 }; let S = {};
+  function init() {
+    wheel = new Stage($('#rWheel'), 0.9); cone = new Stage($('#rCone'), 0.9); rot = new Stage($('#rRot'), 0.72);
+    S.g = bindRange('rG', v => { st.g = v; draw(); }, v => v.toFixed(3));
+    S.p1 = bindRange('rP1', v => { st.p1 = v; draw(); }, v => v + '°'); S.p2 = bindRange('rP2', v => { st.p2 = v; draw(); }, v => v + '°');
+    S.m2 = bindRange('rM2', v => { st.m2 = v; draw(); }, v => v.toFixed(2)); S.beta = bindRange('rBeta', v => { st.beta = v; draw(); }, v => v.toFixed(3));
+    Object.keys(S).forEach(k => st[k] = S[k].v);
+    $('#rPlay').addEventListener('click', () => { st.playing = !st.playing; st.t0 = GM.now() - st.g / 0.12; $('#rPlay').classList.toggle('active', st.playing); $('#rPlay').textContent = st.playing ? 'Pause' : 'Open it slowly'; });
+    $('#rAlign').addEventListener('click', () => { st.p2 = st.p1; st.beta = 0; S.p2.set(st.p2); S.beta.set(0); draw(); });
+    $('#rDef').addEventListener('click', () => { st.p1 = 0; st.p2 = 90; st.m2 = 1; st.beta = 1; S.p1.set(0); S.p2.set(90); S.m2.set(1); S.beta.set(1); draw(); });
+  }
+  function drawWheel(t) {
+    const x = wheel.ctx; wheel.clear(); const W = wheel.W, H = wheel.H; const r = RT.solve(st.g); S.r = r;
+    /* energy levels */
+    const top = 40, lx0 = 24, lx1 = W * 0.42;
+    line(x, [[lx0, top + 10], [lx1, top + 10]], C.ink, 2); line(x, [[lx0, top + 72], [lx1, top + 72]], C.ink, 2);
+    text(x, 'E₊', lx1 + 8, top + 14, { color: C.ink, font: `12px ${MONO}` }); text(x, 'E₋', lx1 + 8, top + 76, { color: C.ink, font: `12px ${MONO}` });
+    const ph = GM.calm ? 0 : (t * 0.8) % 1;
+    x.save(); x.strokeStyle = C.blue; x.lineWidth = 2; glow(x, C.blue, 8); x.beginPath(); x.moveTo(lx0 + 40, top + 70); x.quadraticCurveTo(lx0 + 22, top + 41, lx0 + 40, top + 12); x.stroke(); x.restore();
+    x.save(); x.strokeStyle = C.orange; x.lineWidth = 2; glow(x, C.orange, 8); x.beginPath(); x.moveTo(lx1 - 40, top + 12); x.quadraticCurveTo(lx1 - 22, top + 41, lx1 - 40, top + 70); x.stroke(); x.restore();
+    dot(x, lx0 + 40 - 14 * Math.sin(ph * Math.PI), top + 70 - 58 * ph, 3, C.blue, 10); dot(x, lx1 - 40 + 14 * Math.sin(ph * Math.PI), top + 12 + 58 * ph, 3, C.orange, 10);
+    text(x, 'M₊₋', lx0 + 4, top + 45, { color: C.blue, font: `12px ${MONO}` }); text(x, 'M₋₊', lx1 - 36, top + 45, { color: C.orange, font: `12px ${MONO}`, align: 'right' });
+    text(x, `|M₊₋|² = ${(cx.abs(r.Mpm) ** 2).toFixed(3)}   |M₋₊|² = ${(cx.abs(r.Mmp) ** 2).toFixed(3)}`, lx0, top + 100, { color: C.muted, font: `10.5px ${MONO}` });
+    text(x, 'one way: a square, no sign', lx0, top + 116, { color: C.muted, font: `10.5px ${SANS}` });
+    /* phasor circle */
+    const R = Math.min(W * 0.26, (H - 60) * 0.34); const ox = W - R - 30, oy = H * 0.62;
+    x.save(); x.beginPath(); x.arc(ox, oy, R * 1.15, -Math.PI / 2, Math.PI / 2); x.closePath(); x.fillStyle = rgba(C.green, .07); x.fill();
+    x.beginPath(); x.arc(ox, oy, R * 1.15, Math.PI / 2, 3 * Math.PI / 2); x.closePath(); x.fillStyle = rgba(C.red, .07); x.fill(); x.restore();
+    x.save(); x.strokeStyle = 'rgba(120,150,190,.3)'; x.beginPath(); x.arc(ox, oy, R, 0, TAU); x.moveTo(ox - R * 1.2, oy); x.lineTo(ox + R * 1.2, oy); x.moveTo(ox, oy - R * 1.2); x.lineTo(ox, oy + R * 1.2); x.stroke(); x.restore();
+    const ang = v => cx.arg(v); const tip = (a, L) => [ox + L * Math.cos(a), oy - L * Math.sin(a)];
+    const aP = ang(r.Mpm), aM = ang(r.Mmp), aD = ang(r.D2), aQ = ang(r.Q);
+    let p = tip(-aP, R * .75); line(x, [[ox, oy], p], rgba(C.blue, .45), 1.5, 0, [4, 4]); text(x, 'conj M₊₋', p[0] + 4, p[1] + 14, { color: rgba(C.blue, .7), font: `10px ${MONO}` });
+    p = tip(aP, R * .9); arrow(x, ox, oy, p[0], p[1], C.blue, 2.2, 8); text(x, 'M₊₋', p[0] + 5, p[1] - 5, { color: C.blue, font: `11px ${MONO}` });
+    p = tip(aM, R * .9); arrow(x, ox, oy, p[0], p[1], C.orange, 2.2, 8); text(x, 'M₋₊', p[0] + 5, p[1] + 13, { color: C.orange, font: `11px ${MONO}` });
+    p = tip(aD, R * .55); arrow(x, ox, oy, p[0], p[1], rgba(C.ink, .6), 1.6); text(x, 'Δ²', p[0] + 2, p[1] + 16, { color: C.ink2, font: `10.5px ${MONO}` });
+    const qc = r.Q[0] >= 0 ? C.green : C.red; p = tip(aQ, R * 1.08); arrow(x, ox, oy, p[0], p[1], qc, 3.2, 18, 11); text(x, 'Q', p[0] + (p[0] > ox ? 6 : -16), p[1] + 4, { color: qc, font: `bold 14px ${SERIF}` });
+    text(x, 'Re Q > 0', ox + R * .55, oy + R * 1.12 + 14, { color: C.green, align: 'center', font: `10.5px ${MONO}` }); text(x, 'Re Q < 0', ox - R * .55, oy + R * 1.12 + 14, { color: C.red, align: 'center', font: `10.5px ${MONO}` });
+    const deg = v => (v * 180 / Math.PI);
+    let sum = deg(aP) + deg(aM) - deg(aD); if (Math.abs(sum) < 0.05) sum = 0;
+    S.sum = sum;
+  }
+  function pairing() {
+    const u1 = cx.exp([0, st.p1 * Math.PI / 180]), u2 = cx.sc(cx.exp([0, st.p2 * Math.PI / 180]), st.m2);
+    const c = Math.cos(Math.PI * st.beta / 2), s = Math.sin(Math.PI * st.beta / 2);
+    const v = [u1, u2].map(u => cx.add(cx.sc(u, c), cx.sc(cx.conj(u), s))); const u = [u1, u2];
+    const Q = (a, b) => cx.mul(v[a], u[b])[0];
+    const g11 = Q(0, 0), g22 = Q(1, 1), g12 = (Q(0, 1) + Q(1, 0)) / 2;
+    return { u1, u2, g: [g11, g12, g22], im: cx.mul(cx.conj(u1), u2)[1] };
+  }
+  function drawCone() {
+    const x = cone.ctx; cone.clear(); const W = cone.W, H = cone.H; const P = pairing(); S.P = P;
+    /* amplitudes inset */
+    const ix = 64, iy = 104, ir = 42; x.save(); x.strokeStyle = 'rgba(120,150,190,.3)'; x.beginPath(); x.arc(ix, iy, ir, 0, TAU); x.stroke(); x.restore();
+    const tp = (u) => [ix + ir * u[0] / 1.6 * 1.4, iy - ir * u[1] / 1.6 * 1.4];
+    let p = tp(P.u1); arrow(x, ix, iy, p[0], p[1], C.teal, 2, 8); text(x, 'u₁', p[0] + 4, p[1] - 3, { color: C.teal, font: `11px ${MONO}` });
+    p = tp(P.u2); arrow(x, ix, iy, p[0], p[1], C.gold, 2, 8); text(x, 'u₂', p[0] + 4, p[1] - 3, { color: C.gold, font: `11px ${MONO}` });
+    text(x, 'amplitudes', ix, iy + ir + 16, { color: C.muted, align: 'center', font: `10.5px ${SANS}` });
+    const ox = W * 0.62, oy = H * 0.54, s = Math.min(W, H) * 0.17; const [a, b, c] = P.g; const E = sym2eig(a, b, c); const mx = Math.max(Math.abs(E.l[0]), Math.abs(E.l[1]), 1e-9);
+    const cl = ix + ir + 16; x.save(); x.strokeStyle = 'rgba(120,150,190,.18)'; x.beginPath(); x.moveTo(cl, oy); x.lineTo(W - 6, oy); x.moveTo(ox, 58); x.lineTo(ox, H - 30); x.stroke(); x.restore();
+    x.save(); x.beginPath(); x.rect(cl, 56, W - cl - 4, H - 86); x.clip();
+    const o = drawConic(x, ox, oy, s, a / mx, b / mx, c / mx, { R: 6, tol: 1e-6 }); x.restore();
+    const d = a * c - b * b;
+    const lab = Math.abs(d) < 1e-9 * mx * mx ? ['pinched: rank at most one', C.gold] : d < 0 ? ['indefinite: det g < 0', C.red] : a > 0 ? ['definite: det g > 0', C.blue] : ['negative definite', C.violet];
+    text(x, lab[0], ox, H - 12, { color: lab[1], align: 'center', font: `bold 12px ${SANS}` });
+    text(x, st.beta < 0.001 ? 'reciprocal pairing M_ab = M_ba' : st.beta > 0.999 ? 'conjugate pairing: a Gram form' : 'pairing in between', (cl + W) / 2, 48, { color: C.ink2, align: 'center', font: `11px ${MONO}` });
+    S.det = d;
+  }
+  function drawRot() {
+    const x = rot.ctx; rot.clear(); const W = rot.W, H = rot.H;
+    const f = new Frame(x, [58, 40, W - 76, H - 82], [5e-5, 0.3], [1e-19, 1], { xlog: true, ylog: true });
+    f.axes({ xlabel: 'rotation parameter a', ylabel: 'measured value', yticks: [1e-18, 1e-15, 1e-12, 1e-9, 1e-6, 1e-3, 1] });
+    f.hline(8.992e-9, rgba(C.teal, .6), [4, 4]); text(x, 'W floor at a = 0', f.x0 + 6, f.ty(8.992e-9) - 5, { color: C.teal, font: `10px ${MONO}` });
+    f.hline(7.589e-19, rgba(C.blue, .5), [4, 4]); text(x, '|det g| floor at a = 0', f.x0 + 6, f.ty(7.589e-19) - 5, { color: C.blue, font: `10px ${MONO}` });
+    line(x, [[f.tx(5e-5), f.ty(0.5865 * 5e-5)], [f.tx(0.3), f.ty(0.5865 * 0.3)]], rgba(C.gold, .5), 1.2, 0, [6, 5]);
+    line(x, ROT.map(r => [f.tx(r[0]), f.ty(r[1])]), C.teal, 2, 10); ROT.forEach(r => dot(x, f.tx(r[0]), f.ty(r[1]), 3.5, C.teal, 8));
+    line(x, ROT.map(r => [f.tx(r[0]), f.ty(r[2])]), C.blue, 2, 10); ROT.forEach(r => dot(x, f.tx(r[0]), f.ty(r[2]), 3.5, C.blue, 8));
+    text(x, 'W: slope 1.000, predicted 1.00 ± 0.15', f.x0 + 8, f.y0 + 16, { color: C.teal, font: `10.5px ${MONO}` });
+    text(x, '|det g|: negative at every tested point', f.x0 + f.w - 6, f.ty(1e-15), { color: C.blue, align: 'right', font: `10.5px ${MONO}` });
+  }
+  function cards() {
+    const r = S.r; setText('rc-arg', `${(cx.arg(r.Mpm) * 180 / Math.PI).toFixed(1)}° ${fmtDeg(cx.arg(r.Mmp))} ${fmtDeg(-cx.arg(r.D2))} = ${(S.sum).toFixed(1)}°`);
+    setNote('rn-arg', Math.abs(S.sum) < 0.05 ? 'phases cancel' : 'phases do not cancel', Math.abs(S.sum) < 0.05 ? 'pos' : 'null');
+    setText('rc-Q', sgn(r.Q[0], 4)); setNote('rn-Q', r.Q[0] >= 0 ? 'positive round trip' : 'negative round trip', r.Q[0] >= 0 ? 'pos' : 'neg');
+    setText('rc-mir', sci(cx.abs(cx.sub(r.Mmp, cx.conj(r.Mpm))), 3));
+    setText('rc-det', sgn(S.det, 4)); setNote('rn-det', Math.abs(S.det) < 1e-9 ? 'pinched' : S.det < 0 ? 'indefinite' : 'definite', Math.abs(S.det) < 1e-9 ? 'null' : S.det < 0 ? 'neg' : 'pos');
+    setText('rc-im', sgn(-(S.P.im ** 2), 4));
+  }
+  const fmtDeg = a => { const d = a * 180 / Math.PI; return (d >= 0 ? '+ ' : '− ') + Math.abs(d).toFixed(1) + '°'; };
+  function draw(t = GM.now()) {
+    if (!wheel) return;
+    if (st.playing) { st.g = Math.min(1, (t - st.t0) * 0.12); if (st.g >= 1) { st.playing = false; $('#rPlay').classList.remove('active'); $('#rPlay').textContent = 'Open it slowly'; } S.g.set(st.g); }
+    drawWheel(t); drawCone(); drawRot(); cards();
+  }
+  return { init, draw, animated: true, st, set(o) { Object.assign(st, o); if (S.g) Object.keys(S).forEach(k => S[k] && S[k].set && st[k] != null && S[k].set(st[k])); draw(); } };
+})());
+
+/* ===== Lens 4: neutral tangent ===== */
+GM.add('neutral', (() => {
+  let pl, bars, inert; const st = { Xr: .8, Xi: .2, Yr: .5, Yi: -.4, n: 6, k: 2, dim: 12, pk: 2, cen: { tot: 0, def: 0 } }; let S = {};
+  let rng = mulberry(20260925);
+  function init() {
+    pl = new Stage($('#nPlaneC'), 0.9); bars = new Stage($('#nBars'), 0.9); inert = new Stage($('#nInertia'), w => w < 600 ? 0.9 : 0.36);
+    ['Xr', 'Xi', 'Yr', 'Yi'].forEach(k => S[k] = bindRange('n' + k, v => { st[k] = v; draw(); }, v => v.toFixed(2)));
+    S.n = bindRange('nN', v => { st.n = v; if (st.k > v - 1) { st.k = v - 1; S.k.set(st.k); } $('#nK').max = v - 1; draw(); });
+    S.k = bindRange('nK', v => { st.k = Math.min(v, st.n - 1); draw(); });
+    S.dim = bindRange('nDim', v => { st.dim = v; st.cen = { tot: 0, def: 0 }; census(400); draw(); });
+    S.pk = bindRange('nPlane', v => { st.pk = v; st.cen = { tot: 0, def: 0 }; census(400); draw(); });
+    Object.keys(S).forEach(k => st[k] = S[k].v); $('#nK').max = st.n - 1;
+    const pre = (a, b, c, d) => { [['Xr', a], ['Xi', b], ['Yr', c], ['Yi', d]].forEach(([k, v]) => { st[k] = v; S[k].set(v); }); draw(); };
+    $('#nHerm').addEventListener('click', () => pre(0.8, 0.2, 0.8, -0.2));
+    $('#nCounter').addEventListener('click', () => pre(1, 0, -1, 0));
+    $('#nWall').addEventListener('click', () => pre(0, 0, 0, 1));
+    $('#nRun').addEventListener('click', () => { census(400); draw(); });
+    $('#nReset').addEventListener('click', () => { st.cen = { tot: 0, def: 0 }; draw(); });
+    census(400);
+  }
+  let form = null, formKey = '';
+  function census(nDraw) {
+    const p = st.dim, k = st.pk, N = 2 * p; const key = p + '';
+    if (formKey !== key) { const r = mulberry(7 + p); form = Array.from({ length: N }, (_, i) => (i < p ? 1 : -1) * Math.exp(1.2 * gauss(r))); formKey = key; }
+    for (let s = 0; s < nDraw; s++) {
+      const B = Array.from({ length: N }, () => Array.from({ length: k }, () => gauss(rng)));
+      const M = Array.from({ length: k }, (_, a) => Array.from({ length: k }, (_, b) => { let v = 0; for (let i = 0; i < N; i++) v += B[i][a] * form[i] * B[i][b]; return v; }));
+      const ev = jacobiEig(M).l; const allp = ev.every(v => v > 0), alln = ev.every(v => v < 0);
+      st.cen.tot++; if (allp || alln) st.cen.def++;
+    }
+  }
+  function UV() { const X = [st.Xr, st.Xi], Y = [st.Yr, st.Yi]; const Yd = cx.conj(Y); const U = cx.sc(cx.add(X, Yd), .5), V = cx.sc(cx.sub(X, Yd), .5); return { X, Y, U, V, q: cx.mul(X, Y)[0], u2: cx.abs(U) ** 2, v2: cx.abs(V) ** 2 }; }
+  function drawPlane(t) {
+    const x = pl.ctx; pl.clear(); const W = pl.W, H = pl.H; const m = Math.min(W - 70, H - 92);
+    const f = new Frame(x, [52, 40, m, m], [0, 1.7], [0, 1.7]);
+    const img = x.createImageData(Math.round(f.w), Math.round(f.h));
+    for (let j = 0; j < img.height; j++) for (let i = 0; i < img.width; i++) {
+      const u = 1.7 * i / img.width, v = 1.7 * (1 - j / img.height); const q = u * u - v * v; const a = Math.tanh(Math.abs(q) * 1.2); const k = (j * img.width + i) * 4;
+      const col = q > 0 ? [124, 186, 255] : [255, 141, 152]; img.data[k] = 8 + col[0] * a * .38; img.data[k + 1] = 16 + col[1] * a * .38; img.data[k + 2] = 30 + col[2] * a * .38; img.data[k + 3] = 255;
+    }
+    const dpr = pl.c.width / pl.W; const tmp = document.createElement('canvas'); tmp.width = img.width; tmp.height = img.height; tmp.getContext('2d').putImageData(img, 0, 0);
+    x.drawImage(tmp, f.x0, f.y0, f.w, f.h);
+    f.axes({ bg: 'rgba(0,0,0,0)', nx: 4, ny: 4, xlabel: '‖U‖  (self-adjoint part)', ylabel: '‖V‖  (anti part)', fx: v => v.toFixed(1), fy: v => v.toFixed(1), ylabelOff: 36 });
+    line(x, [[f.tx(0), f.ty(0)], [f.tx(1.7), f.ty(1.7)]], C.gold, 2.2, 14); text(x, 'null: q = 0', f.tx(1.25) + 4, f.ty(1.25) + 14, { color: C.gold, font: `11px ${MONO}` });
+    line(x, [[f.tx(0), f.ty(0) - 1], [f.tx(1.7), f.ty(0) - 1]], C.blue, 4, 14); text(x, 'self-adjoint slice V = 0: q ≥ 0', f.tx(0.05), f.ty(0) - 10, { color: C.blue, font: `10.5px ${MONO}` });
+    [0.25, 0.5, 1, 1.5].forEach(qv => { const pts = []; for (let k = 0; k <= 60; k++) { const v = 1.7 * k / 60; const u = Math.sqrt(qv + v * v); if (u <= 1.7) pts.push([f.tx(u), f.ty(v)]); } line(x, pts, rgba(C.blue, .45), 1); const pts2 = []; for (let k = 0; k <= 60; k++) { const u = 1.7 * k / 60; const v = Math.sqrt(qv + u * u); if (v <= 1.7) pts2.push([f.tx(u), f.ty(v)]); } line(x, pts2, rgba(C.red, .45), 1); });
+    const s = UV(); const px = f.tx(Math.sqrt(s.u2)), py = f.ty(Math.sqrt(s.v2));
+    dot(x, px, py, 7, '#fff', 18, s.q > 1e-9 ? C.blue : s.q < -1e-9 ? C.red : C.gold);
+    text(x, `q = ${sgn(s.q, 3)}`, px + 10, py - 8, { color: '#fff', font: `bold 11px ${MONO}`, bg: 'rgba(5,9,20,.7)' });
+  }
+  function drawBars() {
+    const x = bars.ctx; bars.clear(); const W = bars.W, H = bars.H; const n = st.n, k = st.k; const half = 2 * k * (n - k); const tot = 2 * half;
+    const cols = Math.ceil(Math.sqrt(tot * (W - 40) / (H - 130))); const rows = Math.ceil(tot / cols); const cell = Math.min((W - 40) / cols, (H - 130) / rows);
+    const x0 = (W - cols * cell) / 2, y0 = 44;
+    for (let i = 0; i < tot; i++) {
+      const r = Math.floor(i / cols), c = i % cols; const pos = i < half; const col = pos ? C.blue : C.red;
+      x.fillStyle = rgba(col, pos ? .55 : .5); x.fillRect(x0 + c * cell + 1, y0 + r * cell + 1, cell - 2, cell - 2);
+      if (pos) { x.save(); x.strokeStyle = rgba(C.gold, .9); x.lineWidth = 1.2; x.strokeRect(x0 + c * cell + 1.5, y0 + r * cell + 1.5, cell - 3, cell - 3); x.restore(); }
+    }
+    text(x, `n = ${n}, k = ${k}: real dimension 4k(n − k) = ${tot}`, W / 2, H - 56, { color: C.ink, align: 'center', font: `12px ${MONO}` });
+    text(x, `${half} positive U directions · ${half} negative V directions`, W / 2, H - 37, { color: C.ink2, align: 'center', font: `12px ${MONO}` });
+    text(x, 'gold outline: the self-adjoint tangents, which are exactly the U directions', W / 2, H - 18, { color: C.gold, align: 'center', font: `11px ${SANS}` });
+  }
+  function drawInertia() {
+    const x = inert.ctx; inert.clear(); const W = inert.W, H = inert.H; const narrow = W < 600;
+    const bw = narrow ? W - 150 : W * 0.5 - 170; const x0 = 150, rows = [['self-adjoint control', 48, 0, 49], ['open generator, potential + damping', 96, 98, 0], ['open generator, potential only', 86, 11, 0]];
+    rows.forEach(([lab, p, ng, z], i) => {
+      const y = 56 + i * 46; const tot = p + ng + z; text(x, lab, 12, y + 4, { color: C.ink2, font: `11px ${SANS}` });
+      const sx = v => x0 + bw * v / 194; let cx0 = x0;
+      [[p, C.blue], [ng, C.red], [z, '#3a4d68']].forEach(([v, c]) => { if (!v) return; x.fillStyle = rgba(c === '#3a4d68' ? '#6a7e9c' : c, .6); x.fillRect(cx0, y + 10, bw * v / 194, 16); cx0 += bw * v / 194; });
+      text(x, `(${p}, ${ng}, ${z})`, cx0 + 8, y + 23, { color: C.ink, font: `11px ${MONO}` });
+    });
+    const bx = narrow ? 40 : W * 0.58, by = narrow ? 210 : 40, bwid = narrow ? W - 60 : W * 0.38, bh = narrow ? H - 240 : H - 80;
+    const f = new Frame(x, [bx + 20, by, bwid - 20, bh], [0, 4], [0, 30]);
+    f.axes({ xticks: [], yticks: [0, 10, 20, 30], fy: v => v + '%', noxl: true });
+    [[2, 24.0], [3, 3.2], [5, 0], [10, 0]].forEach(([d, v], i) => { const X = f.tx(i + .5); x.fillStyle = rgba([C.gold, C.blue, C.teal, C.teal][i], .75); x.fillRect(X - 18, f.ty(v), 36, f.ty(0) - f.ty(v)); text(x, v.toFixed(1) + '%', X, f.ty(v) - 5, { color: C.ink, align: 'center', font: `11px ${MONO}` }); text(x, d + '-planes', X, f.y0 + f.h + 15, { color: C.muted, align: 'center', font: `10.5px ${MONO}` }); });
+    text(x, 'random k-planes reading as definite', f.x0 + f.w / 2, f.y0 + 14, { color: C.ink2, align: 'center', font: `11px ${SANS}` });
+  }
+  function cards() {
+    const s = UV(); setText('nc-q', sgn(s.q, 4)); setNote('nn-q', Math.abs(s.q) < 1e-9 ? 'null tangent' : s.q > 0 ? 'positive direction' : 'negative direction', Math.abs(s.q) < 1e-9 ? 'null' : s.q > 0 ? 'pos' : 'neg');
+    setText('nc-u', s.u2.toFixed(4)); setText('nc-v', s.v2.toFixed(4));
+    const half = 2 * st.k * (st.n - st.k); setText('nc-sig', `(${half}, ${half})`);
+    const pct = st.cen.tot ? 100 * st.cen.def / st.cen.tot : 0; setText('nc-cen', pct.toFixed(1) + '%'); setNote('nn-cen', `${st.cen.def} of ${st.cen.tot} ${st.pk}-planes, form (${st.dim}, ${st.dim})`, '');
+  }
+  function draw(t = GM.now()) { if (!pl) return; drawPlane(t); drawBars(); drawInertia(); cards(); }
+  return { init, draw, animated: false, st, set(o) { Object.assign(st, o); ['Xr', 'Xi', 'Yr', 'Yi', 'n', 'k'].forEach(k => S[k] && S[k].set(st[k])); draw(); } };
+})());
+
+/* ===== Lens 5: the cap ===== */
+GM.add('cap', (() => {
+  let geo, cur; const st = { a: 20, s: 0, b: 50, s2: 0, y: -0.1 }; let S = {};
+  const excess = (y, h) => h * h * (2 * y + h) / ((1 - y ** 3) * (1 - (y + h) ** 3));
+  function init() {
+    geo = new Stage($('#cGeo'), 0.9); cur = new Stage($('#cCurve'), 0.9);
+    S.a = bindRange('cA', v => { st.a = v; draw(); }, v => v + '°'); S.s = bindRange('cSk', v => { st.s = v; draw(); }, v => v + '°');
+    S.b = bindRange('cB', v => { st.b = v; draw(); }, v => v + '°'); S.s2 = bindRange('cSk2', v => { st.s2 = v; draw(); }, v => v + '°');
+    S.y = bindRange('cY', v => { st.y = v; draw(); }, v => v.toFixed(3));
+    Object.keys(S).forEach(k => st[k] = S[k].v);
+    const pre = o => { Object.assign(st, o); Object.keys(o).forEach(k => S[k].set(o[k])); draw(); };
+    $('#cOrth').addEventListener('click', () => pre({ s: 0, s2: 0 }));
+    $('#cObl').addEventListener('click', () => pre({ a: 20, s: 50, b: 50, s2: -40 }));
+    $('#cPaper').addEventListener('click', () => pre({ y: -0.1 }));
+    $('#cWall').addEventListener('click', () => pre({ y: 0 }));
+  }
+  const rad = d => d * Math.PI / 180;
+  function ov() { const a = rad(st.a), s = rad(st.s), b = rad(st.b), s2 = rad(st.s2); return Math.cos(a + s - b) * Math.cos(b + s2 - a) / (Math.cos(s) * Math.cos(s2)); }
+  function drawGeo(t) {
+    const x = geo.ctx; geo.clear(); const W = geo.W, H = geo.H; const ox = W * 0.42, oy = H * 0.55, L = Math.min(W * 0.3, H * 0.38);
+    x.save(); x.strokeStyle = 'rgba(120,150,190,.14)'; x.beginPath(); x.arc(ox, oy, L * .7, 0, TAU); x.stroke(); x.restore();
+    const dir = d => [Math.cos(rad(d)), Math.sin(rad(d))]; const P = (v, k = 1) => [ox + v[0] * L * k, oy - v[1] * L * k];
+    const drawProj = (ang, slant, col, name) => {
+      const u = dir(ang), kd = dir(ang + 90 + slant);
+      line(x, [P(u, -1.1), P(u, 1.1)], col, 2.4, 12); line(x, [P(kd, -1.1), P(kd, 1.1)], rgba(col, .6), 1.4, 0, [6, 5]);
+      text(x, 'range ' + name, P(u, 1.1)[0] + 4, P(u, 1.1)[1] - 4, { color: col, font: `11px ${MONO}` }); text(x, 'kernel ' + name, P(kd, 1.05)[0] + 4, P(kd, 1.05)[1] + 12, { color: rgba(col, .8), font: `10.5px ${MONO}` });
+      return { u, kd };
+    };
+    const p1 = drawProj(st.a, st.s, C.teal, 'P'); drawProj(st.b, st.s2, C.violet, 'R');
+    /* animated vector projected along P's kernel */
+    const th = GM.calm ? 1.1 : t * 0.7; const v = [0.72 * Math.cos(th), 0.72 * Math.sin(th)];
+    const w = dir(st.a + st.s); const coef = (w[0] * v[0] + w[1] * v[1]) / (w[0] * p1.u[0] + w[1] * p1.u[1]); const pv = [p1.u[0] * coef, p1.u[1] * coef];
+    arrow(x, ox, oy, P(v)[0], P(v)[1], '#fff', 1.8, 8); line(x, [P(v), P(pv)], rgba(C.gold, .8), 1.4, 0, [3, 3]); dot(x, P(pv)[0], P(pv)[1], 4.5, C.gold, 12);
+    text(x, 'v', P(v)[0] + 6, P(v)[1] - 4, { color: '#fff', font: `11px ${MONO}` }); text(x, 'Pv', P(pv)[0] + 6, P(pv)[1] + 12, { color: C.gold, font: `11px ${MONO}` });
+    /* meter */
+    const mv = ov(); const mx = W - 40, my0 = 40, mh = H - 90; const top = 3; const Y = v => my0 + mh * (1 - clamp(v, 0, top) / top);
+    x.fillStyle = 'rgba(10,19,34,.8)'; x.fillRect(mx - 12, my0, 24, mh); x.fillStyle = rgba(mv > 1 ? C.gold : C.blue, .8); x.fillRect(mx - 12, Y(mv), 24, my0 + mh - Y(mv));
+    line(x, [[mx - 20, Y(1)], [mx + 16, Y(1)]], C.red, 2, 8); text(x, 'cap 1', mx - 24, Y(1) + 4, { color: C.red, align: 'right', font: `10.5px ${MONO}` });
+    text(x, 'Tr(PR)', mx, my0 - 8, { color: C.ink2, align: 'center', font: `10.5px ${MONO}` }); text(x, mv.toFixed(3), mx, my0 + mh + 16, { color: mv > 1 ? C.gold : C.blue, align: 'center', font: `bold 12px ${MONO}` });
+  }
+  function drawCurve() {
+    const x = cur.ctx; cur.clear(); const W = cur.W, H = cur.H; const y = st.y;
+    const hlo = Math.max(-0.2, -0.249 - y), hhi = Math.min(0.25, 0.249 - y);
+    const hs = Array.from({ length: 301 }, (_, i) => hlo + (hhi - hlo) * i / 300); const vals = hs.map(h => excess(y, h));
+    let m = 1e-6; vals.forEach(v => m = Math.max(m, Math.abs(v)));
+    const f = new Frame(x, [64, 40, W - 84, H - 86], [hlo, hhi], [-m * 1.1, m * 1.1]);
+    f.axes({ nx: 5, ny: 4, xlabel: 'step h', ylabel: 'overlap − 1', fx: v => v.toFixed(2), fy: v => sci(v, 1), ylabelOff: 54 });
+    x.fillStyle = rgba(C.gold, .07); x.fillRect(f.x0, f.y0, f.w, f.ty(0) - f.y0); text(x, 'above the cap', f.x0 + 6, f.y0 + 14, { color: C.gold, font: `11px ${MONO}` });
+    f.hline(0, rgba(C.ink, .4), [2, 3]);
+    const hz = -2 * y; if (hz > hlo && hz < hhi) { f.vline(hz, rgba(C.gold, .7), [4, 4]); text(x, 'h = −2y', f.tx(hz) - 4, f.y0 + f.h - 28, { color: C.gold, align: 'right', font: `10.5px ${MONO}` }); }
+    const gyy = -2 * y / (1 - y ** 3) ** 2; f.clip(); line(x, hs.map(h => [f.tx(h), f.ty(-gyy * h * h)]), rgba(C.orange, .8), 1.4, 0, [6, 4]);
+    line(x, hs.map((h, i) => [f.tx(h), f.ty(vals[i])]), C.teal, 2.4, 12); f.unclip();
+    text(x, 'exact', f.x0 + f.w - 8, f.y0 + 14, { color: C.teal, align: 'right', font: `11px ${MONO}` }); text(x, 'local −g_yy h²', f.x0 + f.w - 8, f.y0 + 28, { color: C.orange, align: 'right', font: `11px ${MONO}` });
+    text(x, `base point y = ${y.toFixed(3)}`, f.x0 + f.w / 2, f.y0 + f.h - 10, { color: C.ink2, align: 'center', font: `11px ${MONO}` });
+  }
+  function cards() {
+    const v = ov(); setText('cc-ov', v.toFixed(4)); setNote('cn-ov', v > 1 + 1e-9 ? 'above the cap' : 'within the cap', v > 1 + 1e-9 ? 'null' : 'pos');
+    setText('cc-cos', (Math.cos(rad(st.a - st.b)) ** 2).toFixed(4));
+    if (st.y + 0.25 < 0.25) { const e = excess(st.y, 0.25); setText('cc-ex', Math.abs(st.y + 0.1) < 1e-9 ? '25000/7980973' : sgn(e, 4)); setNote('cn-ex', Math.abs(st.y + 0.1) < 1e-9 ? '= ' + e.toFixed(7) + ', exact' : e > 0 ? 'above the cap' : 'below the cap', e > 0 ? 'null' : 'pos'); }
+    else { setText('cc-ex', '—'); setNote('cn-ex', 'y + 1/4 leaves the chart', ''); }
+  }
+  function draw(t = GM.now()) { if (!geo) return; drawGeo(t); drawCurve(); cards(); }
+  return { init, draw, animated: true, st, set(o) { Object.assign(st, o); Object.keys(S).forEach(k => S[k].set(st[k])); draw(); } };
+})());
+
+/* ===== Lens 6: defects, wraps and clocks ===== */
+GM.add('defects', (() => {
+  let jd, wr, ck; const st = { t: 0.12, d: 5, m: 1, playT: false, playD: false, t0: 0, d0: 0 }; let S = {};
+  function init() {
+    jd = new Stage($('#dJordan'), 0.95); wr = new Stage($('#dWrap'), 0.95); ck = new Stage($('#dClock'), 0.95);
+    S.t = bindRange('dT', v => { st.t = v; draw(); }, v => v.toFixed(3)); S.d = bindRange('dD', v => { st.d = v; draw(); }); S.m = bindRange('dM', v => { st.m = v; draw(); });
+    st.t = S.t.v; st.d = S.d.v; st.m = S.m.v;
+    $('#dPlay').addEventListener('click', () => { st.playT = !st.playT; st.t0 = GM.now(); $('#dPlay').classList.toggle('active', st.playT); });
+    $('#dZero').addEventListener('click', () => { st.playT = false; $('#dPlay').classList.remove('active'); st.t = 0; S.t.set(0); draw(); });
+    $('#dGrow').addEventListener('click', () => { st.playD = !st.playD; st.d0 = GM.now(); $('#dGrow').classList.toggle('active', st.playD); });
+    $('#dTwo').addEventListener('click', () => { st.playD = false; $('#dGrow').classList.remove('active'); st.d = 2; S.d.set(2); draw(); });
+  }
+  function drawJ(t) {
+    const x = jd.ctx; jd.clear(); const W = jd.W, H = jd.H; const m = Math.min(W - 40, H - 50);
+    const f = new Frame(x, [(W - m) / 2, 14, m, m], [1.2, 2.8], [-0.8, 0.8]);
+    f.axes({ nx: 4, ny: 4, fx: v => v.toFixed(1), fy: v => v.toFixed(1) });
+    line(x, [[f.tx(1.5), f.ty(0)], [f.tx(2.5), f.ty(0)]], rgba(C.blue, .35), 5); line(x, [[f.tx(2), f.ty(-0.5)], [f.tx(2), f.ty(0.5)]], rgba(C.violet, .35), 5);
+    const cr = f.tx(2.62) - f.tx(2); x.save(); glow(x, C.green, 12); x.strokeStyle = C.green; x.lineWidth = 2; x.beginPath(); x.arc(f.tx(2), f.ty(0), cr, 0, TAU); x.stroke(); x.restore();
+    if (!GM.calm) contourParticles(x, f.tx(2), f.ty(0), cr, t, C.teal, 16);
+    const s = Math.sqrt(Math.abs(st.t)); const ev = st.t >= 0 ? [[2 + s, 0], [2 - s, 0]] : [[2, s], [2, -s]];
+    if (Math.abs(st.t) < 1e-9) { dot(x, f.tx(2), f.ty(0), 8, C.gold, 22, '#fff'); text(x, 'Jordan block: one eigenvector', f.tx(2), f.ty(0) - 16, { color: C.gold, align: 'center', font: `bold 11px ${SANS}` }); }
+    else ev.forEach(e => dot(x, f.tx(e[0]), f.ty(e[1]), 6, st.t > 0 ? C.blue : C.violet, 16, '#fff'));
+    text(x, st.t > 0 ? 'real pair 2 ± √t' : st.t < 0 ? 'complex pair 2 ± i√|t|' : 'defective at t = 0', f.x0 + f.w / 2, f.y0 + f.h - 8, { color: C.ink2, align: 'center', font: `11px ${MONO}` });
+  }
+  function drawW(t) {
+    const x = wr.ctx; wr.clear(); const W = wr.W, H = wr.H; const ox = W / 2, oy = H * 0.5, R = Math.min(W, H) * 0.33; const d = st.d;
+    x.save(); x.strokeStyle = 'rgba(120,150,190,.3)'; x.beginPath(); x.moveTo(ox - R * 1.3, oy); x.lineTo(ox + R * 1.3, oy); x.moveTo(ox, oy - R * 1.3); x.lineTo(ox, oy + R * 1.3); x.stroke(); x.restore();
+    line(x, [[ox - R * 1.3, oy], [ox - R, oy]], C.red, 4, 10); text(x, 'branch cut', ox - R * 1.3, oy + 16, { color: C.red, font: `10.5px ${MONO}` });
+    if (d > 2) {
+      for (let j = 0; j < d; j++) { const a0 = TAU * j / d, a1 = TAU * (j + 1) / d; const hue = j % 2 ? C.teal : C.green; x.save(); glow(x, hue, 10); x.strokeStyle = hue; x.lineWidth = 5; x.beginPath(); x.arc(ox, oy, R, -a0, -a1 + 0.02, true); x.stroke(); x.restore(); }
+      text(x, `${d} arcs of 2π/${d} tile one full turn: w = 1`, ox, oy + R + 34, { color: C.green, align: 'center', font: `11px ${MONO}` });
+    } else { x.save(); x.strokeStyle = rgba(C.ink, .35); x.lineWidth = 2; x.beginPath(); x.arc(ox, oy, R, 0, TAU); x.stroke(); x.restore(); text(x, 'eigenvalue −1 sits on the cut: wrap undefined', ox, oy + R + 34, { color: C.red, align: 'center', font: `11px ${MONO}` }); }
+    const a = TAU / d; const ex = ox + R * Math.cos(a), ey = oy - R * Math.sin(a);
+    dot(x, ex, ey, 8, C.gold, 20, '#fff'); text(x, `e^(2πi/${d}), ${d} times`, ex + (Math.cos(a) >= 0 ? 12 : -12), ey - 10, { color: C.gold, align: Math.cos(a) >= 0 ? 'left' : 'right', font: `bold 11px ${MONO}` });
+    dot(x, ox + R, oy, 4, '#fff', 8); text(x, '1', ox + R + 8, oy + 14, { color: C.ink, font: `11px ${MONO}` });
+  }
+  function drawC() {
+    const x = ck.ctx; ck.clear(); const W = ck.W, H = ck.H;
+    const f = new Frame(x, [52, 14, W - 70, H - 58], [1e-4, 1], [1e-8, 1], { xlog: true, ylog: true });
+    f.axes({ xlabel: '|t| from the zero', ylabel: '√|λ(t)|', ylabelOff: 40 });
+    const ts = Array.from({ length: 80 }, (_, i) => Math.pow(10, -4 + 4 * i / 79));
+    [1, 2, 3, 4].forEach(m => { const on = m === st.m; line(x, ts.map(q => [f.tx(q), f.ty(Math.pow(q, m / 2))]), on ? (m === 1 ? C.red : m === 2 ? C.blue : C.gold) : rgba(C.ink, .18), on ? 2.6 : 1, on ? 14 : 0); text(x, `m=${m}`, f.tx(1e-4) + 6, f.ty(Math.pow(1e-4, m / 2)) - 5, { color: on ? C.ink : C.muted, font: `10px ${MONO}` }); });
+    text(x, 'slope = m/2', f.x0 + f.w - 8, f.y0 + f.h - 10, { color: C.ink2, align: 'right', font: `11px ${MONO}` });
+  }
+  function cards() {
+    setText('dc-Z', Math.log(4 - st.t).toFixed(6)); setText('dc-sep', (2 * Math.sqrt(Math.abs(st.t))).toFixed(4));
+    if (st.d > 2) { let pr = [1, 0]; const e = cx.exp([0, TAU / st.d]); for (let j = 0; j < st.d; j++) pr = cx.mul(pr, e); setText('dc-det', '1 (|err| ' + sci(cx.abs(cx.sub(pr, [1, 0])), 1) + ')'); setText('dc-w', '1'); }
+    else { setText('dc-det', '1'); setText('dc-w', 'undefined'); }
+    setText('dc-del', (4 * Math.sin(Math.PI / st.d) ** 2).toFixed(5));
+    setText('dc-exp', st.m === 1 ? '1/2' : st.m === 2 ? '1' : (st.m / 2).toString());
+    setText('dc-type', st.m === 1 ? 'transverse crossing' : st.m === 2 ? 'touching zero' : st.m % 2 ? 'odd order: crosses' : 'even order: touches');
+  }
+  function draw(t = GM.now()) {
+    if (!jd) return;
+    if (st.playT) { st.t = Math.round(0.24 * Math.sin((t - st.t0) * 0.7) * 1000) / 1000; S.t.set(st.t); }
+    if (st.playD) { st.d = 3 + Math.floor(((t - st.d0) * 2.2) % 62); S.d.set(st.d); }
+    drawJ(t); drawW(t); drawC(); cards();
+  }
+  return { init, draw, animated: true, st, set(o) { Object.assign(st, o); ['t', 'd', 'm'].forEach(k => S[k] && S[k].set(st[k])); draw(); } };
+})());
+
+/* ===== Lens 7: source probe (Theorem 26, Corollaries 27-28, Counterexample 29, Proposition 30) ===== */
+GM.add('source', (() => {
+  let sph, tomo, obl; const st = { th: 60, ph: 30, sel: '23', s: 3, la: 0, spin: true, tomoStart: -1 }; let S = {};
+  /* K = U diag(2,3,8) U^T with a fixed rotation U */
+  const rot = (() => { const a = 0.7, b = 1.1, c = 0.4; const Rz = [[Math.cos(a), -Math.sin(a), 0], [Math.sin(a), Math.cos(a), 0], [0, 0, 1]], Ry = [[Math.cos(b), 0, Math.sin(b)], [0, 1, 0], [-Math.sin(b), 0, Math.cos(b)]], Rx = [[1, 0, 0], [0, Math.cos(c), -Math.sin(c)], [0, Math.sin(c), Math.cos(c)]]; const mm = (A, B) => A.map((r, i) => B[0].map((_, j) => r.reduce((s, _, k) => s + A[i][k] * B[k][j], 0))); return mm(mm(Rz, Ry), Rx); })();
+  const LAM = [2, 3, 8]; const U = [0, 1, 2].map(j => rot.map(r => r[j])); /* eigenvectors u_2, u_3, u_8 */
+  const K = [0, 1, 2].map(i => [0, 1, 2].map(j => LAM.reduce((s, l, q) => s + l * U[q][i] * U[q][j], 0)));
+  const selIdx = () => st.sel === '2' ? [0] : st.sel === '23' ? [0, 1] : [0, 1, 2];
+  const qC = b => selIdx().reduce((s, q) => s + (U[q][0] * b[0] + U[q][1] * b[1] + U[q][2] * b[2]) ** 2 / LAM[q], 0);
+  const Asel = () => [0, 1, 2].map(i => [0, 1, 2].map(j => selIdx().reduce((s, q) => s + U[q][i] * U[q][j] / LAM[q], 0)));
+  const Psel = () => [0, 1, 2].map(i => [0, 1, 2].map(j => selIdx().reduce((s, q) => s + U[q][i] * U[q][j], 0)));
+  function Zsel(M) { const ev = jacobiEig(M).l; return selIdx().reduce((s, q) => s + Math.log(ev[q]), 0); }
+  const bvec = () => { const t = st.th * Math.PI / 180, p = st.ph * Math.PI / 180; return [Math.sin(t) * Math.cos(p), Math.sin(t) * Math.sin(p), Math.cos(t)]; };
+  const pts = (() => { const n = 1500, out = []; const ga = Math.PI * (3 - Math.sqrt(5)); for (let i = 0; i < n; i++) { const y = 1 - 2 * (i + .5) / n, r = Math.sqrt(1 - y * y), th = ga * i; out.push([r * Math.cos(th), r * Math.sin(th), y]); } return out; })();
+  function cmap(v) { /* 0 navy -> teal -> gold */ const a = [16, 30, 56], b = [105, 215, 196], c = [237, 199, 117]; const m = (p, q, t) => p.map((x, i) => Math.round(x + (q[i] - x) * t)); return v < .5 ? m(a, b, v * 2) : m(b, c, (v - .5) * 2); }
+  function init() {
+    sph = new Stage($('#sSphere'), 0.9); tomo = new Stage($('#sTomoC'), 0.9); obl = new Stage($('#sOblique'), 0.75);
+    S.th = bindRange('sTh', v => { st.th = v; draw(); }, v => v + '°'); S.ph = bindRange('sPh', v => { st.ph = v; draw(); }, v => v + '°');
+    S.s = bindRange('sS', v => { st.s = v; draw(); }, v => v.toFixed(2)); S.la = bindRange('sA', v => { st.la = v; draw(); }, v => v.toFixed(2) + '  (α = ' + Math.pow(10, v).toPrecision(3) + ')');
+    Object.keys(S).forEach(k => st[k] = S[k].v); st.sel = $('#sSel').value;
+    $('#sSel').addEventListener('change', e => { st.sel = e.target.value; st.tomoStart = -1; draw(); });
+    $('#sSilent').addEventListener('click', () => { const u = U[2]; const t = Math.acos(clamp(u[2], -1, 1)) * 180 / Math.PI, p = Math.atan2(u[1], u[0]) * 180 / Math.PI; st.th = Math.round(t); st.ph = Math.round(p); S.th.set(st.th); S.ph.set(st.ph); if (st.sel === '238') { st.sel = '23'; $('#sSel').value = '23'; } draw(); });
+    $('#sSpin').addEventListener('click', () => { st.spin = !st.spin; $('#sSpin').classList.toggle('active', st.spin); });
+    $('#sSpin').classList.add('active');
+    $('#sTomo').addEventListener('click', () => { st.tomoStart = GM.now(); });
+  }
+  let spinA = 0, lastT = null;
+  function drawSphere(t) {
+    const x = sph.ctx; sph.clear(); const W = sph.W, H = sph.H; const R = Math.min(W, H) * 0.36, ox = W / 2, oy = H / 2 + 6;
+    if (lastT != null && st.spin && !GM.calm) spinA += (t - lastT) * 0.35; lastT = t;
+    const ca = Math.cos(spinA), sa = Math.sin(spinA), tilt = 0.35, ct = Math.cos(tilt), stl = Math.sin(tilt);
+    const proj = p => { const x1 = ca * p[0] + sa * p[1], y1 = -sa * p[0] + ca * p[1], z1 = p[2]; const y2 = ct * y1 - stl * z1, z2 = stl * y1 + ct * z1; return [ox + R * x1, oy - R * z2, y2]; };
+    const qmax = 1 / LAM[selIdx()[0]]; const arr = pts.map(p => { const P = proj(p); return [P[0], P[1], P[2], qC(p) / qmax]; }).sort((a, b) => b[2] - a[2]);
+    x.save(); x.fillStyle = 'rgba(8,16,30,.9)'; x.beginPath(); x.arc(ox, oy, R + 2, 0, TAU); x.fill(); x.restore();
+    arr.forEach(([px, py, d, v]) => { const col = cmap(v); const front = d < 0; x.fillStyle = `rgba(${col[0]},${col[1]},${col[2]},${front ? 0.95 : 0.25})`; x.beginPath(); x.arc(px, py, front ? 2.3 : 1.6, 0, TAU); x.fill(); });
+    if (st.sel !== '238') { const silent = st.sel === '23' ? [U[2]] : []; silent.forEach(u => [1, -1].forEach(sg => { const P = proj(u.map(v => v * sg)); if (P[2] < 0) { dot(x, P[0], P[1], 6, C.red, 14, '#fff'); text(x, 'silent', P[0] + 9, P[1] + 4, { color: C.red, font: `bold 11px ${MONO}` }); } })); }
+    const b = bvec(); const B = proj(b); const Bc = proj([0, 0, 0]); arrow(x, Bc[0], Bc[1], B[0], B[1], B[2] < 0 ? '#fff' : rgba('#ffffff', .45), 2.4, 12); text(x, 'b', B[0] + 8, B[1] - 6, { color: '#fff', font: `bold 12px ${MONO}` });
+    /* color bar */
+    const bx = 16, by = H - 22, bw = 120; for (let i = 0; i < bw; i++) { const c = cmap(i / bw); x.fillStyle = `rgb(${c[0]},${c[1]},${c[2]})`; x.fillRect(bx + i, by, 1, 8); }
+    text(x, '0', bx, by - 4, { color: C.muted, font: `10px ${MONO}` }); text(x, sci(qmax, 2), bx + bw, by - 4, { color: C.muted, align: 'right', font: `10px ${MONO}` });
+    text(x, st.sel === '238' ? 'whole spectrum: no silent source' : st.sel === '23' ? 'selected {2, 3}: the 8-eigenvector is silent' : 'selected {2}: a whole great circle is silent', W - 12, H - 12, { color: C.ink2, align: 'right', font: `11px ${SANS}` });
+  }
+  function probes() { const e = i => [0, 1, 2].map(k => k === i ? [1, 0] : [0, 0]); const out = []; for (let i = 0; i < 3; i++) out.push({ lab: `e${i + 1}`, i, j: i, kind: 'd' }); for (let i = 0; i < 3; i++) for (let j = i + 1; j < 3; j++) { out.push({ lab: `e${i + 1}+e${j + 1}`, i, j, kind: 'r' }); out.push({ lab: `e${i + 1}+ie${j + 1}`, i, j, kind: 'i' }); } return out; }
+  function drawTomo(t) {
+    const x = tomo.ctx; tomo.clear(); const W = tomo.W, H = tomo.H; const A = Asel(); const pr = probes();
+    const el = st.tomoStart < 0 ? 99 : (t - st.tomoStart) / 0.5; const done = Math.min(pr.length, Math.floor(el));
+    const q = (i, j, kind) => kind === 'd' ? A[i][i] : kind === 'r' ? A[i][i] + A[j][j] + 2 * A[i][j] : A[i][i] + A[j][j];
+    const rec = [[null, null, null], [null, null, null], [null, null, null]]; const imag = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+    pr.forEach((p, k) => { if (k >= done) return; if (p.kind === 'd') rec[p.i][p.i] = q(p.i, p.i, 'd'); });
+    pr.forEach((p, k) => { if (k >= done || p.kind === 'd') return; if (rec[p.i][p.i] == null || rec[p.j][p.j] == null) return; const v = q(p.i, p.j, p.kind) - rec[p.i][p.i] - rec[p.j][p.j]; if (p.kind === 'r') { rec[p.i][p.j] = rec[p.j][p.i] = v / 2; } else imag[p.i][p.j] = -v / 2; });
+    const lx = 14, ly = 60; text(x, 'probe  →  q_C', lx, ly - 10, { color: C.muted, font: `10.5px ${MONO}` });
+    pr.forEach((p, k) => { const y = ly + 8 + k * 17; const act = k === done && el < 99; const col = k < done ? C.teal : act ? C.gold : C.dim; text(x, `${p.lab.padEnd(8)} ${k < done ? q(p.i, p.j, p.kind).toFixed(4) : '·'}`, lx, y, { color: col, font: `11px ${MONO}` }); });
+    const gx = Math.max(170, W * 0.44), gy = 60, cs = Math.min((W - gx - 16) / 3, (H - 150) / 3);
+    text(x, 'A = P_C K⁻¹ (recovered)', gx, gy - 10, { color: C.muted, font: `10.5px ${MONO}` });
+    for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) { const v = rec[i][j]; const X = gx + j * cs, Y = gy + i * cs; x.fillStyle = v == null ? 'rgba(20,34,56,.7)' : rgba(v >= 0 ? C.teal : C.red, .12 + .6 * Math.min(1, Math.abs(v) * 2.2)); x.fillRect(X + 1, Y + 1, cs - 2, cs - 2); if (v != null) text(x, v.toFixed(3), X + cs / 2, Y + cs / 2 + 4, { color: '#fff', align: 'center', font: `11px ${MONO}` }); }
+    if (done >= pr.length) {
+      const R = rec.map(r => r.map(v => v || 0)); const E = jacobiEig(R); const P = Psel(); const keep = E.l.map((l, i) => l > 1e-9 ? i : -1).filter(i => i >= 0);
+      const Pr = [0, 1, 2].map(i => [0, 1, 2].map(j => keep.reduce((s, q) => s + E.V[q][i] * E.V[q][j], 0)));
+      let err = 0; for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) err += (Pr[i][j] - P[i][j]) ** 2;
+      const imx = Math.max(...imag.flat().map(Math.abs));
+      const y0 = gy + 3 * cs + 22;
+      text(x, `eigenvalues of A: ${E.l.slice().reverse().map(v => v.toFixed(4)).join(', ')}`, gx, y0, { color: C.ink2, font: `11px ${MONO}` });
+      text(x, `support of A vs P_C: ‖error‖ = ${sci(Math.sqrt(err), 1)}`, gx, y0 + 17, { color: C.green, font: `11px ${MONO}` });
+      text(x, `imaginary parts (real K): ${sci(imx, 1)}`, gx, y0 + 34, { color: C.muted, font: `11px ${MONO}` });
+    }
+  }
+  function drawObl() {
+    const x = obl.ctx; obl.clear(); const W = obl.W, H = obl.H; const s = st.s;
+    const fw = W * 0.58 - 20, fh = H - 70; const yspan = 5.2 * fh / fw; const f = new Frame(x, [16, 44, fw, fh], [-3.4, 1.8], [-0.35 * yspan, 0.65 * yspan]);
+    line(x, [[f.tx(-3.4), f.ty(0)], [f.tx(1.8), f.ty(0)]], C.teal, 2.2, 10); text(x, 'range of P_C', f.tx(-3.35), f.ty(0) - 8, { color: C.teal, font: `10.5px ${MONO}` });
+    const kd = [s, 1]; const kn = Math.hypot(kd[0], kd[1]); line(x, [[f.tx(-kd[0] / kn * 0.7), f.ty(-kd[1] / kn * 0.7)], [f.tx(kd[0] / kn * 1.6), f.ty(kd[1] / kn * 1.6)]], rgba(C.violet, .85), 1.6, 0, [6, 5]);
+    text(x, 'kernel of P_C', f.tx(-kd[0] / kn * 0.7) - 4, f.ty(-kd[1] / kn * 0.7) + 14, { color: C.violet, font: `10.5px ${MONO}` });
+    arrow(x, f.tx(0), f.ty(0), f.tx(1), f.ty(1), '#fff', 2.2, 10); text(x, 'b = (1, 1)', f.tx(1) - 6, f.ty(1) - 8, { color: '#fff', align: 'right', font: `11px ${MONO}` });
+    const pb = 1 - s; line(x, [[f.tx(1), f.ty(1)], [f.tx(pb), f.ty(0)]], rgba(C.gold, .85), 1.4, 0, [3, 3]);
+    dot(x, f.tx(pb), f.ty(0), 6, pb >= 0 ? C.green : C.red, 16, '#fff'); text(x, `P_C b = (${pb.toFixed(2)}, 0)`, f.tx(pb), f.ty(0) + 20, { color: pb >= 0 ? C.green : C.red, align: 'center', font: `11px ${MONO}` });
+    /* rate inset */
+    const g = new Frame(x, [W * 0.66 + 16, 44, W * 0.34 - 30, H - 94], [0, 4], [-1.6, 0.6]);
+    g.axes({ xticks: [0, 1, 2, 3, 4], yticks: [-1.5, -1, -0.5, 0, 0.5], xlabel: 'shear s', fx: v => v.toFixed(0), fy: v => v.toFixed(1) });
+    g.hline(0, rgba(C.ink, .4), [2, 3]); line(x, [[g.tx(0), g.ty(0.5)], [g.tx(4), g.ty(-1.5)]], C.gold, 2.2, 10);
+    dot(x, g.tx(3), g.ty(-1), 3.5, C.red); text(x, 'paper', g.tx(3) + 5, g.ty(-1) + 12, { color: C.red, font: `10px ${MONO}` });
+    dot(x, g.tx(s), g.ty(0.5 - s / 2), 5.5, '#fff', 14, C.gold);
+    text(x, 'rate', g.x0 + 4, g.y0 + 12, { color: C.gold, font: `10.5px ${MONO}` });
+  }
+  function cards() {
+    const b = bvec(); const bb = [0, 1, 2].map(i => [0, 1, 2].map(j => b[i] * b[j])); const eps = 1e-5;
+    const Kp = K.map((r, i) => r.map((v, j) => v + eps * bb[i][j])), Km = K.map((r, i) => r.map((v, j) => v - eps * bb[i][j]));
+    const fd = (Zsel(Kp) - Zsel(Km)) / (2 * eps); const th = qC(b);
+    setText('sc-fd', fd.toFixed(7)); setText('sc-th', th.toFixed(7));
+    const a = Math.pow(10, st.la); const k = selIdx().length; const Ka = K.map(r => r.map(v => v * a));
+    setText('sc-P', '‖ΔP‖ = 0'); setText('sc-Z', sgn(Zsel(Ka) - Zsel(K), 4) + ' = ' + k + '·log α');
+    const Kap = Ka.map((r, i) => r.map((v, j) => v + eps * bb[i][j])), Kam = Ka.map((r, i) => r.map((v, j) => v - eps * bb[i][j]));
+    const ra = (Zsel(Kap) - Zsel(Kam)) / (2 * eps); setText('sc-r', (ra * a).toFixed(6));
+    const r = 0.5 - st.s / 2; setText('sc-ob', sgn(r, 4)); setNote('sn-ob', r >= 0 ? 'positive' : 'negative, eigenvalues still positive', r >= 0 ? 'pos' : 'neg');
+  }
+  function draw(t = GM.now()) { if (!sph) return; drawSphere(t); drawTomo(t); drawObl(); cards(); }
+  return { init, draw, animated: true, st, set(o) { Object.assign(st, o); ['th', 'ph', 's', 'la'].forEach(k => S[k] && S[k].set(st[k])); if (o.sel) $('#sSel').value = o.sel; draw(); } };
+})());
+
+/* ===== Lens 8: the spectral screen, Newton to deep MOND (Prop 24, Prop 25, §14) ===== */
+const Screen = {
+  aD: Math.PI * Math.PI / 6, /* in units of a0 */
+  MS: [10, 30, 100, 300, 1000, Infinity],
+  table: null, key: '',
+  simpson(f, a, b, n) { if (b <= a) return 0; if (n % 2) n++; const h = (b - a) / n; let s = f(a) + f(b); for (let i = 1; i < n; i++) s += f(a + i * h) * (i % 2 ? 4 : 2); return s * h / 3; },
+  fcont(t, p) { /* f_p(t) = (p+1) t^(p+1) \int_0^{1/t} u^(p+1)/(e^u - 1) du */
+    const up = Math.min(1 / t, 90); const g = u => u === 0 ? (p === 0 ? 1 : 0) : Math.pow(u, p + 1) / Math.expm1(u);
+    let I; if (up <= 8) I = this.simpson(g, 0, up, 400); else I = this.simpson(g, 0, 8, 400) + this.simpson(g, 8, up, 400);
+    return (p + 1) * Math.pow(t, p + 1) * I;
+  },
+  fmodes(t, p, m) { /* equal-weight midpoint nodes of the rho_p distribution; p = 0 is Proposition 25 */
+    let s = 0; for (let j = 1; j <= m; j++) { const w = Math.pow((j - 0.5) / m, 1 / (p + 1)); const u = w / t; s += u > 700 ? 0 : u / Math.expm1(u); } return s / m;
+  },
+  cache: new Map(),
+  build(p, m) { /* tabulate log f on a log grid of t, keeping a few tables */
+    const key = p + '|' + m; if (this.key === key) return; this.key = key;
+    if (this.cache.has(key)) { this.table = this.cache.get(key); return; }
+    const n = 1500, lo = -5, hi = 6; const T = new Float64Array(n), F = new Float64Array(n);
+    for (let i = 0; i < n; i++) { const lt = lo + (hi - lo) * i / (n - 1); const t = Math.pow(10, lt); const v = m === Infinity ? this.fcont(t, p) : this.fmodes(t, p, m); T[i] = lt; F[i] = Math.log10(Math.max(v, 1e-300)); }
+    this.table = { T, F, lo, hi, n }; this.cache.set(key, this.table);
+    if (this.cache.size > 12) this.cache.delete(this.cache.keys().next().value);
+  },
+  f(t) { const { T, F, lo, hi, n } = this.table; const lt = Math.log10(t); if (lt <= lo) return Math.pow(10, F[0]); if (lt >= hi) return Math.pow(10, F[n - 1]); const u = (lt - lo) / (hi - lo) * (n - 1); const i = Math.floor(u), r = u - i; return Math.pow(10, F[i] * (1 - r) + F[i + 1] * r); },
+  solve(aN) { /* a f(a/aD) = aN by bisection in log a */
+    let lo = -14, hi = 9; for (let k = 0; k < 90; k++) { const mid = (lo + hi) / 2; const a = Math.pow(10, mid); if (a * this.f(a / this.aD) > aN) hi = mid; else lo = mid; } return Math.pow(10, (lo + hi) / 2);
+  },
+  rar: aN => aN / (1 - Math.exp(-Math.sqrt(aN))),
+  solveDirect(aN, p, m) { /* same equation, evaluating f directly: used for the table and the readouts */
+    const f = t => m === Infinity ? this.fcont(t, p) : this.fmodes(t, p, m);
+    let lo = -14, hi = 9; for (let k = 0; k < 70; k++) { const mid = (lo + hi) / 2; const a = Math.pow(10, mid); if (a * f(a / this.aD) > aN) hi = mid; else lo = mid; } return Math.pow(10, (lo + hi) / 2);
+  }
+};
+
+GM.add('screen', (() => {
+  let rel, orb, cur; const st = { p: 0, mi: 5, lan: -0.43, spd: 1 }; let S = {}; let curve = [], ref = [];
+  const ANs = Array.from({ length: 161 }, (_, i) => Math.pow(10, -4 + 8 * i / 160));
+  const RADII = [0.25, 0.4, 0.6, 0.9, 1.3, 1.9, 2.8, 4.1, 6, 8.8];
+  let phase = RADII.map(() => 0), phaseN = RADII.map(() => 0), lastT = null;
+  function recompute() {
+    Screen.build(0, Infinity); ref = ANs.map(Screen.solve.bind(Screen));
+    Screen.build(st.p, Screen.MS[st.mi]); curve = ANs.map(Screen.solve.bind(Screen));
+  }
+  function init() {
+    rel = new Stage($('#mRel'), w => w < 600 ? 0.95 : 0.44); orb = new Stage($('#mOrbit'), 0.9); cur = new Stage($('#mCurve'), 0.9);
+    S.p = bindRange('mP', v => { st.p = v; recompute(); draw(); }, v => v.toFixed(2));
+    S.mi = bindRange('mM', v => { st.mi = v; recompute(); draw(); }, v => Screen.MS[v] === Infinity ? '∞ (continuum)' : Screen.MS[v]);
+    S.lan = bindRange('mAN', v => { st.lan = v; draw(); }, v => v.toFixed(2) + '  (' + sci(Math.pow(10, v), 2) + ')');
+    S.spd = bindRange('mOrb', v => { st.spd = v; }, v => v.toFixed(2) + '×');
+    Object.keys(S).forEach(k => st[k] = S[k].v);
+    const pre = o => { Object.assign(st, o); Object.keys(o).forEach(k => S[k].set(o[k])); recompute(); draw(); };
+    $('#mFlat').addEventListener('click', () => pre({ p: 0, mi: 5 }));
+    $('#mP1').addEventListener('click', () => pre({ p: 1, mi: 5 }));
+    $('#mFew').addEventListener('click', () => pre({ p: 0, mi: 0, lan: -2 }));
+    $('#mWorst').addEventListener('click', () => pre({ p: 0, mi: 5, lan: Math.round(Math.log10(0.3715) * 100) / 100 }));
+    recompute();
+    /* the paper's table, recomputed with the p = 0 continuum */
+    const tb = $('#mTab'); tb.innerHTML = ''; Screen.build(0, Infinity);
+    [1e-4, 1e-2, 0.1, 1, 10, 100].forEach(aN => { const a = Screen.solveDirect(aN, 0, Infinity), r = Screen.rar(aN); const tr = document.createElement('tr'); const f7 = v => v < 1 ? v.toFixed(6) : v.toPrecision(7); tr.innerHTML = `<td class="num">${aN >= 1 ? aN : sci(aN, 1)}</td><td class="num">${f7(a)}</td><td class="num">${f7(r)}</td><td class="num">${(Math.log10(a / r) >= 0 ? '+' : '−') + Math.abs(Math.log10(a / r)).toFixed(5)}</td>`; tb.appendChild(tr); });
+    Screen.build(st.p, Screen.MS[st.mi]);
+  }
+  function drawRel() {
+    const x = rel.ctx; rel.clear(); const W = rel.W, H = rel.H; const narrow = W < 600;
+    const top = new Frame(x, [64, 40, W - 84, (H - 96) * 0.66], [1e-4, 1e4], [1e-4, 1e4], { xlog: true, ylog: true });
+    top.axes({ noxl: true, ylabel: 'a / a₀', ny: 8 });
+    line(x, top.pts(ANs, v => v), rgba(C.ink, .45), 1.2, 0, [2, 4]);
+    line(x, top.pts(ANs, Screen.rar), C.gold, 2.2, 8, [8, 5]);
+    if (!(st.p === 0 && st.mi === 5)) line(x, ANs.map((v, i) => [top.tx(v), top.ty(ref[i])]), rgba(C.teal, .35), 1.4);
+    line(x, ANs.map((v, i) => [top.tx(v), top.ty(curve[i])]), C.teal, 2.6, 14);
+    const lg = [['Newton a = a_N', rgba(C.ink, .6)], ['empirical RAR fit', C.gold], ['screen model', C.teal]]; lg.forEach(([s, c], i) => { const ly = top.y0 + top.h - 52 + i * 16; line(x, [[top.x0 + top.w - 170, ly], [top.x0 + top.w - 148, ly]], c, 2.4); text(x, s, top.x0 + top.w - 142, ly + 4, { color: C.ink2, font: `11px ${MONO}` }); });
+    const aN = Math.pow(10, st.lan); Screen.build(st.p, Screen.MS[st.mi]); const a = Screen.solve(aN);
+    top.vline(aN, rgba('#ffffff', .35), [3, 4]); dot(x, top.tx(aN), top.ty(a), 5.5, '#fff', 14, C.teal); dot(x, top.tx(aN), top.ty(Screen.rar(aN)), 4, C.gold, 8);
+    const by = 40 + (H - 96) * 0.66 + 16; const bot = new Frame(x, [64, by, W - 84, H - by - 44], [1e-4, 1e4], [-0.14, 0.04], { xlog: true });
+    bot.axes({ yticks: [-0.1, -0.05, 0], xlabel: 'baryonic Newtonian acceleration a_N / a₀', ylabel: 'dex', fy: v => v.toFixed(2) });
+    bot.hline(0, rgba(C.ink, .4), [2, 3]); bot.clip();
+    if (!(st.p === 0 && st.mi === 5)) line(x, ANs.map((v, i) => [bot.tx(v), bot.ty(Math.log10(ref[i] / Screen.rar(v)))]), rgba(C.teal, .35), 1.2);
+    line(x, ANs.map((v, i) => [bot.tx(v), bot.ty(Math.log10(curve[i] / Screen.rar(v)))]), C.teal, 2.2, 10); bot.unclip();
+    bot.vline(0.3715, rgba(C.gold, .6), [4, 4]); text(x, '−0.0795 dex (p = 0 continuum)', bot.tx(0.3715) + 6, bot.ty(-0.12), { color: C.gold, font: `10.5px ${MONO}` });
+    bot.vline(aN, rgba('#ffffff', .35), [3, 4]);
+  }
+  function drawOrbit(t) {
+    const x = orb.ctx; orb.clear(); const W = orb.W, H = orb.H; const ox = W / 2, oy = H / 2; const Rmax = Math.min(W, H) * 0.46;
+    const disp = r => Rmax * Math.sqrt(r / RADII[RADII.length - 1]);
+    const dt = lastT == null ? 0 : Math.min(0.05, t - lastT); lastT = t;
+    x.save(); const g = x.createRadialGradient(ox, oy, 0, ox, oy, 26); g.addColorStop(0, 'rgba(255,240,200,.95)'); g.addColorStop(1, 'rgba(255,200,120,0)'); x.fillStyle = g; x.beginPath(); x.arc(ox, oy, 26, 0, TAU); x.fill(); x.restore();
+    Screen.build(st.p, Screen.MS[st.mi]);
+    RADII.forEach((r, i) => {
+      const rr = disp(r); x.save(); x.strokeStyle = 'rgba(120,150,190,.14)'; x.beginPath(); x.arc(ox, oy, rr, 0, TAU); x.stroke(); x.restore();
+      const aN = 1 / (r * r); const a = Screen.solve(aN); const v = Math.sqrt(a * r), vN = Math.sqrt(aN * r);
+      if (!GM.calm) { phase[i] += dt * st.spd * 0.9 * v / r; phaseN[i] += dt * st.spd * 0.9 * vN / r; }
+      const th = phase[i] + i * 0.7, thN = phaseN[i] + i * 0.7;
+      for (let k = 1; k <= 10; k++) { const tt = th - k * 0.045 * v / Math.sqrt(r); dot(x, ox + rr * Math.cos(tt), oy - rr * Math.sin(tt), 2.4 - k * 0.18, rgba(C.teal, 0.5 - k * 0.045)); }
+      dot(x, ox + rr * Math.cos(thN), oy - rr * Math.sin(thN), 3, rgba(C.ink, .4));
+      dot(x, ox + rr * Math.cos(th), oy - rr * Math.sin(th), 4.2, C.teal, 12, '#fff');
+    });
+    x.save(); x.strokeStyle = rgba(C.gold, .6); x.setLineDash([4, 5]); x.beginPath(); x.arc(ox, oy, disp(1), 0, TAU); x.stroke(); x.restore();
+    text(x, 'r = √(GM/a₀)', ox + disp(1) * 0.72, oy - disp(1) * 0.72 - 4, { color: C.gold, font: `10.5px ${MONO}` });
+    text(x, '● screen model   ○ Newton', 12, H - 12, { color: C.ink2, font: `11px ${MONO}` });
+    text(x, 'radius drawn on a square-root scale', W - 12, H - 12, { color: C.muted, align: 'right', font: `10.5px ${SANS}` });
+  }
+  function drawCurve() {
+    const x = cur.ctx; cur.clear(); const W = cur.W, H = cur.H;
+    const rs = Array.from({ length: 140 }, (_, i) => Math.pow(10, -1.5 + 2.9 * i / 139));
+    const f = new Frame(x, [52, 40, W - 70, H - 84], [rs[0], rs[rs.length - 1]], [0, 3.2], { xlog: true });
+    f.axes({ xlabel: 'radius r / √(GM/a₀)', ylabel: 'v / (GMa₀)^(1/4)', ny: 4, ylabelOff: 38 });
+    f.hline(1, rgba(C.gold, .6), [4, 4]); text(x, 'deep-MOND speed', f.x0 + 6, f.ty(1) + 15, { color: C.gold, font: `10.5px ${MONO}` });
+    Screen.build(st.p, Screen.MS[st.mi]);
+    line(x, f.pts(rs, r => 1 / Math.sqrt(r)), rgba(C.ink, .5), 1.4, 0, [2, 4]);
+    line(x, f.pts(rs, r => Math.sqrt(Screen.rar(1 / (r * r)) * r)), C.gold, 2, 6, [8, 5]);
+    line(x, f.pts(rs, r => Math.sqrt(Screen.solve(1 / (r * r)) * r)), C.teal, 2.6, 12);
+    text(x, 'Newton', f.tx(0.06) + 4, f.ty(Math.min(3.1, 1 / Math.sqrt(0.06))) + 14, { color: C.ink2, font: `10.5px ${MONO}` });
+  }
+  function cards() {
+    const aN = Math.pow(10, st.lan); Screen.build(st.p, Screen.MS[st.mi]); const a = Screen.solveDirect(aN, st.p, Screen.MS[st.mi]), r = Screen.rar(aN);
+    setText('mc-a', a.toPrecision(6)); setNote('mn-a', st.mi === 5 ? (st.p === 0 ? 'flat density, continuum' : 'p = ' + st.p.toFixed(2) + ', continuum') : Screen.MS[st.mi] + ' modes', st.mi === 5 && st.p === 0 ? 'rec' : 'null');
+    setText('mc-rar', r.toPrecision(6)); setText('mc-dex', (Math.log10(a / r) >= 0 ? '+' : '−') + Math.abs(Math.log10(a / r)).toFixed(5));
+    const p = st.p; const gam = x => { /* Lanczos */ const g = 7, c = [0.99999999999980993, 676.5203681218851, -1259.1392167224028, 771.32342877765313, -176.61502916214059, 12.507343278686905, -0.13857109526572012, 9.9843695780195716e-6, 1.5056327351493116e-7]; if (x < 0.5) return Math.PI / (Math.sin(Math.PI * x) * gam(1 - x)); x -= 1; let a = c[0]; const tt = x + g + 0.5; for (let i = 1; i < 9; i++) a += c[i] / (x + i); return Math.sqrt(TAU) * Math.pow(tt, x + 0.5) * Math.exp(-tt) * a; };
+    const zeta = s => { let z = 0; for (let n = 1; n <= 20000; n++) z += Math.pow(n, -s); return z + Math.pow(20000, 1 - s) / (s - 1); };
+    if (st.mi === 5) { const c = (p + 1) * gam(p + 2) * zeta(p + 2); setText('mc-deep', c.toFixed(4) + ' · t^' + (p + 1).toFixed(2)); setNote('mn-deep', p === 0 ? 'π²/6: the MOND square root' : p === 1 ? '4ζ(3): a ∝ r^{−2/3}, not flat' : 'deep law a ∝ a_N^{1/(p+2)}', p === 0 ? 'rec' : 'null'); }
+    else { setText('mc-deep', '→ 0'); setNote('mn-deep', 'finite modes: f/t → 0, the deep branch collapses', 'neg'); }
+  }
+  function draw(t = GM.now()) { if (!rel) return; drawRel(); drawOrbit(t); drawCurve(); cards(); }
+  return { init, draw, animated: true, st, set(o) { Object.assign(st, o); Object.keys(S).forEach(k => S[k] && st[k] != null && S[k].set(st[k])); recompute(); draw(); } };
+})());
+
+/* ===== Lens 9: the Einstein coefficient of the imported form-space action (Prop 23) ===== */
+GM.add('einstein', (() => {
+  let slots, ser, poles; const st = { x: 0.35, beta: 0.00663, fill: 1, fillStart: -1 }; let S = {};
+  const EIG = [[1, 1, 'Λ⁰ scalars'], [0.25, 4, 'Λ¹ one-forms'], [1 / 6, 6, 'Λ² two-forms']];
+  const exact = x => -Math.log(1 - x) - 4 * Math.log(1 - x / 4) - 6 * Math.log(1 - x / 6);
+  function init() {
+    slots = new Stage($('#eSlots'), w => w < 600 ? 0.9 : 0.3); ser = new Stage($('#eSeries'), 0.8); poles = new Stage($('#ePoles'), 0.8);
+    S.x = bindRange('eBR', v => { st.x = v; draw(); }, v => v.toFixed(2)); S.beta = bindRange('eBeta', v => { st.beta = v; draw(); }, v => v.toFixed(5));
+    st.x = S.x.v; st.beta = S.beta.v;
+    $('#ePlay').addEventListener('click', () => { st.fillStart = GM.now(); });
+    $('#eMatch').addEventListener('click', () => { st.beta = 1 / (48 * Math.PI); S.beta.set(st.beta); draw(); });
+  }
+  function drawSlots(t) {
+    const x = slots.ctx; slots.clear(); const W = slots.W, H = slots.H; const fill = st.fillStart < 0 ? 1 : clamp((t - st.fillStart) / 2.2, 0, 1);
+    const n = 11, gap = W < 600 ? 3 : 8, sepx = W < 600 ? 12 : 26; const bw = (W - 80 - 2 * sepx - gap * (n - 1)) / n; const base = H * 0.66, hmax = H * 0.4;
+    let k = 0; let X = 40; const sums = [];
+    EIG.forEach(([ev, mult, lab], sI) => {
+      const x0 = X; let sum = 0;
+      for (let i = 0; i < mult; i++) {
+        const v = st.x * ev; const sc = 1 / Math.max(Math.abs(st.x), 0.05); const hv = clamp(v * sc, -1, 1) * hmax * fill; const exv = -Math.log(1 - v);
+        const col = [C.gold, C.teal, C.violet][sI];
+        x.fillStyle = rgba(col, .75); x.fillRect(X, base - Math.max(hv, 0), bw, Math.abs(hv));
+        const he = clamp(exv * sc, -1.25, 1.25) * hmax * fill; line(x, [[X - 1, base - he], [X + bw + 1, base - he]], '#fff', 2, 8);
+        sum += v; X += bw + gap; k++;
+      }
+      sums.push(sum);
+      text(x, lab, (x0 + X - gap) / 2, base + 22, { color: C.ink2, align: 'center', font: `11px ${SANS}` });
+      text(x, `${mult} × βR·${ev === 1 ? '1' : ev === .25 ? '¼' : '⅙'}`, (x0 + X - gap) / 2, base + 38, { color: C.muted, align: 'center', font: `10.5px ${MONO}` });
+      text(x, `trace = ${sum.toFixed(3)}`, (x0 + X - gap) / 2, base + 56, { color: [C.gold, C.teal, C.violet][sI], align: 'center', font: `bold 11px ${MONO}` });
+      X += sepx;
+    });
+    line(x, [[30, base], [W - 20, base]], rgba(C.ink, .4), 1);
+    text(x, `total 3βR = ${(3 * st.x).toFixed(3)}   ·   white marks: exact −log(1 − βλ) per slot`, W - 14, 26, { color: C.ink, align: 'right', font: `12px ${MONO}` });
+  }
+  function drawSeries() {
+    const x = ser.ctx; ser.clear(); const W = ser.W, H = ser.H; const xs = Array.from({ length: 200 }, (_, i) => -1.5 + 2.45 * i / 199);
+    const f = new Frame(x, [52, 40, W - 70, H - 84], [-1.5, 0.95], [-4.5, 5]);
+    f.axes({ xlabel: 'βR', ny: 5, fy: v => v.toFixed(0) }); f.hline(0, rgba(C.ink, .3), [2, 3]); f.vline(0, rgba(C.ink, .3), [2, 3]);
+    line(x, f.pts(xs, v => 3 * v), rgba(C.blue, .9), 1.6, 0, [6, 4]); line(x, f.pts(xs, v => 3 * v + 17 * v * v / 24), C.gold, 1.8, 6, [3, 3]); line(x, f.pts(xs, exact), C.teal, 2.6, 12);
+    dot(x, f.tx(st.x), f.ty(exact(st.x)), 5, '#fff', 14, C.teal);
+    [['exact', C.teal], ['3βR', C.blue], ['3βR + 17β²R²/24', C.gold]].forEach(([s, c], i) => text(x, s, f.x0 + 8, f.y0 + 16 + i * 15, { color: c, font: `11px ${MONO}` }));
+  }
+  function drawPoles() {
+    const x = poles.ctx; poles.clear(); const W = poles.W, H = poles.H; const b = st.beta;
+    const f = new Frame(x, [62, 40, W - 80, H - 84], [0.001, 0.05], [-1300, 700], { xlog: true });
+    f.axes({ xticks: [0.001, 0.002, 0.005, 0.01, 0.02, 0.05], fx: v => v + '', yticks: [-1200, -800, -400, 0, 400], fy: v => v.toFixed(0), xlabel: 'β in units of ℓ_P²', ylabel: 'mass² (1/ℓ_P²)', ylabelOff: 50 });
+    x.fillStyle = rgba(C.red, .1); x.fillRect(f.x0, f.ty(0), f.w, f.y0 + f.h - f.ty(0));
+    f.hline(0, rgba(C.ink, .5), [2, 3]);
+    const bs = Array.from({ length: 120 }, (_, i) => Math.pow(10, -3 + Math.log10(50) * i / 119));
+    f.clip(); line(x, f.pts(bs, v => -6 / (5 * v)), C.red, 2.4, 12); line(x, f.pts(bs, v => 3 / (5 * v)), C.green, 2.4, 12); f.unclip();
+    f.vline(1 / (48 * Math.PI), rgba(C.gold, .7), [4, 4]); text(x, 'β = 1/(48π)', f.tx(1 / (48 * Math.PI)) + 5, f.y0 + 14, { color: C.gold, font: `10.5px ${MONO}` });
+    const m2 = -6 / (5 * b), m0 = 3 / (5 * b);
+    if (m2 > -1300) { dot(x, f.tx(b), f.ty(m2), 6, C.red, 16, '#fff'); text(x, `spin-2: ${m2.toFixed(0)}`, f.tx(b) + 9, f.ty(m2) + 4, { color: C.red, font: `bold 11px ${MONO}` }); }
+    if (m0 < 700) { dot(x, f.tx(b), f.ty(m0), 6, C.green, 16, '#fff'); text(x, `scalar: +${m0.toFixed(0)}`, f.tx(b) + 9, f.ty(m0) - 6, { color: C.green, font: `bold 11px ${MONO}` }); }
+    text(x, 'tachyonic side, m² < 0', f.x0 + f.w - 8, f.y0 + f.h - 10, { color: C.red, align: 'right', font: `11px ${MONO}` });
+  }
+  function cards() {
+    setText('ec-ex', exact(st.x).toFixed(6)); setText('ec-1', (3 * st.x).toFixed(6)); setText('ec-2', (3 * st.x + 17 * st.x * st.x / 24).toFixed(6));
+    const ratio = 48 * Math.PI * st.beta; setText('ec-coef', ratio.toFixed(4) + ' × 1/(16πG)'); setNote('en-coef', Math.abs(ratio - 1) < 2e-3 ? 'Einstein–Hilbert normalization' : 'adjust β to 1/(48π)', Math.abs(ratio - 1) < 2e-3 ? 'rec' : '');
+  }
+  function draw(t = GM.now()) { if (!slots) return; drawSlots(t); drawSeries(); drawPoles(); cards(); }
+  return { init, draw, animated: true, st, set(o) { Object.assign(st, o); S.x && S.x.set(st.x); S.beta && S.beta.set(st.beta); draw(); } };
+})());
+
+/* ===== Lens 10: record vs geometry, record vs relative entropy (Props 21, 22) ===== */
+GM.add('entropy', (() => {
+  let ind, nogo; const st = { x: 0.6, l: 2, c: 3, z: 0 }; let S = {};
+  const D = y => { const p1 = (20 + y) / (70 + 3 * y), p2 = (50 + 2 * y) / (70 + 3 * y); return p1 * Math.log(p1 / (2 / 7)) + p2 * Math.log(p2 / (5 / 7)); };
+  function init() {
+    ind = new Stage($('#iInd'), 0.8); nogo = new Stage($('#iNo'), 0.8);
+    S.x = bindRange('iX', v => { st.x = v; draw(); }, v => v.toFixed(2)); S.l = bindRange('iL', v => { st.l = v; draw(); }, v => v.toFixed(2));
+    S.c = bindRange('iC', v => { st.c = v; draw(); }, v => v.toFixed(2) + '  (c = ' + sci(Math.pow(10, v), 2) + ')'); S.z = bindRange('iZ', v => { st.z = v; draw(); }, v => v.toFixed(2));
+    Object.keys(S).forEach(k => st[k] = S[k].v);
+  }
+  function drawInd(t) {
+    const x = ind.ctx; ind.clear(); const W = ind.W, H = ind.H; const ox = W * 0.27, oy = H * 0.52, L = Math.min(W * 0.22, H * 0.36);
+    x.save(); x.strokeStyle = 'rgba(120,150,190,.2)'; x.beginPath(); x.moveTo(ox - L * 1.2, oy); x.lineTo(ox + L * 1.2, oy); x.moveTo(ox, oy - L * 1.2); x.lineTo(ox, oy + L * 1.2); x.stroke(); x.restore();
+    const a = Math.atan(st.x); line(x, [[ox - L * 1.15 * Math.cos(a), oy + L * 1.15 * Math.sin(a)], [ox + L * 1.15 * Math.cos(a), oy - L * 1.15 * Math.sin(a)]], C.blue, 2.6, 14);
+    const ph = GM.calm ? 0.9 : t * 0.8; const v = [0.8 * Math.cos(ph), 0.8 * Math.sin(ph)]; const u = [Math.cos(a), Math.sin(a)]; const c = v[0] * u[0] + v[1] * u[1];
+    arrow(x, ox, oy, ox + L * v[0], oy - L * v[1], rgba('#ffffff', .8), 1.6, 8); line(x, [[ox + L * v[0], oy - L * v[1]], [ox + L * c * u[0], oy - L * c * u[1]]], rgba(C.gold, .8), 1.2, 0, [3, 3]); dot(x, ox + L * c * u[0], oy - L * c * u[1], 4, C.gold, 10);
+    text(x, 'range of P(x, 0) = span(1, x)', ox, oy + L * 1.25 + 4, { color: C.blue, align: 'center', font: `10.5px ${MONO}` });
+    /* ledger dial */
+    const f = new Frame(x, [W * 0.56, H * 0.18, W * 0.4, H * 0.5], [0.5, 5.5], [-1, 1]);
+    line(x, [[f.x0, f.ty(0)], [f.x0 + f.w, f.ty(0)]], rgba(C.ink, .4), 1);
+    [1, 2, 3, 4, 5].forEach(v => text(x, v, f.tx(v), f.ty(0) + 18, { color: C.muted, align: 'center', font: `10px ${MONO}` }));
+    const cr = (f.tx(st.l + 0.6) - f.tx(st.l)); x.save(); glow(x, C.green, 12); x.strokeStyle = C.green; x.lineWidth = 2; x.beginPath(); x.arc(f.tx(st.l), f.ty(0), cr, 0, TAU); x.stroke(); x.restore();
+    if (!GM.calm) contourParticles(x, f.tx(st.l), f.ty(0), cr, t, C.teal, 12);
+    dot(x, f.tx(st.l), f.ty(0), 6, C.green, 16, '#fff'); dot(x, f.tx(5), f.ty(0), 5, rgba(C.ink, .7));
+    text(x, 'λ', f.tx(st.l), f.ty(0) - cr - 8, { color: C.green, align: 'center', font: `bold 12px ${MONO}` }); text(x, 'μ = 5', f.tx(5), f.ty(0) - 12, { color: C.ink2, align: 'center', font: `10.5px ${MONO}` });
+    text(x, `Z = log λ = ${Math.log(st.l).toFixed(4)}`, f.x0 + f.w / 2, f.y0 + f.h + 34, { color: C.teal, align: 'center', font: `11px ${MONO}` });
+    text(x, `g_xx = ${(1 / (1 + st.x * st.x) ** 2).toFixed(4)}`, ox, H - 14, { color: C.blue, align: 'center', font: `11px ${MONO}` });
+  }
+  function drawNo() {
+    const x = nogo.ctx; nogo.clear(); const W = nogo.W, H = nogo.H; const Y = 0.2 / Math.pow(10, st.z); const c = Math.pow(10, st.c);
+    const ys = Array.from({ length: 241 }, (_, i) => -Y + 2 * Y * i / 240); const lz = ys.map(y => Math.log(1 + y / 20)); const dv = ys.map(y => c * D(y));
+    let lo = Math.min(...lz, 0), hi = Math.max(...lz, ...dv.map(v => Math.min(v, Math.max(...lz) * 3))); const pad = (hi - lo) * 0.1;
+    const f = new Frame(x, [62, 40, W - 80, H - 84], [-Y, Y], [lo - pad, hi + pad]);
+    f.axes({ nx: 4, ny: 4, xlabel: 'y', fx: v => sci(v, 1), fy: v => sci(v, 1) }); f.hline(0, rgba(C.ink, .3), [2, 3]); f.vline(0, rgba(C.ink, .3), [2, 3]);
+    f.clip(); line(x, ys.map((y, i) => [f.tx(y), f.ty(dv[i])]), C.gold, 2.4, 10); line(x, ys.map((y, i) => [f.tx(y), f.ty(lz[i])]), C.teal, 2.6, 12); f.unclip();
+    text(x, 'Z(y) − Z(0) = log(1 + y/20): slope 1/20', f.x0 + 8, f.y0 + 16, { color: C.teal, font: `11px ${MONO}` });
+    text(x, `c · D(ρ(y)‖ρ(0)): slope 0 at y = 0`, f.x0 + 8, f.y0 + 31, { color: C.gold, font: `11px ${MONO}` });
+  }
+  function cards() { setText('ic-g', (1 / (1 + st.x * st.x) ** 2).toFixed(5)); setText('ic-Z', Math.log(st.l).toFixed(5)); }
+  function draw(t = GM.now()) { if (!ind) return; drawInd(t); drawNo(); cards(); }
+  return { init, draw, animated: true, st, set(o) { Object.assign(st, o); Object.keys(S).forEach(k => S[k].set(st[k])); draw(); } };
+})());
+
+/* ===== Lens 11: the ride, and Lens 12: the claim ledger ===== */
+const RIDE = [
+  { t: 'Objects', s: '§1 projector, form, record', lens: 'mixer', set: { y: -0.12 }, body: 'Isolate a spectral cluster with a contour. The Riesz projector P is the first object; the real trace form g_ij = ½ Re Tr(∂ᵢP ∂ⱼP) of its tangents is the second; the contour count N and trace-log Z are the record. The whole paper compares what happens to g with what happens to N and Z.' },
+  { t: 'Positivity', s: 'Thms 1–3, Prop 4', lens: 'roundtrip', set: { g: 0 }, body: 'For orthogonal projectors the overlap is a sum of squared cosines, so it is capped by the rank, and self-adjoint tangents give a Gram form, so g ≥ 0. At a Hermitian point the round trip is |M|²/Δ². All of these need self-adjointness; none of them come free.' },
+  { t: 'Neutral space', s: 'Thm 6, Cor 7', lens: 'neutral', set: {}, body: 'On the full tangent space of complex idempotents the form is exactly neutral: q = ‖U‖² − ‖V‖², with 2k(n − k) directions of each sign. The self-adjoint slice is all positive. A measured restriction carries its own inertia.' },
+  { t: 'Above the cap', s: 'Thm 8, Cor 9', lens: 'cap', set: { y: -0.1 }, body: 'Taylor-expand the overlap: Re Tr(P(0)P(t)) = k − ½ Re Tr(D²) t² + o(t²). A negative direction therefore pushes the overlap above the orthogonal cap for every small step. This closes an open question from earlier editions.' },
+  { t: 'Reciprocity', s: 'Thm 10, Cor 11', lens: 'roundtrip', set: { beta: 0 }, body: 'With a symmetric bilinear pairing, the two transition legs are equal and a two-probe, one-partner form has det g = −[Im(ū₁u₂)]² ≤ 0. The rotation run lifted the antisymmetry W exactly linearly, but the predicted wall never appeared. That failure stays in the ledger.' },
+  { t: 'Contour record', s: 'Prop 12, Thm 13, Prop 14', lens: 'defects', set: { t: 0 }, body: 'A metric wall is one real equation, so it is a hypersurface. The contour count and trace-log are continuous wherever a fixed contour stays in the resolvent set, even through a Jordan block, because the trace of a nilpotent is zero.' },
+  { t: 'Fixed-base wall', s: 'Prop 15, LEDGER-02', lens: 'licence', set: { k: 0.45 }, body: 'Tilt the tangent probes from Hermitian to anti-Hermitian: g(κ) = G_H − κ²G_A. The licence 4 det g − ω² fails first, at κ* − 0.00776; the metric wall follows at κ* = 0.62713. The base is fixed, so the record is exactly constant.' },
+  { t: 'Moving wall', s: 'Thm 16, 16A, 16B', lens: 'mixer', set: { y: 0 }, body: 'The centrepiece. An explicit analytic projector whose metric changes signature at y = 0 while the eigenvalues stay 3 apart. N = 1 and Z = log(2 + y/10) move smoothly through the wall. The projector keeps moving along the null direction, and the proxy stays indefinite on both sides.' },
+  { t: 'Clocks', s: 'Prop 17', lens: 'defects', set: { m: 1 }, body: 'A zero of order m gives a line-element exponent m/2: a crossing gives 1/2, a touching zero gives 1. These are the powers seen in horizon lapses, but matching powers alone does not identify an operator wall with a horizon.' },
+  { t: 'Wraps', s: 'Props 18–20', lens: 'defects', set: { d: 8 }, body: 'A scalar shift is invisible to the commutator diagnostic. A spectral-gradient Gram form is positive semidefinite. And a determinant that is identically 1 can sit over a trace-log that carries a whole turn of 2πi: the wrap is in the record, not in the determinant.' },
+  { t: 'Not the geometry', s: 'Props 21, 22', lens: 'entropy', set: {}, body: 'The selected trace-log and the projector geometry can be varied separately, so neither determines the other. A same-reference relative entropy has zero slope where the states coincide; the moving wall’s record starts with slope 1/20. They cannot be the same function.' },
+  { t: 'Einstein term', s: 'Prop 23', lens: 'einstein', set: { x: 0.35 }, body: 'Import a four-dimensional form-space action. On 1 + 4 + 6 slots each sector’s curvature trace is R, so −Tr log(I − βℝ) starts with 3βR, and β = ℓ_P²/(48π) gives 1/(16πG). The same completion has a tachyonic spin-2 branch, which the paper reports.' },
+  { t: 'Newton to MOND', s: 'Props 24, 25', lens: 'screen', set: { p: 0, mi: 5 }, body: 'Assume an areal screen, the Unruh temperature and a flat mode density. Newton appears at high acceleration and the deep-MOND square root at low acceleration, with a₀ = 6a_D/π². The full curve sits within 0.08 dex of the published fit. Any finite number of modes kills the deep branch.' },
+  { t: 'Source bridge', s: 'Thm 26, Cors 27–28, Cx 29', lens: 'source', set: { sel: '23' }, body: 'Press on the operator with a source b: the selected trace-log moves at the rate b†P_C K⁻¹ b. For a positive self-adjoint K this is a positive weight, a silent direction is exactly the kernel of P_C, and enough readings rebuild P_C. An oblique K gives −1 with positive eigenvalues.' },
+  { t: 'Scale', s: 'Prop 30, (30)–(31)', lens: 'source', set: { la: 1 }, body: 'Multiply K by α: the projector and its metric do not move, the record shifts by k log α, and a source rate scales by 1/α. Projector geometry cannot fix G, a₀ or Λ on its own; a known probe coupling and energy unit can.' },
+  { t: 'Admission tests', s: '§22, §23', lens: 'ledger', set: {}, body: 'What a physical operator must now do: supply a positive state and source insertions, derive the area normalization and the low-frequency density from one controlled limit, give conserved covariant equations with healthy tensor modes, and compute both motion and lensing, with one prediction fixed before fitting.' }
+];
+GM.add('ride', (() => {
+  let cur = 0;
+  function init() {
+    const box = $('#rideSteps'); box.innerHTML = '';
+    RIDE.forEach((r, i) => { const b = document.createElement('button'); b.className = 'step'; b.setAttribute('role', 'listitem'); b.innerHTML = `<b>${i} · ${r.t}</b><span>${r.s}</span>`; b.addEventListener('click', () => { cur = i; render(); }); box.appendChild(b); });
+    render();
+  }
+  function render() {
+    $$('#rideSteps .step').forEach((b, i) => b.classList.toggle('active', i === cur)); const r = RIDE[cur];
+    $('#rideRoute').innerHTML = `<div class="kicker">Step ${cur} of ${RIDE.length - 1} · ${r.s}</div><h3>${r.t}</h3><p style="max-width:70rem;font-size:1.02rem;color:var(--ink2)">${r.body}</p><div class="row" style="margin-top:10px"><button id="rideGo">Open this in the ${$(`nav.tabs button[data-lens="${r.lens}"]`).textContent} lens</button>${cur > 0 ? '<button id="ridePrev">Previous</button>' : ''}${cur < RIDE.length - 1 ? '<button id="rideNext">Next</button>' : ''}</div>`;
+    $('#rideGo').addEventListener('click', () => { GM.show(r.lens); const L = GM.lenses[r.lens]; if (L && L.set && Object.keys(r.set).length) setTimeout(() => L.set(r.set), 30); window.scrollTo({ top: $('nav.tabs').offsetTop, behavior: GM.calm ? 'auto' : 'smooth' }); });
+    const p = $('#ridePrev'), n = $('#rideNext'); p && p.addEventListener('click', () => { cur--; render(); }); n && n.addEventListener('click', () => { cur++; render(); });
+  }
+  return { init, draw() {}, animated: false };
+})());
+
+const LEDGER_ROWS = [
+  ['Orthogonal cap, tangent positivity', 'Thms 1–2', ['T'], 'orthogonal projectors; self-adjoint families'],
+  ['Hermitian proxy criterion', 'Thm 3', ['T', 'L'], 'a 2 × 2 Hermitian proxy; not the raw complex tensor'],
+  ['Tangent block decomposition', 'Thm 5', ['T', 'L'], 'any idempotent'],
+  ['Neutral signature of the full tangent space', 'Thm 6, Cor 7', ['T', 'L'], 'complex idempotents; restrictions carry their own inertia'],
+  ['Negative direction forces overlap above the cap', 'Thm 8, Cor 9', ['T', 'L', 'N'], 'C² families of constant rank; local'],
+  ['Reciprocity obstruction; the rotation wall that did not appear', 'Thm 10, Cor 11, ROT-01', ['T', 'L', 'R', 'F'], 'normalized bilinear pairing, two probes, one partner'],
+  ['Wall codimensions, contour continuation, Jordan trace', 'Prop 12, Thm 13, Prop 14', ['T'], 'transversality; contour in the resolvent set; chosen log branch'],
+  ['Fixed-base probe mixing and its walls', 'Prop 15, LEDGER-02', ['T', 'N', 'R'], 'fixed base point; the record is constant by construction'],
+  ['Analytic wall without an exceptional point', 'Thm 16, 16A, 16B', ['T', 'L', 'N'], 'the explicit chart on |x|, |y| < 1/4'],
+  ['Line-element exponents', 'Prop 17', ['T', 'R'], 'finite-order zeros; interpretation as a clock is separate'],
+  ['Baseline invariance, Gram stress, integer wrap', 'Props 18–20', ['T', 'L', 'C'], 'finite matrices; d ≥ 3 for the illustrated wrap'],
+  ['Independence and the relative-entropy no-go', 'Props 21–22', ['T', 'N'], 'selected log; same-reference relative entropy'],
+  ['Einstein coefficient of the imported action', 'Prop 23', ['T', 'C'], 'an added four-dimensional form-space action; G enters through ℓ_P'],
+  ['Screen exponent, Newton and deep-MOND limits, order of limits', 'Props 24–25', ['T', 'N', 'H'], 'an assumed areal screen and positive continuum mode density'],
+  ['Source derivative, tomography, oblique counterexample', 'Thm 26, Cors 27–28, Cx 29', ['T', 'N'], 'positive corollaries need self-adjoint K > 0'],
+  ['Scale invisibility of projector geometry', 'Prop 30', ['T', 'N'], 'uniform scale of a fixed cluster'],
+  ['Physical Einstein–MOND unification, light-to-gravity coupling', '§§15, 19, 22', ['H'], 'open: no derived area law, continuum, field equations, lensing or stable wave sector yet']
+];
+const KEPT = [
+  '<b class="red">GEOWALL-ROT-01:</b> W rose linearly with rotation as predicted, but the predicted sign change of det g did not appear at any tested point.',
+  '<b class="red">SUBGRAV-04:</b> 19 of 20 seeded operators produced a wall; seed 9 had none in the admissible range.',
+  '<b class="gold">Screen model:</b> the full flat-density curve differs from the published RAR fit by up to −0.0795 dex, and it leaves an additive a_D/4 at high acceleration.',
+  '<b class="gold">Finite modes:</b> any finite number of modes collapses the deep-MOND branch; at t = 0.001 even 100 modes give 0.206 of the continuum value.',
+  '<b class="gold">Imported action:</b> the unrestricted vacuum completion has a tachyonic spin-2 branch and an FLRW tensor-propagation obstruction.',
+  '<b class="gold">Oblique response:</b> Counterexample 29 blocks importing the positive source measure into a nonnormal chart.'
+];
+const DEFEAT = [
+  'A gapped positive source spectrum with no zero-mode or continuum mechanism defeats strict deep-MOND scaling.',
+  'A source-resolved response with uncontrolled sign cannot be treated as a positive thermal density.',
+  'A viable rotation law without the second potential Ψ does not determine lensing.',
+  'A completed log action with pathological tensor characteristics is not a stable gravitational completion.'
+];
+const REFS = [
+  ['P. Dorau and A. Much, From Quantum Relative Entropy to the Semiclassical Einstein Equations, Phys. Rev. Lett. 136, 091602 (2026)', 'https://doi.org/10.1103/lmq8-nsty'],
+  ['G. Bianconi, Gravity from entropy, Phys. Rev. D 111, 066001 (2025)', 'https://doi.org/10.1103/PhysRevD.111.066001'],
+  ['D. S. Pereira, Vacuum Gravity from Entropy: Stability, Spectra, and Exact Waves, arXiv:2607.18518 (2026)', 'https://arxiv.org/abs/2607.18518'],
+  ['A. Montag and T. Ozawa, Quantum geometrical effects in non-Hermitian systems, Phys. Rev. Research 8, 013181 (2026)', 'https://doi.org/10.1103/qb8s-9c6y'],
+  ['M. A. Oancea, T. B. Mieling and G. Palumbo, Quantum geometric tensors from sub-bundle geometry, Quantum 10, 1965 (2026)', 'https://quantum-journal.org/papers/q-2026-01-14-1965/'],
+  ['R. Exel and T. A. Loring, Invariants of almost commuting unitaries, J. Funct. Anal. 95, 364 (1991)', 'https://doi.org/10.1016/0022-1236(91)90034-3'],
+  ['T. Jacobson, Thermodynamics of Spacetime: The Einstein Equation of State, Phys. Rev. Lett. 75, 1260 (1995)', 'https://arxiv.org/abs/gr-qc/9504004'],
+  ['E. Verlinde, On the Origin of Gravity and the Laws of Newton, JHEP 04, 029 (2011)', 'https://arxiv.org/abs/1001.0785'],
+  ['A. Rostami, K. Rezazadeh and M. Rostampour, Relativistic MOND Theory from Modified Entropic Gravity, arXiv:2511.05632 (2026)', 'https://arxiv.org/abs/2511.05632'],
+  ['S. S. McGaugh, F. Lelli and J. M. Schombert, The Radial Acceleration Relation in Rotationally Supported Galaxies, Phys. Rev. Lett. 117, 201101 (2016)', 'https://arxiv.org/abs/1609.05917'],
+  ['D. S. Pereira, Gravitational Waves and Matter Constraints in Gravity from Entropy, arXiv:2609.03082 (2026)', 'https://arxiv.org/abs/2609.03082'],
+  ['J. N. Beasley, Light Keeps the Ledger, research edition 7.2 (24 September 2026)', 'https://zenodo.org/records/22124938'],
+  ['J. N. Beasley, The Ledger Outlives the Metric (record of the paper family)', 'https://zenodo.org/records/22088625']
+];
+GM.add('ledger', (() => {
+  function init() {
+    const names = { T: 'written proof', L: 'Lean algebra', N: 'check', C: 'cited', H: 'hypothesis', R: 'gate record', F: 'failed' };
+    $('#ledgerRows').innerHTML = LEDGER_ROWS.map(([r, w, g, s]) => `<tr><td>${r}</td><td class="mono" style="white-space:nowrap">${w}</td><td><div class="badges" style="margin:0">${g.map(x => `<span class="badge b-${x}">${names[x]}</span>`).join('')}</div></td><td style="color:var(--ink2)">${s}</td></tr>`).join('');
+    $('#keptList').innerHTML = KEPT.map(k => `<li style="margin:.4em 0">${k}</li>`).join('');
+    $('#defeatList').innerHTML = DEFEAT.map(k => `<li style="margin:.4em 0">${k}</li>`).join('');
+    $('#refList').innerHTML = REFS.map(([t, u]) => `<li><a href="${u}" target="_blank" rel="noopener" style="color:var(--teal)">${t}</a></li>`).join('');
+  }
+  return { init, draw() {}, animated: false };
+})());
+
+/* ===== start-up ===== */
+$$('nav.tabs button').forEach(b => b.addEventListener('click', () => GM.show(b.dataset.lens)));
+window.addEventListener('hashchange', () => { const h = location.hash.replace('#', ''); if (h && h !== GM.active && GM.lenses[h]) GM.show(h); });
+window.GM = GM;
+GM.show((location.hash || '#mixer').replace('#', ''));
+requestAnimationFrame(loop);
+
+</script>
+</body>
+</html>
