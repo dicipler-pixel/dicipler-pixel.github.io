@@ -1,0 +1,261 @@
+{
+ "generated": "2026-11-16T23:32:07Z",
+ "count": 20,
+ "items": [
+  {
+   "id": "zenodo-24282998",
+   "kind": "zenodo",
+   "title": "Flock of Balls on the Field: breakdown, v2 math and film (16 Nov 2026)",
+   "date": "2026-11-16",
+   "url": "https://doi.org/10.5281/zenodo.24282998",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.24282998",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-24210039",
+   "kind": "zenodo",
+   "title": "What the Neutrino State Must Keep: Hidden Angular Structure, the Flux–Shear Link and the Threshold for Primordial Black Hole Formation",
+   "date": "2026-11-14",
+   "url": "https://doi.org/10.5281/zenodo.24210039",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.24210039",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-seiberg-witten-lean",
+   "kind": "repo",
+   "title": "seiberg-witten-lean",
+   "date": "2026-11-10",
+   "url": "https://github.com/dicipler-pixel/seiberg-witten-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-maxwell-lean",
+   "kind": "repo",
+   "title": "maxwell-lean",
+   "date": "2026-11-10",
+   "url": "https://github.com/dicipler-pixel/maxwell-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-companion-matrix-lean",
+   "kind": "repo",
+   "title": "companion-matrix-lean",
+   "date": "2026-11-10",
+   "url": "https://github.com/dicipler-pixel/companion-matrix-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-24040319",
+   "kind": "zenodo",
+   "title": "The Volume of the Knot Potential: Decay and Direction on the Vacuum Disk",
+   "date": "2026-11-07",
+   "url": "https://doi.org/10.5281/zenodo.24040319",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.24040319",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-23972187",
+   "kind": "zenodo",
+   "title": "**From Geometric Flux to Magnetic Charge: A Checked Pauli Curvature and an Explicit Physical Bridge**",
+   "date": "2026-11-05",
+   "url": "https://doi.org/10.5281/zenodo.23972187",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.23972187",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-23969285",
+   "kind": "zenodo",
+   "title": "Opened matter · the boundary census The Weight Between and the Exit Line",
+   "date": "2026-11-05",
+   "url": "https://doi.org/10.5281/zenodo.23969285",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.23969285",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-geometric-flux-magnetic-charge-lean",
+   "kind": "repo",
+   "title": "geometric-flux-magnetic-charge-lean",
+   "date": "2026-11-05",
+   "url": "https://github.com/dicipler-pixel/geometric-flux-magnetic-charge-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-23858157",
+   "kind": "zenodo",
+   "title": "When the Neutrinos Leave: Decoupling History and the Threshold for Primordial Black Hole Formation",
+   "date": "2026-11-01",
+   "url": "https://doi.org/10.5281/zenodo.23858157",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.23858157",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-23847114",
+   "kind": "zenodo",
+   "title": "Two Trees in One Ball, version 4",
+   "date": "2026-10-31",
+   "url": "https://doi.org/10.5281/zenodo.23847114",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.23847114",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-neutrinos-leave-lean",
+   "kind": "repo",
+   "title": "neutrinos-leave-lean",
+   "date": "2026-10-31",
+   "url": "https://github.com/dicipler-pixel/neutrinos-leave-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-23787997",
+   "kind": "zenodo",
+   "title": "Non-Normality Is Connection Energy",
+   "date": "2026-10-30",
+   "url": "https://doi.org/10.5281/zenodo.23787997",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.23787997",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-23726273",
+   "kind": "zenodo",
+   "title": "Electron Screening in Metal Deuterides: Measurement Systematics, Evolving Target State, and an Experimental Arbitration Protocol (SCREEN-PROG-04)",
+   "date": "2026-10-28",
+   "url": "https://doi.org/10.5281/zenodo.23726273",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.23726273",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-23698438",
+   "kind": "zenodo",
+   "title": "Colour Selects the Leader",
+   "date": "2026-10-27",
+   "url": "https://doi.org/10.5281/zenodo.23698438",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.23698438",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-23690415",
+   "kind": "zenodo",
+   "title": "The Weight Between",
+   "date": "2026-10-27",
+   "url": "https://doi.org/10.5281/zenodo.23690415",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.23690415",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-23689131",
+   "kind": "zenodo",
+   "title": "The Offset Speed Limit",
+   "date": "2026-10-27",
+   "url": "https://doi.org/10.5281/zenodo.23689131",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.23689131",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-23590925",
+   "kind": "zenodo",
+   "title": "Continuous edition v4 · card set v7 (B1–B207)",
+   "date": "2026-10-23",
+   "url": "https://doi.org/10.5281/zenodo.23590925",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.23590925",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-23493466",
+   "kind": "zenodo",
+   "title": "Beyond the Event Horizon: An Operator-First Theory of Persistent Geometry and Black Hole Dynamics",
+   "date": "2026-10-20",
+   "url": "https://doi.org/10.5281/zenodo.23493466",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.23493466",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-23351688",
+   "kind": "zenodo",
+   "title": "Band-Edge Rectification Test",
+   "date": "2026-10-13",
+   "url": "https://doi.org/10.5281/zenodo.23351688",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.23351688",
+   "balls": [
+    "unsorted"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,54 @@
+name: Update feed
+
+# Weekly refresh of the generated feed files (latest.json, balls/, search-index.json, feed-report.json).
+# Light job: a few public API calls, standard-library Python, no build or compute.
+on:
+  schedule:
+    - cron: "0 11 * * 1"   # Mondays 11:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-feed
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Build feed files
+        run: python3 scripts/update_feed.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Commit the generated files if they changed. If nothing changed and the branch's last commit is older than
+      # KEEPALIVE_DAYS, write feed-checked.json and commit only that, so GitHub does not disable this schedule
+      # (it disables scheduled workflows in public repos after 60 days without repository activity).
+      - name: Commit changes, or a keepalive when the repo has been quiet
+        env:
+          KEEPALIVE_DAYS: "50"
+        run: |
+          git add latest.json search-index.json feed-report.json balls/
+          if git diff --cached --quiet; then
+            last=$(git log -1 --format=%ct)
+            age_days=$(( ( $(date -u +%s) - last ) / 86400 ))
+            echo "No feed changes. Last commit is ${age_days} days old."
+            if [ "$age_days" -lt "$KEEPALIVE_DAYS" ]; then
+              echo "Nothing to commit."
+              exit 0
+            fi
+            printf '{"last_checked": "%s"}\n' "$(date -u +%Y-%m-%d)" > feed-checked.json
+            git add feed-checked.json
+            msg="Feed check (no changes; keepalive)"
+          else
+            msg="Weekly feed update"
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "$msg"
+          git push

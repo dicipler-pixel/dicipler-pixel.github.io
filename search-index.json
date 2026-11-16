@@ -1,0 +1,907 @@
+{
+ "generated": "2026-11-16T23:21:22Z",
+ "items": [
+  {
+   "id": "zenodo-24282998",
+   "t": "Flock of Balls on the Field: breakdown, v2 math and film (16 Nov 2026)",
+   "u": "https://doi.org/10.5281/zenodo.24282998",
+   "d": "2026-11-16",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "flock of balls on the field: breakdown, v2 math and film (16 nov 2026) snapshot of the research folder research/2026-11-16/flock_breakdown_film from https://github.com/dicipler-pixel/votkp-lean, branch claude/votkp-research-20261110, commit 3565281. jeromie beasley. ai-assisted. contents: the flock of balls on the field breakdown page (v2, v1 kept); helper and audit re "
+  },
+  {
+   "id": "zenodo-24210039",
+   "t": "What the Neutrino State Must Keep: Hidden Angular Structure, the Flux–Shear Link and the Threshold for Primordial Black Hole Formation",
+   "u": "https://doi.org/10.5281/zenodo.24210039",
+   "d": "2026-11-14",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "what the neutrino state must keep: hidden angular structure, the flux–shear link and the threshold for primordial black hole formation title what the neutrino state must keep: hidden angular structure, the flux–shear link and the threshold for primordial black hole formation (version 10 of \"when the neutrinos leave\") disclaimer ai use for the reseach and math as well as figures. all research directions are of my own ideas and the w "
+  },
+  {
+   "id": "repo-seiberg-witten-lean",
+   "t": "seiberg-witten-lean",
+   "u": "https://github.com/dicipler-pixel/seiberg-witten-lean",
+   "d": "2026-11-10",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "seiberg-witten-lean lean 4 formalization of seiberg and witten, electric-magnetic duality, monopole condensation, and confinement in n=2 supersymmetric yang-mills theory (hep-th/9407087). "
+  },
+  {
+   "id": "repo-maxwell-lean",
+   "t": "maxwell-lean",
+   "u": "https://github.com/dicipler-pixel/maxwell-lean",
+   "d": "2026-11-10",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "maxwell-lean lean 4 formalization of maxwell's electromagnetism as he wrote it, from the treatise (1873/1881) and the 1865 dynamical theory. "
+  },
+  {
+   "id": "repo-companion-matrix-lean",
+   "t": "companion-matrix-lean",
+   "u": "https://github.com/dicipler-pixel/companion-matrix-lean",
+   "d": "2026-11-10",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "companion-matrix-lean lean 4 / mathlib formalization of the companion-matrix projector diagnostic (zenodo 10.5281/zenodo.21787207) "
+  },
+  {
+   "id": "zenodo-24040319",
+   "t": "The Volume of the Knot Potential: Decay and Direction on the Vacuum Disk",
+   "u": "https://doi.org/10.5281/zenodo.24040319",
+   "d": "2026-11-07",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "the volume of the knot potential: decay and direction on the vacuum disk votkp began as the volume of the knot potential and became the vector of traits kept under peeling. this paper joins the two meanings through the two books of the intrinsic quantum geometric tensor, q = g - (i/2)ω: a climb (metric, size) and a turn (curvature, phase). everything is read on one disk  "
+  },
+  {
+   "id": "zenodo-23972187",
+   "t": "**From Geometric Flux to Magnetic Charge: A Checked Pauli Curvature and an Explicit Physical Bridge**",
+   "u": "https://doi.org/10.5281/zenodo.23972187",
+   "d": "2026-11-05",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "**from geometric flux to magnetic charge: a checked pauli curvature and an explicit physical bridge**  "
+  },
+  {
+   "id": "zenodo-23969285",
+   "t": "Opened matter · the boundary census The Weight Between and the Exit Line",
+   "u": "https://doi.org/10.5281/zenodo.23969285",
+   "d": "2026-11-05",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "opened matter · the boundary census the weight between and the exit line when a system of electrons is cut into a region and the rest, its correlation matrix has a cross block, x_a = c_ab c_ba: the weight between the two sides of the cut. this paper proves what that weight can and cannot say, and then studies where opened (non-hermitian) matter leaves the disk of its occ "
+  },
+  {
+   "id": "repo-geometric-flux-magnetic-charge-lean",
+   "t": "geometric-flux-magnetic-charge-lean",
+   "u": "https://github.com/dicipler-pixel/geometric-flux-magnetic-charge-lean",
+   "d": "2026-11-05",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "geometric-flux-magnetic-charge-lean lean proofs for from geometric flux to magnetic charge: berry curvature of the pauli projector, end to end "
+  },
+  {
+   "id": "zenodo-23858157",
+   "t": "When the Neutrinos Leave: Decoupling History and the Threshold for Primordial Black Hole Formation",
+   "u": "https://doi.org/10.5281/zenodo.23858157",
+   "d": "2026-11-01",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "when the neutrinos leave: decoupling history and the threshold for primordial black hole formation building on s. mccormick's result that free-streaming neutrinos raise the threshold for primordial black hole formation (doi:10.5281/zenodo.23808375), this paper asks what sets the way the effect fades when the neutrinos decouple gradually. the neutrino collision operator is read exactly as a cut be "
+  },
+  {
+   "id": "zenodo-23847114",
+   "t": "Two Trees in One Ball, version 4",
+   "u": "https://doi.org/10.5281/zenodo.23847114",
+   "d": "2026-10-31",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "two trees in one ball, version 4 garrett's tree is built from the six quaternions of norm 5, 1 ± 2i, 1 ± 2j and 1 ± 2k. in the peel coordinate of votkp, a step that multiplies a ratio by z has smith step γ = (z − 1)/(z + 1) and hyperbolic length ln z, and steps compose by einstein addition. read that way, each generator is a lorent "
+  },
+  {
+   "id": "repo-neutrinos-leave-lean",
+   "t": "neutrinos-leave-lean",
+   "u": "https://github.com/dicipler-pixel/neutrinos-leave-lean",
+   "d": "2026-10-31",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "neutrinos-leave-lean when the neutrinos leave: decoupling history and the pbh formation threshold. code, run logs, data and lean. jeromie beasley cosmology formal-verification lean4 mathlib primordial-black-holes"
+  },
+  {
+   "id": "zenodo-23787997",
+   "t": "Non-Normality Is Connection Energy",
+   "u": "https://doi.org/10.5281/zenodo.23787997",
+   "d": "2026-10-30",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "non-normality is connection energy non-normality is connection energy, and its opposite jeromie n. beasley · version 15 this paper identifies a precise relationship between operator non-normality and connection energy on a finite graph. for h = d + a, with hermitian vertex fields dᵢ and skew-hermitian edge transport a built from unit "
+  },
+  {
+   "id": "zenodo-23726273",
+   "t": "Electron Screening in Metal Deuterides: Measurement Systematics, Evolving Target State, and an Experimental Arbitration Protocol (SCREEN-PROG-04)",
+   "u": "https://doi.org/10.5281/zenodo.23726273",
+   "d": "2026-10-28",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "electron screening in metal deuterides: measurement systematics, evolving target state, and an experimental arbitration protocol (screen-prog-04) screening parameters inferred from low-energy nuclear yields in metal deuterides depend on the target's preparation and on its acquisition history: the beam changes the target it measures. this paper separates the instantaneous screening of the target state, a yield-equivalent value within one acqui "
+  },
+  {
+   "id": "zenodo-23698438",
+   "t": "Colour Selects the Leader",
+   "u": "https://doi.org/10.5281/zenodo.23698438",
+   "d": "2026-10-27",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "colour selects the leader colour selects the leader — rate, direction and the gap: schrödinger's colour metric and where it reaches, in light, matter, sound, music, time and memory. version 1.1, 27 october 2026. jeromie beasley. schrödinger's 1920 colour metric splits exactly into a brightness line and a chromatic sphere: a  "
+  },
+  {
+   "id": "zenodo-23690415",
+   "t": "The Weight Between",
+   "u": "https://doi.org/10.5281/zenodo.23690415",
+   "d": "2026-10-27",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "the weight between the weight between what the present must keep, and what it costs to move it what must the present keep to predict every admitted future reading? the predictive quotient answers exactly: the first dim v readings decide. what does it cost to move what is kept? every motion of a kept sector is a crossi "
+  },
+  {
+   "id": "zenodo-23689131",
+   "t": "The Offset Speed Limit",
+   "u": "https://doi.org/10.5281/zenodo.23689131",
+   "d": "2026-10-27",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "the offset speed limit the offset speed limit rate is weight: a record moves only as fast as the weight between allows projector geometry is blind to a rescaling of the generator and to an added constant, and a constant is read only as a difference between two clocks. the signed offset of a cut, tau = tr[log(i-c) - log c] "
+  },
+  {
+   "id": "zenodo-23590925",
+   "t": "Continuous edition v4 · card set v7 (B1–B207)",
+   "u": "https://doi.org/10.5281/zenodo.23590925",
+   "d": "2026-10-23",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "continuous edition v4 · card set v7 (b1–b207) the operator-first atlas is a map of one way of doing mathematics and physics: start from the operator, follow what its subspaces, spectrum and boundaries keep, and read the physics off what survives. it is organised as eight strata (calibration, subspace, spectrum, wall, census, memory, volume and  "
+  },
+  {
+   "id": "zenodo-23493466",
+   "t": "Beyond the Event Horizon: An Operator-First Theory of Persistent Geometry and Black Hole Dynamics",
+   "u": "https://doi.org/10.5281/zenodo.23493466",
+   "d": "2026-10-20",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "beyond the event horizon: an operator-first theory of persistent geometry and black hole dynamics beyond the event horizon: what survives at a rigidity wall jeromie beasley · research edition 10 · october 2026 a black hole carries one wall of each kind. its horizon is a geometric fold: in the right coordinate it is smooth, and nothing breaks there. its innermost stable circular orbit is a spectr "
+  },
+  {
+   "id": "zenodo-23351688",
+   "t": "Band-Edge Rectification Test",
+   "u": "https://doi.org/10.5281/zenodo.23351688",
+   "d": "2026-10-13",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "band-edge rectification test band-edge rectification test: a falsifiable chip test on a gyromorph photonic layer jeromie beasley this record proposes a test that one set of devices can pass or kill. a nonlinear hall rectifier film is placed on a gyromorph, a disordered photonic pattern with hidden rotational order, and read at  "
+  },
+  {
+   "id": "zenodo-23351266",
+   "t": "Intrinsic Quantum Geometric Tensor on the Grassmannian and Spectral Lower Bounds on Dissipation",
+   "u": "https://doi.org/10.5281/zenodo.23351266",
+   "d": "2026-10-13",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "intrinsic quantum geometric tensor on the grassmannian and spectral lower bounds on dissipation every object in this paper is a subspace held in place by a gap. the paper builds the quantum geometric tensor directly on the grassmannian, the space of those subspaces, with no coordinates and no chosen basis, and follows what that one construction says about motion, cost, curvature, geodesics and "
+  },
+  {
+   "id": "zenodo-23340757",
+   "t": "VOTKP: The Vector of Traits Kept under Peeling",
+   "u": "https://doi.org/10.5281/zenodo.23340757",
+   "d": "2026-10-13",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "votkp: the vector of traits kept under peeling in 1867 kelvin proposed that atoms are knotted vortices, and tait drew up the first knot tables to serve as their periodic table. the proposal failed within a generation, but its question did not: what does a layered object keep when one of its layers is taken away? this paper asks that question of  "
+  },
+  {
+   "id": "zenodo-23245792",
+   "t": "The Permutation Coboundary Constant of the Complete Complex Is \\(k/3\\) for Every \\(k\\ge4\\): Including the Powers of Two, with Four Hamming-Native Readings That Do Not Obstruct",
+   "u": "https://doi.org/10.5281/zenodo.23245792",
+   "d": "2026-10-08",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "the permutation coboundary constant of the complete complex is \\(k/3\\) for every \\(k\\ge4\\): including the powers of two, with four hamming-native readings that do not obstruct this paper determines the permutation-valued first coboundary expansion constant of the complete two-dimensional complex. for every k≥4k\\ge4 , h1count(kk,sym)=k3,h1norm(kk,sym)=kk−2,h_1^{\\mathrm{count}}(k_k,\\mathrm{sym})=\\frac{k}{3}, \\qquad h_1^{\\mathrm{norm}}(k_k,\\mathrm{sym})=\\frac{k}{k-2}, and th "
+  },
+  {
+   "id": "repo-what-tesla-saw-lean",
+   "t": "what-tesla-saw-lean",
+   "u": "https://github.com/dicipler-pixel/what-tesla-saw-lean",
+   "d": "2026-10-07",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "what-tesla-saw-lean lean 4 proofs of what tesla's own circuit laws imply (period law, tuning rule, octave, magnification m = pl/r), checked against numbers from the colorado springs notes and his patents, with every hypothesis written out. circuits formal-verification history-of-science lean4 mathlib"
+  },
+  {
+   "id": "zenodo-23043570",
+   "t": "Light Keeps the Ledger: Matter, Direction, and the Wall Between Them",
+   "u": "https://doi.org/10.5281/zenodo.23043570",
+   "d": "2026-09-29",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "light keeps the ledger: matter, direction, and the wall between them light keeps the ledger develops a projector-valued operator framework in which two complementary registers describe local and global structure. a metric, defined as a gram pairing of tangent directions at a point, provides local geometric protection but can degenerate. a ledger, represented by a con "
+  },
+  {
+   "id": "zenodo-23028785",
+   "t": "What Tesla Saw",
+   "u": "https://doi.org/10.5281/zenodo.23028785",
+   "d": "2026-09-29",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "what tesla saw what tesla saw — jeromie beasley this paper rebuilds nikola tesla's work at colorado springs from his own records only: the colorado springs notes (1899–1900), his patents and his published articles. every quantity is checked against the numbers he wrote down himself. it does not lean on later legen "
+  },
+  {
+   "id": "repo-what-transport-keeps-lean",
+   "t": "what-transport-keeps-lean",
+   "u": "https://github.com/dicipler-pixel/what-transport-keeps-lean",
+   "d": "2026-09-28",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "what-transport-keeps-lean lean 4 proofs of the exact algebra of 'what transport keeps': conserved pairings, the catalan cancellation and its certificates, the reconstructed catalan matrix field, and stress, projector and boundary-response identities. catalan-constant formal-verification lean4 mathlib projectors"
+  },
+  {
+   "id": "repo-votkp-lean",
+   "t": "votkp-lean",
+   "u": "https://github.com/dicipler-pixel/votkp-lean",
+   "d": "2026-09-28",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "votkp-lean lean 4 proofs for votkp (the vector of traits kept under peeling) and two trees in one ball — jeromie beasley formal-verification hyperbolic-geometry knot-theory lean4 mathlib4 quaternions smith-chart"
+  },
+  {
+   "id": "repo-sqrt-lower-bound-lean",
+   "t": "sqrt-lower-bound-lean",
+   "u": "https://github.com/dicipler-pixel/sqrt-lower-bound-lean",
+   "d": "2026-09-28",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "sqrt-lower-bound-lean a complete, dependency-closed lean 4 proof of the square-root lower bound on operator entanglement (pozsgay and vona) for the finite rectangular core to which their lemma 4.1 reduces an integrable brickwork circuit. formal-verification lean4 mathlib operator-entanglement quantum-information"
+  },
+  {
+   "id": "repo-small-diophantine-lean",
+   "t": "small-diophantine-lean",
+   "u": "https://github.com/dicipler-pixel/small-diophantine-lean",
+   "d": "2026-09-28",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "small-diophantine-lean lean 4 certificates for the surfaces z² + (y² + a)z + x³ + bx + c = 0 from the epoch 'smallest unsolved equations' problem, and the integrality of an explicit rational section. diophantine-equations formal-verification lean4 mathlib number-theory"
+  },
+  {
+   "id": "repo-coxeter-rank2-lean",
+   "t": "coxeter-rank2-lean",
+   "u": "https://github.com/dicipler-pixel/coxeter-rank2-lean",
+   "d": "2026-09-28",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "coxeter-rank2-lean lean 4 proofs that the rank-two coxeter group i₂(m+2) is the dihedral group of order 2(m+2), checked against mathlib's own coxeter and dihedral objects, with exact integral certificates for the finite and affine rank-two cases. coxeter-groups formal-verification group-theory lean4 mathlib"
+  },
+  {
+   "id": "zenodo-23002919",
+   "t": "Universal Projector Geometry from Electrical Measurements A Coordinate-Free Framework for Transport, Persistence, and Emergent Structure",
+   "u": "https://doi.org/10.5281/zenodo.23002919",
+   "d": "2026-09-27",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "universal projector geometry from electrical measurements a coordinate-free framework for transport, persistence, and emergent structure universal projector geometry from electrical measurements presents a unified, operator-first framework in which coordinate-free geometric structure emerges from experimentally measured covariance operators, bypassing the conventional requirement of an a priori background metric. the electric side of "
+  },
+  {
+   "id": "zenodo-22986657",
+   "t": "What Russell Saw: Walter Russell's Universe of Paired Motion, Read Against a Century of Physics",
+   "u": "https://doi.org/10.5281/zenodo.22986657",
+   "d": "2026-09-27",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "what russell saw: walter russell's universe of paired motion, read against a century of physics walter russell (1871–1963), a painter and sculptor, printed a complete cosmology in the universal one (1926) and the genero-radiative concept (1930). this paper reads both books in full and checks every claim against what has since been measured and proved. his one axiom is a single substance whose  "
+  },
+  {
+   "id": "repo-what-russell-saw-lean",
+   "t": "what-russell-saw-lean",
+   "u": "https://github.com/dicipler-pixel/what-russell-saw-lean",
+   "d": "2026-09-27",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "what-russell-saw-lean lean 4 proofs for 'what russell saw', a reading of walter russell's paired-motion universe: oscillator energy conservation (not the reading itself) and that his planet speeds v ∝ 1/a correspond to an inverse-cube pull. formal-verification history-of-science lean4 mathlib physlib"
+  },
+  {
+   "id": "repo-three-body-lean",
+   "t": "three-body-lean",
+   "u": "https://github.com/dicipler-pixel/three-body-lean",
+   "d": "2026-09-27",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "three-body-lean lean 4 proofs for 'the three-body problem, operator-first': the gram operator of the 120° distance projection has spectrum {cos²ϑ, 1}, so syzygy and equilateral degeneracies are of different kinds. formal-verification lean4 mathlib spectral-theory three-body-problem"
+  },
+  {
+   "id": "repo-suns-lean",
+   "t": "suns-lean",
+   "u": "https://github.com/dicipler-pixel/suns-lean",
+   "d": "2026-09-27",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "suns-lean lean 4 proofs for 'transient structure at solar rigidity interfaces': the square-root law at an exceptional point, the pair exchange recorded by a loop around it, the single-valued ledger, and modal decay versus transient growth. exceptional-points formal-verification lean4 mathlib non-normal-operators"
+  },
+  {
+   "id": "repo-spectral-stress-lean",
+   "t": "spectral-stress-lean",
+   "u": "https://github.com/dicipler-pixel/spectral-stress-lean",
+   "d": "2026-09-27",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "spectral-stress-lean lean 4 proofs for 'spectral stress on a conservative matrix field': band curvatures of a flat connection sum to zero exactly, pair terms factorise under one operator relation, and the amplitude −5√2/16 and 4:1 ratio follow in ℚ(√2). berry-curvature formal-verification lean4 mathlib spectral-theory"
+  },
+  {
+   "id": "repo-spectral-stability-lean",
+   "t": "spectral-stability-lean",
+   "u": "https://github.com/dicipler-pixel/spectral-stability-lean",
+   "d": "2026-09-27",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "spectral-stability-lean lean 4 proofs for 'spectral stability across obstruction interfaces': the transport part a = αj ⊗ δ₁ is symmetric with real spectrum, so every departure from normality of h_n(ε) comes from εe and starts at first order in ε. formal-verification lean4 mathlib non-normal-operators spectral-theory"
+  },
+  {
+   "id": "repo-relational-atlas-lean",
+   "t": "relational-atlas-lean",
+   "u": "https://github.com/dicipler-pixel/relational-atlas-lean",
+   "d": "2026-09-27",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "relational-atlas-lean lean 4 proofs of the bridges in 'the operator-first relational atlas' that are graded theorem and whose content is finite algebra. formal-verification lean4 mathlib operator-theory projectors"
+  },
+  {
+   "id": "repo-price-of-a-direction-lean",
+   "t": "price-of-a-direction-lean",
+   "u": "https://github.com/dicipler-pixel/price-of-a-direction-lean",
+   "d": "2026-09-27",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "price-of-a-direction-lean lean 4 proofs of the exact finite results of 'the price of a direction': two unit directions at angle θ overlap as cos²θ and separate by sin²θ, trackability thresholds, and what survives when two directions coalesce. formal-verification lean4 linear-algebra mathlib projectors"
+  },
+  {
+   "id": "repo-matter-at-a-scale-lean",
+   "t": "matter-at-a-scale-lean",
+   "u": "https://github.com/dicipler-pixel/matter-at-a-scale-lean",
+   "d": "2026-09-27",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "matter-at-a-scale-lean lean 4 proofs for 'matter at a scale': stretching or shifting an operator leaves its eigenspaces unchanged and its departure from normality is a pure ratio; plus the units relations around the bohr rod a₀m = ħ/(αc). formal-verification lean4 mathematical-physics mathlib operator-theory"
+  },
+  {
+   "id": "repo-iqgt-grassmannian-lean",
+   "t": "iqgt-grassmannian-lean",
+   "u": "https://github.com/dicipler-pixel/iqgt-grassmannian-lean",
+   "d": "2026-09-27",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "iqgt-grassmannian-lean lean 4 proofs that the quantum geometric tensor tr(πvw) is a frobenius inner product, so its gram matrix is positive semidefinite and the berry curvature is bounded by the quantum metric, in every finite dimension. formal-verification grassmannian lean4 linear-algebra mathlib quantum-geometry"
+  },
+  {
+   "id": "repo-foft-lean",
+   "t": "foft-lean",
+   "u": "https://github.com/dicipler-pixel/foft-lean",
+   "d": "2026-09-27",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "foft-lean lean 4 proofs for 'foundational operator field theory on stratified manifolds': the isotropic vacuum operator k₀ = −λi, the regularised ledger offset, vanishing odd moments under chirality, and the exact stress-budget rate of the relaxation flow. formal-verification lean4 mathematical-physics mathlib operator-theory"
+  },
+  {
+   "id": "repo-filament-fracture-lean",
+   "t": "filament-fracture-lean",
+   "u": "https://github.com/dicipler-pixel/filament-fracture-lean",
+   "d": "2026-09-27",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "filament-fracture-lean lean 4 proofs for a five-dimensional non-normal stability operator: the embedding of an exact jordan block, the factorised characteristic polynomial, a closed-form resolvent norm 1/ε on |z|² = ε|μ| + ε², and the transient-growth threshold |μ| > 2b. formal-verification lean4 mathlib non-normal-operators pseudospectra"
+  },
+  {
+   "id": "repo-event-horizon-lean",
+   "t": "event-horizon-lean",
+   "u": "https://github.com/dicipler-pixel/event-horizon-lean",
+   "d": "2026-09-27",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "event-horizon-lean lean 4 proofs for 'beyond the event horizon': four-body shape space as qutrit bures geometry, the coplanar wall w₃ = 0 where the metric blows up as 1/(6w₃), the triangular transport block, and a nonnegative discriminant away from the wall. formal-verification four-body-problem lean4 mathematical-physics mathlib"
+  },
+  {
+   "id": "repo-emergent-transport-lean",
+   "t": "emergent-transport-lean",
+   "u": "https://github.com/dicipler-pixel/emergent-transport-lean",
+   "d": "2026-09-27",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "emergent-transport-lean lean 4 proofs for 'intrinsic emergent transport geometry': off-diagonality of projector commutators, first variation of the trace-log ledger, the projector–metric correspondence, and subspace overlap as a squared frobenius norm. formal-verification lean4 mathlib operator-theory projectors"
+  },
+  {
+   "id": "repo-electron-screening-lean",
+   "t": "electron-screening-lean",
+   "u": "https://github.com/dicipler-pixel/electron-screening-lean",
+   "d": "2026-09-27",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "electron-screening-lean lean 4 proofs for 'electron screening in metal deuterides': for an increasing, convex rate, yield-space averaging never gives a fit below the campaign mean, and a two-energy ratio cancels energy-independent factors. convexity formal-verification lean4 mathlib nuclear-physics"
+  },
+  {
+   "id": "repo-coboundary-k3-lean",
+   "t": "coboundary-k3-lean",
+   "u": "https://github.com/dicipler-pixel/coboundary-k3-lean",
+   "d": "2026-09-27",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "coboundary-k3-lean lean 4 proofs that the sym(3) permutation coboundary constant of the complete complex k_k equals k/3 for 4 ≤ k ≤ 8: explicit cochains attain the chapman–lubotzky bound, and gauge minima are checked exhaustively in the kernel. coboundary-expansion combinatorics formal-verification lean4 mathlib simplicial-complexes"
+  },
+  {
+   "id": "repo--connection-energy-lean",
+   "t": "-connection-energy-lean",
+   "u": "https://github.com/dicipler-pixel/-connection-energy-lean",
+   "d": "2026-09-27",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "-connection-energy-lean  formal-verification lean4 mathlib"
+  },
+  {
+   "id": "zenodo-22979186",
+   "t": "The Dirac Time of the Gigantefermion: Memory First, Projector Geometry, Retained History, and the Cost of an Arrow",
+   "u": "https://doi.org/10.5281/zenodo.22979186",
+   "d": "2026-09-26",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "the dirac time of the gigantefermion: memory first, projector geometry, retained history, and the cost of an arrow the dirac time programme begins from memory rather than from a metric, a clock or an assumed time coordinate. its question is operational: what distinction must survive a change of description for a system to stay predictively distinguishable from what it has been? for a finite linear system with co "
+  },
+  {
+   "id": "repo-yang-mills-lean",
+   "t": "yang-mills-lean",
+   "u": "https://github.com/dicipler-pixel/yang-mills-lean",
+   "d": "2026-09-26",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "yang-mills-lean research record for 'retained geometry and certified gauge cutoffs': the sept 8 paper and scripts, sept 9 spatial su(3) calculations, and lean 4 checks of specified finite algebra. no continuum mass gap is claimed. formal-verification gauge-theory lean4 mathlib yang-mills"
+  },
+  {
+   "id": "repo-upg-lean",
+   "t": "upg-lean",
+   "u": "https://github.com/dicipler-pixel/upg-lean",
+   "d": "2026-09-26",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "upg-lean lean 4 proofs of the finite feedback algebra behind 'universal projector geometry': [h, p] = 0 exactly when the coupling block b = 0, and the commutator, redistribution operator and memory gram bbᵀ vanish together. formal-verification lean4 mathlib operator-theory projectors"
+  },
+  {
+   "id": "repo-square-case-lean",
+   "t": "square-case-lean",
+   "u": "https://github.com/dicipler-pixel/square-case-lean",
+   "d": "2026-09-26",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "square-case-lean lean 4 proofs of the finite algebra behind the four-body binary-collision wall and 'the square case': when the intrinsic flow keeps a tangent on the wall σ_l(w) = lwlᵀ, and kernel consequences for positive-semidefinite w. formal-verification four-body-problem lean4 linear-algebra mathlib"
+  },
+  {
+   "id": "repo-offset-lean",
+   "t": "offset-lean",
+   "u": "https://github.com/dicipler-pixel/offset-lean",
+   "d": "2026-09-26",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "offset-lean lean 4 formalization of the offset results entanglement formal-verification free-fermions lean4 mathlib"
+  },
+  {
+   "id": "repo-light-ledger-lean",
+   "t": "light-ledger-lean",
+   "u": "https://github.com/dicipler-pixel/light-ledger-lean",
+   "d": "2026-09-26",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "light-ledger-lean lean 4 proofs of the finite algebra behind 'light keeps the ledger': boundary elimination, the transition census, optical response as a reweighted metric, and scope counterexamples. formal-verification lean4 linear-algebra mathematical-physics mathlib"
+  },
+  {
+   "id": "repo-gravity-ledger-lean",
+   "t": "gravity-ledger-lean",
+   "u": "https://github.com/dicipler-pixel/gravity-ledger-lean",
+   "d": "2026-09-26",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "gravity-ledger-lean lean 4 proofs of the finite projector algebra behind 'the ledger outlives the metric': projector tangents, the signed metric, the reciprocal determinant, the local overlap cap and the projector-overlap taylor bridge. formal-verification lean4 mathematical-physics mathlib projectors"
+  },
+  {
+   "id": "repo-elemental-peeling-lean",
+   "t": "elemental-peeling-lean",
+   "u": "https://github.com/dicipler-pixel/elemental-peeling-lean",
+   "d": "2026-09-26",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "elemental-peeling-lean lean 4 proofs of the finite algebra behind 'elemental peeling and what the boundary retains': what a specified removal takes away, what later records can recover, force recovery from readings, and exclusion certificates. formal-verification lean4 linear-algebra mathlib"
+  },
+  {
+   "id": "repo-dirac-time-lean",
+   "t": "dirac-time-lean",
+   "u": "https://github.com/dicipler-pixel/dirac-time-lean",
+   "d": "2026-09-26",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "dirac-time-lean lean 4 proofs of the finite mathematics behind 'the dirac time of the gigantefermion': the predictive quotient of a linear continuation map and observation, and related results. what is not formalized is listed in limitations.md. formal-verification lean4 linear-algebra mathematical-physics mathlib physlib"
+  },
+  {
+   "id": "repo-dicipler-pixel",
+   "t": "dicipler-pixel",
+   "u": "https://github.com/dicipler-pixel/dicipler-pixel",
+   "d": "2026-09-26",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "dicipler-pixel jeromie beasley "
+  },
+  {
+   "id": "zenodo-22959910",
+   "t": "The Ledger Outlives the Metric: Wall Species, the Reciprocity Obstruction, and a Measured Crossing Behind an Operator-Side Reading of Entropic Gravity",
+   "u": "https://doi.org/10.5281/zenodo.22959910",
+   "d": "2026-09-25",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "the ledger outlives the metric: wall species, the reciprocity obstruction, and a measured crossing behind an operator-side reading of entropic gravity the ledger outlives the metric: wall species, the reciprocity obstruction, and a measured crossing behind an operator-side reading of entropic gravity we identify the operator-side object that licenses two recent programmes deriving gravity from relative entropy, and we measure where that license ex "
+  },
+  {
+   "id": "zenodo-22959175",
+   "t": "Five-Dimensional Non-Normal Stability Operator with Gradient-Driven Interface Coupling for Zero-Precursor Filamentary Fractures",
+   "u": "https://doi.org/10.5281/zenodo.22959175",
+   "d": "2026-09-25",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "five-dimensional non-normal stability operator with gradient-driven interface coupling for zero-precursor filamentary fractures a five-dimensional non-normal stability operator with gradient-driven interface coupling for zero-precursor filamentary fractures this preprint develops a finite-dimensional operator framework for analyzing localized, non-normal transport mechanisms capable of producing large transient amplification "
+  },
+  {
+   "id": "repo-acwindow-lean",
+   "t": "acwindow-lean",
+   "u": "https://github.com/dicipler-pixel/acwindow-lean",
+   "d": "2026-09-22",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "acwindow-lean  andrews-curtis formal-verification group-theory lean4 mathlib"
+  },
+  {
+   "id": "zenodo-22812168",
+   "t": "Certified Obstructions and Exact Forcing: Thickness Bounds, Nine-Colorings, and Integer Dual Certificates for Two Open Benchmarks",
+   "u": "https://doi.org/10.5281/zenodo.22812168",
+   "d": "2026-09-17",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "certified obstructions and exact forcing: thickness bounds, nine-colorings, and integer dual certificates for two open benchmarks this preprint develops exact, certificate-based approaches to the earth–moon graph-coloring and arithmetic kakeya construction problems. it combines structural obstructions, finite classifications, probe-sensitive linear algebra, and reproducible computational evidence while distinguishing these res "
+  },
+  {
+   "id": "repo-earth-moon-kakeya-certificates",
+   "t": "earth-moon-kakeya-certificates",
+   "u": "https://github.com/dicipler-pixel/earth-moon-kakeya-certificates",
+   "d": "2026-09-17",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "earth-moon-kakeya-certificates certified obstructions and exact forcing for the earth-moon and arithmetic kakeya problems — paper, checkable certificates, full replay. arithmetic-kakeya biplanar-graphs certified-computation combinatorics earth-moon-problem graph-coloring katz-tao reproducible-research"
+  },
+  {
+   "id": "repo-rhythm-game-one",
+   "t": "rhythm-game-one",
+   "u": "https://github.com/dicipler-pixel/rhythm-game-one",
+   "d": "2026-09-14",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "rhythm-game-one a 4-key rhythm game that runs in the browser: plain html, canvas and web audio, with no framework, build step, dependencies or audio files. canvas game javascript web-audio"
+  },
+  {
+   "id": "repo-arithmetic-kakeya-finite-bridges",
+   "t": "arithmetic-kakeya-finite-bridges",
+   "u": "https://github.com/dicipler-pixel/arithmetic-kakeya-finite-bridges",
+   "d": "2026-09-14",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "arithmetic-kakeya-finite-bridges lean 4 proofs of two finite bridges for the epoch frontiermath arithmetic kakeya problem: rational forcing equals integer forcing, and every completed configuration leaves two independent surviving labels on each nonempty cut. companion to the certified obstructions paper. arithmetic-kakeya combinatorics formal-verification lean4 mathlib"
+  },
+  {
+   "id": "zenodo-22555919",
+   "t": "The Offset Belongs to the Boundary: the trace split of the entanglement Hamiltonian, a measured Clausius region, and an offset with no bulk",
+   "u": "https://doi.org/10.5281/zenodo.22555919",
+   "d": "2026-09-06",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "the offset belongs to the boundary: the trace split of the entanglement hamiltonian, a measured clausius region, and an offset with no bulk for a region of a free-fermion ground state the entanglement hamiltonian k_a = log[(1 - c_a) c_a^-1] splits into a part proportional to the identity and a trace-free remainder. the identity part shifts every level rigidly, so every observable built from level differences is blind to it. this paper i "
+  },
+  {
+   "id": "zenodo-22543487",
+   "t": "What Transport Keeps Projector selection, conserved pairings, and spectral geometry after the Ramanujan Challenge",
+   "u": "https://doi.org/10.5281/zenodo.22543487",
+   "d": "2026-09-06",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "what transport keeps projector selection, conserved pairings, and spectral geometry after the ramanujan challenge a transport can forget almost every direction and still retain a constant. a flat matrix field can have changing spectral subspaces. an electronic system can keep its energy levels while changing its response to light. what transport keeps develops these relationships through the operator-first prin "
+  },
+  {
+   "id": "zenodo-22307184",
+   "t": "A subgraph density obstruction to biplanarity, and the thickness of inflated cycles",
+   "u": "https://doi.org/10.5281/zenodo.22307184",
+   "d": "2026-09-04",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "a subgraph density obstruction to biplanarity, and the thickness of inflated cycles a graph is biplanar if its edges can be covered by two planar subgraphs. we record an elementary obstruction: since every subgraph of a biplanar graph is biplanar, the classical girth-four planar bound applies to subgraphs, so a biplanar graph on n vertices can contain no triangle-free subgraph with "
+  },
+  {
+   "id": "zenodo-22080702",
+   "t": "The Three-Body Problem, Operator-First: A Complete Spectral Anatomy of Relational Transport on the Shape Sphere, a Conserved Record Measured Along the Figure-Eight, and the Shape Manifold Read as a Birefringent Crystal",
+   "u": "https://doi.org/10.5281/zenodo.22080702",
+   "d": "2026-08-24",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "the three-body problem, operator-first: a complete spectral anatomy of relational transport on the shape sphere, a conserved record measured along the figure-eight, and the shape manifold read as a birefringent crystal the three-body problem, operator-first: a complete spectral anatomy of relational transport on the shape sphere, a conserved record measured along the figure-eight, and the shape manifold read as a birefringent crystal this work develops an operator-first description of relational transport in the e "
+  },
+  {
+   "id": "zenodo-22019893",
+   "t": "Matter at a Scale: Zero, Span, and the Logarithm Between Them",
+   "u": "https://doi.org/10.5281/zenodo.22019893",
+   "d": "2026-08-20",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "matter at a scale: zero, span, and the logarithm between them matter at a scale develops a mathematical and computational framework for asking a deceptively simple question: if matter has no absolute reference of size, what is matter? the work begins with the premise that physical observables should remain meaningful when the overall scale of the underlying sy "
+  },
+  {
+   "id": "zenodo-22013524",
+   "t": "Transient Structure at Solar Rigidity Interfaces and the Exceptional Point of the Dynamo Wave: An Operator-First Study of the Sun",
+   "u": "https://doi.org/10.5281/zenodo.22013524",
+   "d": "2026-08-19",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "transient structure at solar rigidity interfaces and the exceptional point of the dynamo wave: an operator-first study of the sun we study the sun as the observable panel of a single operator-theoretic family: non-normal transport operators whose stress concentrates at rigidity interfaces, previously developed for the four-body shape manifold and its black-hole horizon analogue. the paper centers on two core computations, each "
+  },
+  {
+   "id": "zenodo-21978567",
+   "t": "The Operator-First Relational Atlas",
+   "u": "https://doi.org/10.5281/zenodo.21978567",
+   "d": "2026-08-17",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "the operator-first relational atlas the operator-first atlas presents a unified mathematical framework for studying structure through operators, spectra, geometry, topology, and the transitions between them. rather than treating these subjects as isolated techniques, the atlas organizes them into eight connected mathematical strata an "
+  },
+  {
+   "id": "zenodo-21918464",
+   "t": "The Price of a Direction: Boundary Channel Budgets, Directional Capacity, and Kakeya Structure in Operator Transport",
+   "u": "https://doi.org/10.5281/zenodo.21918464",
+   "d": "2026-08-13",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "the price of a direction: boundary channel budgets, directional capacity, and kakeya structure in operator transport the price of a direction: boundary channel budgets, directional capacity, and kakeya structure in operator transport in an operator-first transport framework, a direction is not free: carrying it as a resolvable channel through a region costs one unit of that region's boundary-trackable census. this "
+  },
+  {
+   "id": "zenodo-21860370",
+   "t": "Foundational Operator Field Theory on Stratified Manifolds: Isotropic Backgrounds, Gradient Relaxation, and Projector Stability; A new approach for Resolving Cosmic Singularity and Vacuum Divergence",
+   "u": "https://doi.org/10.5281/zenodo.21860370",
+   "d": "2026-08-09",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "foundational operator field theory on stratified manifolds: isotropic backgrounds, gradient relaxation, and projector stability; a new approach for resolving cosmic singularity and vacuum divergence this work establishes a self-consistent, coordinate-free mathematical framework demonstrating that macroscopic spacetime geometries emerge as downstream representations of non-normal transport processes on stratified configuration spaces. rather than postulating a smooth metric tensor a priori, we m "
+  },
+  {
+   "id": "zenodo-21855591",
+   "t": "The Square Case: Gram Reduction and Spectral Transport for N=d+1 Bodies",
+   "u": "https://doi.org/10.5281/zenodo.21855591",
+   "d": "2026-08-09",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "the square case: gram reduction and spectral transport for n=d+1 bodies the square case: gram reduction and spectral transport for n = d + 1 bodies this paper develops a unified geometric and spectral framework for the reduced n -body problem in the square case n = d + 1 , where the mass-weighted jacobi configuration matrix is d × d . the central result is that this sin "
+  },
+  {
+   "id": "zenodo-21855787",
+   "t": "Spectral Stress on a Conservative Matrix Field curvature of a flat connection's spectral sub-bundle, and an exceptional point beside the origin",
+   "u": "https://doi.org/10.5281/zenodo.21855787",
+   "d": "2026-08-08",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "spectral stress on a conservative matrix field curvature of a flat connection's spectral sub-bundle, and an exceptional point beside the origin this paper analyses the biorthogonal curvature of the eigenline bundle transported by the conservative matrix field generated from the meijer-g function of the catalan-constant recurrence. although the ambient connection is provably flat, the spectral sub-bundle is curved. a closed-form expression f "
+  },
+  {
+   "id": "zenodo-21799194",
+   "t": "The Companion-Matrix Projector Diagnostic: An Exact Order-2 Theorem, a Confirmed Phase Mechanism for Rotating Order-3 Systems, an Intrinsic Casoratian Invariant, a Calibrated Account of the All-Real-Eigenvalue Order-3 Case, and a Nonzero Projector Curvature over a Flat Conservative Matrix Field",
+   "u": "https://doi.org/10.5281/zenodo.21799194",
+   "d": "2026-08-05",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "the companion-matrix projector diagnostic: an exact order-2 theorem, a confirmed phase mechanism for rotating order-3 systems, an intrinsic casoratian invariant, a calibrated account of the all-real-eigenvalue order-3 case, and a nonzero projector curvature over a flat conservative matrix field this work tests a transport-geometry diagnostic against the ramanujan machine challenge recurrences, using the challenge organizers' own official proofs as ground truth. it settles the order-2 case with a proof and four independent confirmations, identifies the correct invariant for the rotating ord "
+  },
+  {
+   "id": "repo-ramanujan-normality-diagnostic",
+   "t": "ramanujan-normality-diagnostic",
+   "u": "https://github.com/dicipler-pixel/ramanujan-normality-diagnostic",
+   "d": "2026-08-01",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "ramanujan-normality-diagnostic companion-matrix normality/pseudospectra diagnostic for candidate linear recurrences. splits m=s+k, checks [s,k]=0 to predict if transport is well-conditioned or obstructed. validated against 5 independently-known cases (4/4 scored correctly) via riesz projector boundedness, not root multiplicity al pseudospectra python ramanujan-machine recurrences"
+  },
+  {
+   "id": "zenodo-21089304",
+   "t": "Intrinsic Emergent Transport Geometry, Emergent Metrics from Spectral Projector Hierarchies",
+   "u": "https://doi.org/10.5281/zenodo.21089304",
+   "d": "2026-06-30",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "intrinsic emergent transport geometry, emergent metrics from spectral projector hierarchies this work develops an operator-first framework for directional transport in which the primary mathematical objects are spectral projector bundles rather than individual trajectories, eigenvectors, or prescribed metrics. the central idea is that many geometric structures traditionally treated as fund "
+  },
+  {
+   "id": "zenodo-20834719",
+   "t": "Spectral Stability Across Obstruction Interfaces in Geometric Transport Systems: Effective Inertia Tensors and Gluing Dynamic",
+   "u": "https://doi.org/10.5281/zenodo.20834719",
+   "d": "2026-06-24",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "spectral stability across obstruction interfaces in geometric transport systems: effective inertia tensors and gluing dynamic his work develops and studies a class of finite-dimensional non-normal operators on a one-dimensional periodic lattice. the state space is the direct sum of nn n copies of r2\\mathbb{r}^2 r 2 . the operator family is defined by hn(ε)=a+d0+εe,h_n(\\varepsilon) = a + d_0 + \\varepsilon e, h n ( ε ) = a + "
+  },
+  {
+   "id": "zenodo-20818169",
+   "t": "The 5D Spectral Anatomy of Four-Body Obstructions: Kinematic Transport Geometry on Stratified Shape Manifolds",
+   "u": "https://doi.org/10.5281/zenodo.20818169",
+   "d": "2026-06-23",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "the 5d spectral anatomy of four-body obstructions: kinematic transport geometry on stratified shape manifolds the 5d spectral anatomy of four-body obstructions: kinematic transport geometry on stratified shape manifolds this paper extends the coordinate-free spectral geometry framework developed in earlier work to the full four-body problem in three-dimensional physical space. after reduction by translation "
+  }
+ ]
+}

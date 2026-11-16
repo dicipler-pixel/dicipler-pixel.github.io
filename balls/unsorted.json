@@ -1,0 +1,1033 @@
+{
+ "generated": "2026-11-16T23:32:07Z",
+ "ball": "unsorted",
+ "items": [
+  {
+   "id": "zenodo-24282998",
+   "kind": "zenodo",
+   "title": "Flock of Balls on the Field: breakdown, v2 math and film (16 Nov 2026)",
+   "date": "2026-11-16",
+   "url": "https://doi.org/10.5281/zenodo.24282998",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.24282998",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-24210039",
+   "kind": "zenodo",
+   "title": "What the Neutrino State Must Keep: Hidden Angular Structure, the Flux–Shear Link and the Threshold for Primordial Black Hole Formation",
+   "date": "2026-11-14",
+   "url": "https://doi.org/10.5281/zenodo.24210039",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.24210039",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-seiberg-witten-lean",
+   "kind": "repo",
+   "title": "seiberg-witten-lean",
+   "date": "2026-11-10",
+   "url": "https://github.com/dicipler-pixel/seiberg-witten-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-maxwell-lean",
+   "kind": "repo",
+   "title": "maxwell-lean",
+   "date": "2026-11-10",
+   "url": "https://github.com/dicipler-pixel/maxwell-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-companion-matrix-lean",
+   "kind": "repo",
+   "title": "companion-matrix-lean",
+   "date": "2026-11-10",
+   "url": "https://github.com/dicipler-pixel/companion-matrix-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-24040319",
+   "kind": "zenodo",
+   "title": "The Volume of the Knot Potential: Decay and Direction on the Vacuum Disk",
+   "date": "2026-11-07",
+   "url": "https://doi.org/10.5281/zenodo.24040319",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.24040319",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-23972187",
+   "kind": "zenodo",
+   "title": "**From Geometric Flux to Magnetic Charge: A Checked Pauli Curvature and an Explicit Physical Bridge**",
+   "date": "2026-11-05",
+   "url": "https://doi.org/10.5281/zenodo.23972187",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.23972187",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-23969285",
+   "kind": "zenodo",
+   "title": "Opened matter · the boundary census The Weight Between and the Exit Line",
+   "date": "2026-11-05",
+   "url": "https://doi.org/10.5281/zenodo.23969285",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.23969285",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-geometric-flux-magnetic-charge-lean",
+   "kind": "repo",
+   "title": "geometric-flux-magnetic-charge-lean",
+   "date": "2026-11-05",
+   "url": "https://github.com/dicipler-pixel/geometric-flux-magnetic-charge-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-23858157",
+   "kind": "zenodo",
+   "title": "When the Neutrinos Leave: Decoupling History and the Threshold for Primordial Black Hole Formation",
+   "date": "2026-11-01",
+   "url": "https://doi.org/10.5281/zenodo.23858157",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.23858157",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-23847114",
+   "kind": "zenodo",
+   "title": "Two Trees in One Ball, version 4",
+   "date": "2026-10-31",
+   "url": "https://doi.org/10.5281/zenodo.23847114",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.23847114",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-neutrinos-leave-lean",
+   "kind": "repo",
+   "title": "neutrinos-leave-lean",
+   "date": "2026-10-31",
+   "url": "https://github.com/dicipler-pixel/neutrinos-leave-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-23787997",
+   "kind": "zenodo",
+   "title": "Non-Normality Is Connection Energy",
+   "date": "2026-10-30",
+   "url": "https://doi.org/10.5281/zenodo.23787997",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.23787997",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-23726273",
+   "kind": "zenodo",
+   "title": "Electron Screening in Metal Deuterides: Measurement Systematics, Evolving Target State, and an Experimental Arbitration Protocol (SCREEN-PROG-04)",
+   "date": "2026-10-28",
+   "url": "https://doi.org/10.5281/zenodo.23726273",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.23726273",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-23698438",
+   "kind": "zenodo",
+   "title": "Colour Selects the Leader",
+   "date": "2026-10-27",
+   "url": "https://doi.org/10.5281/zenodo.23698438",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.23698438",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-23690415",
+   "kind": "zenodo",
+   "title": "The Weight Between",
+   "date": "2026-10-27",
+   "url": "https://doi.org/10.5281/zenodo.23690415",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.23690415",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-23689131",
+   "kind": "zenodo",
+   "title": "The Offset Speed Limit",
+   "date": "2026-10-27",
+   "url": "https://doi.org/10.5281/zenodo.23689131",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.23689131",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-23590925",
+   "kind": "zenodo",
+   "title": "Continuous edition v4 · card set v7 (B1–B207)",
+   "date": "2026-10-23",
+   "url": "https://doi.org/10.5281/zenodo.23590925",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.23590925",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-23493466",
+   "kind": "zenodo",
+   "title": "Beyond the Event Horizon: An Operator-First Theory of Persistent Geometry and Black Hole Dynamics",
+   "date": "2026-10-20",
+   "url": "https://doi.org/10.5281/zenodo.23493466",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.23493466",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-23351688",
+   "kind": "zenodo",
+   "title": "Band-Edge Rectification Test",
+   "date": "2026-10-13",
+   "url": "https://doi.org/10.5281/zenodo.23351688",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.23351688",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-23351266",
+   "kind": "zenodo",
+   "title": "Intrinsic Quantum Geometric Tensor on the Grassmannian and Spectral Lower Bounds on Dissipation",
+   "date": "2026-10-13",
+   "url": "https://doi.org/10.5281/zenodo.23351266",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.23351266",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-23340757",
+   "kind": "zenodo",
+   "title": "VOTKP: The Vector of Traits Kept under Peeling",
+   "date": "2026-10-13",
+   "url": "https://doi.org/10.5281/zenodo.23340757",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.23340757",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-23245792",
+   "kind": "zenodo",
+   "title": "The Permutation Coboundary Constant of the Complete Complex Is \\(k/3\\) for Every \\(k\\ge4\\): Including the Powers of Two, with Four Hamming-Native Readings That Do Not Obstruct",
+   "date": "2026-10-08",
+   "url": "https://doi.org/10.5281/zenodo.23245792",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.23245792",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-what-tesla-saw-lean",
+   "kind": "repo",
+   "title": "what-tesla-saw-lean",
+   "date": "2026-10-07",
+   "url": "https://github.com/dicipler-pixel/what-tesla-saw-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-23043570",
+   "kind": "zenodo",
+   "title": "Light Keeps the Ledger: Matter, Direction, and the Wall Between Them",
+   "date": "2026-09-29",
+   "url": "https://doi.org/10.5281/zenodo.23043570",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.23043570",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-23028785",
+   "kind": "zenodo",
+   "title": "What Tesla Saw",
+   "date": "2026-09-29",
+   "url": "https://doi.org/10.5281/zenodo.23028785",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.23028785",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-what-transport-keeps-lean",
+   "kind": "repo",
+   "title": "what-transport-keeps-lean",
+   "date": "2026-09-28",
+   "url": "https://github.com/dicipler-pixel/what-transport-keeps-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-votkp-lean",
+   "kind": "repo",
+   "title": "votkp-lean",
+   "date": "2026-09-28",
+   "url": "https://github.com/dicipler-pixel/votkp-lean",
+   "license": "MIT",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.24282998",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-sqrt-lower-bound-lean",
+   "kind": "repo",
+   "title": "sqrt-lower-bound-lean",
+   "date": "2026-09-28",
+   "url": "https://github.com/dicipler-pixel/sqrt-lower-bound-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-small-diophantine-lean",
+   "kind": "repo",
+   "title": "small-diophantine-lean",
+   "date": "2026-09-28",
+   "url": "https://github.com/dicipler-pixel/small-diophantine-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-coxeter-rank2-lean",
+   "kind": "repo",
+   "title": "coxeter-rank2-lean",
+   "date": "2026-09-28",
+   "url": "https://github.com/dicipler-pixel/coxeter-rank2-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-23002919",
+   "kind": "zenodo",
+   "title": "Universal Projector Geometry from Electrical Measurements A Coordinate-Free Framework for Transport, Persistence, and Emergent Structure",
+   "date": "2026-09-27",
+   "url": "https://doi.org/10.5281/zenodo.23002919",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.23002919",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-22986657",
+   "kind": "zenodo",
+   "title": "What Russell Saw: Walter Russell's Universe of Paired Motion, Read Against a Century of Physics",
+   "date": "2026-09-27",
+   "url": "https://doi.org/10.5281/zenodo.22986657",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.22986657",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-what-russell-saw-lean",
+   "kind": "repo",
+   "title": "what-russell-saw-lean",
+   "date": "2026-09-27",
+   "url": "https://github.com/dicipler-pixel/what-russell-saw-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-three-body-lean",
+   "kind": "repo",
+   "title": "three-body-lean",
+   "date": "2026-09-27",
+   "url": "https://github.com/dicipler-pixel/three-body-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-suns-lean",
+   "kind": "repo",
+   "title": "suns-lean",
+   "date": "2026-09-27",
+   "url": "https://github.com/dicipler-pixel/suns-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-spectral-stress-lean",
+   "kind": "repo",
+   "title": "spectral-stress-lean",
+   "date": "2026-09-27",
+   "url": "https://github.com/dicipler-pixel/spectral-stress-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-spectral-stability-lean",
+   "kind": "repo",
+   "title": "spectral-stability-lean",
+   "date": "2026-09-27",
+   "url": "https://github.com/dicipler-pixel/spectral-stability-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-relational-atlas-lean",
+   "kind": "repo",
+   "title": "relational-atlas-lean",
+   "date": "2026-09-27",
+   "url": "https://github.com/dicipler-pixel/relational-atlas-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-price-of-a-direction-lean",
+   "kind": "repo",
+   "title": "price-of-a-direction-lean",
+   "date": "2026-09-27",
+   "url": "https://github.com/dicipler-pixel/price-of-a-direction-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-matter-at-a-scale-lean",
+   "kind": "repo",
+   "title": "matter-at-a-scale-lean",
+   "date": "2026-09-27",
+   "url": "https://github.com/dicipler-pixel/matter-at-a-scale-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-iqgt-grassmannian-lean",
+   "kind": "repo",
+   "title": "iqgt-grassmannian-lean",
+   "date": "2026-09-27",
+   "url": "https://github.com/dicipler-pixel/iqgt-grassmannian-lean",
+   "license": "MIT",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.23351266",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-foft-lean",
+   "kind": "repo",
+   "title": "foft-lean",
+   "date": "2026-09-27",
+   "url": "https://github.com/dicipler-pixel/foft-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-filament-fracture-lean",
+   "kind": "repo",
+   "title": "filament-fracture-lean",
+   "date": "2026-09-27",
+   "url": "https://github.com/dicipler-pixel/filament-fracture-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-event-horizon-lean",
+   "kind": "repo",
+   "title": "event-horizon-lean",
+   "date": "2026-09-27",
+   "url": "https://github.com/dicipler-pixel/event-horizon-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-emergent-transport-lean",
+   "kind": "repo",
+   "title": "emergent-transport-lean",
+   "date": "2026-09-27",
+   "url": "https://github.com/dicipler-pixel/emergent-transport-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-electron-screening-lean",
+   "kind": "repo",
+   "title": "electron-screening-lean",
+   "date": "2026-09-27",
+   "url": "https://github.com/dicipler-pixel/electron-screening-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-coboundary-k3-lean",
+   "kind": "repo",
+   "title": "coboundary-k3-lean",
+   "date": "2026-09-27",
+   "url": "https://github.com/dicipler-pixel/coboundary-k3-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo--connection-energy-lean",
+   "kind": "repo",
+   "title": "-connection-energy-lean",
+   "date": "2026-09-27",
+   "url": "https://github.com/dicipler-pixel/-connection-energy-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-22979186",
+   "kind": "zenodo",
+   "title": "The Dirac Time of the Gigantefermion: Memory First, Projector Geometry, Retained History, and the Cost of an Arrow",
+   "date": "2026-09-26",
+   "url": "https://doi.org/10.5281/zenodo.22979186",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.22979186",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-yang-mills-lean",
+   "kind": "repo",
+   "title": "yang-mills-lean",
+   "date": "2026-09-26",
+   "url": "https://github.com/dicipler-pixel/yang-mills-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-upg-lean",
+   "kind": "repo",
+   "title": "upg-lean",
+   "date": "2026-09-26",
+   "url": "https://github.com/dicipler-pixel/upg-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-square-case-lean",
+   "kind": "repo",
+   "title": "square-case-lean",
+   "date": "2026-09-26",
+   "url": "https://github.com/dicipler-pixel/square-case-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-offset-lean",
+   "kind": "repo",
+   "title": "offset-lean",
+   "date": "2026-09-26",
+   "url": "https://github.com/dicipler-pixel/offset-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-light-ledger-lean",
+   "kind": "repo",
+   "title": "light-ledger-lean",
+   "date": "2026-09-26",
+   "url": "https://github.com/dicipler-pixel/light-ledger-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-gravity-ledger-lean",
+   "kind": "repo",
+   "title": "gravity-ledger-lean",
+   "date": "2026-09-26",
+   "url": "https://github.com/dicipler-pixel/gravity-ledger-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-elemental-peeling-lean",
+   "kind": "repo",
+   "title": "elemental-peeling-lean",
+   "date": "2026-09-26",
+   "url": "https://github.com/dicipler-pixel/elemental-peeling-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-dirac-time-lean",
+   "kind": "repo",
+   "title": "dirac-time-lean",
+   "date": "2026-09-26",
+   "url": "https://github.com/dicipler-pixel/dirac-time-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-dicipler-pixel",
+   "kind": "repo",
+   "title": "dicipler-pixel",
+   "date": "2026-09-26",
+   "url": "https://github.com/dicipler-pixel/dicipler-pixel",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-22959910",
+   "kind": "zenodo",
+   "title": "The Ledger Outlives the Metric: Wall Species, the Reciprocity Obstruction, and a Measured Crossing Behind an Operator-Side Reading of Entropic Gravity",
+   "date": "2026-09-25",
+   "url": "https://doi.org/10.5281/zenodo.22959910",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.22959910",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-22959175",
+   "kind": "zenodo",
+   "title": "Five-Dimensional Non-Normal Stability Operator with Gradient-Driven Interface Coupling for Zero-Precursor Filamentary Fractures",
+   "date": "2026-09-25",
+   "url": "https://doi.org/10.5281/zenodo.22959175",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.22959175",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-acwindow-lean",
+   "kind": "repo",
+   "title": "acwindow-lean",
+   "date": "2026-09-22",
+   "url": "https://github.com/dicipler-pixel/acwindow-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-22812168",
+   "kind": "zenodo",
+   "title": "Certified Obstructions and Exact Forcing: Thickness Bounds, Nine-Colorings, and Integer Dual Certificates for Two Open Benchmarks",
+   "date": "2026-09-17",
+   "url": "https://doi.org/10.5281/zenodo.22812168",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.22812168",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-earth-moon-kakeya-certificates",
+   "kind": "repo",
+   "title": "earth-moon-kakeya-certificates",
+   "date": "2026-09-17",
+   "url": "https://github.com/dicipler-pixel/earth-moon-kakeya-certificates",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-rhythm-game-one",
+   "kind": "repo",
+   "title": "rhythm-game-one",
+   "date": "2026-09-14",
+   "url": "https://github.com/dicipler-pixel/rhythm-game-one",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-arithmetic-kakeya-finite-bridges",
+   "kind": "repo",
+   "title": "arithmetic-kakeya-finite-bridges",
+   "date": "2026-09-14",
+   "url": "https://github.com/dicipler-pixel/arithmetic-kakeya-finite-bridges",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-22555919",
+   "kind": "zenodo",
+   "title": "The Offset Belongs to the Boundary: the trace split of the entanglement Hamiltonian, a measured Clausius region, and an offset with no bulk",
+   "date": "2026-09-06",
+   "url": "https://doi.org/10.5281/zenodo.22555919",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.22555919",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-22543487",
+   "kind": "zenodo",
+   "title": "What Transport Keeps Projector selection, conserved pairings, and spectral geometry after the Ramanujan Challenge",
+   "date": "2026-09-06",
+   "url": "https://doi.org/10.5281/zenodo.22543487",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.22543487",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-22307184",
+   "kind": "zenodo",
+   "title": "A subgraph density obstruction to biplanarity, and the thickness of inflated cycles",
+   "date": "2026-09-04",
+   "url": "https://doi.org/10.5281/zenodo.22307184",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.22307184",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-22080702",
+   "kind": "zenodo",
+   "title": "The Three-Body Problem, Operator-First: A Complete Spectral Anatomy of Relational Transport on the Shape Sphere, a Conserved Record Measured Along the Figure-Eight, and the Shape Manifold Read as a Birefringent Crystal",
+   "date": "2026-08-24",
+   "url": "https://doi.org/10.5281/zenodo.22080702",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.22080702",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-22019893",
+   "kind": "zenodo",
+   "title": "Matter at a Scale: Zero, Span, and the Logarithm Between Them",
+   "date": "2026-08-20",
+   "url": "https://doi.org/10.5281/zenodo.22019893",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.22019893",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-22013524",
+   "kind": "zenodo",
+   "title": "Transient Structure at Solar Rigidity Interfaces and the Exceptional Point of the Dynamo Wave: An Operator-First Study of the Sun",
+   "date": "2026-08-19",
+   "url": "https://doi.org/10.5281/zenodo.22013524",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.22013524",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-21978567",
+   "kind": "zenodo",
+   "title": "The Operator-First Relational Atlas",
+   "date": "2026-08-17",
+   "url": "https://doi.org/10.5281/zenodo.21978567",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.21978567",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-21918464",
+   "kind": "zenodo",
+   "title": "The Price of a Direction: Boundary Channel Budgets, Directional Capacity, and Kakeya Structure in Operator Transport",
+   "date": "2026-08-13",
+   "url": "https://doi.org/10.5281/zenodo.21918464",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.21918464",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-21860370",
+   "kind": "zenodo",
+   "title": "Foundational Operator Field Theory on Stratified Manifolds: Isotropic Backgrounds, Gradient Relaxation, and Projector Stability; A new approach for Resolving Cosmic Singularity and Vacuum Divergence",
+   "date": "2026-08-09",
+   "url": "https://doi.org/10.5281/zenodo.21860370",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.21860370",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-21855591",
+   "kind": "zenodo",
+   "title": "The Square Case: Gram Reduction and Spectral Transport for N=d+1 Bodies",
+   "date": "2026-08-09",
+   "url": "https://doi.org/10.5281/zenodo.21855591",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.21855591",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-21855787",
+   "kind": "zenodo",
+   "title": "Spectral Stress on a Conservative Matrix Field curvature of a flat connection's spectral sub-bundle, and an exceptional point beside the origin",
+   "date": "2026-08-08",
+   "url": "https://doi.org/10.5281/zenodo.21855787",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.21855787",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-21799194",
+   "kind": "zenodo",
+   "title": "The Companion-Matrix Projector Diagnostic: An Exact Order-2 Theorem, a Confirmed Phase Mechanism for Rotating Order-3 Systems, an Intrinsic Casoratian Invariant, a Calibrated Account of the All-Real-Eigenvalue Order-3 Case, and a Nonzero Projector Curvature over a Flat Conservative Matrix Field",
+   "date": "2026-08-05",
+   "url": "https://doi.org/10.5281/zenodo.21799194",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.21799194",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-ramanujan-normality-diagnostic",
+   "kind": "repo",
+   "title": "ramanujan-normality-diagnostic",
+   "date": "2026-08-01",
+   "url": "https://github.com/dicipler-pixel/ramanujan-normality-diagnostic",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-21089304",
+   "kind": "zenodo",
+   "title": "Intrinsic Emergent Transport Geometry, Emergent Metrics from Spectral Projector Hierarchies",
+   "date": "2026-06-30",
+   "url": "https://doi.org/10.5281/zenodo.21089304",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.21089304",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-20834719",
+   "kind": "zenodo",
+   "title": "Spectral Stability Across Obstruction Interfaces in Geometric Transport Systems: Effective Inertia Tensors and Gluing Dynamic",
+   "date": "2026-06-24",
+   "url": "https://doi.org/10.5281/zenodo.20834719",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.20834719",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "zenodo-20818169",
+   "kind": "zenodo",
+   "title": "The 5D Spectral Anatomy of Four-Body Obstructions: Kinematic Transport Geometry on Stratified Shape Manifolds",
+   "date": "2026-06-23",
+   "url": "https://doi.org/10.5281/zenodo.20818169",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.20818169",
+   "balls": [
+    "unsorted"
+   ]
+  }
+ ]
+}

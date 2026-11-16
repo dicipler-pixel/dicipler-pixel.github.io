@@ -1,0 +1,125 @@
+{
+  "THEMES": {
+    "blackholes": [
+      {"title": "Beyond the Event Horizon: What Survives at a Rigidity Wall", "doi": "10.5281/zenodo.21147366"},
+      {"title": "When the Neutrinos Leave: Decoupling History and the Threshold for Primordial Black Hole Formation", "soon": true},
+      {"title": "Lean proofs: Beyond the Event Horizon", "url": "https://github.com/dicipler-pixel/event-horizon-lean", "note": "GitHub · event-horizon-lean"},
+      {"title": "Lean proofs: When the Neutrinos Leave", "url": "https://github.com/dicipler-pixel/neutrinos-leave-lean", "note": "GitHub · neutrinos-leave-lean"}
+    ],
+    "gravity": [
+      {"title": "The Ledger Outlives the Metric", "doi": "10.5281/zenodo.22023237"},
+      {"title": "Lean proofs: The Ledger Outlives the Metric", "url": "https://github.com/dicipler-pixel/gravity-ledger-lean", "note": "GitHub · gravity-ledger-lean"}
+    ],
+    "suns": [
+      {"title": "Transient Structure at Solar Rigidity Interfaces and the Exceptional Point of the Dynamo Wave", "doi": "10.5281/zenodo.21895551"},
+      {"title": "Electron Screening in Metal Deuterides: Measurement Systematics, Evolving Target State, and an Experimental Architecture", "doi": "10.5281/zenodo.21935285"},
+      {"title": "Lean proofs: the suns paper", "url": "https://github.com/dicipler-pixel/suns-lean", "note": "GitHub · suns-lean"},
+      {"title": "Lean proofs: electron screening", "url": "https://github.com/dicipler-pixel/electron-screening-lean", "note": "GitHub · electron-screening-lean"}
+    ],
+    "threebody": [
+      {"title": "The Three-Body Problem, Operator-First: A Complete Spectral Anatomy of Relational Transport on the Shape Sphere", "doi": "10.5281/zenodo.20764188"},
+      {"title": "The Square Case: Gram Reduction and Spectral Transport for N = d + 1 Bodies", "doi": "10.5281/zenodo.21855590"},
+      {"title": "The 5D Spectral Anatomy of Four-Body Obstructions", "doi": "10.5281/zenodo.20818168"},
+      {"title": "Spectral Stability Across Obstruction Interfaces in Geometric Transport Systems", "doi": "10.5281/zenodo.20818899"},
+      {"title": "Lean proofs: the three-body problem", "url": "https://github.com/dicipler-pixel/three-body-lean", "note": "GitHub · three-body-lean"},
+      {"title": "Lean proofs: the square case", "url": "https://github.com/dicipler-pixel/square-case-lean", "note": "GitHub · square-case-lean"}
+    ],
+    "iqgt": [
+      {"title": "Intrinsic Quantum Geometric Tensor on the Grassmannian and Spectral Lower Bounds on Dissipation", "doi": "10.5281/zenodo.20768258"},
+      {"title": "Universal Projector Geometry from Electrical Measurements", "doi": "10.5281/zenodo.21305024"},
+      {"title": "The Companion-Matrix Projector Diagnostic", "doi": "10.5281/zenodo.21787207"},
+      {"title": "From Geometric Flux to Magnetic Charge", "soon": true},
+      {"title": "Lean proofs: IQGT on the Grassmannian", "url": "https://github.com/dicipler-pixel/iqgt-grassmannian-lean", "note": "GitHub · iqgt-grassmannian-lean"},
+      {"title": "Lean proofs: IQGT core", "url": "https://github.com/dicipler-pixel/iqgt-core-lean", "note": "GitHub · iqgt-core-lean"}
+    ],
+    "votkp": [
+      {"title": "VOTKP: The Vector of Traits Kept under Peeling", "doi": "10.5281/zenodo.23340757"},
+      {"title": "Flock of Balls on the Field: breakdown, v2 math and film script", "doi": "10.5281/zenodo.24282998"},
+      {"title": "Lean proofs: VOTKP and the peel atlas", "url": "https://github.com/dicipler-pixel/votkp-lean", "note": "GitHub · votkp-lean"},
+      {"title": "Lean proofs: Elemental Peeling and What the Boundary Retains", "url": "https://github.com/dicipler-pixel/elemental-peeling-lean", "note": "GitHub · elemental-peeling-lean"}
+    ],
+    "onetree": [
+      {"title": "Open the 3D mixer: One Tree, One Ball", "url": "one-tree-one-ball.html", "note": "Interactive · the twin-prime chain inside the tree, and the Seiberg–Witten charge chains"},
+      {"title": "Two Trees in One Ball: Norm Ladders, Peel Steps and Knot Boosts", "doi": "10.5281/zenodo.23847114"},
+      {"title": "Lean proofs: Two Trees in One Ball", "url": "https://github.com/dicipler-pixel/votkp-lean/tree/main/two-trees", "note": "GitHub · votkp-lean / two-trees"},
+      {"title": "Lean: Seiberg–Witten", "url": "https://github.com/dicipler-pixel/seiberg-witten-lean", "note": "GitHub · seiberg-witten-lean"}
+    ],
+    "light": [
+      {"title": "Light Keeps the Ledger", "doi": "10.5281/zenodo.22123115"},
+      {"title": "What Russell Saw", "doi": "10.5281/zenodo.22986656"},
+      {"title": "Colour Selects the Leader", "soon": true},
+      {"title": "The Weight Between", "soon": true},
+      {"title": "What Tesla Saw", "soon": true},
+      {"title": "Lean proofs: Light Keeps the Ledger", "url": "https://github.com/dicipler-pixel/light-ledger-lean", "note": "GitHub · light-ledger-lean"}
+    ],
+    "knots": [
+      {"title": "The Permutation Coboundary Constant of the Complete Complex Is k/3", "doi": "10.5281/zenodo.22090958"},
+      {"title": "The Dirac Time of the Gigantefermion", "doi": "10.5281/zenodo.22978630"},
+      {"title": "Machine-checked fragments of a base-10 prime pattern", "doi": "10.5281/zenodo.23378596"},
+      {"title": "Lean proofs: coboundary k/3", "url": "https://github.com/dicipler-pixel/coboundary-k3-lean", "note": "GitHub · coboundary-k3-lean"},
+      {"title": "Lean proofs: the Dirac time", "url": "https://github.com/dicipler-pixel/dirac-time-lean", "note": "GitHub · dirac-time-lean"}
+    ],
+    "fields": [
+      {"title": "Non-Normality Is Connection Energy", "doi": "10.5281/zenodo.22803572"},
+      {"title": "Spectral Stress on a Conservative Matrix Field", "doi": "10.5281/zenodo.21825872"},
+      {"title": "Retained Geometry and Certified Gauge Cutoffs (Yang–Mills)", "soon": true},
+      {"title": "Lean: Yang–Mills, retained geometry", "url": "https://github.com/dicipler-pixel/yang-mills-lean", "note": "GitHub · yang-mills-lean"},
+      {"title": "Lean: Seiberg–Witten", "url": "https://github.com/dicipler-pixel/seiberg-witten-lean", "note": "GitHub · seiberg-witten-lean"},
+      {"title": "Lean: Maxwell's own electromagnetism", "url": "https://github.com/dicipler-pixel/maxwell-lean", "note": "GitHub · maxwell-lean"}
+    ],
+    "atlas": [
+      {"title": "The Operator-First Relational Atlas", "doi": "10.5281/zenodo.21972561"},
+      {"title": "The Operator-First Atlas: continuous edition v4, cards B1–B207", "doi": "10.5281/zenodo.23590925"},
+      {"title": "What Transport Keeps", "doi": "10.5281/zenodo.22543486"},
+      {"title": "Intrinsic Emergent Transport Geometry: Emergent Metrics from Spectral Projector Hierarchies", "doi": "10.5281/zenodo.21089303"},
+      {"title": "Lean proofs: the Relational Atlas", "url": "https://github.com/dicipler-pixel/relational-atlas-lean", "note": "GitHub · relational-atlas-lean"}
+    ],
+    "cosmos": [
+      {"title": "Foundational Operator Field Theory on Stratified Manifolds", "doi": "10.5281/zenodo.21254648"},
+      {"title": "The Offset Belongs to the Boundary", "doi": "10.5281/zenodo.22181748"},
+      {"title": "A Five-Dimensional Non-Normal Stability Operator for Zero-Precursor Filamentary Fractures", "doi": "10.5281/zenodo.21184980"},
+      {"title": "Matter at a Scale: Zero, Span, and the Logarithm Between Them", "doi": "10.5281/zenodo.22019892"},
+      {"title": "The Offset Speed Limit", "soon": true},
+      {"title": "Lean proofs: FOFT", "url": "https://github.com/dicipler-pixel/foft-lean", "note": "GitHub · foft-lean"}
+    ],
+    "problems": [
+      {"title": "Certified Obstructions and Exact Forcing: Earth–Moon Graph Colouring and Arithmetic Kakeya", "doi": "10.5281/zenodo.22812168"},
+      {"title": "The Price of a Direction: Boundary Channel Budgets, Directional Capacity, and Kakeya Structure", "doi": "10.5281/zenodo.21918463"},
+      {"title": "A subgraph density obstruction to biplanarity", "doi": "10.5281/zenodo.22307184"},
+      {"title": "Lean: rank-two Coxeter groups", "url": "https://github.com/dicipler-pixel/coxeter-rank2-lean", "note": "GitHub · coxeter-rank2-lean"},
+      {"title": "Lean: arithmetic Kakeya, finite bridges", "url": "https://github.com/dicipler-pixel/arithmetic-kakeya-finite-bridges", "note": "GitHub · arithmetic-kakeya-finite-bridges"},
+      {"title": "Lean: small Diophantine equations", "url": "https://github.com/dicipler-pixel/small-diophantine-lean", "note": "GitHub · small-diophantine-lean"}
+    ]
+  },
+  "THEME_INFO": {
+    "blackholes": {"name": "Black holes", "line": "Horizons, rigidity walls, and what survives at the edge."},
+    "gravity": {"name": "Gravity & the ledger", "line": "The metric can expire at a wall; the record it kept carries on."},
+    "suns": {"name": "Suns & stars", "line": "Solar rigidity interfaces, the dynamo wave, and screening in dense matter."},
+    "threebody": {"name": "Three bodies", "line": "The shape of a triangle as a point on a sphere, ranked by its Gram tensor."},
+    "iqgt": {"name": "Quantum geometry · IQGT", "line": "The intrinsic quantum geometric tensor: metric, curvature, and the gap that holds a subspace."},
+    "votkp": {"name": "Peeling · VOTKP", "line": "Peel an atom shell by shell; every step lands on one disk."},
+    "onetree": {"name": "One Tree, One Ball", "line": "Garrett's tree of peel steps fills the hyperbolic ball, and the twin-prime chain is one path inside it."},
+    "light": {"name": "Light & colour", "line": "Light keeps the ledger: splitting, transport, and colour as a measurement."},
+    "knots": {"name": "Knots & primes", "line": "Knotted curves, coboundaries, and patterns in the primes."},
+    "fields": {"name": "Fields & operators", "line": "Gauge fields, non-normality as connection energy, and spectral stress."},
+    "atlas": {"name": "Transport & the Atlas", "line": "How structure is carried from place to place, mapped as one atlas."},
+    "cosmos": {"name": "Galaxies & the cosmos", "line": "Filaments, the cosmological constant, and matter across scales."},
+    "problems": {"name": "Open problems", "line": "Certified obstructions: Earth–Moon colouring, arithmetic Kakeya, and more."}
+  },
+  "ANCHOR": {
+    "threebody": {"px": 1186, "py": 96, "r": 92, "z": -30},
+    "blackholes": {"px": 1500, "py": 190, "r": 150, "z": -34},
+    "gravity": {"px": 1786, "py": 186, "r": 84, "z": -32},
+    "suns": {"px": 1350, "py": 478, "r": 46, "z": -36},
+    "votkp": {"px": 1046, "py": 238, "r": 80, "z": -24},
+    "iqgt": {"px": 1112, "py": 388, "r": 58, "z": -26},
+    "light": {"px": 330, "py": 175, "r": 66, "z": -20},
+    "onetree": {"px": 345, "py": 440, "r": 92, "z": -18},
+    "atlas": {"px": 1602, "py": 392, "r": 80, "z": -30},
+    "cosmos": {"px": 1206, "py": 332, "r": 56, "z": -34},
+    "problems": {"px": 1676, "py": 546, "r": 44, "z": -36},
+    "knots": {"px": 548, "py": 206, "r": 74, "z": -18},
+    "fields": {"px": 562, "py": 606, "r": 80, "z": -20}
+  },
+  "ORDER": ["threebody", "blackholes", "gravity", "suns", "votkp", "iqgt", "onetree", "light", "atlas", "cosmos", "problems", "knots", "fields"]
+}
