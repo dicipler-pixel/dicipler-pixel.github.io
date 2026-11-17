@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-17T02:01:16Z",
+ "generated": "2026-11-17T13:23:30Z",
  "items": [
   {
    "id": "zenodo-24282998",
@@ -792,17 +792,6 @@
     "unsorted"
    ],
    "s": "rhythm-game-one a 4-key rhythm game that runs in the browser: plain html, canvas and web audio, with no framework, build step, dependencies or audio files. canvas game javascript web-audio"
-  },
-  {
-   "id": "repo-rhythm-game",
-   "t": "rhythm-game",
-   "u": "https://github.com/dicipler-pixel/rhythm-game",
-   "d": "2026-09-14",
-   "k": "repo",
-   "b": [
-    "unsorted"
-   ],
-   "s": "rhythm-game  "
   },
   {
    "id": "repo-arithmetic-kakeya-finite-bridges",

@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-17T02:01:16Z",
+ "generated": "2026-11-17T13:23:30Z",
  "ball": "unsorted",
  "items": [
   {
@@ -889,18 +889,6 @@
    "date": "2026-09-14",
    "url": "https://github.com/dicipler-pixel/rhythm-game-one",
    "license": "MIT",
-   "badge": "GitHub",
-   "balls": [
-    "unsorted"
-   ]
-  },
-  {
-   "id": "repo-rhythm-game",
-   "kind": "repo",
-   "title": "rhythm-game",
-   "date": "2026-09-14",
-   "url": "https://github.com/dicipler-pixel/rhythm-game",
-   "license": "NOASSERTION",
    "badge": "GitHub",
    "balls": [
     "unsorted"
