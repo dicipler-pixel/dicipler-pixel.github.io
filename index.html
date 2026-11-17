@@ -342,7 +342,7 @@ const { THEMES, THEME_INFO, ORDER, ANCHOR } = ATLAS;
 const PW = 1983, PH = 793, PA = PW / PH;
 /* the figure on the platform, with the backpack: a link to every paper on Zenodo */
 const ME = { px: 900, py: 540, w: 170, h: 350 }, ME_LABEL = 'Jeromie Beasley · all papers on Zenodo';
-const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const reduced = false; /* animations always run (owner's choice, 17 Nov 2026) */
 const isTouch = window.matchMedia('(hover: none)').matches;
 const small = Math.min(window.innerWidth, window.innerHeight) < 700;
 
@@ -396,7 +396,7 @@ function enterStill(imgURL, pts, photo){
   const img = new Image(); img.alt = 'A figure on a platform in a room of equations, looking out at a black hole, a sun, galaxies and a planet'; img.src = imgURL; host.appendChild(img);
   for(const k of ORDER){ const b = document.createElement('button'); b.className = 'hot'; b.dataset.k = k; b.setAttribute('aria-label', THEME_INFO[k].name);
     const s = document.createElement('span'); s.textContent = THEME_INFO[k].name; b.appendChild(s); b.addEventListener('click', () => showPanel(k)); host.appendChild(b); }
-  if(photo){ const a = document.createElement('a'); a.className = 'hot me'; a.dataset.k = 'me'; a.href = LINKS.zenodo; a.target = '_blank'; a.rel = 'noopener'; a.setAttribute('aria-label', ME_LABEL);
+  if(pts.me){ const a = document.createElement('a'); a.className = 'hot me'; a.dataset.k = 'me'; a.href = LINKS.zenodo; a.target = '_blank'; a.rel = 'noopener'; a.setAttribute('aria-label', ME_LABEL);
     const s = document.createElement('span'); s.textContent = ME_LABEL; a.appendChild(s); host.appendChild(a); }
   $('c').style.display = 'none'; $('hint').textContent = 'Tap a glowing ring to open its papers'; layoutStill();
   select = k => showPanel(k); deselect = () => hidePanel();
@@ -868,7 +868,7 @@ const meHit = new THREE.Mesh(new THREE.PlaneGeometry(ME.w/PH*PHH, ME.h/PH*PHH), 
 const meRing = new THREE.Mesh(new THREE.RingGeometry(0.8, 1, 64), new THREE.MeshBasicMaterial({ color: 0xf2c46d, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide }));
 meRing.position.copy(P2W(ME.px + 8, ME.py + ME.h/2 - 6)); meRing.position.z += 0.4; meRing.scale.set(ME.w/PH*PHH*0.45, ME.w/PH*PHH*0.09, 1); scene.add(meRing); let meGlow = 0;
 const ray = new THREE.Raycaster(), pointer = new THREE.Vector2(-9, -9); const hits = ORDER.map(k => worlds[k].hit).concat([meHit]); let hover = null, down = null;
-function pick(x, y){ pointer.set(x / vw() * 2 - 1, -(y / vh()) * 2 + 1); ray.setFromCamera(pointer, camera); const h = ray.intersectObjects(hits, false); return h.length ? h[0].object.userData.key : null; }
+function pick(x, y){ const rc = canvas.getBoundingClientRect(); x -= rc.left; y -= rc.top; pointer.set(x / vw() * 2 - 1, -(y / vh()) * 2 + 1); ray.setFromCamera(pointer, camera); const h = ray.intersectObjects(hits, false); return h.length ? h[0].object.userData.key : null; }
 canvas.addEventListener('pointermove', e => { parallax.set(e.clientX / vw() - 0.5, e.clientY / vh() - 0.5); if(e.pointerType === 'mouse'){ hover = pick(e.clientX, e.clientY); canvas.style.cursor = hover ? 'pointer' : 'default'; } });
 canvas.addEventListener('pointerleave', () => { hover = null; });
 canvas.addEventListener('pointerdown', e => { down = { x: e.clientX, y: e.clientY }; });
@@ -922,12 +922,14 @@ function frame(){
   updateLens(); composer.render();
   if(!checked && !forceLive){ frames.push(dt);
     if(forceStill){ if(frames.length >= 12) toStill(); }
-    else if(frames.length > 20){ const m = frames.slice(20), sum = m.reduce((x,y)=>x+y,0); if(sum >= 2.5){ checked = true; if(m.length / sum < 26) toStill(); } } }
+    else if(frames.length > 20){ const m = frames.slice(20), sum = m.reduce((x,y)=>x+y,0); if(sum >= 2.5){ checked = true; if(m.length / sum < 26) lighten(); } } }
 }
+function lighten(){ /* keep animating on slow devices: render at 1x pixels and drop the bloom glow */ renderer.setPixelRatio(1); composer.setPixelRatio(1); bloom.enabled = false; resize(); window.__atlasLight = true; }
 function toStill(){ checked = true; composer.render(); const url = renderer.domElement.toDataURL('image/jpeg', 0.95); cancelAnimationFrame(raf);
   const pts = {}; for(const k of ORDER){ const v = worlds[k].group.position.clone().project(camera); pts[k] = [(v.x + 1) / 2, (1 - v.y) / 2]; }
+  { const v = meHit.position.clone().project(camera); pts.me = [(v.x + 1) / 2, (1 - v.y) / 2]; }
   enterStill(url, pts, false); renderer.dispose(); }
-window.__atlas = { worlds, select: k => select(k), deselect: () => deselect(), toStill, camera, home: () => home.clone() };
+window.__atlas = { worlds, select: k => select(k), deselect: () => deselect(), toStill, lighten, me: meHit, camera, home: () => home.clone() };
 frame();
 }
 </script>
