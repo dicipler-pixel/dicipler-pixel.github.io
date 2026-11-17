@@ -1,95 +1,36 @@
 {
- "generated": "2026-11-16T23:36:11Z",
+ "generated": "2026-11-17T02:01:16Z",
  "sources": {
   "github_repos_public_nonfork": 52,
   "zenodo_records_found": 41,
   "zenodo_total_reported": 41
  },
- "included": 82,
+ "included": 92,
  "included_by_kind": {
-  "repo": 41,
+  "repo": 51,
   "zenodo": 41
  },
  "held_back": [
-  {
-   "name": "dicipler-pixel.github.io",
-   "kind": "repo",
-   "url": "https://github.com/dicipler-pixel/dicipler-pixel.github.io",
-   "license": "NOASSERTION",
-   "reason": "licence not recognised by GitHub (NOASSERTION)"
-  },
   {
    "name": "EJ-base-prime-pattern",
    "kind": "repo",
    "url": "https://github.com/dicipler-pixel/EJ-base-prime-pattern",
    "license": null,
    "reason": "no licence detected"
-  },
-  {
-   "name": "formula-pictures",
-   "kind": "repo",
-   "url": "https://github.com/dicipler-pixel/formula-pictures",
-   "license": "NOASSERTION",
-   "reason": "licence not recognised by GitHub (NOASSERTION)"
-  },
-  {
-   "name": "iqgt-core-lean",
-   "kind": "repo",
-   "url": "https://github.com/dicipler-pixel/iqgt-core-lean",
-   "license": "NOASSERTION",
-   "reason": "licence not recognised by GitHub (NOASSERTION)"
-  },
-  {
-   "name": "narrator-animation-kit",
-   "kind": "repo",
-   "url": "https://github.com/dicipler-pixel/narrator-animation-kit",
-   "license": null,
-   "reason": "no licence detected"
-  },
-  {
-   "name": "nonnormality-connection-energy-lean",
-   "kind": "repo",
-   "url": "https://github.com/dicipler-pixel/nonnormality-connection-energy-lean",
-   "license": "NOASSERTION",
-   "reason": "licence not recognised by GitHub (NOASSERTION)"
-  },
-  {
-   "name": "Oceans-Journey",
-   "kind": "repo",
-   "url": "https://github.com/dicipler-pixel/Oceans-Journey",
-   "license": null,
-   "reason": "no licence detected"
-  },
-  {
-   "name": "operator-first",
-   "kind": "repo",
-   "url": "https://github.com/dicipler-pixel/operator-first",
-   "license": "NOASSERTION",
-   "reason": "licence not recognised by GitHub (NOASSERTION)"
-  },
-  {
-   "name": "ramanujan-challenge-lean",
-   "kind": "repo",
-   "url": "https://github.com/dicipler-pixel/ramanujan-challenge-lean",
-   "license": "NOASSERTION",
-   "reason": "licence not recognised by GitHub (NOASSERTION)"
-  },
-  {
-   "name": "rhythm-game",
-   "kind": "repo",
-   "url": "https://github.com/dicipler-pixel/rhythm-game",
-   "license": null,
-   "reason": "no licence detected"
-  },
-  {
-   "name": "what-the-neutrino-state-must-keep",
-   "kind": "repo",
-   "url": "https://github.com/dicipler-pixel/what-the-neutrino-state-must-keep",
-   "license": null,
-   "reason": "no licence detected"
   }
  ],
  "unknown_ball_topics": {},
- "allowlist": [],
+ "allowlist": [
+  "Oceans-Journey",
+  "dicipler-pixel.github.io",
+  "formula-pictures",
+  "iqgt-core-lean",
+  "narrator-animation-kit",
+  "nonnormality-connection-energy-lean",
+  "operator-first",
+  "ramanujan-challenge-lean",
+  "rhythm-game",
+  "what-the-neutrino-state-must-keep"
+ ],
  "license_rule": "include only MIT or Creative Commons (CC-*, CC0); others held back unless repo name is in license-allowlist.json"
 }

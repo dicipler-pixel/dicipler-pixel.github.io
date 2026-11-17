@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-16T23:21:22Z",
+ "generated": "2026-11-17T02:01:16Z",
  "items": [
   {
    "id": "zenodo-24282998",
@@ -22,6 +22,28 @@
     "unsorted"
    ],
    "s": "what the neutrino state must keep: hidden angular structure, the flux–shear link and the threshold for primordial black hole formation title what the neutrino state must keep: hidden angular structure, the flux–shear link and the threshold for primordial black hole formation (version 10 of \"when the neutrinos leave\") disclaimer ai use for the reseach and math as well as figures. all research directions are of my own ideas and the w "
+  },
+  {
+   "id": "repo-what-the-neutrino-state-must-keep",
+   "t": "what-the-neutrino-state-must-keep",
+   "u": "https://github.com/dicipler-pixel/what-the-neutrino-state-must-keep",
+   "d": "2026-11-14",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "what-the-neutrino-state-must-keep what the neutrino state must keep — v10 paper, illustrated html and session archive. jeromie beasley. "
+  },
+  {
+   "id": "repo-dicipler-pixel.github.io",
+   "t": "dicipler-pixel.github.io",
+   "u": "https://github.com/dicipler-pixel/dicipler-pixel.github.io",
+   "d": "2026-11-14",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "dicipler-pixel.github.io  "
   },
   {
    "id": "repo-seiberg-witten-lean",
@@ -66,6 +88,17 @@
     "unsorted"
    ],
    "s": "the volume of the knot potential: decay and direction on the vacuum disk votkp began as the volume of the knot potential and became the vector of traits kept under peeling. this paper joins the two meanings through the two books of the intrinsic quantum geometric tensor, q = g - (i/2)ω: a climb (metric, size) and a turn (curvature, phase). everything is read on one disk  "
+  },
+  {
+   "id": "repo-narrator-animation-kit",
+   "t": "narrator-animation-kit",
+   "u": "https://github.com/dicipler-pixel/narrator-animation-kit",
+   "d": "2026-11-06",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "narrator-animation-kit narrator animation kit v2.0: the hologram tesla figure, animated in code. jeromie beasley / atlas memoriae. "
   },
   {
    "id": "zenodo-23972187",
@@ -189,6 +222,17 @@
    "s": "the offset speed limit the offset speed limit rate is weight: a record moves only as fast as the weight between allows projector geometry is blind to a rescaling of the generator and to an added constant, and a constant is read only as a difference between two clocks. the signed offset of a cut, tau = tr[log(i-c) - log c] "
   },
   {
+   "id": "repo-iqgt-core-lean",
+   "t": "iqgt-core-lean",
+   "u": "https://github.com/dicipler-pixel/iqgt-core-lean",
+   "d": "2026-10-24",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "iqgt-core-lean iqgt core: the intrinsic quantum geometric tensor tr(pvw) as primitive geometry, lean 4 + mathlib v4.35.0 (in development) formal-verification lean4 mathlib quantum-geometry"
+  },
+  {
    "id": "zenodo-23590925",
    "t": "Continuous edition v4 · card set v7 (B1–B207)",
    "u": "https://doi.org/10.5281/zenodo.23590925",
@@ -200,6 +244,17 @@
    "s": "continuous edition v4 · card set v7 (b1–b207) the operator-first atlas is a map of one way of doing mathematics and physics: start from the operator, follow what its subspaces, spectrum and boundaries keep, and read the physics off what survives. it is organised as eight strata (calibration, subspace, spectrum, wall, census, memory, volume and  "
   },
   {
+   "id": "repo-formula-pictures",
+   "t": "formula-pictures",
+   "u": "https://github.com/dicipler-pixel/formula-pictures",
+   "d": "2026-10-22",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "formula-pictures pictures that are equations: yeganeh's black-hole formula taken apart, and the twisted ring drawn the same way generative-art javascript mathematical-visualization"
+  },
+  {
    "id": "zenodo-23493466",
    "t": "Beyond the Event Horizon: An Operator-First Theory of Persistent Geometry and Black Hole Dynamics",
    "u": "https://doi.org/10.5281/zenodo.23493466",
@@ -209,6 +264,28 @@
     "unsorted"
    ],
    "s": "beyond the event horizon: an operator-first theory of persistent geometry and black hole dynamics beyond the event horizon: what survives at a rigidity wall jeromie beasley · research edition 10 · october 2026 a black hole carries one wall of each kind. its horizon is a geometric fold: in the right coordinate it is smooth, and nothing breaks there. its innermost stable circular orbit is a spectr "
+  },
+  {
+   "id": "repo-nonnormality-connection-energy-lean",
+   "t": "nonnormality-connection-energy-lean",
+   "u": "https://github.com/dicipler-pixel/nonnormality-connection-energy-lean",
+   "d": "2026-10-18",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "nonnormality-connection-energy-lean lean 4 formalization of non-normality is connection energy (jeromie beasley) formal-verification graph-connections lean4 mathlib non-normal-operators"
+  },
+  {
+   "id": "repo-ramanujan-challenge-lean",
+   "t": "ramanujan-challenge-lean",
+   "u": "https://github.com/dicipler-pixel/ramanujan-challenge-lean",
+   "d": "2026-10-16",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "ramanujan-challenge-lean lean 4 proofs of the exact algebra in jeromie beasley's ramanujan challenge (technion, 2026) submissions: determinant identities, a pochhammer product, a telescoping cubic, nilpotent leading-order algebra and a partial-fraction decomposition. limits rely on numerics. continued-fractions formal-verification lean4 mathlib number-theory ramanujan-machine"
   },
   {
    "id": "zenodo-23351688",
@@ -717,6 +794,17 @@
    "s": "rhythm-game-one a 4-key rhythm game that runs in the browser: plain html, canvas and web audio, with no framework, build step, dependencies or audio files. canvas game javascript web-audio"
   },
   {
+   "id": "repo-rhythm-game",
+   "t": "rhythm-game",
+   "u": "https://github.com/dicipler-pixel/rhythm-game",
+   "d": "2026-09-14",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "rhythm-game  "
+  },
+  {
    "id": "repo-arithmetic-kakeya-finite-bridges",
    "t": "arithmetic-kakeya-finite-bridges",
    "u": "https://github.com/dicipler-pixel/arithmetic-kakeya-finite-bridges",
@@ -750,6 +838,17 @@
    "s": "what transport keeps projector selection, conserved pairings, and spectral geometry after the ramanujan challenge a transport can forget almost every direction and still retain a constant. a flat matrix field can have changing spectral subspaces. an electronic system can keep its energy levels while changing its response to light. what transport keeps develops these relationships through the operator-first prin "
   },
   {
+   "id": "repo-Oceans-Journey",
+   "t": "Oceans-Journey",
+   "u": "https://github.com/dicipler-pixel/Oceans-Journey",
+   "d": "2026-09-06",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "oceans-journey small kid game game html"
+  },
+  {
    "id": "zenodo-22307184",
    "t": "A subgraph density obstruction to biplanarity, and the thickness of inflated cycles",
    "u": "https://doi.org/10.5281/zenodo.22307184",
@@ -759,6 +858,17 @@
     "unsorted"
    ],
    "s": "a subgraph density obstruction to biplanarity, and the thickness of inflated cycles a graph is biplanar if its edges can be covered by two planar subgraphs. we record an elementary obstruction: since every subgraph of a biplanar graph is biplanar, the classical girth-four planar bound applies to subgraphs, so a biplanar graph on n vertices can contain no triangle-free subgraph with "
+  },
+  {
+   "id": "repo-operator-first",
+   "t": "operator-first",
+   "u": "https://github.com/dicipler-pixel/operator-first",
+   "d": "2026-09-04",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "operator-first  formal-verification lean4 mathematical-physics"
   },
   {
    "id": "zenodo-22080702",

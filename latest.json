@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-16T23:32:07Z",
+ "generated": "2026-11-17T02:01:16Z",
  "count": 20,
  "items": [
   {
@@ -24,6 +24,30 @@
    "license": "cc-by-4.0",
    "badge": "archived",
    "doi": "10.5281/zenodo.24210039",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-what-the-neutrino-state-must-keep",
+   "kind": "repo",
+   "title": "what-the-neutrino-state-must-keep",
+   "date": "2026-11-14",
+   "url": "https://github.com/dicipler-pixel/what-the-neutrino-state-must-keep",
+   "license": "NOASSERTION",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-dicipler-pixel.github.io",
+   "kind": "repo",
+   "title": "dicipler-pixel.github.io",
+   "date": "2026-11-14",
+   "url": "https://github.com/dicipler-pixel/dicipler-pixel.github.io",
+   "license": "NOASSERTION",
+   "badge": "GitHub",
    "balls": [
     "unsorted"
    ]
@@ -73,6 +97,18 @@
    "license": "cc-by-4.0",
    "badge": "archived",
    "doi": "10.5281/zenodo.24040319",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-narrator-animation-kit",
+   "kind": "repo",
+   "title": "narrator-animation-kit",
+   "date": "2026-11-06",
+   "url": "https://github.com/dicipler-pixel/narrator-animation-kit",
+   "license": "NOASSERTION",
+   "badge": "GitHub",
    "balls": [
     "unsorted"
    ]
@@ -214,45 +250,6 @@
    "license": "cc-by-4.0",
    "badge": "archived",
    "doi": "10.5281/zenodo.23689131",
-   "balls": [
-    "unsorted"
-   ]
-  },
-  {
-   "id": "zenodo-23590925",
-   "kind": "zenodo",
-   "title": "Continuous edition v4 · card set v7 (B1–B207)",
-   "date": "2026-10-23",
-   "url": "https://doi.org/10.5281/zenodo.23590925",
-   "license": "cc-by-4.0",
-   "badge": "archived",
-   "doi": "10.5281/zenodo.23590925",
-   "balls": [
-    "unsorted"
-   ]
-  },
-  {
-   "id": "zenodo-23493466",
-   "kind": "zenodo",
-   "title": "Beyond the Event Horizon: An Operator-First Theory of Persistent Geometry and Black Hole Dynamics",
-   "date": "2026-10-20",
-   "url": "https://doi.org/10.5281/zenodo.23493466",
-   "license": "cc-by-4.0",
-   "badge": "archived",
-   "doi": "10.5281/zenodo.23493466",
-   "balls": [
-    "unsorted"
-   ]
-  },
-  {
-   "id": "zenodo-23351688",
-   "kind": "zenodo",
-   "title": "Band-Edge Rectification Test",
-   "date": "2026-10-13",
-   "url": "https://doi.org/10.5281/zenodo.23351688",
-   "license": "cc-by-4.0",
-   "badge": "archived",
-   "doi": "10.5281/zenodo.23351688",
    "balls": [
     "unsorted"
    ]

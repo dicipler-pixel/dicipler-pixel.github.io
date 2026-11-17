@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-16T23:32:07Z",
+ "generated": "2026-11-17T02:01:16Z",
  "ball": "unsorted",
  "items": [
   {
@@ -24,6 +24,30 @@
    "license": "cc-by-4.0",
    "badge": "archived",
    "doi": "10.5281/zenodo.24210039",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-what-the-neutrino-state-must-keep",
+   "kind": "repo",
+   "title": "what-the-neutrino-state-must-keep",
+   "date": "2026-11-14",
+   "url": "https://github.com/dicipler-pixel/what-the-neutrino-state-must-keep",
+   "license": "NOASSERTION",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-dicipler-pixel.github.io",
+   "kind": "repo",
+   "title": "dicipler-pixel.github.io",
+   "date": "2026-11-14",
+   "url": "https://github.com/dicipler-pixel/dicipler-pixel.github.io",
+   "license": "NOASSERTION",
+   "badge": "GitHub",
    "balls": [
     "unsorted"
    ]
@@ -73,6 +97,18 @@
    "license": "cc-by-4.0",
    "badge": "archived",
    "doi": "10.5281/zenodo.24040319",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-narrator-animation-kit",
+   "kind": "repo",
+   "title": "narrator-animation-kit",
+   "date": "2026-11-06",
+   "url": "https://github.com/dicipler-pixel/narrator-animation-kit",
+   "license": "NOASSERTION",
+   "badge": "GitHub",
    "balls": [
     "unsorted"
    ]
@@ -219,6 +255,18 @@
    ]
   },
   {
+   "id": "repo-iqgt-core-lean",
+   "kind": "repo",
+   "title": "iqgt-core-lean",
+   "date": "2026-10-24",
+   "url": "https://github.com/dicipler-pixel/iqgt-core-lean",
+   "license": "NOASSERTION",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
    "id": "zenodo-23590925",
    "kind": "zenodo",
    "title": "Continuous edition v4 · card set v7 (B1–B207)",
@@ -232,6 +280,18 @@
    ]
   },
   {
+   "id": "repo-formula-pictures",
+   "kind": "repo",
+   "title": "formula-pictures",
+   "date": "2026-10-22",
+   "url": "https://github.com/dicipler-pixel/formula-pictures",
+   "license": "NOASSERTION",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
    "id": "zenodo-23493466",
    "kind": "zenodo",
    "title": "Beyond the Event Horizon: An Operator-First Theory of Persistent Geometry and Black Hole Dynamics",
@@ -240,6 +300,30 @@
    "license": "cc-by-4.0",
    "badge": "archived",
    "doi": "10.5281/zenodo.23493466",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-nonnormality-connection-energy-lean",
+   "kind": "repo",
+   "title": "nonnormality-connection-energy-lean",
+   "date": "2026-10-18",
+   "url": "https://github.com/dicipler-pixel/nonnormality-connection-energy-lean",
+   "license": "NOASSERTION",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-ramanujan-challenge-lean",
+   "kind": "repo",
+   "title": "ramanujan-challenge-lean",
+   "date": "2026-10-16",
+   "url": "https://github.com/dicipler-pixel/ramanujan-challenge-lean",
+   "license": "NOASSERTION",
+   "badge": "GitHub",
    "balls": [
     "unsorted"
    ]
@@ -811,6 +895,18 @@
    ]
   },
   {
+   "id": "repo-rhythm-game",
+   "kind": "repo",
+   "title": "rhythm-game",
+   "date": "2026-09-14",
+   "url": "https://github.com/dicipler-pixel/rhythm-game",
+   "license": "NOASSERTION",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
    "id": "repo-arithmetic-kakeya-finite-bridges",
    "kind": "repo",
    "title": "arithmetic-kakeya-finite-bridges",
@@ -849,6 +945,18 @@
    ]
   },
   {
+   "id": "repo-Oceans-Journey",
+   "kind": "repo",
+   "title": "Oceans-Journey",
+   "date": "2026-09-06",
+   "url": "https://github.com/dicipler-pixel/Oceans-Journey",
+   "license": "NOASSERTION",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
    "id": "zenodo-22307184",
    "kind": "zenodo",
    "title": "A subgraph density obstruction to biplanarity, and the thickness of inflated cycles",
@@ -857,6 +965,18 @@
    "license": "cc-by-4.0",
    "badge": "archived",
    "doi": "10.5281/zenodo.22307184",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-operator-first",
+   "kind": "repo",
+   "title": "operator-first",
+   "date": "2026-09-04",
+   "url": "https://github.com/dicipler-pixel/operator-first",
+   "license": "NOASSERTION",
+   "badge": "GitHub",
    "balls": [
     "unsorted"
    ]
