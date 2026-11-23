@@ -1,16 +1,23 @@
 {
- "generated": "2026-11-17T13:23:30Z",
+ "generated": "2026-11-23T22:30:27Z",
  "sources": {
-  "github_repos_public_nonfork": 52,
-  "zenodo_records_found": 41,
-  "zenodo_total_reported": 41
+  "github_repos_public_nonfork": 55,
+  "zenodo_records_found": 42,
+  "zenodo_total_reported": 42
  },
- "included": 91,
+ "included": 94,
  "included_by_kind": {
-  "repo": 50,
-  "zenodo": 41
+  "repo": 52,
+  "zenodo": 42
  },
  "held_back": [
+  {
+   "name": "dirac-time-d25-lean",
+   "kind": "repo",
+   "url": "https://github.com/dicipler-pixel/dirac-time-d25-lean",
+   "license": null,
+   "reason": "no licence detected"
+  },
   {
    "name": "EJ-base-prime-pattern",
    "kind": "repo",

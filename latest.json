@@ -1,7 +1,44 @@
 {
- "generated": "2026-11-17T02:01:16Z",
+ "generated": "2026-11-23T22:30:27Z",
  "count": 20,
  "items": [
+  {
+   "id": "zenodo-24432624",
+   "kind": "zenodo",
+   "title": "Periodic Table of Elemental Peels, v1.1",
+   "date": "2026-11-22",
+   "url": "https://doi.org/10.5281/zenodo.24432624",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.24432624",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-count-me-as-one-lean",
+   "kind": "repo",
+   "title": "count-me-as-one-lean",
+   "date": "2026-11-20",
+   "url": "https://github.com/dicipler-pixel/count-me-as-one-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-cmao-combined-lean",
+   "kind": "repo",
+   "title": "cmao-combined-lean",
+   "date": "2026-11-20",
+   "url": "https://github.com/dicipler-pixel/cmao-combined-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
   {
    "id": "zenodo-24282998",
    "kind": "zenodo",
@@ -211,45 +248,6 @@
    "license": "cc-by-4.0",
    "badge": "archived",
    "doi": "10.5281/zenodo.23726273",
-   "balls": [
-    "unsorted"
-   ]
-  },
-  {
-   "id": "zenodo-23698438",
-   "kind": "zenodo",
-   "title": "Colour Selects the Leader",
-   "date": "2026-10-27",
-   "url": "https://doi.org/10.5281/zenodo.23698438",
-   "license": "cc-by-4.0",
-   "badge": "archived",
-   "doi": "10.5281/zenodo.23698438",
-   "balls": [
-    "unsorted"
-   ]
-  },
-  {
-   "id": "zenodo-23690415",
-   "kind": "zenodo",
-   "title": "The Weight Between",
-   "date": "2026-10-27",
-   "url": "https://doi.org/10.5281/zenodo.23690415",
-   "license": "cc-by-4.0",
-   "badge": "archived",
-   "doi": "10.5281/zenodo.23690415",
-   "balls": [
-    "unsorted"
-   ]
-  },
-  {
-   "id": "zenodo-23689131",
-   "kind": "zenodo",
-   "title": "The Offset Speed Limit",
-   "date": "2026-10-27",
-   "url": "https://doi.org/10.5281/zenodo.23689131",
-   "license": "cc-by-4.0",
-   "badge": "archived",
-   "doi": "10.5281/zenodo.23689131",
    "balls": [
     "unsorted"
    ]

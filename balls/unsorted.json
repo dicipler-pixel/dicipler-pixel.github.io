@@ -1,7 +1,44 @@
 {
- "generated": "2026-11-17T13:23:30Z",
+ "generated": "2026-11-23T22:30:27Z",
  "ball": "unsorted",
  "items": [
+  {
+   "id": "zenodo-24432624",
+   "kind": "zenodo",
+   "title": "Periodic Table of Elemental Peels, v1.1",
+   "date": "2026-11-22",
+   "url": "https://doi.org/10.5281/zenodo.24432624",
+   "license": "cc-by-4.0",
+   "badge": "archived",
+   "doi": "10.5281/zenodo.24432624",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-count-me-as-one-lean",
+   "kind": "repo",
+   "title": "count-me-as-one-lean",
+   "date": "2026-11-20",
+   "url": "https://github.com/dicipler-pixel/count-me-as-one-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
+  {
+   "id": "repo-cmao-combined-lean",
+   "kind": "repo",
+   "title": "cmao-combined-lean",
+   "date": "2026-11-20",
+   "url": "https://github.com/dicipler-pixel/cmao-combined-lean",
+   "license": "MIT",
+   "badge": "GitHub",
+   "balls": [
+    "unsorted"
+   ]
+  },
   {
    "id": "zenodo-24282998",
    "kind": "zenodo",

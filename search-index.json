@@ -1,6 +1,39 @@
 {
- "generated": "2026-11-17T13:23:30Z",
+ "generated": "2026-11-23T22:30:27Z",
  "items": [
+  {
+   "id": "zenodo-24432624",
+   "t": "Periodic Table of Elemental Peels, v1.1",
+   "u": "https://doi.org/10.5281/zenodo.24432624",
+   "d": "2026-11-22",
+   "k": "zenodo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "periodic table of elemental peels, v1.1 an interactive periodic table, hydrogen to astatine, that orders the elements by how their electrons peel away. each removal step z = ie(k+1)/ie(k) has a reflection γ = (z−1)/(z+1). the loop wall is γ² = ½, that is z = 3 + 2√2 = 5.828427, derived from geometry rather than fitted. results: • of 3,570 "
+  },
+  {
+   "id": "repo-count-me-as-one-lean",
+   "t": "count-me-as-one-lean",
+   "u": "https://github.com/dicipler-pixel/count-me-as-one-lean",
+   "d": "2026-11-20",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "count-me-as-one-lean  "
+  },
+  {
+   "id": "repo-cmao-combined-lean",
+   "t": "cmao-combined-lean",
+   "u": "https://github.com/dicipler-pixel/cmao-combined-lean",
+   "d": "2026-11-20",
+   "k": "repo",
+   "b": [
+    "unsorted"
+   ],
+   "s": "cmao-combined-lean lean 4 source for the [t] theorems of count me as one v4 (zenodo 10.5281/zenodo.24403983) "
+  },
   {
    "id": "zenodo-24282998",
    "t": "Flock of Balls on the Field: breakdown, v2 math and film (16 Nov 2026)",
@@ -604,7 +637,7 @@
    "b": [
     "unsorted"
    ],
-   "s": "coboundary-k3-lean lean 4 proofs that the sym(3) permutation coboundary constant of the complete complex k_k equals k/3 for 4 ≤ k ≤ 8: explicit cochains attain the chapman–lubotzky bound, and gauge minima are checked exhaustively in the kernel. coboundary-expansion combinatorics formal-verification lean4 mathlib simplicial-complexes"
+   "s": "coboundary-k3-lean lean 4 proofs that the sym(3) permutation coboundary constant of the complete complex k_k equals k/3 for every k ≥ 3 (sym(3) counting convention): explicit cochains attain the chapman–lubotzky bound, and gauge minima are checked exhaustively in the kernel. coboundary-expansion combinatorics formal-verification lean4 mathlib simplicial-complexes"
   },
   {
    "id": "repo--connection-energy-lean",
